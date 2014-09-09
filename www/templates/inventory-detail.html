@@ -1,0 +1,21 @@
+<!--
+  This template loads for the 'tab.inventory-detail' state (app.js)
+  'inventory' is a $scope variable created in the InventorysCtrl controller (controllers.js)
+  The InventorysCtrl pulls data from the Inventorys service (service.js)
+  The Inventorys service returns an array of inventory data
+-->
+<ion-view title="({{slideActiveSlide()}} / {{slideSize()}}) - {{activeItem.name}}">
+  <ion-content has-header="true" padding="false">
+  
+  <ion-slide-box delegate-handle="inventory" on-slide-changed="slideHasChanged($index)" show-pager=false>
+  <ion-slide ng-repeat="item in inventory.Items">
+  
+    <div class="list">
+	   <ng-include src="'templates/order-basic.html'"></ng-include>
+	   <h3>已有{{item.cntBuyer}}位买手参与此次购买</h3>
+  	</div>
+    	
+  	</ion-slide>
+  	</ion-slide-box>
+  </ion-content>
+</ion-view>

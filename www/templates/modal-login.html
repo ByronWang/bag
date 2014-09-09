@@ -1,0 +1,20 @@
+ <ion-modal-view ng-controller="LoginCtrl">
+	  <ion-header-bar class="bar-positive">
+	      <h1 class="title">登录</h1>
+	    </ion-header-bar>
+    <ion-content>
+	<div class="list">
+		  <label class="item item-input">
+		    <span class="input-label">用户名</span>
+		    <input type="text" x-ng-model="user.username">
+		  </label>
+		  <label class="item item-input">
+		    <span class="input-label">密码</span>
+		    <input type="password" x-ng-model="user.pwd">
+		  </label>
+	</div>
+		<div class="padding">
+			<button class="button button-block button-positive" x-ng-click="login();">登录</button>
+		</div>
+    </ion-content>
+</ion-modal-view>

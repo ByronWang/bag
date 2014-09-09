@@ -1,0 +1,202 @@
+/* Empty. Add your own CSS if you like */
+
+table tr th{
+	text-align: left;
+	font-size: 60%;
+	width: 4em;
+}
+
+.scroll-content{	
+}
+a{
+	text-decoration: none;
+	color: black;
+}
+
+.button .badge {
+  position: absolute;
+  top: -3px; 
+  left:-3px;
+  }
+  
+  .bar{
+  color: #f0b840;
+  }
+  
+  .tab-item-active{
+  	color: red;
+  }
+  .item{
+  	font-size: 10px;
+  }
+
+.bar-subheader .tabs{
+	line-height: 33px;
+	padding-top: 17px;	
+}
+
+.bar-subheader .tabs .tab-item.tab-item-active{
+  	border-bottom: solid 1px red;
+ }
+
+ .bar-subheader{
+ 	padding: 0px;
+ }
+ .bar-subheader .tabs{
+ 	background: none;
+ }
+ 
+ .item-value {
+  float: right;
+  color: black;
+  font-size: 14px; 
+ }
+  .item-lang-value {
+  padding-top:5px;
+  float: left;
+  color: black;
+  font-size: 14px; 
+  overflow:  visible;
+ }
+ 
+ .list.view{
+ 	border: none;
+ 	background: none;
+ }
+ 
+.list.view .item{
+ 	border: none;
+ 	background: none;
+ 	padding: 1px;
+} 
+  
+.view-button .item-avatar{
+  	min-height: 44px;
+}
+  
+.view-button .item-avatar .button{
+  	top: 18px;
+}
+
+img.main{
+	width: 160px;
+	height: 160px;	
+}
+
+.item-graph {
+  overflow: auto;
+  text-overflow: inherit;
+  white-space: normal; 
+}
+
+.thumbnails_lists a{
+	padding: 5px;
+  float:left;
+  width: 100px;
+  height: 120px;
+  text-align: center;
+}
+
+.thumbnails_lists a img{
+	height: 80px;
+	width: 80px;
+	box-shadow: 1px 1px 1px #bbbbbb;
+}
+
+.icon_lists a{
+  float:left;
+  width: 80px;
+  height: 82px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.icon_lists .name{
+	overflow: hidden;
+  	text-decoration: none;
+  	color: black;
+}
+.icon_lists .icon{
+  font-size: 38px;
+  line-height: 60px;
+  margin: 10px 0;
+  color:white;
+  -webkit-transition: font-size 0.25s ease-out 0s;
+  -moz-transition: font-size 0.25s ease-out 0s;
+  transition: font-size 0.25s ease-out 0s;
+  
+  padding:6px;
+  border-radius: 12px 12px;
+  background-color: OrangeRed;
+  text-decoration: none;
+}
+
+.icon_lists .icon:hover{
+}
+
+.list.layout{
+	border: none;
+	padding: 0em;	
+}
+.list.layout .item{
+	border: none;
+	padding: 10px 0px;
+}
+
+.item-checkbox-left{
+  padding-left: 40px;
+}
+  .item-checkbox-left  input {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    max-width: 20px;
+    max-height: 20px;
+    width: 20px; }
+
+.item-checkbox-thumbnail-left, .item-checkbox-thumbnail-left .item-content {
+  padding-left: 136px;
+  min-height: 100px; 
+}
+  .item-checkbox-thumbnail-left  .item-content  img:first-child{
+    position: absolute;
+    top: 10px;
+    left: 40px;
+    max-width: 80px;
+    max-height: 80px;
+    width: 100%; }
+    
+  .item-checkbox-thumbnail-left .item-content  input[type=checkbox] {
+    position: absolute;
+    top: 40px;
+    left: 15px;
+    max-width: 20px;
+    max-height: 20px;
+    width: 20px; }
+
+.item-avatar.item-complex, .item-avatar-left.item-complex, .item-checkbox-thumbnail-left.item-complex {
+  padding-left: 0; }
+
+  
+  
+ .item-range-input{
+ 	padding-right: 10px;
+ }
+  .item-range-input .seperator{ 
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 10px;
+    -moz-box-flex: 1;
+    -moz-flex: 1 0 10px;
+    -ms-flex: 1 0 10px;
+    flex: 1 0 10px;
+ }
+ 
+ .item-input.item-range-input input{
+    -webkit-box-flex: 10;
+    -webkit-flex: 10 0 40px;
+    -moz-box-flex: 10;
+    -moz-flex: 10 0 40px;
+    -ms-flex: 10 0 40px;
+    flex: 10 0 40px;
+ }
+ 

@@ -1,0 +1,190 @@
+<ion-view title="主页">
+<style>
+div.box{
+	height: 100px;
+	text-align: center;
+}
+
+.box img{
+	width: 100%
+}
+
+</style>
+	<ion-nav-buttons side="left">    
+  		<img src="img/logo3.png" height="32px" width="32px">
+	</ion-nav-buttons>
+	<ion-nav-buttons side="right">    
+      <button class="button button-icon icon ion-search" x-ng-click="search()">
+     </button> 
+      <a class="button button-icon icon ion-plus" x-ng-click="editCart()">
+     </a>
+  </ion-nav-buttons>
+  <ion-content class="has-header" on-scroll="onScroll();" on-scroll-complete="onScrollComplete();">
+    <ion-slide-box delegate-handle="band" does-continue=true auto-play=true slide-interval=2000>
+    <ion-slide>
+    <a  href="#/tab/product/1">
+      <div id="s1" class="box blue">
+        <img alt="1111" src="img/A001.jpg">
+      </div></a>
+    </ion-slide>
+    <ion-slide>
+    <a  href="#/tab/product/2">
+      <div id="s2" class="box yellow">
+        <img alt="2222" src="img/A002.jpg">
+      </div></a>
+    </ion-slide>
+  </ion-slide-box>
+    
+  <div class="list layout">
+      <div class="item thumbnails_lists clear">
+             <a href="#/tab/products">
+             	<img src="img/u10.png"></img>
+                 <div class="name">个护化妆-01</div>
+             </a>
+         
+             <a href="#/tab/products">
+             	<img src="img/u10.png"></img>
+                 <div class="name">个护化妆-01</div>
+             </a>
+         
+             <a href="#/tab/products">
+             	<img src="img/u10.png"></img>
+                 <div class="name">个护化妆-01</div>
+             </a>
+        </div>
+        
+        
+       <div class="item icon_lists clear text-center">
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: blue">&#xf0006;</i>
+                 <div class="name">个护化妆</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: green">&#xe601;</i>
+                 <div class="name">钻石珠宝</div>
+             </a>
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: orange;">&#x348f;</i>
+                 <div class="name">电脑</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: Purple;">&#xe63c;</i>
+                 <div class="name">笔记本电脑</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: OliveDrab;">&#xe617;</i>
+                 <div class="name">电脑端</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: Orchid;">&#x3437;</i>
+                 <div class="name">数码</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: Olive;">&#xe653;</i>
+                 <div class="name">数码</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: MediumVioletRed;">&#xe64e;</i>
+                 <div class="name">高跟鞋</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: MediumSeaGreen;">&#xf006f;</i>
+                 <div class="name">登山鞋</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: Magenta;">&#xe708;</i>
+                 <div class="name">时尚服饰</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: MediumOrchid;">&#xf0004;</i>
+                 <div class="name">服装鞋靴-01</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: MediumAquaMarine;">&#xe61a;</i>
+                 <div class="name">服装服饰</div>
+             </a>
+                  
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: Lime;">&#xe658;</i>
+                 <div class="name">鞋靴箱包</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: IndianRed;">&#x3478;</i>
+                 <div class="name">回流区日用百货</div>
+             </a>
+             
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: LightCoral;">&#xf0071;</i>
+                 <div class="name">冰箱</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: Coral;">&#xf0092;</i>
+                 <div class="name">照相机</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: Olive;">&#xf0065;</i>
+                 <div class="name">洗衣机</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: Coral;">&#xe656;</i>
+                 <div class="name">医疗</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: ForestGreen;">&#x343f;</i>
+                 <div class="name">药品</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: FireBrick;">&#xf0066;</i>
+                 <div class="name">体育02</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: Darkorange;">&#xf0006;</i>
+                 <div class="name">乒乓球</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: DarkCyan;">&#xf0009;</i>
+                 <div class="name">足球</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: Crimson;">&#xe63b;</i>
+                 <div class="name">母婴</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: CornflowerBlue;">&#xf01d7;</i>
+                 <div class="name">玩耍的孩子</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: Coral;">&#xf0085;</i>
+                 <div class="name">酒</div>
+             </a>
+         
+             <a href="#/tab/products">
+             <i class="icon iconfont" style="background-color: Chocolate;">&#x3435;</i>
+                 <div class="name">更多</div>
+             </a>            
+     </div>
+     </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,16 @@
+<ion-view title="已发布订单">
+  <ion-content class="has-subheader">
+    <div class="list padding-top" x-ng-repeat="order in orders" >
+    
+	   <div class="item item-divider">{{order.country}} </div>
+		      <a x-ng-repeat="item in order.Items"  class="item item-thumbnail-left"  href="#/tab/order/c/{{order.id}}/{{item.id}}">
+		      <img src="img/u10.png">
+		      <pre>{{item.name}}      （ {{item.country}} ）
+				价格：{{item.expectedPrice}}/元   
+				到货周期：{{item.lastMonth}}个月</pre>
+		      </a>
+  </div>
+  <ion-infinite-scroll on-infinite="loadMoreItems()" icon="ion-loading-c">
+  </ion-infinite-scroll>
+  </ion-content>
+</ion-view>
