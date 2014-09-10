@@ -46,7 +46,9 @@ angular.module('starter.controllers', [])
 		$scope.closeModal();
 	};
 })
-.controller('FilterCtrl', function($scope,$state) {
+.controller('FilterCtrl', function($scope,$state,Countries) {
+	$scope.countries = Countries.all();
+	
 	$scope.ok = function(country){
 		$scope.country = country;
 		$scope.closeModal();

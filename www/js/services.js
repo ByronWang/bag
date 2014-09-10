@@ -302,6 +302,30 @@ angular.module('starter.services', [])
 	    }
 	  };
 })
+
+
+.factory('Countries', function() {
+	  // Might use a resource here that returns a JSON array
+
+	  // Some fake testing data
+	  var countries = [
+		{id:1,name:'美国',},
+		{id:2,name:'韩国'},
+		{id:3,name:'日本'},
+		{id:3,name:'英国'},
+		{id:3,name:'德国'}
+	  ];
+
+	  return {
+	    all: function() {
+	      return countries;
+	    },
+	    get: function(id) {
+	      // Simple index lookup
+	      return countries[id-1];
+	    }
+	  };
+})
 	
 .factory('Products', function() {
 	  // Might use a resource here that returns a JSON array

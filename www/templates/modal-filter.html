@@ -1,12 +1,13 @@
  <ion-modal-view ng-controller="FilterCtrl">
 	  <ion-header-bar class="bar-positive">
 	      <h1 class="title">筛选</h1>
+	        <div class="buttons">           	        
+  		<button class="button button-icon icon ion-ios7-close-empty pull-right"    x-ng-click="modal.hide();"></button>
+  			</div>
 	    </ion-header-bar>
     <ion-content>
 	<div class="list">
-		<a class="item"  x-ng-click="ok('美国');">美国</a>
-		<a class="item"  x-ng-click="ok('韩国');">韩国</a>
-		<a class="item" x-ng-click="ok('日本');">日本</a>
+		<a class="item"  x-ng-click="ok(c.id);" x-ng-repeat="c in countries">{{c.name}}</a>
 	</div>
     </ion-content>
 </ion-modal-view>
