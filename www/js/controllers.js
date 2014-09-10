@@ -9,7 +9,8 @@ angular.module('starter.controllers', [])
 	
 })
 
-.controller('DashCtrl', function($scope, $ionicSlideBoxDelegate,$ionicModal) {
+.controller('DashCtrl', function($scope, $ionicSlideBoxDelegate,Category,$ionicModal) {
+	$scope.category = Category.level1();
 	$scope.search = function(){
 		  $ionicModal.fromTemplateUrl('templates/modal-search.html', {
 		    scope: $scope,
@@ -209,6 +210,11 @@ angular.module('starter.controllers', [])
 
 .controller('ProductsCtrl', function($scope, Products) {
   $scope.products = Products.all();
+})
+
+.controller('ProductsCategoryCtrl', function($scope, $stateParams,Category,Products) {
+  $scope.products = Products.byCategory($stateParams.categoryId);
+  $scope.category = Category.get($stateParams.categoryId);
 })
 
 .controller('ProductDetailCtrl', function($scope, $stateParams, Products) {

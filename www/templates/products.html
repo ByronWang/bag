@@ -1,15 +1,14 @@
 
-<ion-view title="宝贝一览">
-  <ion-content class="has-header">
-	<ion-nav-buttons side="left">      
+<ion-view title="{{category.name}}">
+<ion-nav-buttons side="right">      
       <a class="button button-icon icon ion-ios7-cart-outline" x-ng-click="editCart()">
 	    <span  class="badge badge-positive">{{cart.size()}}</span>
      </a>
   </ion-nav-buttons>
-	<ion-nav-buttons side="right">      
-      <a class="button button-icon icon ion-plus" x-ng-click="editCart()">
-     </a>
-  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <div ng-show="products.length==0">
+    <p >此分类下暂时还没有商品哦！</p></div>
+	
     <div class="list">
       <a x-ng-repeat="item in products"  class="item item-avatar"  href="#/tab/product/{{item.id}}">
  		<img src="img/u10.png">
