@@ -1,0 +1,94 @@
+ <ion-modal-view ng-controller="NewOrderCtrl">
+ 
+ <ion-header-bar class="bar-positive">
+  <div class="buttons">
+ </div>
+<h1 class="title">新建订单</h1>
+  <div class="buttons">           	        
+  		<button class="button button-icon icon ion-ios7-close-empty pull-right" 
+          ng-click="modal.hide();"></button>
+  </div>
+</ion-header-bar>
+
+<ion-content>
+ 
+ <div class="list" x-ng-show="editCategory">
+	  <a class="item item-icon-right" x-ng-repeat="c in category" x-ng-click="selectCat(c)" href="#">
+	   	{{c.name}}
+	   <i class="icon ion-ios7-arrow-forward"></i>
+	  </a>
+ </div>
+     
+ <div class="list"  x-ng-show="!editCategory">      
+ 
+	  <div class="item item-divider">{{order.categoryList}}</div>
+      <div class="item item-thumbnail-left"  x-ng-click="editProductAvatar();">
+	      	<img  x-ng-src="{{lastPhoto}}" >
+	  </div>
+      	
+	  <div class="item item-divider">
+	    基本信息
+	  </div>
+	  <label class="item item-input">
+	    <span class="input-label">物品名称</span>
+	    <input type="text" x-ng-model="order.name">
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">说明</span>
+	    <input type="text" x-ng-model="order.description">
+	  </label>
+	  <div class="item item-divider">
+	   	商品参数
+	  </div>
+	  <label class="item item-input">
+	    <span class="input-label">功效</span>
+	    <input type="text" x-ng-model="order.extends.function">
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">色泽</span>
+	    <input type="text" x-ng-model="order.extends.color">
+	  </label>
+	  
+	  <div class="item item-divider">
+	   	代购信息
+	  </div>
+	  <label class="item item-input">
+	    <span class="input-label">代购国家</span>
+		<select x-ng-model="order.country" x-ng-options="c.name as c.name for c in countries">
+		    <option value="">-- 请选择 --</option>
+		</select>
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">预想总价</span>
+	    <input type="number" x-ng-model="order.expectedPrice">
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">代购件数</span>
+	    <input type="number" x-ng-model="order.amount">
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">代购期限</span>
+	    <input type="number" x-ng-model="order.deadline">
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">发货方式</span>
+		<select x-ng-model="order.deliveryMethod" x-ng-options="c.name as c.name for c in deliveryMethods">
+		    <option value="">-- 请选择 --</option>
+		</select>
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">邮寄地址</span>
+	    <input type="text" x-ng-model="order.address">
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">备注</span>
+	    <textarea x-ng-model="order.comment"></textarea>
+	  </label>
+ </div>
+
+	<div class="buttons text-center" x-ng-show="!editCategory">
+		<button class="button button-positive" x-ng-click="modal.hide();">取消</button>
+		<button class="button button-positive" x-ng-click="ok();">确定</button>
+	</div>
+ </ion-content>
+</ion-modal-view>

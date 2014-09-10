@@ -28,6 +28,25 @@ angular.module('starter.controllers', [])
 		    $scope.modal.hide();
 		  };	
 	};
+	
+	$scope.neworder = function(){
+		
+		  $ionicModal.fromTemplateUrl('templates/modal-order-new.html', {
+		    scope: $scope,
+		    animation: 'slide-in-up'
+		  }).then(function(modal) {
+		    $scope.modal = modal;
+		    $scope.modal.show();
+		  });
+		
+		  $scope.openModal = function() {
+		    $scope.modal.show();
+		  };
+		  
+		  $scope.closeModal = function() {	    			  
+		    $scope.modal.hide();
+		  };	
+	};
 
 	$scope.onScroll = function(){
 		$ionicSlideBoxDelegate.$getByHandle('band').stop();
@@ -46,8 +65,41 @@ angular.module('starter.controllers', [])
 		$scope.closeModal();
 	};
 })
-.controller('CartCtrl', function($scope, $ionicSlideBoxDelegate) {
-
+.controller('CartCtrl', function($scope, Orders,DeliveryMethods) {
+	$scope.step = 1;
+	$scope.deliveryMethods = DeliveryMethods.all();
+	$scope.order = { Items:[]};
+	$scope.Items = [];
+	$scope.country = {};
+	$scope.next = function(){
+		angular.forEach($scope.cart.Countrys,function(c){
+			angular.forEach(c.Items,function(i){
+				if(i.checked){
+					$scope.Items.push(i);
+					$scope.country = c;
+				}
+			});
+		});
+		$scope.order.country = $scope.country.name;
+		$scope.order.Items = $scope.Items;
+		$scope.step = 2;
+	}
+	$scope.checked = function(item){
+		item.checked = !item.checked;
+	}
+	$scope.pay = function(){
+		angular.forEach($scope.cart.Countrys,function(c){
+			var newitems = [];
+			angular.forEach(c.Items,function(i){
+				if(!i.checked){
+					newitems.push(i);
+				}
+			});
+			c.Items = newitems;
+		});
+		Orders.add($scope.order);
+		$scope.closeModal();
+	}
 })
 .controller('LoginCtrl', function($scope, Users) {
 	$scope.user= {};
@@ -142,6 +194,127 @@ angular.module('starter.controllers', [])
   $scope.loadMoreItems = function() {
      $scope.$broadcast('scroll.infiniteScrollComplete');
   };
+})
+
+.controller('NewOrderCtrl', function($scope, $ionicActionSheet,Camera,Orders,DeliveryMethods,Countries,Category) {
+	$scope.order = {};
+	$scope.category = Category.level1();
+	$scope.editCategory=true;
+	$scope.countries = Countries.all();
+	$scope.deliveryMethods = DeliveryMethods.all();
+	
+	$scope.order.categoryList ="";
+	
+	$scope.selectCat =function(cat){
+		var cs = Category.children(cat.id);
+		if(cs.length>0){
+			$scope.category = cs;
+			if($scope.order.categoryList != ""){
+				$scope.order.categoryList = $scope.order.categoryList + " > " + cat.name;				
+			}else{
+				$scope.order.categoryList = cat.name;
+			}
+		}else{
+			$scope.editCategory=false;
+			$scope.order.category = cat.name;
+			
+			if($scope.order.categoryList!=""){
+				$scope.order.categoryList = $scope.order.categoryList + " > " + cat.name;				
+			}else{
+				$scope.order.categoryList = cat.name;
+			}
+		}
+	};
+
+	$scope.lastPhoto ="img/mcfly.jpg";
+
+	$scope.getPhotoFromCamera = function() {
+	    Camera.getPicture( {
+		      sourceType : Camera.PictureSourceType.CAMERA,
+		      correctOrientation: true,
+		      quality: 50,
+		      targetWidth: 320,
+		      targetHeight: 320,
+		      saveToPhotoAlbum: false
+		    }).then(function(imageURI) {
+	      console.log(imageURI);
+	      $scope.lastPhoto = imageURI;
+	    }, function(err) {
+	      console.err(err);
+	    });
+	  };
+  
+	$scope.getPhotoFromLibrary = function() {
+	    Camera.getPicture({
+		      sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
+		      correctOrientation: true,
+		      quality: 50,
+		      targetWidth: 320,
+		      targetHeight: 320,
+		      saveToPhotoAlbum: false
+		    }).then(function(imageURI) {
+	      console.log(imageURI);
+	      $scope.lastPhoto = imageURI;
+	    }, function(err) {
+	      console.err(err);
+	    });
+	  };
+	  
+
+		$scope.getPhotoFromAlbum = function() {
+		    Camera.getPicture({
+			      sourceType : Camera.PictureSourceType.SAVEDPHOTOALBUM,
+			      correctOrientation: true,
+			      quality: 50,
+			      targetWidth: 320,
+			      targetHeight: 320,
+			      saveToPhotoAlbum: false
+			    }).then(function(imageURI) {
+		      console.log(imageURI);
+		      $scope.lastPhoto = imageURI;
+		    }, function(err) {
+		      console.err(err);
+		    });
+		  };
+		  
+
+	
+	 // Triggered on a button click, or some other target
+	 $scope.editProductAvatar= function() {
+
+	   // Show the action sheet
+	   var hideSheet = $ionicActionSheet.show({
+	     buttons: [
+	       { text: '拍照' },
+	       { text: '从手机相册选择' }
+	     ],
+	     titleText: '更改产品简介',
+	     cancelText: '取消',
+	     cancel: function() {
+	          // add cancel code..
+	        },
+	     buttonClicked: function(index) {
+	    	if(index==0){
+	    		 $scope.getPhotoFromCamera();	  
+	    	 }else if(index==1){
+	    		 $scope.getPhotoFromLibrary();    		 
+	    	 }
+	       return true;
+	     }
+	   });
+	   
+	   // For example's sake, hide the sheet after two seconds
+	   $timeout(function() {
+	     hideSheet();
+	   }, 2000);
+
+	 };
+	 
+	 $scope.ok = function(){
+		 $scope.cart.add($scope.order);
+		 $scope.closeModal();
+	 };
+	 
 })
 
 .controller('OrderDetailCtrl', function($scope, $stateParams,$ionicSlideBoxDelegate,$timeout, Orders) {

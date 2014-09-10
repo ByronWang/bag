@@ -299,7 +299,18 @@ angular.module('starter.services', [])
 	    get: function(id) {
 	      // Simple index lookup
 	      return categories[id-1];
-	    }
+	    },
+	    children: function(id) {
+	    	var cren = [];
+	  	  angular.forEach(categories,function(c){
+			  if(c.parentID == id){
+				  cren.push(c);
+			  }
+		    });
+	  	  
+		      // Simple index lookup
+		      return cren;
+		    }
 	  };
 })
 
@@ -326,7 +337,28 @@ angular.module('starter.services', [])
 	    }
 	  };
 })
-	
+
+
+.factory('DeliveryMethods', function() {
+	  // Might use a resource here that returns a JSON array
+
+	  // Some fake testing data
+	  var methods = [
+		{id:1,name:'邮寄',},
+		{id:2,name:'买手选定'}
+	  ];
+
+	  return {
+	    all: function() {
+	      return methods;
+	    },
+	    get: function(id) {
+	      // Simple index lookup
+	      return methods[id-1];
+	    }
+	  };
+})
+
 .factory('Products', function() {
 	  // Might use a resource here that returns a JSON array
 
@@ -445,6 +477,11 @@ angular.module('starter.services', [])
 		    get: function(orderId) {
 			      // Simple index lookup
 			      return orders[orderId];
+			    },
+		    add: function(order) {
+		    	  orders.push(order);
+		    	  order.id = orders.length-1;
+			      return order.id;
 			    },
 		    getItem: function(orderId,itemId) {
 			      // Simple index lookup

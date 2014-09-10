@@ -9,13 +9,13 @@
           ng-click="modal.hide();"></button>
   </div>
 </ion-header-bar>
-
-
     <ion-content>
     <div ng-show="cart.size()==0">
     <p >你还没有选中任何东西哦！</p></div>
-    <pane ng-show="cart.size()!=0">
     
+    
+<pane x-ng-show="step==1 && cart.size()!=0">
+
 <ion-list   ng-repeat="country in cart.Countrys"  class="padding-horizontal"
           show-delete="false"
           show-reorder="false"
@@ -32,7 +32,7 @@
 			价格：{{item.expectedPrice}}/元   
 			数量：{{item.amount}}   
 			到货周期：{{item.lastMonth}}个月</p>
-			<input type="checkbox" />
+			<input type="checkbox"  x-ng-modal="item.isChecked" x-ng-click="checked(item)"/>
     	<ion-option-button class="button-info button-assertive"    ng-click="country.Items.splice($index, 1)">删除</ion-option-button>
     	<ion-delete-button class="ion-minus-circled"                   ng-click="country.Items.splice($index, 1)">    </ion-delete-button>
   </ion-item>
@@ -42,14 +42,73 @@
 </ion-list>
 
 </pane>
+
+<pane x-ng-show="step==2">
+ <div class="list" >      
+	  <div class="item item-divider">
+	   	代购信息
+	  </div>
+	  <label class="item item-input">
+	    <span class="input-label">发货方式</span>
+		<select x-ng-model="order.deliveryMethod" x-ng-options="c.name as c.name for c in deliveryMethods">
+		    <option value="">-- 请选择 --</option>
+		</select>
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">代购期限</span>
+	    <input type="date" x-ng-model="order.deadline">
+	  </label>
+	  <div class="item item-divider">
+	   	收件地址
+	  </div>
+	  <label class="item item-input">
+	    <span class="input-label">省</span>
+	    <input type="text" x-ng-model="order.address">
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">市</span>
+	    <input type="text" x-ng-model="order.address">
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">详细地址</span>
+	    <input type="text" x-ng-model="order.address">
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">邮编</span>
+	    <input type="text" x-ng-model="order.address">
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">联系人</span>
+	    <input type="text" x-ng-model="order.address">
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">联系电话</span>
+	    <input type="text" x-ng-model="order.address">
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">备注</span>
+	    <textarea x-ng-model="order.comment"></textarea>
+	  </label>
+</div>
+</pane>
+
+
   </ion-content>
   <ion-footer-bar align-title="left" class="bar-assertive">
+  <pane x-ng-show="step==1">
 	  <div class="buttons">
 	    <button class="button">全选</button>
 	  </div>
 	  <h1 class="title">合计</h1>
-	  <div class="buttons" ng-click="doSomething()">
+	  <div class="buttons" x-ng-click="next()">
 	    <button class="button">结算</button>
 	  </div>
+</pane>
+  <pane x-ng-show="step==2">
+	  <h1 class="title">合计</h1>
+	  <div class="buttons" x-ng-click="pay()">
+	    <button class="button">付款</button>
+	  </div>
+</pane>
 </ion-footer-bar>
 </ion-modal-view>

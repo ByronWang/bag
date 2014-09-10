@@ -60,7 +60,7 @@
 <div class="item item-graph">
 	  <div class="row pager">
 	  		<div class="col first"></div>
-	  		<div class="col" x-ng-class="{'done':item.statusId>1,'doing':item.statusId==1}"><div class="prog" x-ng-click="statusSlide($event.target,0)"><i class="icon ion-ios7-checkmark-outline" ></i>发布中</div></div>
+	  		<div class="col" x-ng-class="{'done':item.statusId>1,'doing':item.statusId==1}"><div class="prog" x-ng-click="statusSlide($event.target,0)"><i class="icon ion-ios7-checkmark-outline" ></i><div style="position: relative; width: 5em;padding-left: 2em;padding-right: 2em;">发布中</div></div></div>
 	  		<div class="col" x-ng-class="{'done':item.statusId>1,'doing':item.statusId==1}"></div>	  
 	  		<div class="col" x-ng-class="{'done':item.statusId>2,'doing':item.statusId==2}"><div class="prog" x-ng-click="statusSlide($event.target,1)"><i class="icon ion-ios7-checkmark-outline" ></i>代购中</div></div>
 	  		<div class="col" x-ng-class="{'done':item.statusId>2,'doing':item.statusId==2}"></div>
