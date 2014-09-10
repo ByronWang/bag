@@ -46,18 +46,6 @@ angular.module('starter.controllers', [])
 		$scope.closeModal();
 	};
 })
-.controller('FilterCtrl', function($scope,$state,Countries) {
-	$scope.countries = Countries.all();
-	
-	$scope.ok = function(country){
-		$scope.country = country;
-		$scope.closeModal();
-	};
-	
-	$scope.cancel = function(){
-		$scope.closeModal();
-	};
-})
 .controller('CartCtrl', function($scope, $ionicSlideBoxDelegate) {
 
 })
@@ -78,7 +66,7 @@ angular.module('starter.controllers', [])
 
 .controller('InventorysCtrl', function($scope,$ionicModal, Inventorys) {
 	$scope.country = "美国";
-  $scope.inventorys = Inventorys.all();
+	$scope.inventorys = Inventorys.all();
 	$scope.filter = function(){
 		  $ionicModal.fromTemplateUrl('templates/modal-filter.html', {
 		    scope: $scope,
@@ -95,6 +83,23 @@ angular.module('starter.controllers', [])
 		  $scope.closeModal = function() {	    			  
 		    $scope.modal.hide();
 		  };	
+	};
+	
+	$scope.changeCountry = function(c){
+		$scope.country = c;
+	};
+})
+
+.controller('FilterCtrl', function($scope,$state,Countries) {
+	$scope.countries = Countries.all();
+	
+	$scope.ok = function(country){
+		$scope.changeCountry(country);
+		$scope.closeModal();
+	};
+	
+	$scope.cancel = function(){
+		$scope.closeModal();
 	};
 })
 

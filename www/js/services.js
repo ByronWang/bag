@@ -11,25 +11,25 @@ angular.module('starter.services', [])
         			            {  id:0,country:'韩国',date:'2013-11-11',
         			            	Items:[
         			   	    		    { id: 0, name: '自然堂凝时鲜颜肌活乳液', type:'化妆品', country:'韩国',description:"",amount:3,expectedPrice:'3000',statusId:1,status:"买手已接单"},
-        				    		    { id: 1, name: '苹果手机' , type:'数码', country:'美国',description:"",amount:3,expectedPrice:'5000',seller:'买手一',statusId:2,status:"买手购买中"},
-        				    		    { id: 2, name: '花王婴儿尿布' , type:'妇婴', country:'日本',description:"",amount:3,expectedPrice:'500',seller:'买手一',statusId:4,status:"寻求买手中"},
-        				    		    { id: 3, name: '惠氏奶粉' , type:'妇婴', country:'美国',description:"",amount:3,expectedPrice:'290',seller:'买手一',statusId:5,status:"买手已接单"}
+        				    		    { id: 1, name: '苹果手机' , type:'数码', country:'韩国',description:"",amount:3,expectedPrice:'5000',seller:'买手一',statusId:2,status:"买手购买中"},
+        				    		    { id: 2, name: '花王婴儿尿布' , type:'妇婴', country:'韩国',description:"",amount:3,expectedPrice:'500',seller:'买手一',statusId:4,status:"寻求买手中"},
+        				    		    { id: 3, name: '惠氏奶粉' , type:'妇婴', country:'韩国',description:"",amount:3,expectedPrice:'290',seller:'买手一',statusId:5,status:"买手已接单"}
         			            	 ]		            	
         			            },
         			            {id:1,country:'美国',date:'2013-11-11',
         			            	Items:[
         			   	    		    { id: 0, name: '自然堂凝时鲜颜肌活乳液', type:'化妆品', country:'韩国',description:"",amount:3,expectedPrice:'3000',statusId:1,status:"买手已接单"},
         				    		    { id: 1, name: '苹果手机' , type:'数码', country:'美国',description:"",amount:3,expectedPrice:'5000',seller:'买手一',statusId:2,status:"买手购买中"},
-        				    		    { id: 2, name: '花王婴儿尿布' , type:'妇婴', country:'日本',description:"",amount:3,expectedPrice:'500',seller:'买手一',statusId:4,status:"寻求买手中"},
+        				    		    { id: 2, name: '花王婴儿尿布' , type:'妇婴', country:'美国',description:"",amount:3,expectedPrice:'500',seller:'买手一',statusId:4,status:"寻求买手中"},
         				    		    { id: 3, name: '惠氏奶粉' , type:'妇婴', country:'美国',description:"",amount:3,expectedPrice:'290',seller:'买手一',statusId:5,status:"买手已接单"}
         			            	 ]		            	
         			            },
         			            {id:2,country:'日本',date:'2013-11-11',
         			            	Items:[
-        			   	    		    { id: 0, name: '自然堂凝时鲜颜肌活乳液', type:'化妆品', country:'韩国',description:"",amount:3,expectedPrice:'3000',statusId:2,status:"买手已接单"},
-        				    		    { id: 1, name: '苹果手机' , type:'数码', country:'美国',description:"",amount:3,expectedPrice:'5000',seller:'买手一',statusId:2,status:"买手购买中"},
+        			   	    		    { id: 0, name: '自然堂凝时鲜颜肌活乳液', type:'化妆品', country:'日本',description:"",amount:3,expectedPrice:'3000',statusId:2,status:"买手已接单"},
+        				    		    { id: 1, name: '苹果手机' , type:'数码', country:'日本',description:"",amount:3,expectedPrice:'5000',seller:'买手一',statusId:2,status:"买手购买中"},
         				    		    { id: 2, name: '花王婴儿尿布' , type:'妇婴', country:'日本',description:"",amount:3,expectedPrice:'500',seller:'买手一',statusId:2,status:"寻求买手中"},
-        				    		    { id: 3, name: '惠氏奶粉' , type:'妇婴', country:'美国',description:"",amount:3,expectedPrice:'290',seller:'买手一',statusId:2,status:"买手已接单"}
+        				    		    { id: 3, name: '惠氏奶粉' , type:'妇婴', country:'日本',description:"",amount:3,expectedPrice:'290',seller:'买手一',statusId:2,status:"买手已接单"}
         			            	 ]		            	
         			            }
         		  ];

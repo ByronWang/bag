@@ -4,8 +4,10 @@
      </a>
   </ion-nav-buttons>
   <ion-content class="has-header">
-  
-      <div class="list padding-top" x-ng-repeat="inventory in inventorys | filter:country" >
+    <div ng-show="products.length==0">
+    <p>{{country}}暂时还没有商品哦！</p></div>
+    
+        <div class="list padding-top" x-ng-repeat="inventory in inventorys | filter: country" >
     
 	   <div class="item item-divider">
 	    	{{inventory.country}} &nbsp;	    	{{inventory.date}}

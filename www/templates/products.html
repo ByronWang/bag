@@ -7,7 +7,7 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
     <div ng-show="products.length==0">
-    <p >此分类下暂时还没有商品哦！</p></div>
+    <p>{{category.name}}分类下暂时还没有商品哦！</p></div>
 	
     <div class="list">
       <a x-ng-repeat="item in products"  class="item item-avatar"  href="#/tab/product/{{item.id}}">
