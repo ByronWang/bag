@@ -46,6 +46,14 @@
 	font-weight: bold;
 }
 
+.prog .name{
+position: relative; 
+width: 5em;
+padding-left: 2em;
+padding-right: 2em;
+left: -2em
+}
+
 </style>
 <ion-view title="({{slideActiveSlide()}} / {{slideSize()}}) - {{activeItem.name}}">
   <ion-content has-header="true" padding="false" class="has-subheader">
@@ -60,13 +68,13 @@
 <div class="item item-graph">
 	  <div class="row pager">
 	  		<div class="col first"></div>
-	  		<div class="col" x-ng-class="{'done':item.statusId>1,'doing':item.statusId==1}"><div class="prog" x-ng-click="statusSlide($event.target,0)"><i class="icon ion-ios7-checkmark-outline" ></i><div style="position: relative; width: 5em;padding-left: 2em;padding-right: 2em;">发布中</div></div></div>
+	  		<div class="col" x-ng-class="{'done':item.statusId>1,'doing':item.statusId==1}"><div class="prog" x-ng-click="statusSlide($event.target,0)"><i class="icon ion-ios7-checkmark-outline" ></i><div class="name">发布中</div></div></div>
 	  		<div class="col" x-ng-class="{'done':item.statusId>1,'doing':item.statusId==1}"></div>	  
-	  		<div class="col" x-ng-class="{'done':item.statusId>2,'doing':item.statusId==2}"><div class="prog" x-ng-click="statusSlide($event.target,1)"><i class="icon ion-ios7-checkmark-outline" ></i>代购中</div></div>
+	  		<div class="col" x-ng-class="{'done':item.statusId>2,'doing':item.statusId==2}"><div class="prog" x-ng-click="statusSlide($event.target,1)"><i class="icon ion-ios7-checkmark-outline" ></i><div class="name">代购中</div></div></div>
 	  		<div class="col" x-ng-class="{'done':item.statusId>2,'doing':item.statusId==2}"></div>
-	  		<div class="col" x-ng-class="{'done':item.statusId>4,'doing':item.statusId==4}"><div class="prog" x-ng-click="statusSlide($event.target,2)"><i class="icon ion-ios7-circle-outline" ></i>收货中</div></div>
+	  		<div class="col" x-ng-class="{'done':item.statusId>4,'doing':item.statusId==4}"><div class="prog" x-ng-click="statusSlide($event.target,2)"><i class="icon ion-ios7-circle-outline" ></i><div class="name">收货中</div></div></div>
 	  		<div class="col" x-ng-class="{'done':item.statusId>4,'doing':item.statusId==4}"></div>	  
-	  		<div class="col last"  x-ng-class="{'done':item.statusId>5,'doing':item.statusId==5}"><div class="prog" x-ng-click="statusSlide($event.target,3)"><i class="icon ion-ios7-circle-outline" ></i>完成</div></div>
+	  		<div class="col last"  x-ng-class="{'done':item.statusId>5,'doing':item.statusId==5}"><div class="prog" x-ng-click="statusSlide($event.target,3)"><i class="icon ion-ios7-circle-outline" ></i><div class="name">完成</div></div></div>
 	</div>
 
 	<ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide">
