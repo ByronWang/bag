@@ -482,6 +482,12 @@ angular.module('starter.services', [])
 .factory('LoginUser', function($ionicModal,Users) {
 	  // Might use a resource here that returns a JSON array
 
+	 var defaultUser = {
+			 isLogin : false,
+			 isPurchase:false,
+			 username: "未登录"
+	 };
+	 
 	  return {
 		isLogin :false,
 		isPurchase : false,
@@ -513,6 +519,9 @@ angular.module('starter.services', [])
 	    	}else{
 	    		return false;
 	    	}
+	    },
+	    logoff: function(){
+	    	angular.extend(this,defaultUser);
 	    }
 	  };
 	})

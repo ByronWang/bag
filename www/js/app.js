@@ -251,12 +251,12 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.filter', 'sta
           }
       })
       
-      .state('tab.account-exchangerate', {
-          url: '/accounts/exchangerate',
+      .state('tab.account-info', {
+          url: '/accounts/info',
           views: {
             'tab-account': {
-              templateUrl: 'templates/account-exchangerate.html',
-              controller: 'AccountCtrl'
+              templateUrl: 'templates/account-info.html',
+              controller: 'AccountInfoCtrl'
             }
           }
       })

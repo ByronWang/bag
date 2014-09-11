@@ -56,8 +56,9 @@
   <div class="list">
 	
 	   <ng-include src="'templates/order-basic.html'"></ng-include>
+</div>
    
-<div class="item item-graph">
+<div class="item-graph">
 	  <div class="row pager">
 	  		<div class="col first"></div>
 	  		<div class="col" x-ng-class="{'done':item.statusId>1,'doing':item.statusId==1}"><div class="prog" x-ng-click="statusSlide($event.target,0)"><i class="icon ion-ios7-checkmark-outline" ></i>发布中</div></div>
@@ -86,7 +87,6 @@
 	   <ng-include src="'templates/order-completed-p-info.html'"></ng-include>
 	  </ion-slide>
 	</ion-slide-box>
-</div>
 </div>
 </ion-slide>
 </ion-slide-box>

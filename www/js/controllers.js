@@ -439,6 +439,12 @@ angular.module('starter.controllers', [])
 .controller('AccountCtrl', function($scope) {
 	$scope.currentUser.needLogin($scope);
 })
+.controller('AccountInfoCtrl', function($scope,$state) {
+	$scope.logoff = function(){
+		$scope.currentUser.logoff();
+		$state.go('tab.dash');
+	};
+})
 .controller('AccountSettingCtrl', function($scope,$ionicActionSheet,Camera,$timeout,LoginUser) {
 	$scope.user = $scope.currentUser; 
 	$scope.lastPhoto ="img/mcfly.jpg";
