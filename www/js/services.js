@@ -395,49 +395,6 @@ angular.module('starter.services', [])
 	})
 	
 	
-.factory('LoginUser', function($ionicModal) {
-	  // Might use a resource here that returns a JSON array
-
-	  // Some fake testing data
-	  var user={};
-	  var islogin = false;
-
-	  return {
-	    get: function() {
-	      // Simple index lookup
-	      return user;
-	    },
-	    requireUser:function($scope,callback){	    
-	    	if(!islogin){
-	    		$scope.user={};
-	    		$ionicModal.fromTemplateUrl('templates/modal-login.html', {
-	    		    scope: $scope,
-	    		    animation: 'slide-in-up'
-	    		  }).then(function(modal) {
-	    		    $scope.modal = modal;
-	    		    $scope.modal.show();
-	    		    return user;
-	    		  });
-	    		  $scope.openModal = function() {
-	    		    $scope.modal.show();
-	    		  };
-	    		  $scope.closeModal = function(user) {
-	    			  callback(user);
-	    		    $scope.modal.hide();
-	    		  };
-	    	}else{
-	    		callback(user);
-	    	}
-		    return user;
-	    },
-	    login: function(user,pwd){
-	    	user.username = user;
-	    	user.pwd = pwd;
-	    	islogin = true;
-	    	return;
-	    }
-	  };
-	})
 	
 	.factory('Orders', function() {
 		  // Might use a resource here that returns a JSON array
@@ -481,6 +438,10 @@ angular.module('starter.services', [])
 		    add: function(order) {
 		    	  orders.push(order);
 		    	  order.id = orders.length-1;
+			    	angular.forEach(order.Items,function(i){
+			    		i.statusId = 1;
+			    	});
+		    	  
 			      return order.id;
 			    },
 		    getItem: function(orderId,itemId) {
@@ -518,14 +479,51 @@ angular.module('starter.services', [])
   }
 }])
 
+.factory('LoginUser', function($ionicModal,Users) {
+	  // Might use a resource here that returns a JSON array
+
+	  return {
+		isLogin :false,
+		isPurchase : false,
+	    needLogin:function($scope){	    
+	    	if(!this.isLogin){
+	    		$scope.user = {};
+	    		$ionicModal.fromTemplateUrl('templates/modal-login.html', {
+	    		    scope: $scope,
+	    		    animation: 'slide-in-up'
+	    		  }).then(function(modal) {
+	    		    $scope.modal = modal;
+	    		    $scope.modal.show();
+	    		    return;
+	    		  });
+	    		  $scope.openModal = function() {
+	    		    $scope.modal.show();
+	    		  };
+	    		  $scope.closeModal = function() {
+	    		    $scope.modal.hide();
+	    		  };
+	    	}
+	    },
+	    login: function(username,pwd){
+	    	var user = Users.get(username);
+	    	if(user){
+		    	angular.extend(this,user);
+		    	this.isLogin = true;
+		    	return true;	    		
+	    	}else{
+	    		return false;
+	    	}
+	    }
+	  };
+	})
 	.factory('Users', function() {
 		  // Might use a resource here that returns a JSON array
 
 		  // Some fake testing data
 		  var users = [
-        	    { id: 0, username: 'wangshilian',password:'1234567',nickname:"alian",avatarPath:"",role:'purchase'},
-        	    { id: 1, username: 'jihua',password:'1234567',nickname:"alian",avatarPath:""},
-        	    { id: 2, username: 'liubo',password:'1234567',nickname:"alian",avatarPath:""}
+        	    { id: 0, username: 'wangshilian',password:'1234567',nickname:"alian",avatarPath:"",isPurchase:true},
+        	    { id: 1, username: 'jihua',password:'1234567',nickname:"alian",avatarPath:"",isPurchase:false},
+        	    { id: 2, username: 'liubo',password:'1234567',nickname:"alian",avatarPath:"",isPurchase:false}
 		  ];
 
 		  return {

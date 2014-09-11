@@ -1,12 +1,11 @@
 angular.module('starter.controllers', [])
 
 .controller('GlobalCtrl', function($scope,$ionicModal,LoginUser,Cart) {
-	$scope.user = LoginUser.get();
+	$scope.currentUser = LoginUser;
 	$scope.cart = Cart;
 	$scope.editCart = function(){
 		$scope.cart.edit($scope);
 	};
-	
 })
 
 .controller('DashCtrl', function($scope, $ionicSlideBoxDelegate,Category,$ionicModal) {
@@ -106,12 +105,9 @@ angular.module('starter.controllers', [])
 	
 	// for test
 	$scope.user.username = "wangshilian";
-	
 	$scope.login = function() {
-		var user = Users.get($scope.user.username);
-		if(user){
-	    	islogin = true;
-	    	$scope.closeModal(user);
+		if($scope.currentUser.login($scope.user.username,$scope.user.pwssword)){
+	    	$scope.closeModal();
 		}
 	  };
 })
@@ -440,12 +436,8 @@ angular.module('starter.controllers', [])
   })
 })
 
-.controller('AccountCtrl', function($scope,LoginUser) {
-	setTimeout(function() {
-		LoginUser.requireUser($scope,function(user){
-			$scope.currentUser = user;
-		});
-	}, 0);
+.controller('AccountCtrl', function($scope) {
+	$scope.currentUser.needLogin($scope);
 })
 .controller('AccountSettingCtrl', function($scope,$ionicActionSheet,Camera,$timeout,LoginUser) {
 	$scope.user = $scope.currentUser; 

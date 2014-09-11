@@ -12,7 +12,7 @@
 
 
   <!-- Inventorys Tab -->
-  <ion-tab title="清单" icon="icon ion-model-s" href="#/tab/inventorys">
+  <ion-tab title="清单" icon="icon ion-model-s" href="#/tab/inventorys" x-ng-show="currentUser.isPurchase">
     <ion-nav-view name="tab-inventorys"></ion-nav-view>
   </ion-tab>
 
@@ -22,8 +22,8 @@
 		<div class="tabs tabs-stable tabs-menu" x-ng-controller="tabsMenuCtrl">
 		  <a class="tab-item tab-item-active" href="#/tab/orders-sendout" x-ng-click="showThis($event.target);">已发布</a>
 		  <a class="tab-item" href="#/tab/orders-completed" x-ng-click="showThis($event.target);">已完成</a>
-		  <a class="tab-item" href="#/tab/orders-requested" x-ng-click="showThis($event.target);">代购中</a>
-		  <a class="tab-item" href="#/tab/orders-requestedCompleted" x-ng-click="showThis($event.target);">已代购</a>
+		  <a class="tab-item" href="#/tab/orders-requested" x-ng-click="showThis($event.target);" x-ng-show="currentUser.isPurchase">代购中</a>
+		  <a class="tab-item" href="#/tab/orders-requestedCompleted" x-ng-click="showThis($event.target);" x-ng-show="currentUser.isPurchase">已代购</a>
 		</div>
 	</div>
     <ion-nav-view name="tab-orders"></ion-nav-view>
