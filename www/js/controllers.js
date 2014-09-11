@@ -203,6 +203,7 @@ angular.module('starter.controllers', [])
 	$scope.countries = Countries.all();
 	$scope.deliveryMethods = DeliveryMethods.all();
 	
+	
 	$scope.order.categoryList ="";
 	
 	$scope.selectCat =function(cat){
@@ -309,9 +310,17 @@ angular.module('starter.controllers', [])
 	   }, 2000);
 
 	 };
-	 
-	 $scope.ok = function(){
+
+	$scope.step = 1;
+	$scope.addToCart = function(){
 		 $scope.cart.add($scope.order);
+		 $scope.closeModal();		
+	};
+	$scope.checkout = function(){
+		$scope.step = 2;
+		
+	};
+	 $scope.pay = function(){
 		 $scope.closeModal();
 	 };
 	 
