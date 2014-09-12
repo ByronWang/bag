@@ -6,12 +6,12 @@
 -->
 <ion-view title="{{product.name}}">
 	<ion-nav-buttons side="right">      
-      <a class="button button-icon icon ion-ios7-cart-outline"  x-ng-click="editCart()">
+      <a class="button button-icon icon ion-ios7-cart"  href="#/tab/cart">
 	    <span  class="badge badge-positive">{{cart.size()}}</span>
      </a>
   </ion-nav-buttons>
-  <ion-content has-header="true" padding="true">
-<div class="list card">
+  <ion-content has-header="true">
+<div class="list">
   <div class="item item-avatar">
     <img src="img/u10.png">
     <h2>{{product.name}}</h2>
@@ -25,15 +25,11 @@
       consists of tabs, icons aligned left, within the card-footer.
     </p>
   </div>
-
-  <div class="item tabs tabs-secondary tabs-icon-left">
-    <a class="tab-item"           x-ng-click="selectThis()">
-      <i class="icon ion-share"></i>
-      我也想买
-    </a>
-  </div>
 </div>
 
+<div class="padding">
+	    <button class="button button-block  button-positive" x-ng-click="selectThis();"> 我也想买</button>
+</div>
 
   </ion-content>
 </ion-view>

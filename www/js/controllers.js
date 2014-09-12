@@ -97,7 +97,7 @@ angular.module('starter.controllers', [])
 			c.Items = newitems;
 		});
 		Orders.add($scope.order);
-		$scope.closeModal();
+		$scope.step = 1;
 	}
 })
 .controller('LoginCtrl', function($scope, Users) {

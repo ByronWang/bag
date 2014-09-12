@@ -88,6 +88,16 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.filter', 'sta
         }
       }
     })
+    
+    .state('tab.cart', {
+        url: '/cart',
+        views: {
+          'tab-cart': {
+            templateUrl: 'templates/tab-cart.html',
+            controller: 'CartCtrl'
+          }
+        }
+      })
 
     .state('tab.products-caterory', {
       url: '/products-category/:categoryId',

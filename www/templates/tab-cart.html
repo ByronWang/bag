@@ -1,17 +1,9 @@
- <ion-modal-view ng-controller="CartCtrl">
+ <ion-view title="购物车">
  
- <ion-header-bar class="bar-positive">
-  <div class="buttons">
- </div>
-<h1 class="title">购物车</h1>
-  <div class="buttons">           	        
-  		<button class="button button-icon icon ion-ios7-close-empty pull-right" 
-          ng-click="modal.hide();"></button>
-  </div>
-</ion-header-bar>
-    <ion-content>
+<ion-content>
     <div ng-show="cart.size()==0">
-    <p >你还没有选中任何东西哦！</p></div>
+    	<p >你还没有选中任何东西哦！</p>
+   	</div>
     
     
 <pane x-ng-show="step==1 && cart.size()!=0">
@@ -36,11 +28,11 @@
     	<ion-option-button class="button-info button-assertive"    ng-click="country.Items.splice($index, 1)">删除</ion-option-button>
     	<ion-delete-button class="ion-minus-circled"                   ng-click="country.Items.splice($index, 1)">    </ion-delete-button>
   </ion-item>
-            <div class="item item-divider item-checkbox-left">
-合计
-  </div>
+         <div class="item item-divider item-checkbox-left">合计</div>
 </ion-list>
-
+<div class="padding">
+	    <button class="button button-block  button-positive" x-ng-click="next()"> 发布</button>
+</div>
 </pane>
 
 <pane x-ng-show="step==2">
@@ -91,21 +83,11 @@
 	  </label>
 </div>
 </pane>
-
+  <pane x-ng-show="step==2">
+	  <div class="padding">
+	    <button class="button button-block  button-positive" x-ng-click="pay()"> 确认</button>
+</div>
+</pane>
 
   </ion-content>
-  <ion-footer-bar align-title="left" class="bar-assertive">
-  <pane x-ng-show="step==1">
-	  <h1 class="title">合计</h1>
-	  <div class="buttons" x-ng-click="next()">
-	    <button class="button">发布</button>
-	  </div>
-</pane>
-  <pane x-ng-show="step==2">
-	  <h1 class="title">合计</h1>
-	  <div class="buttons" x-ng-click="pay()">
-	    <button class="button">确认</button>
-	  </div>
-</pane>
-</ion-footer-bar>
-</ion-modal-view>
+</ion-view>
