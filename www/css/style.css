@@ -200,3 +200,21 @@ img.main{
     flex: 10 0 40px;
  }
  
+ .item-input-note input{
+    -webkit-box-flex: 10;
+    -webkit-flex: 10 0 40px;
+    -moz-box-flex: 10;
+    -moz-flex: 10 0 40px;
+    -ms-flex: 10 0 40px;
+    flex: 10 0 40px; 
+ }
+ 
+ .item-input-note .item-note{
+    -webkit-box-flex: 10;
+    -webkit-flex: 10 0 20px;
+    -moz-box-flex: 10;
+    -moz-flex: 10 0 20px;
+    -ms-flex: 10 0 20px;
+    flex: 10 0 20px;  	
+    padding-left: 10px;
+ }

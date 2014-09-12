@@ -10,11 +10,29 @@
   <ion-slide-box delegate-handle="inventory" on-slide-changed="slideHasChanged($index)" show-pager=false>
   <ion-slide ng-repeat="item in inventory.Items">
   
+  <pane x-ng-show="step==1">
     <div class="list">
 	   <ng-include src="'templates/order-basic.html'"></ng-include>
-	   <h3>已有{{item.cntBuyer}}位买手参与此次购买</h3>
   	</div>
-    	
+  	<div  class="list">
+	   		<h3>已有{{item.suitors.length}}位买手参与此次购买</h3>
+    	      <label class="item item-input item-input-note"><span class="input-label">代购佣金</span><input type="text" x-ng-model="item.commission"><span class="item-note">元（人民币）</span></label>
+			  <a class="item item-input item-icon-right"  x-ng-click="showDeliveryMethods();"><span class="input-label">邮寄方式</span>
+   <span class="item-note">{{item.deliveryMethod}}</span><i class="icon ion-ios7-arrow-forward"></i></a>
+			  <label class="item item-input"><span class="input-label">代购期限</span><input type="text" x-ng-model="item.deadline"></label>
+			  <label class="item item-input item-input-note"><span class="input-label">建议价格</span><input type="text" x-ng-model="item.suggestedPrice"><span class="item-note">元（人民币）</span></label>
+			  <label class="item item-input item-input-note"><span class="input-label">运费</span><input type="text" x-ng-model="item.deliveryCost"><span class="item-note">元（人民币）</span></label>
+    	</div>	  <div class="padding">
+	    <button class="button button-block  button-positive" x-ng-click="pay()"> 确认</button>
+</div>
+</pane>
+
+  <pane x-ng-show="step==2">
+  	<div class="list">
+		<a class="item"  x-ng-click="selDeliveryMethod(c);" x-ng-repeat="c in deliveryMethods">{{c.name}}</a>
+	</div>
+  </pane>
+
   	</ion-slide>
   	</ion-slide-box>
   </ion-content>

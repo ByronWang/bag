@@ -113,7 +113,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('InventorysCtrl', function($scope,$ionicModal, Inventorys) {
-	$scope.country = "美国";
+	$scope.country = "";
 	$scope.inventorys = Inventorys.all();
 	$scope.filter = function(){
 		  $ionicModal.fromTemplateUrl('templates/modal-filter.html', {
@@ -159,9 +159,22 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('InventoryDetailCtrl', function($scope, $stateParams,$timeout,$ionicSlideBoxDelegate, Inventorys) {
+.controller('InventoryDetailCtrl', function($scope, $stateParams,$timeout,DeliveryMethods,$ionicSlideBoxDelegate, Inventorys) {
+	$scope.step = 1;
+	
+	$scope.deliveryMethods = DeliveryMethods.all();
+	$scope.selDeliveryMethod = function(method){
+		$scope.step = 1;
+		$scope.item.deliveryMethod = method.name;
+	};
+	
+	$scope.showDeliveryMethods = function(){
+		$scope.step = 2;		
+	};
+	
+	
   $scope.inventory = Inventorys.get($stateParams.inventoryId);
-  $scope.activeItem  = $scope.inventory.Items[$stateParams.itemId];
+  $scope.item  = $scope.inventory.Items[$stateParams.itemId];
   
   $scope.slideSize = function(){
 	  return $scope.inventory.Items.length;
@@ -334,10 +347,6 @@ angular.module('starter.controllers', [])
 		  return status-1;
 	  }
   };
-  
-  $scope.$watch('statusActiveSlide',function(){
-	  
-  });
   
   $scope.statusSlide = function(e,to){
 	  $ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);

@@ -3,9 +3,11 @@ angular.module('starter.services', [])
 /**
  * A simple example service that returns some data.
  */
-.factory('Inventorys', function() {
+.factory('Inventorys', function(Orders) {
   // Might use a resource here that returns a JSON array
 
+	var inventorys = [];
+	/*
   // Some fake testing data
   var inventorys = [
         			            {  id:0,country:'韩国',date:'2013-11-11',
@@ -34,12 +36,34 @@ angular.module('starter.services', [])
         			            }
         		  ];
 
-
+*/
   return {
     all: function() {
+    	inventorys = [];
+    	angular.forEach(Orders.all(),function(order){
+    		
+    		var items = [];
+        	angular.forEach(order.Items,function(item){
+        		if(item.statusId == 1){
+        			items.push(item);
+        			if(!item.suitors){
+        				item.suitors = [];
+        			}
+        		}
+        	});
+        	
+        	if(items.length>0){
+        		var orderCopy = angular.copy(order);
+        		orderCopy.Items = items;
+            	inventorys.push(orderCopy);
+        	}
+    	});
       return inventorys;
     },
     get: function(inventoryId) {
+    	if(inventorys.length<1){
+    		this.all();
+    	}
 	      // Simple index lookup
 	      return inventorys[inventoryId];
 	    },
