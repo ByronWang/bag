@@ -4,11 +4,8 @@
   The InventorysCtrl pulls data from the Inventorys service (service.js)
   The Inventorys service returns an array of inventory data
 -->
-<ion-view title="({{slideActiveSlide()}} / {{slideSize()}}) - {{activeItem.name}}">
+<ion-view title="{{item.name}}">
   <ion-content has-header="true" padding="false">
-  
-  <ion-slide-box delegate-handle="inventory" on-slide-changed="slideHasChanged($index)" show-pager=false>
-  <ion-slide ng-repeat="item in inventory.Items">
   
   <pane x-ng-show="step==1">
     <div class="list">
@@ -16,14 +13,14 @@
   	</div>
   	<div  class="list">
 	   		<h3>已有{{item.suitors.length}}位买手参与此次购买</h3>
-    	      <label class="item item-input item-input-note"><span class="input-label">代购佣金</span><input type="text" x-ng-model="item.commission"><span class="item-note">元（人民币）</span></label>
+    	      <label class="item item-input item-input-note"><span class="input-label">代购佣金</span><input type="number" x-ng-model="item.commission"><span class="item-note">元（人民币）</span></label>
 			  <a class="item item-input item-icon-right"  x-ng-click="showDeliveryMethods();"><span class="input-label">邮寄方式</span>
    <span class="item-note">{{item.deliveryMethod}}</span><i class="icon ion-ios7-arrow-forward"></i></a>
-			  <label class="item item-input"><span class="input-label">代购期限</span><input type="text" x-ng-model="item.deadline"></label>
-			  <label class="item item-input item-input-note"><span class="input-label">建议价格</span><input type="text" x-ng-model="item.suggestedPrice"><span class="item-note">元（人民币）</span></label>
-			  <label class="item item-input item-input-note"><span class="input-label">运费</span><input type="text" x-ng-model="item.deliveryCost"><span class="item-note">元（人民币）</span></label>
+			  <label class="item item-input"><span class="input-label">代购期限</span><input type="date" x-ng-model="item.deadline"></label>
+			  <label class="item item-input item-input-note"><span class="input-label">建议价格</span><input type="number" x-ng-model="item.suggestedPrice"><span class="item-note">元（人民币）</span></label>
+			  <label class="item item-input item-input-note"><span class="input-label">运费</span><input type="number" x-ng-model="item.deliveryCost"><span class="item-note">元（人民币）</span></label>
     	</div>	  <div class="padding">
-	    <button class="button button-block  button-positive" x-ng-click="pay()"> 确认</button>
+	    <button class="button button-block  button-positive" x-ng-click="submit()"> 确认</button>
 </div>
 </pane>
 
@@ -32,8 +29,22 @@
 		<a class="item"  x-ng-click="selDeliveryMethod(c);" x-ng-repeat="c in deliveryMethods">{{c.name}}</a>
 	</div>
   </pane>
+  
+  <pane x-ng-show="step==3">
+  <div class="list">
+	   <ng-include src="'templates/order-basic.html'"></ng-include>
+  	</div>
+  	<div  class="list">
+	   		<h3>已有{{item.suitors.length}}位买手参与此次购买</h3>
+    	      <label class="item item-input item-input-note"><span class="input-label">代购佣金</span><span class="item-note">{{item.commission}}元（人民币）</span></label>
+			  <a class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{item.deliveryMethod}}</span></a>
+			  <label class="item item-input item-input-note"><span class="input-label">代购期限</span><span class="item-note">{{item.deadline}}</span></label>
+			  <label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{item.suggestedPrice}}元（人民币）</span></label>
+			  <label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{item.deliveryCost}}元（人民币）</span></label>
+    	</div>	  <div class="padding">
+	    已经参与竞标！
+</div>
+  </pane>
 
-  	</ion-slide>
-  	</ion-slide-box>
   </ion-content>
 </ion-view>

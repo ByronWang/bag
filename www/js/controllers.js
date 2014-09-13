@@ -159,7 +159,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('InventoryDetailCtrl', function($scope, $stateParams,$timeout,DeliveryMethods,$ionicSlideBoxDelegate, Inventorys) {
+.controller('InventoryDetailCtrl', function($scope,$state, $stateParams,$timeout,DeliveryMethods,$ionicSlideBoxDelegate, Inventorys) {
 	$scope.step = 1;
 	
 	$scope.deliveryMethods = DeliveryMethods.all();
@@ -172,29 +172,17 @@ angular.module('starter.controllers', [])
 		$scope.step = 2;		
 	};
 	
-	
   $scope.inventory = Inventorys.get($stateParams.inventoryId);
   $scope.item  = $scope.inventory.Items[$stateParams.itemId];
   
-  $scope.slideSize = function(){
-	  return $scope.inventory.Items.length;
+  $scope.submit = function(){
+	  $scope.step =  3;
+	 /*$state.go("tab.order-detail-p",{
+		  orderId:$scope.inventory.id,
+	  	  itemId:$scope.item.id
+	  });*/  
   };
   
-  $scope.slideActiveSlide = function(){
-	  var delegateInstance  = $ionicSlideBoxDelegate.$getByHandle('inventory');
-	  if(delegateInstance){
-		  return delegateInstance.currentIndex() + 1;
-	  }else{
-		  return 0;
-	  }
-  };  
-  $timeout( function() {
-      $scope.$broadcast('slideBox.setSlide', $stateParams.itemId);
-  }, 300);
-  
-  $scope.slideHasChanged=function($index){
-	  $scope.activeItem = $scope.inventory.Items[$index];
-  };
 })
 .controller('OrdersCtrl', function($scope, Orders) {
   $scope.orders = Orders.all();
