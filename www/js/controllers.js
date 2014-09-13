@@ -161,11 +161,11 @@ angular.module('starter.controllers', [])
 
 .controller('InventoryDetailCtrl', function($scope,$state, $stateParams,$timeout,DeliveryMethods,$ionicSlideBoxDelegate, Inventorys) {
 	$scope.step = 1;
-	
+	$scope.suitor = {suitor: $scope.currentUser.username};
 	$scope.deliveryMethods = DeliveryMethods.all();
 	$scope.selDeliveryMethod = function(method){
 		$scope.step = 1;
-		$scope.item.deliveryMethod = method.name;
+		$scope.suitor.deliveryMethod = method.name;
 	};
 	
 	$scope.showDeliveryMethods = function(){
@@ -177,6 +177,7 @@ angular.module('starter.controllers', [])
   
   $scope.submit = function(){
 	  $scope.step =  3;
+	  $scope.item.suitors.push($scope.suitor);
 	 /*$state.go("tab.order-detail-p",{
 		  orderId:$scope.inventory.id,
 	  	  itemId:$scope.item.id
@@ -323,9 +324,9 @@ angular.module('starter.controllers', [])
 	 
 })
 
-.controller('OrderDetailCtrl', function($scope, $stateParams,$ionicSlideBoxDelegate,$timeout, Orders) {
+.controller('OrderDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders) {
   $scope.order = Orders.get($stateParams.orderId);
-  $scope.activeItem  = $scope.order.Items[$stateParams.itemId];
+  $scope.item  = $scope.order.Items[$stateParams.itemId];
   
   
   $scope.fromStatusToIndex = function(status){
@@ -346,6 +347,8 @@ angular.module('starter.controllers', [])
 	  ele.addClass("active");
   };
   
+  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.statusId);
+
   /*
   $scope.$curStatus = $scope.item.statusId;
   
@@ -366,27 +369,15 @@ angular.module('starter.controllers', [])
   
 
 */
-  
-
-  $scope.slideSize = function(){
-	  return $scope.order.Items.length;
+  $scope.bitSucceed = function(suitor){
+	  $scope.item.suitor = suitor;
+	  $scope.item.statusId = Orders.StatusType.purchase;
+	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.statusId);
+	  $state.reload();
   };
   
-  $scope.slideActiveSlide = function(){
-	  var delegateInstance  = $ionicSlideBoxDelegate.$getByHandle('order');
-	  if(delegateInstance){
-		  return delegateInstance.currentIndex() + 1;
-	  }else{
-		  return 0;
-	  }
-  };  
-  $timeout( function() {
-      $scope.$broadcast('slideBox.setSlide', $stateParams.itemId);
-  }, 300);
-  
-  $scope.slideHasChanged=function($index){
-	  $scope.activeItem = $scope.order.Items[$index];
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.activeItem.statusId);
+  $scope.cancelOrder = function(){
+	  
   };
 })
 

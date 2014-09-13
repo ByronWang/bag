@@ -471,7 +471,13 @@ angular.module('starter.services', [])
 		    getItem: function(orderId,itemId) {
 			      // Simple index lookup
 			      return orders[orderId].Items[itemId];
-			    }
+			    },
+			   StatusType : {
+			  		    bid : 1,
+			  		    purchase : 2,
+			  		    delivering : 3 ,
+			  		    completed : 4 
+			    },
 		  };
 		})
 	
