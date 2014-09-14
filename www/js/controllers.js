@@ -64,7 +64,7 @@ angular.module('starter.controllers', [])
 		$scope.closeModal();
 	};
 })
-.controller('CartCtrl', function($scope, Orders,DeliveryMethods) {
+.controller('CartCtrl', function($scope,$ionicModal, Orders,DeliveryMethods) {
 	$scope.step = 1;
 	$scope.deliveryMethods = DeliveryMethods.all();
 	$scope.order = { Items:[]};
@@ -98,7 +98,25 @@ angular.module('starter.controllers', [])
 		});
 		Orders.add($scope.order);
 		$scope.step = 1;
-	}
+	};
+	
+	$scope.neworder = function(){
+		  $ionicModal.fromTemplateUrl('templates/modal-order-new.html', {
+		    scope: $scope,
+		    animation: 'slide-in-up'
+		  }).then(function(modal) {
+		    $scope.modal = modal;
+		    $scope.modal.show();
+		  });
+		
+		  $scope.openModal = function() {
+		    $scope.modal.show();
+		  };
+		  
+		  $scope.closeModal = function() {	    			  
+		    $scope.modal.hide();
+		  };	
+	};
 })
 .controller('LoginCtrl', function($scope, Users) {
 	$scope.user= {};
