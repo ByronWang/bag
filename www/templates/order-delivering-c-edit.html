@@ -1,0 +1,14 @@
+<pane  x-ng-show="item.current.actionId=='purchased'">
+	<div class="list"> 
+			<div class="item">买手尚未发货，请等待！</div>
+	</div>
+</pane>
+
+<pane  x-ng-show="item.current.actionId=='delivering'">
+	<div class="list"> 
+			<div class="item">买手已发货</div>
+		  <label class="item item-input item-input-note"><span class="input-label">预计</span>{{action.commission}}<span class="item-note">天后到达</span></label>
+		  <label class="item item-input"><span class="input-label">快递单号</span>{{action.commission}}</label>
+		</div>
+    <button class="button button-positive button-block"  x-ng-click="confirmDelivering();">确认收货</button>
+</pane>

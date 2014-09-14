@@ -468,15 +468,39 @@ angular.module('starter.services', [])
 		    	  
 			      return order.id;
 			    },
+			done: function(item,statusId,actionId,params){
+				if(!params){params={};}
+				
+				params.statusId = statusId;
+				params.actionId = actionId;
+				params.timestamp = new Date();
+		    	if(!item.actions){
+		    		item.actions = [];
+		    	}		    	
+		    	item.actions.push(params);
+		    	item.current = params;
+			},
 		    getItem: function(orderId,itemId) {
-			      // Simple index lookup
-			      return orders[orderId].Items[itemId];
-			    },
+		    	var item = orders[orderId].Items[itemId];
+		    	if(!item.actions){
+		    		item.actions = [];
+		    		item.current ={
+		    				statusId :1
+		    		}; 
+		    	}else if(item.actions.length>0){
+		    		item.current =item.actions[item.actions.length-1];
+		    	}else{
+		    		item.current ={
+		    				statusId :1
+		    		}; 		
+		    	}		    	
+			    return item;
+			},
 			   StatusType : {
 			  		    bid : 1,
-			  		    purchase : 2,
-			  		    delivering : 3 ,
-			  		    completed : 4 
+			  		    purchasing : 2,
+			  		    delivering : 4 ,
+			  		    completed : 5 
 			    },
 		  };
 		})

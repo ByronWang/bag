@@ -2,15 +2,14 @@
 	<div class="item view-button">
 		<div class="item-avatar">
 		<img src="img/mcfly.jpg">
-		买手一
+		{{item.suitor.suitor}}
 	    </div>
-		
-		<div class="list view">
-			  <label class="item">代购佣金<span class="item-value">8%</span></label>
-			  <label class="item">邮寄方式<span class="item-value">国际快递</span></label>
-			  <label class="item">代购期限<span class="item-value">2014/8/20</span></label>
-			  <label class="item">建议价格<span class="item-value">600元</span></label>
-			  <label class="item">代购次数<span class="item-value">3次</span></label>
+		<div class="list view">  	      
+			<label class="item item-input item-input-note"><span class="input-label">代购佣金</span><span class="item-note">{{item.suitor.commission}}元（人民币）</span></label>
+			  <a class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{item.suitor.deliveryMethod}}</span></a>
+			  <label class="item item-input item-input-note"><span class="input-label">代购期限</span><span class="item-note">{{item.suitor.deadline}}</span></label>
+			  <label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{item.suitor.suggestedPrice}}元（人民币）</span></label>
+			  <label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{item.suitor.deliveryCost}}元（人民币）</span></label>
 		</div>
   </div>
 </div>

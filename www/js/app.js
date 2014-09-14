@@ -216,7 +216,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.filter', 'sta
         views: {
           'tab-orders': {
             templateUrl: 'templates/order-detail-c.html',
-            controller: 'OrderDetailCtrl'
+            controller: 'OrderCustomerDetailCtrl'
           }
         }
       })
@@ -226,7 +226,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.filter', 'sta
           views: {
             'tab-orders': {
               templateUrl: 'templates/order-detail-p.html',
-              controller: 'OrderDetailCtrl'
+              controller: 'OrderPurchaserDetailCtrl'
             }
           }
         })

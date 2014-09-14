@@ -1,15 +1,13 @@
-<div class="list ">
-	  <label class="item">买手已经开始购买</label>
-	  <label class="item">开始时间<span class="item-value">2014-09-30 15:30:30</span></label>
-</div>
-<div class="list ">
-	  <label class="item">上传小票				本地			拍照	</label>
-	  <label class="item">开始时间<span class="item-value">2014-09-30 15:30:30</span></label>
-</div>
-	
-<div class="list ">
-	  <label class="item">上传商品照片					本地			拍照		</label>
-	  <label class="item">开始时间<span class="item-value">2014-09-30 15:30:30</span></label>
-</div>
+<pane>
+<div class="list">
+	  <label class="item">买手已经购买完成</label>
+	  <label class="item">结束时间<span class="item-value">{{item.purchasing.finishDatetime}}</span></label>
+	  <label class="item">结束地点<span class="item-value">{{item.purchasing.finishLocation}}</span></label>
+	  <label class="item">共计 ？？ 天</label>
 
-    <button class="button button-positive">完成购买</button>
+	  <div class="item item-divider">商品照片</div>
+	  <div class="item"><img  src="img/u10.png"></div>
+		<div class="item item-divider">小票</div>
+	  <div class="item"><img  src="img/u10.png"></div>
+</div>
+</pane>

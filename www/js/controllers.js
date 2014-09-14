@@ -342,9 +342,9 @@ angular.module('starter.controllers', [])
 	 
 })
 
-.controller('OrderDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders) {
-  $scope.order = Orders.get($stateParams.orderId);
-  $scope.item  = $scope.order.Items[$stateParams.itemId];
+.controller('OrderCustomerDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders) {
+	  $scope.order = Orders.get($stateParams.orderId);
+	  $scope.item  = Orders.getItem($stateParams.orderId,$stateParams.itemId);
   
   
   $scope.fromStatusToIndex = function(status){
@@ -365,7 +365,7 @@ angular.module('starter.controllers', [])
 	  ele.addClass("active");
   };
   
-  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.statusId);
+  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
 
   /*
   $scope.$curStatus = $scope.item.statusId;
@@ -387,16 +387,98 @@ angular.module('starter.controllers', [])
   
 
 */
-  $scope.bitSucceed = function(suitor){
-	  $scope.item.suitor = suitor;
-	  $scope.item.statusId = Orders.StatusType.purchase;
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.statusId);
+  $scope.bitSucceed = function(suitor){	  
+	  Orders.done($scope.item,Orders.StatusType.purchasing,'bitSucceed',suitor);
+	  
+	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
 	  $state.reload();
   };
   
   $scope.cancelOrder = function(){
+	  Orders.done($scope.item,Orders.StatusType.completed,'cancelOrder',{});
 	  
+	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
+	  $state.reload();
   };
+  
+  $scope.confirmDelivering= function(){
+	  Orders.done($scope.item,Orders.StatusType.completed,'delivered',{});
+	  
+	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
+	  $state.reload();
+  };
+})
+
+
+.controller('OrderPurchaserDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders) {
+  $scope.order = Orders.get($stateParams.orderId);
+  $scope.item  = Orders.getItem($stateParams.orderId,$stateParams.itemId);
+  
+  
+  $scope.fromStatusToIndex = function(status){
+	  if(status>2){
+		  return status-2;
+	  }else{
+		  return status-1;
+	  }
+  };
+  
+  $scope.statusSlide = function(e,to){
+	  $ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
+	  var ele = angular.element(e);
+	  angular.forEach(ele.parent().parent().find("div"),function(i){
+		  var ie =angular.element(i);
+		 if(ie.hasClass("active"))ie.removeClass("active"); 
+	  });
+	  ele.addClass("active");
+  };
+
+  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
+
+  /*
+  $scope.$curStatus = $scope.item.statusId;
+  
+  $scope.initSlide = function(){
+	  if($scope.item.statusId>2){
+		  return $scope.item.statusId-2;
+	  }else{
+		  return $scope.item.statusId-1;
+	  }
+  };
+  $scope.$watch($scope.item.statusId,function(){
+	  if($scope.item.statusId){
+		  $timeout( function() {
+		      $scope.$broadcast('slideBox.setSlide', $scope.initSlide());
+		  }, 300);
+	  };
+  });
+  
+
+*/
+
+  
+  $scope.beginPurchasing = function(){
+	  Orders.done($scope.item,Orders.StatusType.purchasing,'purchasing',{});
+	  
+	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
+	  $state.reload();
+  };
+  
+  $scope.finishPurchasing = function(){
+	  Orders.done($scope.item,Orders.StatusType.delivering,'purchased',{});
+	  
+	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
+	  $state.reload();
+  };
+  
+
+  $scope.startDelivering = function(){
+	  Orders.done($scope.item,Orders.StatusType.delivering,'delivering',$scope.action);
+	  
+	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
+	  $state.reload();
+  };
+  
 })
 
 .controller('ProductsCtrl', function($scope, Products) {

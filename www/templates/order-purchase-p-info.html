@@ -1,23 +1,13 @@
-<div class="list view">
-	  <label class="item">代购佣金<span class="item-value">8%</span></label>
-	  <label class="item">代购期限<span class="item-value">2014-10-15</span></label>
-	  <label class="item">建议总价<span class="item-value">110元（人民币）</span></label>
-	  <label class="item">运费<span class="item-value">100元（人民币）</span></label>
-	  <label class="item">备注<span class="item-value">balabalabalabalabalabalabalabala														
-balabalabalabalabalabalabalabala</span></label>
-</div>
-<div class="list ">
-	  <label class="item">您已经开始购买</label>
-	  <label class="item">开始时间<span class="item-value">2014-09-30 15:30:30</span></label>
-</div>
-<div class="list ">
-	  <label class="item">上传小票				本地			拍照	</label>
-	  <label class="item">开始时间<span class="item-value">2014-09-30 15:30:30</span></label>
-</div>
-	
-<div class="list ">
-	  <label class="item">上传商品照片					本地			拍照		</label>
-	  <label class="item">开始时间<span class="item-value">2014-09-30 15:30:30</span></label>
-</div>
+<pane>
+<div class="list">
+	  <label class="item">已经购买完成</label>
+	  <label class="item">结束时间<span class="item-value">{{item.purchasing.finishDatetime}}</span></label>
+	  <label class="item">结束地点<span class="item-value">{{item.purchasing.finishLocation}}</span></label>
+	  <label class="item">共计 ？？ 天</label>
 
-    <button class="button button-positive">完成购买</button>
+	  <div class="item item-divider">商品实物</div>
+	  <div class="item"><img  src="img/u10.png"></div>
+		<div class="item item-divider">购物小票</div>
+	  <div class="item"><img  src="img/u10.png"></div>
+</div>
+</pane>

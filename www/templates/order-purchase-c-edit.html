@@ -1,9 +1,13 @@
-<div class="list ">
-	  <label class="item">买手尚未开始购买</label>
-    <button class="button button-positive">取消订单</button>
+<pane  x-ng-show="item.current.actionId=='bitSucceed'">
+<div class="list">
+	  <div class="item">买手尚未开始购买</div>
 </div>
+ <button class="button button-assertive button-block" x-ng-click="cancelOrder();">取消订单</button>
+ </pane>
 
-<div class="list ">
-	  <label class="item">买手已经开始购买</label>
-	  <label class="item">开始时间<span class="item-value">2014-09-30 15:30:30</span></label>
+<pane  x-ng-show="item.current.actionId=='purchasing'">
+<div class="list">
+	  <div class="item">买手已经开始购买</div>
+	  <label class="item">开始时间<span class="item-value">{{item.purchasing.startDatetime}}</span></label>
 </div>
+</pane>
