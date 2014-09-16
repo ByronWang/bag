@@ -54,11 +54,17 @@ div.box{
         </div>
         
         
-       <div class="item icon_lists clear text-center">         
-             <a ng-href="#/tab/products-category/{{c.id}}" x-ng-repeat="c in category">
-             <i class="icon iconfont {{c.icon}}" style="background-color: {{c.color}}"></i>
-                 <div class="name">{{c.name}}</div>
-             </a>
+       <div class="item icon_lists clear text-center">
+       		<div class="row" x-ng-repeat="nc in category">
+  				<div class="col" x-ng-repeat="c in nc">				
+	             <a ng-href="#/tab/products-category/{{c.id}}" >
+	             <i class="icon iconfont {{c.icon}}" style="background-color: {{c.color}}"></i>
+	                 <div class="name">{{c.name}}</div>
+	             </a>
+             
+				</div>
+			</div>
+
          
      </div>
      </div>

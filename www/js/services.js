@@ -303,6 +303,10 @@ angular.module('starter.services', [])
 	  });
 	  
 	  var index = 0;
+	  var ncat = [];
+	  var nscat = [];
+	  ncat.push(nscat);
+	  
 	  angular.forEach(cat1,function(c){
 		  c.color = colors[index];
 		  
@@ -311,7 +315,14 @@ angular.module('starter.services', [])
 		  }else{
 			  index = 0;
 		  }
+		  
+		  if(nscat.length>=4){
+			  nscat = [];
+			  ncat.push(nscat);
+		  }
+		  nscat.push(c);
 	  });
+	  cat1 = ncat;
 	  
 	  return {
 	    all: function() {
