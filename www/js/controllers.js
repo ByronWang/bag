@@ -9,7 +9,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('DashCtrl', function($scope, $ionicSlideBoxDelegate,Category,$ionicModal) {
-	$scope.category = Category.level1();
+	$scope.category = Category.level1Grouped();
 	$scope.search = function(){
 		  $ionicModal.fromTemplateUrl('templates/modal-search.html', {
 		    scope: $scope,
@@ -28,25 +28,6 @@ angular.module('starter.controllers', [])
 		  };	
 	};
 	
-	$scope.neworder = function(){
-		
-		  $ionicModal.fromTemplateUrl('templates/modal-order-new.html', {
-		    scope: $scope,
-		    animation: 'slide-in-up'
-		  }).then(function(modal) {
-		    $scope.modal = modal;
-		    $scope.modal.show();
-		  });
-		
-		  $scope.openModal = function() {
-		    $scope.modal.show();
-		  };
-		  
-		  $scope.closeModal = function() {	    			  
-		    $scope.modal.hide();
-		  };	
-	};
-
 	$scope.onScroll = function(){
 		$ionicSlideBoxDelegate.$getByHandle('band').stop();
 	}

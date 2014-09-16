@@ -322,12 +322,14 @@ angular.module('starter.services', [])
 		  }
 		  nscat.push(c);
 	  });
-	  cat1 = ncat;
 	  
 	  return {
-	    all: function() {
-	      return categories;
-	    },
+		    all: function() {
+			      return categories;
+			},
+			level1Grouped: function() {
+			      return ncat;
+			    },
 	    level1: function() {
 		      return cat1;
 		    },
