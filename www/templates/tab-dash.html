@@ -1,70 +1,105 @@
 <ion-view title="主页">
-<style>
-div.box{
-	height: 100px;
-	text-align: center;
-}
+    <style>
+        div.box{
+            height: 200px;
+            text-align: center;
+        }
 
-.box img{
-	width: 100%
-}
+        .box img{
+            width: 100%
+        }
 
-</style>
-	<ion-nav-buttons side="left">    
-  		<img src="img/logo3.png" height="32px" width="32px">
-	</ion-nav-buttons>
-	<ion-nav-buttons side="right">    
-      <button class="button button-icon icon ion-search" x-ng-click="search()">
-     </button> 
-      <a class="button button-icon icon ion-plus" x-ng-click="neworder()">
-     </a>
-  </ion-nav-buttons>
-  <ion-content class="has-header" on-scroll="onScroll();" on-scroll-complete="onScrollComplete();">
-    <ion-slide-box delegate-handle="band" does-continue=true auto-play=true slide-interval=2000>
-    <ion-slide>
-    <a  href="#/tab/product/1">
-      <div id="s1" class="box blue">
-        <img alt="1111" src="img/A001.jpg">
-      </div></a>
-    </ion-slide>
-    <ion-slide>
-    <a  href="#/tab/product/2">
-      <div id="s2" class="box yellow">
-        <img alt="2222" src="img/A002.jpg">
-      </div></a>
-    </ion-slide>
-  </ion-slide-box>
-    
-  <div class="list layout">
-      <div class="item thumbnails_lists clear">
-             <a href="#/tab/products">
-             	<img src="img/u10.png"></img>
-                 <div class="name">个护化妆-01</div>
-             </a>
-         
-             <a href="#/tab/products">
-             	<img src="img/u10.png"></img>
-                 <div class="name">个护化妆-01</div>
-             </a>
-         
-             <a href="#/tab/products">
-             	<img src="img/u10.png"></img>
-                 <div class="name">个护化妆-01</div>
-             </a>
+    </style>
+    <ion-nav-buttons side="left">
+        <img src="img/logo3.png" height="32px" width="32px">
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-search" x-ng-click="search()">
+        </button>
+        <a class="button button-icon icon ion-plus" x-ng-click="neworder()">
+        </a>
+    </ion-nav-buttons>
+    <ion-content class="has-header" on-scroll="onScroll();" on-scroll-complete="onScrollComplete();">
+        <ion-slide-box delegate-handle="band" does-continue=true auto-play=true slide-interval=2000>
+            <ion-slide>
+                <a  href="#/tab/product/1">
+                    <div id="s1" class="box blue">
+                        <img alt="1111" src="img/A001.jpg">
+                    </div></a>
+            </ion-slide>
+            <ion-slide>
+                <a  href="#/tab/product/2">
+                    <div id="s2" class="box yellow">
+                        <img alt="2222" src="img/A002.jpg">
+                    </div></a>
+            </ion-slide>
+        </ion-slide-box>
+
+        <div class="layout">
+            <!--<div class="item thumbnails_lists clear">-->
+                <!--<a href="#/tab/products">-->
+                    <!--<img src="img/u10.png"></img>-->
+                    <!--<div class="name">个护化妆-01</div>-->
+                <!--</a>-->
+
+                <!--<a href="#/tab/products">-->
+                    <!--<img src="img/u10.png"></img>-->
+                    <!--<div class="name">个护化妆-01</div>-->
+                <!--</a>-->
+
+                <!--<a href="#/tab/products">-->
+                    <!--<img src="img/u10.png"></img>-->
+                    <!--<div class="name">个护化妆-01</div>-->
+                <!--</a>-->
+            <!--</div>-->
+
+            <div class="row" style="padding: 0 0 0 0">
+                <div class="col" style="padding: 0">
+                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">
+                        <img src="img/products/bag.jpg">
+                        <h2>皮革箱包</h2>
+                        <p>包</p>
+                    </a>
+                </div>
+                <div class="col" style="padding: 0">
+                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">
+                        <img src="img/products/camera.jpg">
+                        <h2>数码</h2>
+                        <p>单反相机</p>
+                    </a>
+                </div>
+            </div>
+            <div class="row" style="padding: 0 0 10px 0">
+                <div class="col" style="padding: 0">
+                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">
+                        <img src="img/products/diamond.jpg">
+                        <h2>珠宝饰品</h2>
+                        <p>钻石</p>
+                    </a>
+                </div>
+                <div class="col" style="padding: 0">
+                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">
+                        <img src="img/products/mask.jpg">
+                        <h2>珠宝饰品</h2>
+                        <p>面膜</p>
+                    </a>
+                </div>
+            </div>
+
+            <hr noshade="noshade" style="height: 15px; border: 0; background-color: #D9D9D9"/>
+
+            <div class="row icon_lists text-center" x-ng-repeat="nc in category">
+                <div class="row">
+                    <div class="col col-25 text-center" x-ng-repeat="c in nc">
+                        <a ng-href="#/tab/products-category/{{c.id}}">
+                            <i class="icon iconfont {{c.icon}}" style="background-color: {{c.color}}"></i>
+                            <div class="name">{{c.name}}</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
 
-      <div class="row icon_lists text-center" x-ng-repeat="nc in category">
-          <div class="row">
-              <div class="col col-25 text-center" x-ng-repeat="c in nc">
-                  <a ng-href="#/tab/products-category/{{c.id}}">
-                      <i class="icon iconfont {{c.icon}}" style="background-color: {{c.color}}"></i>
-                      <div class="name">{{c.name}}</div>
-                  </a>
-              </div>
-          </div>
-      </div>
-         
-     </div>
-     </div>
-  </ion-content>
+        </div>
+    </ion-content>
 </ion-view>
