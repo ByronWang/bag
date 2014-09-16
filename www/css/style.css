@@ -104,7 +104,7 @@ img.main{
 }
 
 .icon_lists a{
-  float:left;
+  /*float:left;*/
   width: 80px;
   height: 82px;
   text-align: center;
