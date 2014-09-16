@@ -112,12 +112,13 @@ img.main{
 }
 
 .icon_lists .name{
-	overflow: hidden;
-  	text-decoration: none;
-  	color: black;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+    margin-top:8px
 }
 .icon_lists .icon{
-  font-size: 38px;
+  font-size: 40px;
   line-height: 60px;
   margin: 10px 0;
   color:white;
