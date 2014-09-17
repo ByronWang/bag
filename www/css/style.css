@@ -6,6 +6,61 @@ table tr th{
 	width: 4em;
 }
 
+.item-options-right{
+  padding-right: 120px; }
+
+.item-options-right > .options{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  position: absolute;
+  top: 0px;
+  right: 16px;
+  min-width: 34px;
+  min-height: 34px;
+  font-size: 18px;
+  line-height: 32px; 
+  height: 100%;
+vertical-align: middle;
+}
+  
+  .item-options-right > .button .icon:before {
+    position: relative;
+    left: auto;
+    width: auto;
+    line-height: 31px; }
+  .item-options-right > .button > .button {
+    margin: 0px 2px;
+    min-width: 34px;
+    min-height: 34px;
+    font-size: 18px;
+    line-height: 32px; }
+    
+
+.item-product-image {
+  padding: 0;
+  text-align: left; 
+}
+
+.item-product-image  img:first-child, .item-image .list-img {
+    vertical-align: middle; 
+}
+    
+    
+.item-product-image .img-product{
+	padding:3px;
+	height: 160px;
+	width: 120px;	
+}
+
 .scroll-content{	
 }
 a{
@@ -218,4 +273,9 @@ img.main{
     -ms-flex: 10 0 20px;
     flex: 10 0 20px;  	
     padding-left: 10px;
+ }
+ 
+ 
+ input.ng-invalid.ng-dirty{
+ 	background-color: red;
  }

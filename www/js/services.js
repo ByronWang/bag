@@ -546,6 +546,27 @@ angular.module('starter.services', [])
   }
 }])
 
+.factory('Address', function($http) {
+	var provinces  = [];
+	  // Might use a resource here that returns a JSON array
+	$http.get('js/ProvinceAndCityJson.json').then(function(resp) {
+	    console.log('Success', resp);
+	    provinces = resp.data;
+	  }, function(err) {
+	    console.error('ERR', err);
+	    // err.status will contain the status code
+	  });
+	 
+	  return {
+		  provinces: function(){
+			  return provinces;
+		  },
+		  cities: function(province){
+			  
+		  }		  
+	  }
+})
+
 .factory('LoginUser', function($ionicModal,Users) {
 	  // Might use a resource here that returns a JSON array
 
