@@ -4,6 +4,10 @@
     </ion-nav-buttons>
 
     <ion-content>
+    
+    <div class="list">
+    	<div class="item" x-ng-repeat="p in provinces">{{p.name}}</div>
+    </div>
         <div ng-show="cart.size()==0">
             <!--<p >你还没有选中任何东西哦！</p>-->
             <!--<div class="padding">-->
@@ -19,7 +23,6 @@
                 <button class="button button-block button-positive" x-ng-click="neworder()">新建订单</button>
             </div>
         </div>
-
 
         <pane x-ng-show="step==1 && cart.size()!=0">
 
@@ -51,57 +54,46 @@
         </pane>
 
         <pane x-ng-show="step==2">
+ 			<form name="mainform" novalidate>
             <div class="list" >
                 <div class="item item-divider">
                     代购信息
                 </div>
                 <label class="item item-input">
-                    <span class="input-label">发货方式</span>
-                    <select x-ng-model="order.deliveryMethod" x-ng-options="c.name as c.name for c in deliveryMethods">
-                        <option value="">-- 请选择 --</option>
-                    </select>
-                </label>
-                <label class="item item-input">
                     <span class="input-label">代购期限</span>
-                    <input type="date" x-ng-model="order.deadline">
+                    <input type="date" x-ng-model="order.deadline" required>
                 </label>
                 <div class="item item-divider">
                     收件地址
                 </div>
-                <label class="item item-input">
-                    <span class="input-label">省</span>
-                    <input type="text" x-ng-model="order.address">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">市</span>
-                    <input type="text" x-ng-model="order.address">
-                </label>
+               	<a class="item item-input item-icon-right"  x-ng-click="popupProvinces();"><span class="input-label">地区</span>
+   					<span class="item-note">{{order.address.province}}-{{order.address.city}}-{{order.address.area}}</span><i class="icon ion-ios7-arrow-forward"></i></a>
+   
                 <label class="item item-input">
                     <span class="input-label">详细地址</span>
-                    <input type="text" x-ng-model="order.address">
+                    <input type="text" x-ng-model="order.address.address">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">邮编</span>
-                    <input type="text" x-ng-model="order.address">
+                    <input type="text" x-ng-model="order.addres.zip">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">联系人</span>
-                    <input type="text" x-ng-model="order.address">
+                    <input type="text" x-ng-model="order.address.contact">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">联系电话</span>
-                    <input type="text" x-ng-model="order.address">
+                    <input type="text" x-ng-model="order.address.phone">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">备注</span>
                     <textarea x-ng-model="order.comment"></textarea>
                 </label>
             </div>
-        </pane>
-        <pane x-ng-show="step==2">
             <div class="padding">
-                <button class="button button-block  button-positive" x-ng-click="pay()"> 确认</button>
+                <button class="button button-block  button-positive" x-ng-disabled="mainform.$invalid"  x-ng-click="pay()"> 确认</button>
             </div>
+            </form>
         </pane>
 
     </ion-content>
