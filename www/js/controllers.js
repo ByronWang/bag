@@ -589,6 +589,22 @@ angular.module('starter.controllers', [])
   $scope.category = Category.get($stateParams.categoryId);
 })
 
+
+// for unionpay test by jih ++++++++++++++++++++++++++
+.controller('UnionpayCtrl', function($scope, $http) {
+	$scope.pay = function() {
+		$http.jsonp("http://www.gouwudai.net.cn:8080/bag-unionpay-server/trade?callback=JSON_CALLBACK")
+		.success(function(data, status) {
+			cn.xj.bag.plugin.Unionpay.pay(data.tn);
+		})
+		.error(function(data, status){
+			alert("error " + data + " " + status);
+		});
+	}
+})
+// ---------------------------------------------------
+
+
 ;
 
 
