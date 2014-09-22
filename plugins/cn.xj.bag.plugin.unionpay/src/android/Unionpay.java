@@ -22,15 +22,10 @@ public class Unionpay extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if ("pay".equals(action)) {
-            Log.i("bag", args.toString());
-            cordova.getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    String np = "201409181103160094432";
-                    UPPayAssistEx.startPayByJAR(cordova.getActivity(), PayActivity.class, null, null, np, "01");
-                    callbackContext.success(); // Thread-safe.
-                }
-            });
+            String tn = args.getString(0);
+            Log.i("Unionpay", "tn: " + args.getString(0));
+            UPPayAssistEx.startPayByJAR(cordova.getActivity(), PayActivity.class, null, null, tn, "01");
+            callbackContext.success(); // Thread-safe.
             return true;
         }
         return false; // Returning false results in a "MethodNotFound" error.

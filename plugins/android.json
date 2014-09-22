@@ -9,6 +9,10 @@
                 "parents": {
                     "/*": [
                         {
+                            "xml": "<feature name=\"Unionpay\"><param name=\"android-package\" value=\"cn.xj.bag.plugin.unionpay.Unionpay\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" value=\"com.ionic.keyboard.IonicKeyboard\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -27,7 +31,33 @@
                 "parents": {
                     "/*": [
                         {
+                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\" />",
+                            "count": 1
+                        },
+                        {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 2
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/manifest/application": [
+                        {
+                            "xml": "<activity android:name=\"com.unionpay.uppay.PayActivity\"></activity>",
                             "count": 1
                         }
                     ]
@@ -36,6 +66,9 @@
         }
     },
     "installed_plugins": {
+        "cn.xj.bag.plugin.unionpay": {
+            "PACKAGE_NAME": "cn.xj.bag.client"
+        },
         "com.ionic.keyboard": {
             "PACKAGE_NAME": "cn.xj.bag.client"
         },

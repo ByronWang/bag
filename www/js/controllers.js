@@ -595,7 +595,10 @@ angular.module('starter.controllers', [])
 	$scope.pay = function() {
 		$http.jsonp("http://www.gouwudai.net.cn:8080/bag-unionpay-server/trade?callback=JSON_CALLBACK")
 		.success(function(data, status) {
-			cn.xj.bag.plugin.Unionpay.pay(data.tn);
+			cn.xj.bag.plugin.Unionpay.payForTest(data.tn, function(msg) {
+				// 支付控件返回字符串:success、fail、cancel 分别代表支付成功，支付失败，支付取消
+				alert(msg);
+			});
 		})
 		.error(function(data, status){
 			alert("error " + data + " " + status);

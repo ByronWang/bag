@@ -41,4 +41,20 @@
         <resource-file src="src/android/libs/armeabi-v7a/libentryex.so" target="libs/armeabi-v7a/libentryex.so" />
 	</platform>
 
+     <!-- ios -->
+     <platform name="ios">
+         <config-file target="config.xml" parent="/*">
+             <feature name="Unionpay">
+                 <param name="ios-package" value="UPPayPlugin" />
+             </feature>
+         </config-file>
+
+         <header-file src="src/ios/Unionpay.h" />
+         <source-file src="src/ios/Unionpay.m" />
+         <header-file src="src/ios/UPPayPlugin.h" />
+         <header-file src="src/ios/UPPayPluginDelegate.h" />
+         <source-file src="src/ios/libUPPayPlugin.a" />
+         <framework src="QuartzCore.framework" />
+         <framework src="Security.framework" />
+     </platform>
 </plugin>
