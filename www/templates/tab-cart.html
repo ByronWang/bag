@@ -32,15 +32,15 @@
                         can-swipe="true" ng-if="country.Items.length>0">
                 <div class="item item-divider item-checkbox-left">
                     <input type="checkbox"  x-ng-model="data.checkall"/>
-                    {{country.name}}
+                    {{country.Name}}
                 </div>
                 <ion-item ng-repeat="item in country.Items"  class="item-checkbox-thumbnail-left">
-                    <img src="img/u10.png">
-                    <h2>{{item.name}} </h2>
+                    <img x-ng-src="{{item.Product.Image}}">
+                    <h2>{{item.Product.Name}} </h2>
                     <p>
-                        {{item.country}}
-                        价格：{{item.expectedPrice}}/元
-                        数量：{{item.amount}}
+                        {{item.Product.Country}}
+                        价格：{{item.Product.ExpectedPrice}}/元
+                        数量：{{item.Amount}}
                         到货周期：{{item.lastMonth}}个月</p>
                     <input type="checkbox"  x-ng-modal="item.isChecked" x-ng-click="checked(item)"/>
                     <ion-option-button class="button-info button-assertive"    ng-click="country.Items.splice($index, 1)">删除</ion-option-button>
@@ -55,13 +55,29 @@
 
         <pane x-ng-show="step==2">
  			<form name="mainform" novalidate>
+ 			<div class="list">
+               <div x-ng-repeat="item in Items"  class="item item-thumbnail-left">
+                    <img x-ng-src="{{item.Product.Image}}">
+                    <h2>{{item.Product.Name}} </h2>
+                    <p>
+                        {{item.Product.Country}}
+                        价格：{{item.Product.ExpectedPrice}}/元
+                        数量：{{item.Amount}}
+                        到货周期：{{item.lastMonth}}个月</p>
+              </div>
+ 		</div>
+ 
             <div class="list" >
                 <div class="item item-divider">
                     代购信息
                 </div>
                 <label class="item item-input">
                     <span class="input-label">代购期限</span>
-                    <input type="date" x-ng-model="order.deadline" required>
+                    <input type="date" x-ng-model="order.Deadline" required>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">备注</span>
+                    <textarea x-ng-model="order.Comment"></textarea>
                 </label>
                 <div class="item item-divider">
                     收件地址
@@ -84,10 +100,6 @@
                 <label class="item item-input">
                     <span class="input-label">联系电话</span>
                     <input type="text" x-ng-model="order.address.phone">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">备注</span>
-                    <textarea x-ng-model="order.comment"></textarea>
                 </label>
             </div>
             <div class="padding">

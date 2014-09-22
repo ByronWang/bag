@@ -12,20 +12,23 @@
   </ion-nav-buttons>
   <ion-content has-header="true">
 <div class="list">
-  <div class="item item-avatar">
-    <img src="img/u10.png">
-    <h2>{{product.name}}</h2>
-    <p>November 05, 1955</p>
-  </div>
-
-  <div class="item item-body">
-    <p>
-      This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
-      the content is from a card-body consisting of an image and paragraph text. The footer
-      consists of tabs, icons aligned left, within the card-footer.
-    </p>
-  </div>
-</div>
+	  <div class="item item-divider">{{product.ProductDetailKind}}</div>
+	  <div class="item item-avatar">
+	    <img ng-src="{{host}}{{product.Image}}">
+	    <h2>{{product.Name}}</h2>
+	    <p>{{product.Description}}</p>
+	  </div>
+	  <label class="item">品牌<span class="item-value">{{product.Brand}}</span></label>
+	  <label class="item">预想总价<span class="item-value">{{product.ExpectedPrice}}元（人民币）</span></label>
+	  <div class="item item-divider">
+	   	商品参数
+	  </div>
+  	  <label class="item">功效<span class="item-value">{{product.Extends.Function}}</span></label>
+ 	  <label class="item">色泽<span class="item-value">{{product.Extends.Color}}</span></label>
+  	 	<div class="item item-divider"> 代购信息 </div>
+	   <label class="item">代购国家<span class="item-value">{{product.Country}}</span></label>
+	  <label class="item">预想总价<span class="item-value">{{product.ExpectedPrice}}元（人民币）</span></label>
+ </div>
 
 <div class="padding">
 	    <button class="button button-block  button-positive" x-ng-click="selectThis();"> 我也想买</button>

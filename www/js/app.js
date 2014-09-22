@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers','starter.filter', 'starter.services', 'starter.directives'])
+angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.filter', 'starter.services', 'starter.directives'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -100,7 +100,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.filter', 'sta
       })
 
     .state('tab.products-caterory', {
-      url: '/products-category/:categoryId',
+      url: '/products-category/:ProductKind',
       views: {
         'tab-dash': {
           templateUrl: 'templates/products.html',
@@ -169,47 +169,25 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.filter', 'sta
         }
       })     
       
-    .state('tab.orders-sendout', {
-        url: '/orders-sendout',
+    .state('tab.orders-customer', {
+        url: '/orders-customer',
         views: {
           'tab-orders': {
             templateUrl: 'templates/orders-sendout.html',
-            controller: 'OrdersCtrl'
+            controller: 'OrdersCustomerCtrl'
           }
         }
       })
       
-    .state('tab.orders-requested', {
-        url: '/orders-requested',
+    .state('tab.orders-purchaser', {
+        url: '/orders-purchaser',
         views: {
           'tab-orders': {
             templateUrl: 'templates/orders-requested.html',
-            controller: 'OrdersCtrl'
+            controller: 'OrdersPurchaserCtrl'
           }
         }
       })
-      
-      
-    .state('tab.orders-completed', {
-        url: '/orders-completed',
-        views: {
-          'tab-orders': {
-            templateUrl: 'templates/orders-completed.html',
-            controller: 'OrdersCtrl'
-          }
-        }
-      })
-      
-      .state('tab.orders-requestedCompleted', {
-          url: '/orders-requestedCompleted',
-          views: {
-            'tab-orders': {
-              templateUrl: 'templates/orders-requestedCompleted.html',
-              controller: 'OrdersCtrl'
-            }
-          }
-        })
-      
       
       .state('tab.order-detail-c', {
         url: '/order/c/:orderId/:itemId',

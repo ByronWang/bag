@@ -6,6 +6,7 @@ angular.module('starter.controllers', [])
 	$scope.editCart = function(){
 		$scope.cart.edit($scope);
 	};
+	$scope.host = "http://localhost:8686/";
 })
 
 .controller('DashCtrl', function($scope, $ionicSlideBoxDelegate,Category,$ionicModal) {
@@ -199,36 +200,72 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('NewProductCtrl', function($scope, $ionicActionSheet,$ionicModal, $timeout,Camera,Orders,DeliveryMethods,Countries,Category) {
+.controller('OrderInListCtrl', function($scope, Orders) {
+  $scope.realOrder =Orders.get({ id:$scope.$parent.order.ID});
+  
+  //Load more after 1 second delay
+  $scope.loadMoreItems = function() {
+     $scope.$broadcast('scroll.infiniteScrollComplete');
+  };
+})
+
+.controller('OrdersCustomerCtrl', function($scope, Orders) {
+  $scope.orders = Orders.query();
+  
+  //Load more after 1 second delay
+  $scope.loadMoreItems = function() {
+     $scope.$broadcast('scroll.infiniteScrollComplete');
+  };
+})
+
+
+.controller('OrdersPurchaserCtrl', function($scope, Orders) {
+  $scope.orders = Orders.query();
+  
+  //Load more after 1 second delay
+  $scope.loadMoreItems = function() {
+     $scope.$broadcast('scroll.infiniteScrollComplete');
+  };
+})
+
+.controller('NewProductCtrl', function($scope, $ionicActionSheet,$ionicModal, $timeout,Products,Camera,Orders,DeliveryMethods,Countries,Category) {
 	$scope.product = {};
-	$scope.category = Category.level1();
+	$scope.categories = Category.level1();
+	$scope.item = {
+    		Amount:1
+    };
 	
 	$scope.categoryInEdit=true;
 	
-	$scope.product.categoryDesc ="";
+	$scope.product.ProductDetailKind ="";
 	
 	$scope.selectCat =function(cat){
 		var cs = Category.children(cat.id);
 		if(cs.length>0){
-			$scope.category = cs;
-			if($scope.product.categoryDesc != ""){
-				$scope.product.categoryDesc = $scope.product.categoryDesc + " > " + cat.name;				
+			$scope.categories = cs;
+			if($scope.product.ProductDetailKind != ""){
+				$scope.product.ProductDetailKind = $scope.product.ProductDetailKind + " > " + cat.name;				
 			}else{
-				$scope.product.categoryDesc = cat.name;
+				$scope.product.ProductDetailKind = cat.name;
+			}
+			if(!$scope.product.ProductKind){
+				$scope.product.ProductKind = cat.name;				
 			}
 		}else{
 			$scope.categoryInEdit=false;
-			$scope.product.category = cat.name;
+			if(!$scope.product.ProductKind){
+				$scope.product.ProductKind = cat.name;				
+			}
 			
-			if($scope.product.categoryDesc!=""){
-				$scope.product.categoryDesc = $scope.product.categoryDesc + " > " + cat.name;				
+			if($scope.product.ProductDetailKind!=""){
+				$scope.product.ProductDetailKind = $scope.product.ProductDetailKind + " > " + cat.name;				
 			}else{
-				$scope.product.categoryDesc = cat.name;
+				$scope.product.ProductDetailKind = cat.name;
 			}
 		}
 	};
 
-	$scope.product.lastPhoto ="img/mcfly.jpg";
+	$scope.product.Image ="img/mcfly.jpg";
 
 	$scope.getPhotoFromCamera = function() {
 	    Camera.getPicture( {
@@ -275,7 +312,7 @@ angular.module('starter.controllers', [])
 			  });
 			  	
 			  $scope.ret = function(item) {
-					$scope.product.country =item.name;
+					$scope.product.Country =item.name;
 			  };
 			  			  
 			  $scope.closeModal = function() {	    			  
@@ -285,11 +322,28 @@ angular.module('starter.controllers', [])
 			  };	
 			  
 		};
+		var encode = function(o){
+			var es = "";
+			angular.forEach(o,function(v,k){
+				es = es + k + ":" + v +";";
+			});
+			
+			if(es.length>0){
+				es = es.substr(0,es.length-1);
+			}
+			return es;
+			
+		};
 		
 	$scope.step = 1;
 	$scope.submit = function(){
-		 $scope.cart.add($scope.product);
-		 $scope.$parent.closeModal();		
+		$scope.product.Extends = encode($scope.product.Extends);
+	    var post = new Products($scope.product);
+	    post.$save();
+	    
+	    $scope.item.Product = $scope.product;
+		 $scope.cart.add($scope.item);
+		 $scope.$parent.closeModal();
 	};	 
 })
 
@@ -390,13 +444,16 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ProductsCtrl', function($scope, Products) {
-  $scope.products = Products.all();
+  $scope.products = Products.query();
 })
 
 .controller('ProductDetailCtrl', function($scope, $stateParams, Products) {
-  $scope.product = Products.get($stateParams.productId);
+  $scope.product = Products.get($stateParams);
   $scope.selectThis = function(){
-	  $scope.cart.add($scope.product);
+	  var item = {};
+	  item.Product = $scope.product;
+	  item.Amount = 1;
+	  $scope.cart.add(item);
 	  return false;
   };
 })
@@ -585,7 +642,7 @@ angular.module('starter.controllers', [])
 
 
 .controller('ProductsCategoryCtrl', function($scope, $stateParams,Category,Products) {
-  $scope.products = Products.byCategory($stateParams.categoryId);
+  $scope.products = Products.query($stateParams);
   $scope.category = Category.get($stateParams.categoryId);
 })
 
