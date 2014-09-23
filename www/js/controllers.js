@@ -592,7 +592,7 @@ angular.module('starter.controllers', [])
 
 // for unionpay test by jih ++++++++++++++++++++++++++
 .controller('UnionpayCtrl', function($scope, $http) {
-	$scope.pay = function() {
+    $scope.pay = function() {
 		$http.jsonp("http://www.gouwudai.net.cn:8080/bag-unionpay-server/trade?callback=JSON_CALLBACK")
 		.success(function(data, status) {
 			cn.xj.bag.plugin.Unionpay.payForTest(data.tn, function(msg) {

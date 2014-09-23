@@ -45,7 +45,7 @@
      <platform name="ios">
          <config-file target="config.xml" parent="/*">
              <feature name="Unionpay">
-                 <param name="ios-package" value="UPPayPlugin" />
+                 <param name="ios-package" value="Unionpay" />
              </feature>
          </config-file>
 
@@ -53,7 +53,8 @@
          <source-file src="src/ios/Unionpay.m" />
          <header-file src="src/ios/UPPayPlugin.h" />
          <header-file src="src/ios/UPPayPluginDelegate.h" />
-         <source-file src="src/ios/libUPPayPlugin.a" />
+         <source-file src="src/ios/libUPPayPlugin.a" framework="true" />
+         <framework src="libc++.dylib" />
          <framework src="QuartzCore.framework" />
          <framework src="Security.framework" />
      </platform>
