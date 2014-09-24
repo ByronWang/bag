@@ -10,11 +10,13 @@
     <p>{{category.Name}}分类下暂时还没有商品哦！</p></div>
 	
     <div class="list">
-      <a x-ng-repeat="product in products"  class="item item-avatar"  href="#/tab/product/{{product.ID}}">
- 		<img src="img/u10.png">
-      <pre>{{product.Name}}      （ {{product.Country}} ）
-		价格：{{product.ExpectedPrice}}/元   
-		到货周期：{{product.LastMonth}}个月</pre>
+      <a x-ng-repeat="product in products"  class="item item-thumbnail-left item-info"  href="#/tab/product/{{product.ID}}">
+			      <img x-ng-src="{{host}}/{{product.Image}}">
+			      <div class="list info"> 
+			      		<span class="item"><h3>{{product.Name}}</h3></span>
+			      		<span class="item">价格 <span class="item-note"> {{product.ExpectedPrice}}/元</span>      </span>
+			      		<span class="item">到货周期 <span class="item-note">{{item.lastMonth}}个月</span>   </span>
+			      </div>
       </a>
 	</div>
   </ion-content>

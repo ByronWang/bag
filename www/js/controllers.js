@@ -62,10 +62,9 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('CartCtrl', function($scope,$ionicModal, Orders,DeliveryMethods,Address) {
+.controller('CartCtrl', function($scope,$ionicModal, Orders,Address) {
 	$scope.step = 1;
 	
-	$scope.deliveryMethods = DeliveryMethods.all();
 	$scope.order = { Items:[]};
 	$scope.Items = [];
 	$scope.country = {};
@@ -359,12 +358,13 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('OrderCustomerDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,OrderFlow) {
+.controller('OrderCustomerDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,OrderFlow,Exts) {
 	$scope.order =Orders.get($stateParams,function(){
 		angular.forEach($scope.order.Items,function(i){
 			if(i.ID == $stateParams.itemId){
-				$scope.item = i;				
-			}			
+				$scope.item = i;		
+				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+			}
 		});
 	});
 	
@@ -421,10 +421,26 @@ angular.module('starter.controllers', [])
 })
 
 .controller('OrderPurchaserDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders) {
-  $scope.order = Orders.get($stateParams.orderId);
-  $scope.item  = Orders.getItem($stateParams.orderId,$stateParams.itemId);
-  $scope.statusActiveSlide = 0;
-  
+	$scope.order =Orders.get($stateParams,function(){
+		angular.forEach($scope.order.Items,function(i){
+			if(i.ID == $stateParams.itemId){
+				$scope.item = i;		
+				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+			}
+		});
+	});
+	
+	$scope.flows =OrderFlow.query($stateParams,function(){
+		if($scope.flows.length>0){
+			$scope.current = $scope.flows[$scope.flows.length-1];
+		}else{
+			$scope.current = {StatusID:1};
+			$scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
+		}
+	});
+
+	  $scope.statusActiveSlide = 0;
+	  
   $scope.fromStatusToIndex = function(status){
 	  if(status>2){
 		  return status-2;

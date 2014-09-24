@@ -280,8 +280,22 @@ img.main{
  	background-color: red;
  }
  
- 
+ .item-info .list{
+ 	margin-bottom: 0px;
+ }
 .item-info .item{
-padding: 0px;
-border: none;
+	padding: 0px;
+	border: none;
+	background: none;
+}
+.item-product{
+	padding-left: 200px;
+	height: 200px;
+}
+
+.item-avatar.item-product img{
+	max-width: 160px;
+	max-height: 160px;
+	height: 160px;
+	width: 160px;
 }
