@@ -279,3 +279,9 @@ img.main{
  input.ng-invalid.ng-dirty{
  	background-color: red;
  }
+ 
+ 
+.item-info .item{
+padding: 0px;
+border: none;
+}

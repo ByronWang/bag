@@ -159,16 +159,6 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
       })
       
       
-    .state('tab.orders-cart', {
-        url: '/orders-cart',
-        views: {
-          'tab-orders': {
-            templateUrl: 'templates/orders-cart.html',
-            controller: 'OrdersCtrl'
-          }
-        }
-      })     
-      
     .state('tab.orders-customer', {
         url: '/orders-customer',
         views: {
@@ -178,6 +168,16 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
           }
         }
       })
+      
+      .state('tab.orders-biding', {
+          url: '/orders-biding',
+          views: {
+            'tab-orders': {
+              templateUrl: 'templates/orders-biding.html',
+              controller: 'OrdersBidingCtrl'
+            }
+          }
+        })
       
     .state('tab.orders-purchaser', {
         url: '/orders-purchaser',

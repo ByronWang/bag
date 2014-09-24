@@ -1,15 +1,18 @@
 <ion-view title="我的代购订单">
-  <ion-content class="has-subheader">
-    <div class="list padding-top" x-ng-repeat="order in orders" >
+   <ion-content class="has-subheader">
+    <div class="list padding-top" x-ng-repeat="order in orders">
     
-	   <div class="item item-divider">{{order.ID}} </div>
-		      <a x-ng-repeat="item in order.Items"  class="item item-thumbnail-left"  href="#/tab/order/p/{{order.id}}/{{item.id}}">
-		      <img src="img/u10.png">
-		      <pre>{{item.name}}      （ {{item.country}} ）
-				价格：{{item.expectedPrice}}/元   
-				到货周期：{{item.lastMonth}}个月</pre>
-		      </a>
+	   <div class="item item-divider">订单号: {{order.ID}}  {{order.Country}}</div>
+		      <a x-ng-repeat="item in order.Items"  class="item item-thumbnail-left item-info"  href="#/tab/order/c/{{order.ID}}/{{item.ID}}">
+		      <img x-ng-src="{{host}}/{{item.Product.Image}}">
+		      <div class="list info"> 
+		      		<span class="item"><h3>{{item.Product.Name}}</h3></span>
+		      		<span class="item">价格 <span class="item-note"> {{item.Product.ExpectedPrice}}/元</span>      </span>
+		      		<span class="item">到货周期 <span class="item-note">{{item.lastMonth}}个月</span>   </span>
+		      </div>
   </div>
+  
+  
   <ion-infinite-scroll on-infinite="loadMoreItems()" icon="ion-loading-c">
   </ion-infinite-scroll>
   </ion-content>

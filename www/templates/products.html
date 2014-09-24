@@ -1,5 +1,5 @@
 
-<ion-view title="{{category.name}}">
+<ion-view title="{{category.Name}}">
 <ion-nav-buttons side="right">      
       <a class="button button-icon icon ion-ios7-cart" href="#/tab/cart">
 	    <span  class="badge badge-positive">{{cart.size()}}</span>
@@ -7,14 +7,14 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
     <div ng-show="products.length==0">
-    <p>{{category.name}}分类下暂时还没有商品哦！</p></div>
+    <p>{{category.Name}}分类下暂时还没有商品哦！</p></div>
 	
     <div class="list">
       <a x-ng-repeat="product in products"  class="item item-avatar"  href="#/tab/product/{{product.ID}}">
  		<img src="img/u10.png">
-      <pre>{{product.Name}}      （ {{product.country}} ）
+      <pre>{{product.Name}}      （ {{product.Country}} ）
 		价格：{{product.ExpectedPrice}}/元   
-		到货周期：{{product.lastMonth}}个月</pre>
+		到货周期：{{product.LastMonth}}个月</pre>
       </a>
 	</div>
   </ion-content>

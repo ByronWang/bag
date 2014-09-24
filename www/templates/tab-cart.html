@@ -83,27 +83,27 @@
                     收件地址
                 </div>
                	<a class="item item-input item-icon-right"  x-ng-click="popupProvinces();"><span class="input-label">地区</span>
-   					<span class="item-note">{{order.address.province}}-{{order.address.city}}-{{order.address.area}}</span><i class="icon ion-ios7-arrow-forward"></i></a>
+   					<span class="item-note">{{order.Address.Province}}-{{order.Address.City}}-{{order.Address.Area}}</span><i class="icon ion-ios7-arrow-forward"></i></a>
    
                 <label class="item item-input">
                     <span class="input-label">详细地址</span>
-                    <input type="text" x-ng-model="order.address.address">
+                    <input type="text" x-ng-model="order.Address.Address">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">邮编</span>
-                    <input type="text" x-ng-model="order.addres.zip">
+                    <input type="text" x-ng-model="order.addres.Zip">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">联系人</span>
-                    <input type="text" x-ng-model="order.address.contact">
+                    <input type="text" x-ng-model="order.Address.Contact">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">联系电话</span>
-                    <input type="text" x-ng-model="order.address.phone">
+                    <input type="text" x-ng-model="order.Address.Phone">
                 </label>
             </div>
             <div class="padding">
-                <button class="button button-block  button-positive" x-ng-disabled="mainform.$invalid"  x-ng-click="pay()"> 确认</button>
+                <button class="button button-block  button-positive" x-ng-disabled="mainform.$invalid"  x-ng-click="submit()"> 确认</button>
             </div>
             </form>
         </pane>

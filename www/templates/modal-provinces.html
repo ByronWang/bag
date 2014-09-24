@@ -9,21 +9,21 @@
     
  <div class="list" x-ng-show="step=='province'">
 	  <a class="item item-icon-right" x-ng-repeat="c in provinces" x-ng-click="selectProvince(c)">
-	   	{{c.name}}
+	   	{{c.Name}}
 	   <i class="icon ion-ios7-arrow-forward"></i>
 	  </a>
  </div>
  
   <div class="list" x-ng-show="step=='city'">
-	  <a class="item item-icon-right" x-ng-repeat="c in province.city" x-ng-click="selectCity(c)">
-	   	{{c.name}}
+	  <a class="item item-icon-right" x-ng-repeat="c in province.City" x-ng-click="selectCity(c)">
+	   	{{c.Name}}
 	   <i class="icon ion-ios7-arrow-forward"></i>
 	  </a>
  </div>
  
   <div class="list" x-ng-show="step=='area'">
-	  <a class="item item-icon-right" x-ng-repeat="c in city.area" x-ng-click="selectArea(c)">
-	   	{{c.name}}
+	  <a class="item item-icon-right" x-ng-repeat="c in city.Area" x-ng-click="selectArea(c)">
+	   	{{c.Name}}
 	   <i class="icon ion-ios7-arrow-forward"></i>
 	  </a>
  </div>
