@@ -46,6 +46,7 @@
          <config-file target="config.xml" parent="/*">
              <feature name="Unionpay">
                  <param name="ios-package" value="Unionpay" />
+                 <param name="onload" value="true" />
              </feature>
          </config-file>
 

@@ -5,34 +5,26 @@
     },
     "config_munge": {
         "files": {
-            "config.xml": {
-                "parents": {
-                    "/*": [
-                        {
-                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Unionpay\"><param name=\"ios-package\" value=\"Unionpay\" /></feature>",
-                            "count": 1
-                        }
-                    ]
-                }
-            },
             "framework": {
                 "parents": {
+                    "libc++.dylib": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "QuartzCore.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "Security.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
                     "ImageIO.framework": [
                         {
                             "xml": "true",
@@ -62,22 +54,30 @@
                             "xml": "false",
                             "count": 1
                         }
-                    ],
-                    "libc++.dylib": [
+                    ]
+                }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
                         {
-                            "xml": "false",
+                            "xml": "<feature name=\"Unionpay\"><param name=\"ios-package\" value=\"Unionpay\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
-                        }
-                    ],
-                    "QuartzCore.framework": [
+                        },
                         {
-                            "xml": "false",
+                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
                             "count": 1
-                        }
-                    ],
-                    "Security.framework": [
+                        },
                         {
-                            "xml": "false",
+                            "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -86,6 +86,9 @@
         }
     },
     "installed_plugins": {
+        "cn.xj.bag.plugin.unionpay": {
+            "PACKAGE_NAME": "cn.xj.bag.client"
+        },
         "com.ionic.keyboard": {
             "PACKAGE_NAME": "cn.xj.bag.client"
         },
@@ -96,9 +99,6 @@
             "PACKAGE_NAME": "cn.xj.bag.client"
         },
         "org.apache.cordova.device": {
-            "PACKAGE_NAME": "cn.xj.bag.client"
-        },
-        "cn.xj.bag.plugin.unionpay": {
             "PACKAGE_NAME": "cn.xj.bag.client"
         }
     },
