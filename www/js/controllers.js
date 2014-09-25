@@ -593,6 +593,7 @@ angular.module('starter.controllers', [])
 // for unionpay test by jih ++++++++++++++++++++++++++
 .controller('UnionpayCtrl', function($scope, $http) {
     $scope.pay = function() {
+		
 		$http.jsonp("http://www.gouwudai.net.cn:8080/bag-unionpay-server/trade?callback=JSON_CALLBACK")
 		.success(function(data, status) {
 			cn.xj.bag.plugin.Unionpay.payForTest(data.tn, function(msg) {
@@ -604,6 +605,13 @@ angular.module('starter.controllers', [])
 			alert("error " + data + " " + status);
 		});
 	}
+	
+	$scope.toast = function() {
+		// https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin
+
+		window.plugins.toast.showShortCenter("这是一个警告！！！\n这是第二个警告！！！\n这是第三个警告！！！")
+	}
+	
 })
 // ---------------------------------------------------
 
