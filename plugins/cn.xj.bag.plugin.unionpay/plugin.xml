@@ -55,6 +55,7 @@
          <header-file src="src/ios/UPPayPlugin.h" />
          <header-file src="src/ios/UPPayPluginDelegate.h" />
          <source-file src="src/ios/libUPPayPlugin.a" framework="true" />
+<!--         <source-file src="src/ios/libUPPayPlugin.a" framework="true" compiler-flags="-lc++" />-->
          <framework src="libc++.dylib" />
          <framework src="QuartzCore.framework" />
          <framework src="Security.framework" />

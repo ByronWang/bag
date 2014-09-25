@@ -53,46 +53,46 @@
             <!--</a>-->
             <!--</div>-->
 
-            <div class="row" style="padding: 0 0 0 0">
-                <div class="col" style="padding: 0">
-                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">
-                        <img src="img/products/bag.jpg">
-                        <h2>皮革箱包</h2>
-                        <p>包</p>
-                    </a>
-                </div>
-                <div class="col" style="padding: 0">
-                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">
-                        <img src="img/products/camera.jpg">
-                        <h2>数码</h2>
-                        <p>单反相机</p>
-                    </a>
-                </div>
-            </div>
-            <div class="row" style="padding: 0 0 10px 0">
-                <div class="col" style="padding: 0">
-                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">
-                        <img src="img/products/diamond.jpg">
-                        <h2>珠宝饰品</h2>
-                        <p>钻石</p>
-                    </a>
-                </div>
-                <div class="col" style="padding: 0">
-                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">
-                        <img src="img/products/mask.jpg">
-                        <h2>个护化妆</h2>
-                        <p>面膜</p>
-                    </a>
-                </div>
-            </div>
-
-            <hr noshade="noshade" style="height: 15px; border: 0; background-color: #D9D9D9"/>
+<!--            <div class="row" style="padding: 0 0 0 0">-->
+<!--                <div class="col" style="padding: 0">-->
+<!--                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">-->
+<!--                        <img src="img/products/bag.jpg">-->
+<!--                        <h2>皮革箱包</h2>-->
+<!--                        <p>包</p>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--                <div class="col" style="padding: 0">-->
+<!--                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">-->
+<!--                        <img src="img/products/camera.jpg">-->
+<!--                        <h2>数码</h2>-->
+<!--                        <p>单反相机</p>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row" style="padding: 0 0 10px 0">-->
+<!--                <div class="col" style="padding: 0">-->
+<!--                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">-->
+<!--                        <img src="img/products/diamond.jpg">-->
+<!--                        <h2>珠宝饰品</h2>-->
+<!--                        <p>钻石</p>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--                <div class="col" style="padding: 0">-->
+<!--                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">-->
+<!--                        <img src="img/products/mask.jpg">-->
+<!--                        <h2>个护化妆</h2>-->
+<!--                        <p>面膜</p>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!---->
+<!--            <hr noshade="noshade" style="height: 15px; border: 0; background-color: #D9D9D9"/>-->
 
             <div class="row icon_lists text-center" x-ng-repeat="nc in category">
-                <div class="row">
-                    <div class="col col-25 text-center" x-ng-repeat="c in nc">
+                <div class="row" style=" padding: 0 0 0 0">
+                    <div class="col col-25 text-center" x-ng-repeat="c in nc" style="border-style: solid; border-width: 1px; padding: 0 0 0 0">
                         <a ng-href="#/tab/products-category/{{c.id}}">
-                            <i class="icon iconfont {{c.icon}}" style="background-color: {{c.color}}"></i>
+                            <i class="icon iconfont {{c.icon}}" style="background-color: #FFFFFF; color: {{c.color}}"></i>
                             <div class="name">{{c.name}}</div>
                         </a>
                     </div>
