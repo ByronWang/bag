@@ -608,6 +608,9 @@ angular.module('starter.controllers', [])
 	
 	$scope.toast = function() {
 		// https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin
+		
+		// cordova plugin add https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
+		// cordova prepare
 
 		window.plugins.toast.showShortCenter("这是一个警告！！！\n这是第二个警告！！！\n这是第三个警告！！！")
 	}
