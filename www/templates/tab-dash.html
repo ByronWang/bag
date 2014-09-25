@@ -1,7 +1,7 @@
 <ion-view title="主页">
     <style>
         div.box{
-            height: 200px;
+            height: 160px;
             text-align: center;
         }
 
@@ -9,6 +9,12 @@
             width: 100%
         }
 
+        .rect{
+            border: #eaedee solid;
+            border-width: 0 1px 1px 0;
+            height: 0;
+            padding: 4% 0 29% 0;
+         }
     </style>
 
     <ion-nav-buttons side="left">
@@ -89,8 +95,8 @@
 <!--            <hr noshade="noshade" style="height: 15px; border: 0; background-color: #D9D9D9"/>-->
 
             <div class="row icon_lists text-center" x-ng-repeat="nc in category" style="padding: 0">
-                <div class="row" style="padding: 0">
-                    <div class="col col-33 text-center" x-ng-repeat="c in nc" style="padding-top: 5%; padding-bottom: 5%; border-right:1px solid #eaedee; border-bottom: 1px solid #eaedee;">
+                <div class="row" style="padding: 0;">
+                    <div class="col col-33 text-center rect" x-ng-repeat="c in nc">
                         <a ng-href="#/tab/products-category/{{c.id}}">
                             <i class="icon iconfont {{c.icon}}" style="background-color: #FFFFFF; color: {{c.color}}; font-size: 350%;"></i>
                             <br/>
@@ -99,6 +105,21 @@
                     </div>
                 </div>
             </div>
+
+            <!--<table width="100%">-->
+                <!--<tbody>-->
+                    <!--<tr x-ng-repeat="nc in category" style="display: table-row">-->
+                        <!--<td x-ng-repeat="c in nc" style="width: 33.33333%; height: 100%; display: table-cell; border-collapse: collapse;">-->
+                            <!--<a ng-href="#/tab/products-category/{{c.id}}">-->
+                                <!--<i class="icon iconfont {{c.icon}}" style="background-color: #FFFFFF; color: {{c.color}}; font-size: 350%;"></i>-->
+                                <!--<br/>-->
+                                <!--<div class="name">{{c.name}}</div>-->
+                            <!--</a>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                <!--</tbody>-->
+            <!--</table>-->
+
         <!--</div>-->
 
         </div>
