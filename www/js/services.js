@@ -294,7 +294,7 @@ angular.module('starter.services', [])
 
 	  var cat1 = [];
 	  
-	 var colors =[ "#6cc143","#f5c132" ,"#fd8e35" ,"#ff565b" ,"#fe8864" ,"#42bde8" ,"#7b7ad7" ,"#f8cc58" ,"#fd8e35" ,"#f5c132" ,"#da70d6"];
+	 var colors =[ "#6cc143","#f5c132" ,"#fd8e35" ,"#ff565b" ,"#fe8864" ,"#42bde8" ,"#7b7ad7" ,"#f8cc58" ,"#fd8e35" ,"#da70d6"]; //  ,"#f5c132"
 	  
 	  angular.forEach(categories,function(c){
 		  if(c.level == 1){
@@ -308,15 +308,13 @@ angular.module('starter.services', [])
 	  ncat.push(nscat);
 	  
 	  angular.forEach(cat1,function(c){
-		  c.color = colors[index];
+		  c.color = colors[index++];
+
+          if (index >= colors.length) {
+              index = 0;
+          }
 		  
-		  if(index < colors.length){
-			  index = index + 1;			  
-		  }else{
-			  index = 0;
-		  }
-		  
-		  if(nscat.length>=4){
+		  if(nscat.length>=3){
 			  nscat = [];
 			  ncat.push(nscat);
 		  }
