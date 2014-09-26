@@ -1,282 +1,298 @@
 /* Empty. Add your own CSS if you like */
 
-table tr th{
-	text-align: left;
-	font-size: 60%;
-	width: 4em;
+table tr th {
+    text-align: left;
+    font-size: 60%;
+    width: 4em;
 }
 
-.item-options-right{
-  padding-right: 120px; }
-
-.item-options-right > .options{
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  -moz-align-items: center;
-  align-items: center;
-  position: absolute;
-  top: 0px;
-  right: 16px;
-  min-width: 34px;
-  min-height: 34px;
-  font-size: 18px;
-  line-height: 32px; 
-  height: 100%;
-vertical-align: middle;
+.item-options-right {
+    padding-right: 120px;
 }
-  
-  .item-options-right > .button .icon:before {
+
+.item-options-right > .options {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    right: 16px;
+    min-width: 34px;
+    min-height: 34px;
+    font-size: 18px;
+    line-height: 32px;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.item-options-right > .button .icon:before {
     position: relative;
     left: auto;
     width: auto;
-    line-height: 31px; }
-  .item-options-right > .button > .button {
+    line-height: 31px;
+}
+
+.item-options-right > .button > .button {
     margin: 0px 2px;
     min-width: 34px;
     min-height: 34px;
     font-size: 18px;
-    line-height: 32px; }
-    
+    line-height: 32px;
+}
 
 .item-product-image {
-  padding: 0;
-  text-align: left; 
+    padding: 0;
+    text-align: left;
 }
 
-.item-product-image  img:first-child, .item-image .list-img {
-    vertical-align: middle; 
-}
-    
-    
-.item-product-image .img-product{
-	padding:3px;
-	height: 160px;
-	width: 120px;	
+.item-product-image img:first-child, .item-image .list-img {
+    vertical-align: middle;
 }
 
-.scroll-content{	
+.item-product-image .img-product {
+    padding: 3px;
+    height: 160px;
+    width: 120px;
 }
-a{
-	text-decoration: none;
-	color: black;
+
+.scroll-content {
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }
 
 .button .badge {
-  position: absolute;
-  top: -3px; 
-  left:-3px;
-  }
-  
-  .bar{
-  color: #f0b840;
-  }
-  
-  .tab-item-active{
-  	color: red;
-  }
-  .item{
-  	/*font-size: 10px;*/
-      font-size: 100%;
-  }
-
-.bar-subheader .tabs{
-	line-height: 33px;
-	padding-top: 17px;	
+    position: absolute;
+    top: -3px;
+    left: -3px;
 }
 
-.bar-subheader .tabs .tab-item.tab-item-active{
-  	border-bottom: solid 1px red;
- }
-
- .bar-subheader{
- 	padding: 0px;
- }
- .bar-subheader .tabs{
- 	background: none;
- }
- 
- .item-value {
-  float: right;
-  color: black;
-  font-size: 14px; 
- }
-  .item-lang-value {
-  padding-top:5px;
-  float: left;
-  color: black;
-  font-size: 14px; 
-  overflow:  visible;
- }
- 
- .list.view{
- 	border: none;
- 	background: none;
- }
- 
-.list.view .item{
- 	border: none;
- 	background: none;
- 	padding: 1px;
-} 
-  
-.view-button .item-avatar{
-  	min-height: 44px;
-}
-  
-.view-button .item-avatar .button{
-  	top: 18px;
+.bar {
+    color: #f0b840;
 }
 
-img.main{
-	width: 160px;
-	height: 160px;	
+.tab-item-active {
+    color: red;
+}
+
+.item {
+    /*font-size: 10px;*/
+    font-size: 100%;
+}
+
+.bar-subheader .tabs {
+    line-height: 33px;
+    padding-top: 17px;
+}
+
+.bar-subheader .tabs .tab-item.tab-item-active {
+    border-bottom: solid 1px red;
+}
+
+.bar-subheader {
+    padding: 0px;
+}
+
+.bar-subheader .tabs {
+    background: none;
+}
+
+.item-value {
+    float: right;
+    color: black;
+    font-size: 14px;
+}
+
+.item-lang-value {
+    padding-top: 5px;
+    float: left;
+    color: black;
+    font-size: 14px;
+    overflow: visible;
+}
+
+.list.view {
+    border: none;
+    background: none;
+}
+
+.list.view .item {
+    border: none;
+    background: none;
+    padding: 1px;
+}
+
+.view-button .item-avatar {
+    min-height: 44px;
+}
+
+.view-button .item-avatar .button {
+    top: 18px;
+}
+
+img.main {
+    width: 160px;
+    height: 160px;
 }
 
 .item-graph {
-  overflow: auto;
-  text-overflow: inherit;
-  white-space: normal; 
+    overflow: auto;
+    text-overflow: inherit;
+    white-space: normal;
 }
 
-.thumbnails_lists a{
-	padding: 5px;
-  float:left;
-  width: 100px;
-  height: 120px;
-  text-align: center;
+.thumbnails_lists a {
+    padding: 5px;
+    float: left;
+    width: 100px;
+    height: 120px;
+    text-align: center;
 }
 
-.thumbnails_lists a img{
-	height: 80px;
-	width: 80px;
-	box-shadow: 1px 1px 1px #bbbbbb;
+.thumbnails_lists a img {
+    height: 80px;
+    width: 80px;
+    box-shadow: 1px 1px 1px #bbbbbb;
 }
 
-.icon_lists a{
-  /*float:left;*/
-  width: 80px;
-  height: 82px;
-  text-align: center;
-  text-decoration: none;
+.icon_lists a {
+    /*float:left;*/
+    width: 80px;
+    height: 82px;
+    text-align: center;
+    text-decoration: none;
 }
 
-.icon_lists .name{
+.icon_lists .name {
     overflow: hidden;
     text-decoration: none;
     color: black;
-    margin-top:8px
-}
-.icon_lists .icon{
-  font-size: 40px;
-  line-height: 60px;
-  margin: 10px 0;
-  color:white;
-  -webkit-transition: font-size 0.25s ease-out 0s;
-  -moz-transition: font-size 0.25s ease-out 0s;
-  transition: font-size 0.25s ease-out 0s;
-  
-  padding:6px;
-  border-radius: 12px 12px;
-  background-color: OrangeRed;
-  text-decoration: none;
+    margin-top: 8px
 }
 
-.icon_lists .icon:hover{
+.icon_lists .icon {
+    font-size: 40px;
+    line-height: 60px;
+    margin: 10px 0;
+    color: white;
+    -webkit-transition: font-size 0.25s ease-out 0s;
+    -moz-transition: font-size 0.25s ease-out 0s;
+    transition: font-size 0.25s ease-out 0s;
+
+    padding: 6px;
+    border-radius: 12px 12px;
+    background-color: OrangeRed;
+    text-decoration: none;
 }
 
-.list.layout{
-	border: none;
-	padding: 0em;	
-}
-.list.layout .item{
-	border: none;
-	padding: 10px 0px;
+.icon_lists .icon:hover {
 }
 
-.item-checkbox-left{
-  padding-left: 40px;
+.list.layout {
+    border: none;
+    padding: 0em;
 }
-  .item-checkbox-left  input {
+
+.list.layout .item {
+    border: none;
+    padding: 10px 0px;
+}
+
+.item-checkbox-left {
+    padding-left: 40px;
+}
+
+.item-checkbox-left input {
     position: absolute;
     top: 10px;
     left: 15px;
     max-width: 20px;
     max-height: 20px;
-    width: 20px; }
+    width: 20px;
+}
 
 .item-checkbox-thumbnail-left, .item-checkbox-thumbnail-left .item-content {
-  padding-left: 136px;
-  min-height: 100px; 
+    padding-left: 136px;
+    min-height: 100px;
 }
-  .item-checkbox-thumbnail-left  .item-content  img:first-child{
+
+.item-checkbox-thumbnail-left .item-content img:first-child {
     position: absolute;
     top: 10px;
     left: 40px;
     max-width: 80px;
     max-height: 80px;
-    width: 100%; }
-    
-  .item-checkbox-thumbnail-left .item-content  input[type=checkbox] {
+    width: 100%;
+}
+
+.item-checkbox-thumbnail-left .item-content input[type=checkbox] {
     position: absolute;
     top: 40px;
     left: 15px;
     max-width: 20px;
     max-height: 20px;
-    width: 20px; }
+    width: 20px;
+}
 
 .item-avatar.item-complex, .item-avatar-left.item-complex, .item-checkbox-thumbnail-left.item-complex {
-  padding-left: 0; }
+    padding-left: 0;
+}
 
-  
-  
- .item-range-input{
- 	padding-right: 10px;
- }
-  .item-range-input .seperator{ 
+.item-range-input {
+    padding-right: 10px;
+}
+
+.item-range-input .seperator {
     -webkit-box-flex: 1;
     -webkit-flex: 1 0 10px;
     -moz-box-flex: 1;
     -moz-flex: 1 0 10px;
     -ms-flex: 1 0 10px;
     flex: 1 0 10px;
- }
- 
- .item-input.item-range-input input{
+}
+
+.item-input.item-range-input input {
     -webkit-box-flex: 10;
     -webkit-flex: 10 0 40px;
     -moz-box-flex: 10;
     -moz-flex: 10 0 40px;
     -ms-flex: 10 0 40px;
     flex: 10 0 40px;
- }
- 
- .item-input-note input{
+}
+
+.item-input-note input {
     -webkit-box-flex: 10;
     -webkit-flex: 10 0 40px;
     -moz-box-flex: 10;
     -moz-flex: 10 0 40px;
     -ms-flex: 10 0 40px;
-    flex: 10 0 40px; 
- }
- 
- .item-input-note .item-note{
+    flex: 10 0 40px;
+}
+
+.item-input-note .item-note {
     -webkit-box-flex: 10;
     -webkit-flex: 10 0 20px;
     -moz-box-flex: 10;
     -moz-flex: 10 0 20px;
     -ms-flex: 10 0 20px;
-    flex: 10 0 20px;  	
+    flex: 10 0 20px;
     padding-left: 10px;
- }
- 
- 
- input.ng-invalid.ng-dirty{
- 	background-color: red;
- }
+}
+
+input.ng-invalid.ng-dirty {
+    background-color: red;
+}
+
+textarea {
+    resize: none;
+}
