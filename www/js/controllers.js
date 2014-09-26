@@ -9,6 +9,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('DashCtrl', function($scope, $ionicSlideBoxDelegate,Category,$ionicModal) {
+    $scope.rectHeight = document.body.clientWidth / 3;
 	$scope.category = Category.level1Grouped();
 	$scope.search = function(){
 		  $ionicModal.fromTemplateUrl('templates/modal-search.html', {
