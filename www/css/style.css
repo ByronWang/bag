@@ -82,7 +82,8 @@ a{
   	color: red;
   }
   .item{
-  	font-size: 10px;
+  	/*font-size: 10px;*/
+      font-size: 100%;
   }
 
 .bar-subheader .tabs{

@@ -14,11 +14,11 @@
             width: 100%;
         }
 
-        .rect{
+        .rect {
             border: #eaedee solid;
             border-width: 0 1px 1px 0;
-            /*height: 0;*/
-            /*padding: 4% 0 29% 0;*/
+            vertical-align: middle;
+            text-align: center;
          }
 
         td.rect i {
@@ -127,13 +127,11 @@
         <table width="100%">
             <tbody>
             <tr x-ng-repeat="nc in category">
-                <td x-ng-repeat="c in nc" class="rect"
-                    style="width: 33.33333%; height: {{rectHeight}}px; vertical-align: middle; text-align: center;">
+                <td x-ng-repeat="c in nc" class="rect" style="height: {{rectHeight}}px;">
                     <br/>
-                    <a ng-href="#/tab/products-category/{{c.id}}" style="">
+                    <a ng-href="#/tab/products-category/{{c.id}}">
                         <i class="icon iconfont {{c.icon}}" style="color: {{c.color}};"></i>
                         <br/><br/>
-
                         <div class="name" style="font: bold">{{c.name}}</div>
                     </a>
                 </td>
