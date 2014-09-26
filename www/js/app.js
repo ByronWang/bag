@@ -100,7 +100,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
       })
 
     .state('tab.products-caterory', {
-      url: '/products-category/:ProductKind',
+      url: '/products-category/:CategoryLevel1',
       views: {
         'tab-dash': {
           templateUrl: 'templates/products.html',
