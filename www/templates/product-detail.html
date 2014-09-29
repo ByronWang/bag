@@ -4,7 +4,7 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view title="{{product.name}}">
+<ion-view title="{{product.Name}}">
 	<ion-nav-buttons side="right">      
       <a class="button button-icon icon ion-ios7-cart"  href="#/tab/cart">
 	    <span  class="badge badge-positive">{{cart.size()}}</span>
@@ -17,10 +17,11 @@
 	    <img x-ng-src="{{host}}/{{product.Image}}">
 	  </div>
 	  <div class="item item-divider">
-	   物品信息
+	   {{product.CategoryDesc}}
 	  </div>
+	  <div class="item">
 	    <h2>{{product.Name}}</h2>
-	    <p>{{product.Description}}</p>
+	    <p>{{product.Description}}</p></div>
 	  <label class="item">品牌<span class="item-value">{{product.Brand}}</span></label>
 	  <label class="item">预想总价<span class="item-value">{{product.ExpectedPrice}}元（人民币）</span></label>
 	  <div class="item item-divider">
@@ -29,7 +30,7 @@
   	  <label class="item">功效<span class="item-value">{{product.Exts.Function}}</span></label>
  	  <label class="item">色泽<span class="item-value">{{product.Exts.Color}}</span></label>
   	 	<div class="item item-divider"> 代购信息 </div>
-	   <label class="item">代购国家<span class="item-value">{{product.Country}}</span></label>
+	   <label class="item">代购国家<span class="item-value">{{product.CountryName}}</span></label>
 	  <label class="item">预想总价<span class="item-value">{{product.ExpectedPrice}}元（人民币）</span></label>
  </div>
 

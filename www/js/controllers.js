@@ -32,25 +32,26 @@ angular.module('starter.controllers', [])
 	
 	$scope.onScroll = function(){
 		$ionicSlideBoxDelegate.$getByHandle('band').stop();
-	}
+	};
 	$scope.onScrollComplete = function(){
 		$ionicSlideBoxDelegate.$getByHandle('band').start();
-	}
+	};
 })
 
 .controller('ProductsCategoryCtrl', function($scope, $stateParams,Category,Products) {
   $scope.products = Products.query($stateParams);
-  $scope.category = Category.get($stateParams.ProductKind);
+  $scope.category = Category.get($stateParams.CategoryLevel1);
 })
 
 .controller('ProductsCtrl', function($scope, Products) {
   $scope.products = Products.query();
 })
 
-.controller('ProductDetailCtrl', function($scope, $stateParams, Products,Exts) {
+.controller('ProductDetailCtrl', function($scope, $stateParams, Products,Exts,Category) {
   $scope.product = Products.get($stateParams,function(){;
 	  $scope.product.Exts = Exts.decode($scope.product.Extends);
-	  $scope.product.Extends = undefined;	  
+	  $scope.product.Extends = undefined;
+	  $scope.product.CategoryDesc = Category.get($scope.product.CategoryID).Desc;
   });
   $scope.selectThis = function(){
 	  var item = {};
@@ -146,7 +147,7 @@ angular.module('starter.controllers', [])
 	};
 })
 
-.controller('NewProductCtrl', function($scope, $ionicActionSheet,$ionicModal, $timeout,Products,Camera,Orders,DeliveryMethods,Countries,Category,Exts) {
+.controller('NewProductCtrl', function($scope, $ionicActionSheet,$ionicModal, $timeout,Products,Camera,Orders,Countries,Category,Exts) {
 	$scope.product = {};
 	$scope.categories = Category.level1();
 	$scope.item = {
@@ -155,30 +156,32 @@ angular.module('starter.controllers', [])
 	
 	$scope.categoryInEdit=true;
 	
-	$scope.product.ProductDetailKind ="";
+	$scope.product.CategoryDesc ="";
 	
 	$scope.selectCat =function(cat){
 		var cs = Category.children(cat.ID);
 		if(cs.length>0){
 			$scope.categories = cs;
-			if($scope.product.ProductDetailKind != ""){
-				$scope.product.ProductDetailKind = $scope.product.ProductDetailKind + " > " + cat.Name;				
+			if($scope.product.CategoryDesc != ""){
+				$scope.product.CategoryDesc = $scope.product.CategoryDesc + " > " + cat.Name;				
 			}else{
-				$scope.product.ProductDetailKind = cat.Name;
+				$scope.product.CategoryDesc = cat.Name;
 			}
-			if(!$scope.product.ProductKind){
-				$scope.product.ProductKind = cat.Name;				
+			if(!$scope.product.CategoryLevel1ID){
+				$scope.product.CategoryLevel1ID = cat.ID;	
+				$scope.product.CategoryLevel1Name = cat.Name;				
 			}
 		}else{
 			$scope.categoryInEdit=false;
-			if(!$scope.product.ProductKind){
-				$scope.product.ProductKind = cat.Name;				
+			if(!$scope.product.CategoryID){
+				$scope.product.CategoryID = cat.ID;			
+				$scope.product.CategoryName = cat.Name;				
 			}
 			
-			if($scope.product.ProductDetailKind!=""){
-				$scope.product.ProductDetailKind = $scope.product.ProductDetailKind + " > " + cat.Name;				
+			if($scope.product.CategoryDesc!=""){
+				$scope.product.CategoryDesc = $scope.product.CategoryDesc + " > " + cat.Name;				
 			}else{
-				$scope.product.ProductDetailKind = cat.Name;
+				$scope.product.CategoryDesc = cat.Name;
 			}
 		}
 	};
@@ -219,7 +222,7 @@ angular.module('starter.controllers', [])
 	  };
 	  
 		$scope.popupCountries = function(){
-			  $scope.datalist = Countries.all();
+			  $scope.datalist = Countries.query();
 			  
 			  $ionicModal.fromTemplateUrl('templates/modal-select.html', {
 			    scope: $scope,
@@ -230,7 +233,8 @@ angular.module('starter.controllers', [])
 			  });
 			  	
 			  $scope.ret = function(item) {
-					$scope.product.Country =item.name;
+					$scope.product.CountryID =item.ID;
+					$scope.product.CountryName =item.Name;
 			  };
 			  			  
 			  $scope.closeModal = function() {	    			  

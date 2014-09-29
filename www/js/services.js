@@ -61,6 +61,15 @@ angular.module('starter.services', [])
 	  var categories =[];
 	  var categoriesLevel1 = [];
 	  var categoriesGrouped = [];
+
+	  function desc(id,name){
+		  	  angular.forEach(categories,function(c){
+				  if(c.ParentID == id){
+					  c.Desc = name + ">" +c.Name;
+					  desc(c.ID,c.Name);
+				  }
+			  });
+	  }
 	  
 	  $http.get('js/Categories.json').then(function(resp) {
 		     var cats = resp.data;
@@ -92,12 +101,17 @@ angular.module('starter.services', [])
 					  categoriesGrouped.push(nscat);
 				  }
 				  nscat.push(c);
+				  
+
+				 desc(c.ID,c.Name);
 			  });
 			  
 		  }, function(err) {
 		    console.error('ERR', err);
 		    // err.status will contain the status code
 		  });
+	  
+	  
 
 	  return {
 		    all: function() {
@@ -109,10 +123,10 @@ angular.module('starter.services', [])
 	    level1: function() {
 		      return categoriesLevel1;
 		    },
-	    get: function(name) {
+	    get: function(id) {
 	    	var cat;
 			  angular.forEach(categories,function(c){
-				  if(c.Name == name){
+				  if(c.ID == id){
 					 cat =  c;
 				  }
 			  });
@@ -133,27 +147,8 @@ angular.module('starter.services', [])
 })
 
 
-.factory('Countries', function() {
-	  // Might use a resource here that returns a JSON array
-
-	  // Some fake testing data
-	  var countries = [
-		{id:1,name:'美国',},
-		{id:2,name:'韩国'},
-		{id:3,name:'日本'},
-		{id:3,name:'英国'},
-		{id:3,name:'德国'}
-	  ];
-
-	  return {
-	    all: function() {
-	      return countries;
-	    },
-	    get: function(id) {
-	      // Simple index lookup
-	      return countries[id-1];
-	    }
-	  };
+.factory('Countries', function($resource,Host) {
+	  return $resource(Host.host +  '/d/Country/:countryId');
 })
 
 .factory('Products', function($resource,Host) {
