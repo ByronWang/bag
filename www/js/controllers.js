@@ -63,7 +63,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('CartCtrl', function($scope,$ionicModal, Orders,Address) {
+.controller('CartCtrl', function($scope,$ionicModal, Orders,Address,Exts) {
 	$scope.step = 1;
 	
 	$scope.order = { Items:[]};
@@ -96,6 +96,11 @@ angular.module('starter.controllers', [])
 			c.Items = newitems;
 		});
 		/*Orders.add($scope.order);*/
+
+		angular.forEach($scope.order.Items,function(newitem){
+			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
+			newitem.Product.Exts = undefined;			
+		});
 		
 	    var Order = new Orders($scope.order);
 	    Order.$save();
@@ -362,12 +367,14 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('OrderCustomerDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,OrderFlow,Exts) {
+.controller('OrderCustomerDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,OrderFlow,Category,Exts) {
 	$scope.order =Orders.get($stateParams,function(){
 		angular.forEach($scope.order.Items,function(i){
 			if(i.ID == $stateParams.itemId){
 				$scope.item = i;		
 				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+				$scope.item.Product.Extends = undefined;
+				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
 			}
 		});
 	});

@@ -160,6 +160,11 @@ angular.module('starter.services', [])
   return $resource(url);
 })
 
+.factory('OrderItems', function($resource,Host) {
+	var url = Host.host +  '/d/OrderItem/:itemId';
+	return $resource(url);
+})
+
 .factory('OrderFlow', function($resource,Host) {
   return $resource(Host.host +  '/d/OrderItem/:itemId/OrderItemFlow');
 })
