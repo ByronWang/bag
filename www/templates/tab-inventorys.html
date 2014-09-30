@@ -1,38 +1,28 @@
-<ion-view title="清单">
+<ion-view title="清单 ({{countryName}})">
 	<ion-nav-buttons side="right">      
       <a class="button button-icon icon ion-navicon" x-ng-click="filter()">
      </a>
   </ion-nav-buttons>
   <ion-content class="has-header">
-    <div ng-show="products.length==0">
-    <p>{{country}}暂时还没有商品哦！</p></div>
+    <div x-ng-show="inventorys.length==0">
+    <p>{{countryName}}暂时还没有商品哦！</p></div>
     
+    <!-- 
         <div class="list padding-top" x-ng-repeat="inventory in inventorys | filter: country" >
-    
 	   <div class="item item-divider">
-	    	{{inventory.country}} &nbsp;	    	{{inventory.date}}
-	  </div>
-  
-      <a ng-repeat="item in inventory.Items"  class="item"  href="#/tab/inventory/{{inventory.id}}/{{$index}}">
-			<div>
-				<table>
-					<tbody>
-			  		<tr>
-			  			<th>类&nbsp;&nbsp;型：</th>
-			  			<td>{{item.type}}</td>
-			  		</tr>
-			  		<tr>
-			  			<th>总金额：</th>
-			  			<td>{{item.amount}}</td>
-			  		</tr>
-			  		<tr>
-			  			<th>竞单期限：</th>
-			  			<td>{{item.deadline}}</td>
-			  		</tr>
-			  		</tbody>
-		  			<tfoot><tr><th rowspan="2">已有{{item.suitors.length}}位买手参与此次购买</th></tr></tfoot>
-		  	</table>
-      </div>
-    </a>
+	    	{inventory.country} &nbsp;	    	{inventory.date}
+	  </div> -->
+	  
+  		      <a x-ng-repeat="item in inventorys"  class="item item-thumbnail-left item-info"  href="#/tab/inventory/{{item.ID}}">
+			      <img x-ng-src="{{host}}/{{item.Product.Image}}">
+			      <div class="list info"> 
+			      		<span class="item"><h3>{{item.Product.Name}}</h3></span>
+			      		<span class="item">价格 <span class="item-note"> {{item.Product.ExpectedPrice}}/元</span>      </span>
+			      		<span class="item">到货周期 <span class="item-note">{{item.lastMonth}}个月</span>   </span>
+			      		<span class="item">已有{{item.suitors.length}}位买手参与此次购买</span>
+			      </div>
+		      </a>
+    
+    
   </ion-content>
 </ion-view>

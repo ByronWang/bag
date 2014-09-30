@@ -139,7 +139,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
       }
     })
     .state('tab.inventory-detail', {
-      url: '/inventory/:inventoryId/:itemId',
+      url: '/inventory/:itemId',
       views: {
         'tab-inventorys': {
           templateUrl: 'templates/inventory-detail.html',

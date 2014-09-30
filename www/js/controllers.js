@@ -95,8 +95,7 @@ angular.module('starter.controllers', [])
 			});
 			c.Items = newitems;
 		});
-		/*Orders.add($scope.order);*/
-
+		
 		angular.forEach($scope.order.Items,function(newitem){
 			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
 			newitem.Product.Exts = undefined;			
@@ -264,14 +263,14 @@ angular.module('starter.controllers', [])
 })
 
 .controller('InventorysCtrl', function($scope,$ionicModal, Inventorys) {
-	$scope.country = "";
-	//$scope.inventorys = Inventorys.all();
+	$scope.countryName = "全部国家";
+	$scope.inventorys = Inventorys.query();
 	$scope.filter = function(){
 		  $ionicModal.fromTemplateUrl('templates/modal-filter.html', {
 		    scope: $scope,
 		    animation: 'slide-left-right'
 		  }).then(function(modal) {
-		    $scope.modal = modal;
+		    $scope.modalFilter = modal;
 		    $scope.modalFilter.show();
 		  });
 		
@@ -285,36 +284,56 @@ angular.module('starter.controllers', [])
 	};
 	
 	$scope.changeCountry = function(c){
-		$scope.country = c;
+		$scope.countryID = c.ID;
+		$scope.countryName = c.Name;
+		$scope.Inventorys = Inventorys.query();
 	};
 })
 
 
-.controller('InventoryDetailCtrl', function($scope,$state, $stateParams,$timeout,DeliveryMethods,$ionicSlideBoxDelegate, Inventorys) {
+.controller('InventoryDetailCtrl', function($scope,$state, $stateParams,OrderBiding,$timeout,$ionicModal,DeliveryMethod, Inventorys) {
 	$scope.step = 1;
-	$scope.suitor = {suitor: $scope.currentUser.username};
-	$scope.deliveryMethods = DeliveryMethods.all();
-	$scope.selDeliveryMethod = function(method){
-		$scope.step = 1;
-		$scope.suitor.deliveryMethod = method.name;
-	};
+	$scope.suitor = {
+			PurchaserID: 1, //TODO 
+			PurchaserName: $scope.currentUser.username,
+			OrderItemID:parseInt($stateParams.itemId)};
 	
 	$scope.showDeliveryMethods = function(){
-		$scope.step = 2;		
+		  $scope.datalist = DeliveryMethod.query();
+		  
+		  $ionicModal.fromTemplateUrl('templates/modal-select.html', {
+		    scope: $scope,
+		    animation: 'slide-left-right'
+		  }).then(function(modal) {
+		    $scope.modal = modal;
+		    $scope.modal.show();
+		  });
+		  	
+		  $scope.ret = function(item) {
+				$scope.suitor.DeliveryMethodID = item.ID;
+				$scope.suitor.DeliveryMethodName = item.Name;
+		  };
+		  			  
+		  $scope.closeModal = function() {	    			  
+			  	$scope.modal.hide();
+		    	$scope.modal.remove();
+		    	$scope.datalist = undefined;
+		  };	
+		  
 	};
+
+	  $scope.bids = OrderBiding.query({
+		  OrderItem:$scope.suitor.OrderItemID,
+		  Purchaser:$scope.suitor.PurchaserID
+	  });
 	
-  $scope.inventory = Inventorys.get($stateParams.inventoryId);
-  $scope.item  = $scope.inventory.Items[$stateParams.itemId];
   
   $scope.submit = function(){
-	  $scope.step =  3;
-	  $scope.item.suitors.push($scope.suitor);
-	 /*$state.go("tab.order-detail-p",{
-		  orderId:$scope.inventory.id,
-	  	  itemId:$scope.item.id
-	  });*/  
-  };
-  
+	  var post = new Bid($scope.suitor);
+	  post.$save(function(){
+		  $scope.step =  3;
+	  });
+  };  
 })
 
 
@@ -620,7 +639,7 @@ angular.module('starter.controllers', [])
 
 
 .controller('FilterCtrl', function($scope,$state,Countries) {
-	$scope.countries = Countries.all();
+	$scope.countries = Countries.query();
 	
 	$scope.ok = function(country){
 		$scope.changeCountry(country);

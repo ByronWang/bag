@@ -12,47 +12,16 @@ angular.module('starter.services', [])
 	};
 })
 
-.factory('Inventorys', function(Orders) {
-  // Might use a resource here that returns a JSON array
-
-	var inventorys = [];
-
-  return {
-    all: function() {
-    	inventorys = [];
-    	angular.forEach(Orders.all(),function(order){
-    		
-    		var items = [];
-        	angular.forEach(order.Items,function(item){
-        		if(item.StatusID == 1){
-        			items.push(item);
-        			if(!item.suitors){
-        				item.suitors = [];
-        			}
-        		}
-        	});
-        	
-        	if(items.length>0){
-        		var orderCopy = angular.copy(order);
-        		orderCopy.Items = items;
-            	inventorys.push(orderCopy);
-        	}
-    	});
-      return inventorys;
-    },
-    get: function(inventoryId) {
-    	if(inventorys.length<1){
-    		this.all();
-    	}
-	      // Simple index lookup
-	      return inventorys[inventoryId];
-	    },
-  getItem: function(inventoryId,itemId) {
-	      // Simple index lookup
-	      return inventorys[inventoryId].Items[itemId];
-	    }
-  };
+.factory('Inventorys', function($resource,Host) {
+	  return $resource(Host.host +  '/d/OrderItem/:itemId');
 })
+.factory('Bid', function($resource,Host) {
+	  return $resource(Host.host +  '/d/Bid/:bidId');
+})
+.factory('DeliveryMethod', function($resource,Host) {
+	  return $resource(Host.host +  '/d/DeliveryMethod/:itemId');
+})
+
 
 .factory('Category', function($http) {
 	  // Might use a resource here that returns a JSON array
