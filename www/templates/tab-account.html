@@ -1,4 +1,4 @@
-<ion-view title="Account">
+<ion-view title="我的">
 
     <style>
         /*#ffd670*/
@@ -12,25 +12,86 @@
         /*#a894da*/
         /*实现垂直居中的五种方法*/
         a.item i.color-icon {
-            width: 28px;
-            height: 28px;
+            width: 27px;
+            height: 27px;
             font-size: 22px;
             color: white;
             border-radius: 6px 6px;
+            padding-top: 1px;
             top: 0;
             bottom: 0;
             margin: auto;
         }
+
+        div.account {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -moz-flex;
+            display: -ms-flexbox;
+            display: flex;
+            padding: 5px;
+            width: 100%;
+            height: 104px;
+            background-image: url(img/account_bg.jpg);
+            background-size: 100%;
+        }
+
+        div.account a.avatar {
+            background: none;
+            border: 0;
+            display: block;
+            top: 0;
+            bottom: 0;
+            margin-top: auto;
+            margin-bottom: auto;
+            padding: 0 15px;
+        }
+
+        div.account a img {
+            border: 0;
+            display: block;
+            width: 64px;
+            height: 64px;
+            border-radius: 12px 12px;
+            padding-top: 1px;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        div.account p {
+            height: 64px;
+            top: 0;
+            bottom: 0;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
     </style>
 
     <ion-content class="has-header">
-        <div class="list">
-            <a class="item item-thumbnail-left item-icon-right" href="#/tab/accounts/info">
+        <div class="account">
+            <a class="item avatar" href="#/tab/accounts/info">
                 <img src="img/mcfly.jpg">
-
-                <h2>{{currentUser.username}}</h2>
-                <i class="icon ion-ios7-arrow-forward item-note"></i>
             </a>
+            <p>
+                <a style="font-size: 120%">{{currentUser.username}}</a>
+            </p>
+            <!--<a class="item">-->
+                <!--<h2>{{currentUser.username}}</h2>-->
+            <!--</a>-->
+            <!--<ul class="list">-->
+                <!--<a href="#/tab/accounts/info" style="background: none;">-->
+                    <!--<img src="img/mcfly.jpg">-->
+                <!--</a>-->
+                <!--adfadf-->
+                <!--<a  href="#/tab/accounts/info" style="background: none;">-->
+                    <!--<img src="img/mcfly.jpg">-->
+                <!--</a>-->
+            <!--</ul>-->
+        </div>
+
+        <div class="list">
 
             <a class="item item-icon-left item-icon-right" href="#/tab/accounts/setting">
                 <i class="icon ion-ios7-gear-outline color-icon" style="background-color: #ffd670"></i>
