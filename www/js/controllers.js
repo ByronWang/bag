@@ -291,7 +291,12 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('InventoryDetailCtrl', function($scope,$state, $stateParams,OrderBiding,$timeout,$ionicModal,DeliveryMethod, Inventorys) {
+.controller('InventoryDetailCtrl', function($scope,$state, Category,$stateParams,Exts,OrderBiding,$timeout,$state,$ionicModal,DeliveryMethod, Inventorys) {
+	$scope.item = Inventorys.get($stateParams,function(){
+		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+		$scope.item.Product.Extends = undefined;
+		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+	});
 	$scope.step = 1;
 	$scope.suitor = {
 			PurchaserID: 1, //TODO 
@@ -322,16 +327,25 @@ angular.module('starter.controllers', [])
 		  
 	};
 
-	  $scope.bids = OrderBiding.query({
-		  OrderItem:$scope.suitor.OrderItemID,
-		  Purchaser:$scope.suitor.PurchaserID
-	  });
+	$scope.loadBid = function(){
+		  $scope.bids = OrderBiding.query({
+			  OrderItem:$scope.suitor.OrderItemID,
+			  Purchaser:$scope.suitor.PurchaserID
+		  },function(){
+			  if($scope.bids.length>0){
+				  $scope.step =  3;	
+				  $scope.suitor = $scope.bids[0];
+			  }
+			  
+		  });
+	};
 	
+	$scope.loadBid();
   
   $scope.submit = function(){
-	  var post = new Bid($scope.suitor);
+	  var post = new OrderBiding($scope.suitor);
 	  post.$save(function(){
-		  $scope.step =  3;
+		  $scope.loadBid();
 	  });
   };  
 })
