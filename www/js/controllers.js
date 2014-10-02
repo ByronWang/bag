@@ -418,10 +418,10 @@ angular.module('starter.controllers', [])
 		$scope.flows =OrderItemFlowByItem.query($stateParams,function(){
 			if($scope.flows.length>0){
 				$scope.current = $scope.flows[$scope.flows.length-1];
-				$scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
+				$scope.statusActiveSlide = $scope.current.StatusID-1;
 			}else{
 				$scope.current = {StatusID:1};
-				$scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
+				$scope.statusActiveSlide = $scope.current.StatusID-1;
 				$scope.loadBid();
 			}
 		});
@@ -429,16 +429,8 @@ angular.module('starter.controllers', [])
 	
 	loadFlow();
 
-	  $scope.statusActiveSlide = 0;
+	$scope.statusActiveSlide = 0;
  
-  $scope.fromStatusToIndex = function(status){
-	  if(status>2){
-		  return status-2;
-	  }else{
-		  return status-1;
-	  }
-  };
-  
 
   var flowStepOut = function(status,action,params){	 
 	  	var step = {};
@@ -485,6 +477,7 @@ angular.module('starter.controllers', [])
 				  "ID": suitor.ID,
 				  "OrderItemID": suitor.OrderItemID,
 				  "PurchaserID": suitor.PurchaserID,
+				  "PurchaserName": suitor.PurchaserName,
 				  "Commission": suitor.Commission,
 				  "SuggestedPrice": suitor.SuggestedPrice,
 				  "DeliveryCost": suitor.DeliveryCost,
@@ -518,15 +511,15 @@ angular.module('starter.controllers', [])
 	});
 	
 	$scope.Actions = Actions;
-	$scope.steps = {};
+	
 	var loadFlow = function(){
 		$scope.flows =OrderItemFlowByItem.query($stateParams,function(){
 			if($scope.flows.length>0){
 				$scope.current = $scope.flows[$scope.flows.length-1];
-				$scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
+				$scope.statusActiveSlide = $scope.current.StatusID-1;
 			}else{
 				$scope.current = {StatusID:1};
-				$scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
+				$scope.statusActiveSlide = $scope.current.StatusID-1;
 				$scope.loadBid();
 			}
 		});
@@ -534,24 +527,23 @@ angular.module('starter.controllers', [])
 	
 	loadFlow();
 
-	  $scope.statusActiveSlide = 0;
+	$scope.statusActiveSlide = 0;
  
-  $scope.fromStatusToIndex = function(status){
-	  if(status>2){
-		  return status-2;
-	  }else{
-		  return status-1;
-	  }
-  };
-  
-  var flowStepOut = function(status,action,params){	  
-		if(!params){params={};}
-		params.OrderItemID = $scope.item.ID;
-		params.StatusID = status.ID;
-		params.StatusName = status.Name;
-		params.ActionID = action.ID;
-		params.ActionName = action.Name;
-		var post = new OrderItemFlow(params);
+
+  var flowStepOut = function(status,action,params){	 
+	  	var step = {};
+
+	  	step.Extends = angular.copy($scope.current.Extends);
+	  	step.Bid = angular.copy($scope.current.Bid);
+		if(params){
+			step=angular.copy(params,step);
+		}
+		step.OrderItemID = $scope.item.ID;
+		step.StatusID = status.ID;
+		step.StatusName = status.Name;
+		step.ActionID = action.ID;
+		step.ActionName = action.Name;
+		var post = new OrderItemFlow(step);
 		post.$save(function(){
 			loadFlow();
 			$state.reload();
