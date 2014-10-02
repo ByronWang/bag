@@ -56,37 +56,16 @@ angular.module('starter.controllers', [])
   $scope.selectThis = function(){
 	  var item = {};
 	  item.Product = $scope.product;
-	  item.Amount = 1;
+	  item.Quantity = 1;
 	  $scope.cart.add(item);
 	  return false;
   };
 })
-
-
-.controller('CartCtrl', function($scope,$ionicModal, Orders,Address,Exts) {
-	$scope.step = 1;
-	
-	$scope.order = { Items:[]};
+.controller('NewOrderCtrl', function($scope,$ionicModal, Orders,Address,Exts) {
 	$scope.Items = [];
 	$scope.country = {};
-	$scope.next = function(){
-		angular.forEach($scope.cart.Countrys,function(c){
-			angular.forEach(c.Items,function(i){
-				if(i.checked){
-					$scope.Items.push(i);
-					$scope.country = c;
-				}
-			});
-		});
-		$scope.order.country = $scope.country.name;
-		$scope.order.Items = $scope.Items;
-		$scope.step = 2;
-	}
-	$scope.checked = function(item){
-		item.checked = !item.checked;
-	}
 	$scope.submit = function(){
-		angular.forEach($scope.cart.Countrys,function(c){
+		/*angular.forEach($scope.cart.Countrys,function(c){
 			var newitems = [];
 			angular.forEach(c.Items,function(i){
 				if(!i.checked){
@@ -94,7 +73,7 @@ angular.module('starter.controllers', [])
 				}
 			});
 			c.Items = newitems;
-		});
+		});*/
 		
 		angular.forEach($scope.order.Items,function(newitem){
 			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
@@ -103,13 +82,11 @@ angular.module('starter.controllers', [])
 		
 	    var Order = new Orders($scope.order);
 	    Order.$save();
-	    
-		$scope.step = 1;
 	};
 	
 
-	$scope.popupProvinces = function(){
-		  
+
+	$scope.popupProvinces = function(){		  
 		  $ionicModal.fromTemplateUrl('templates/modal-provinces.html', {
 		    scope: $scope,
 		    animation: 'slide-left-right'
@@ -131,9 +108,51 @@ angular.module('starter.controllers', [])
 		  };	
 		  
 	};
+})
+.controller('CartCtrl', function($scope,$ionicModal, Exts) {
+
+	$scope.next = function(){
+		var items = [];
+		
+		angular.forEach($scope.cart.Countrys,function(c){
+			angular.forEach(c.Items,function(i){
+				if(i.checked){
+					items.push(i);
+					$scope.country = c;
+				}
+			});
+		});
+		
+		var order = {};
+		order.Items = items;
+		$scope.popupOrder(order);
+	};
 	
-	$scope.neworder = function(){
-		  $ionicModal.fromTemplateUrl('templates/modal-order-new.html', {
+	$scope.checked = function(item){
+		item.checked = !item.checked;
+	};
+	
+	$scope.newProduct = function(){
+		  $ionicModal.fromTemplateUrl('templates/modal-new-product.html', {
+		    scope: $scope,
+		    animation: 'slide-left-right'
+		  }).then(function(modal) {
+		    $scope.modal = modal;
+		    $scope.modal.show();
+		  });
+		
+		  $scope.openModal = function() {
+		    $scope.modal.show();
+		  };
+		  
+		  $scope.closeModal = function() {	    			  
+		    $scope.modal.hide();
+		  };	
+	};
+
+	$scope.popupOrder = function(order){
+		$scope.order = order;
+		  $ionicModal.fromTemplateUrl('templates/modal-new-order.html', {
 		    scope: $scope,
 		    animation: 'slide-left-right'
 		  }).then(function(modal) {

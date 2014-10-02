@@ -1,6 +1,6 @@
 <ion-view title="购物车">
     <ion-nav-buttons side="right">
-        <a class="button button-icon icon ion-plus" x-ng-click="neworder()"></a>
+        <a class="button button-icon icon ion-plus" x-ng-click="newProduct()"></a>
     </ion-nav-buttons>
 
     <ion-content>
@@ -8,11 +8,7 @@
     <div class="list">
     	<div class="item" x-ng-repeat="p in provinces">{{p.name}}</div>
     </div>
-        <div ng-show="cart.size()==0">
-            <!--<p >你还没有选中任何东西哦！</p>-->
-            <!--<div class="padding">-->
-            <!--<button class="button button-block button-positive"  x-ng-click="neworder()">新建订单</button>-->
-            <!--</div>-->
+        <div x-ng-show="cart.size()==0">
             <div class="card">
                 <div class="item item-text-wrap text-center">
                     <p><i class="icon ion-ios7-cart" style="font-size: 600%"></i></p>
@@ -20,11 +16,11 @@
                 </div>
             </div>
             <div class="padding">
-                <button class="button button-block button-positive" x-ng-click="neworder()">新建订单</button>
+                <button class="button button-block button-positive" x-ng-click="newProduct()">新建订单</button>
             </div>
         </div>
 
-        <pane x-ng-show="step==1 && cart.size()!=0">
+        <pane x-ng-show="cart.size()!=0">
 
             <ion-list   ng-repeat="country in cart.Countrys"  class="padding-horizontal"
                         show-delete="false"
@@ -39,7 +35,7 @@
 	              <div class="list info"> 
 			      		<span class="item"><h2>{{item.Product.Name}}</h2></span>
 			      		<span class="item">价格 <span class="item-note">{{item.Product.ExpectedPrice}}/元</span></span>
-			      		<span class="item">数量 <span class="item-note">{{item.Amount}}</span></span>
+			      		<span class="item">数量 <span class="item-note">{{item.Quantity}}</span></span>
 			      		<span class="item">到货周期 <span class="item-note">{{item.lastMonth}}个月</span></span>
 			      </div>
 		      
@@ -54,49 +50,6 @@
             </div>
         </pane>
 
-        <pane x-ng-show="step==2">
- 			<form name="mainform" novalidate>
- 			<div class="list">
-               <div x-ng-repeat="item in Items"  class="item item-thumbnail-left">
-                    <img x-ng-src="{{item.Product.Image}}">
-                    <h2>{{item.Product.Name}} </h2>
-                    <p>
-                        {{item.Product.Country}}
-                        价格：{{item.Product.ExpectedPrice}}/元
-                        数量：{{item.Amount}}
-                        到货周期：{{item.lastMonth}}个月</p>
-              </div>
- 		</div>
- 
-            <div class="list" >
-                <div class="item item-divider">
-                    收件地址
-                </div>
-               	<a class="item item-input item-icon-right"  x-ng-click="popupProvinces();"><span class="input-label">地区</span>
-   					<span class="item-note">{{order.Address.Province}}-{{order.Address.City}}-{{order.Address.Area}}</span><i class="icon ion-ios7-arrow-forward"></i></a>
-   
-                <label class="item item-input">
-                    <span class="input-label">详细地址</span>
-                    <input type="text" x-ng-model="order.Address.Address">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">邮编</span>
-                    <input type="text" x-ng-model="order.addres.Zip">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">收件人</span>
-                    <input type="text" x-ng-model="order.Address.Contact">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">联系电话</span>
-                    <input type="text" x-ng-model="order.Address.Phone">
-                </label>
-            </div>
-            <div class="padding">
-                <button class="button button-block  button-positive" x-ng-disabled="mainform.$invalid"  x-ng-click="submit()"> 确认</button>
-            </div>
-            </form>
-        </pane>
 
     </ion-content>
 </ion-view>
