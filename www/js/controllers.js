@@ -98,7 +98,7 @@ angular.module('starter.controllers', [])
 		
 		angular.forEach($scope.order.Items,function(newitem){
 			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
-			newitem.Product.Exts = undefined;			
+			newitem.Product.Exts = undefined;
 		});
 		
 	    var Order = new Orders($scope.order);
@@ -400,7 +400,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('OrderCustomerDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,OrderFlow,Category,Exts) {
+.controller('OrderCustomerDetailCtrl', function($scope,OrderItemFlowByItem,OrderItemFlow, Statuses,Actions,OrderBiding,$state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,Category,Exts) {
 	$scope.order =Orders.get($stateParams,function(){
 		angular.forEach($scope.order.Items,function(i){
 			if(i.ID == $stateParams.itemId){
@@ -412,14 +412,22 @@ angular.module('starter.controllers', [])
 		});
 	});
 	
-	$scope.flows =OrderFlow.query($stateParams,function(){
-		if($scope.flows.length>0){
-			$scope.current = $scope.flows[$scope.flows.length-1];
-		}else{
-			$scope.current = {StatusID:1};
-			$scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
-		}
-	});
+	$scope.Actions = Actions;
+	
+	var loadFlow = function(){
+		$scope.flows =OrderItemFlowByItem.query($stateParams,function(){
+			if($scope.flows.length>0){
+				$scope.current = $scope.flows[$scope.flows.length-1];
+				$scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
+			}else{
+				$scope.current = {StatusID:1};
+				$scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
+				$scope.loadBid();
+			}
+		});
+	};
+	
+	loadFlow();
 
 	  $scope.statusActiveSlide = 0;
  
@@ -431,6 +439,33 @@ angular.module('starter.controllers', [])
 	  }
   };
   
+
+  var flowStepOut = function(status,action,params){	 
+	  	var step = {};
+	  	
+	  	step.Extends = angular.copy($scope.current.Extends);
+		if(params){
+			step.Extends=angular.copy(params,step.Extends);
+		}
+		step.OrderItemID = $scope.item.ID;
+		step.StatusID = status.ID;
+		step.StatusName = status.Name;
+		step.ActionID = action.ID;
+		step.ActionName = action.Name;
+		var post = new OrderItemFlow(step);
+		post.$save(function(){
+			loadFlow();
+			$state.reload();
+	  });
+  };
+
+	$scope.loadBid = function(){
+		  $scope.bids = OrderBiding.query({
+			  OrderItem:$stateParams.itemId
+		  },function(){	  
+		  });
+	};
+	
   $scope.statusSlide = function(e,to){
 	  $ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
 	  var ele = angular.element(e);
@@ -442,49 +477,64 @@ angular.module('starter.controllers', [])
   };
   
 
-  $scope.bitSucceed = function(suitor){	  
-	  Orders.done($scope.item,Orders.StatusType.purchasing,'bitSucceed',suitor);
+  $scope.bitSucceed = function(suitor){
 	  
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
-	  $state.reload();
+	  var params = {
+			  Bid : {
+				  "ID": suitor.ID,
+				  "OrderItemID": suitor.OrderItemID,
+				  "PurchaserID": suitor.PurchaserID,
+				  "Commission": suitor.Commission,
+				  "SuggestedPrice": suitor.SuggestedPrice,
+				  "DeliveryCost": suitor.DeliveryCost,
+				  "DeliveryMethodID": suitor.DeliveryMethodID,
+				  "DeliveryMethodName": suitor.DeliveryMethodName
+		  }
+	  };
+	  
+	  flowStepOut(Statuses.purchasing,Actions.bitSucceed,params);
   };
   
   $scope.cancelOrder = function(){
-	  Orders.done($scope.item,Orders.StatusType.completed,'cancelOrder',{});
-	  
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
-	  $state.reload();
+	  flowStepOut(Statuses.completed,Actions.cancelOrder);
   };
   
   $scope.confirmDelivering= function(){
-	  Orders.done($scope.item,Orders.StatusType.completed,'delivered',{});
-	  
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
-	  $state.reload();
+	  flowStepOut(Statuses.completed,Actions.delivered);
   };
 })
 
-.controller('OrderPurchaserDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders) {
+.controller('OrderPurchaserDetailCtrl', function($scope,OrderItemFlowByItem,OrderItemFlow, Statuses,Actions,OrderBiding,$state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,Category,Exts) {
 	$scope.order =Orders.get($stateParams,function(){
 		angular.forEach($scope.order.Items,function(i){
 			if(i.ID == $stateParams.itemId){
 				$scope.item = i;		
 				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+				$scope.item.Product.Extends = undefined;
+				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
 			}
 		});
 	});
 	
-	$scope.flows =OrderFlow.query($stateParams,function(){
-		if($scope.flows.length>0){
-			$scope.current = $scope.flows[$scope.flows.length-1];
-		}else{
-			$scope.current = {StatusID:1};
-			$scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
-		}
-	});
+	$scope.Actions = Actions;
+	$scope.steps = {};
+	var loadFlow = function(){
+		$scope.flows =OrderItemFlowByItem.query($stateParams,function(){
+			if($scope.flows.length>0){
+				$scope.current = $scope.flows[$scope.flows.length-1];
+				$scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
+			}else{
+				$scope.current = {StatusID:1};
+				$scope.statusActiveSlide = $scope.fromStatusToIndex($scope.current.StatusID);
+				$scope.loadBid();
+			}
+		});
+	};
+	
+	loadFlow();
 
 	  $scope.statusActiveSlide = 0;
-	  
+ 
   $scope.fromStatusToIndex = function(status){
 	  if(status>2){
 		  return status-2;
@@ -493,6 +543,27 @@ angular.module('starter.controllers', [])
 	  }
   };
   
+  var flowStepOut = function(status,action,params){	  
+		if(!params){params={};}
+		params.OrderItemID = $scope.item.ID;
+		params.StatusID = status.ID;
+		params.StatusName = status.Name;
+		params.ActionID = action.ID;
+		params.ActionName = action.Name;
+		var post = new OrderItemFlow(params);
+		post.$save(function(){
+			loadFlow();
+			$state.reload();
+	  });
+  };
+
+	$scope.loadBid = function(){
+		  $scope.bids = OrderBiding.query({
+			  OrderItem:$stateParams.itemId
+		  },function(){	  
+		  });
+	};
+	
   $scope.statusSlide = function(e,to){
 	  $ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
 	  var ele = angular.element(e);
@@ -502,29 +573,21 @@ angular.module('starter.controllers', [])
 	  });
 	  ele.addClass("active");
   };
-
-  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.StatusID);
   
   $scope.beginPurchasing = function(){
-	  Orders.done($scope.item,Orders.StatusType.purchasing,'purchasing',{});
-	  
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.StatusID);
-	  $state.reload();
+	  flowStepOut(Statuses.purchasing,Actions.purchasing);
+  };
+  
+  $scope.cancelPurchasing = function(){
+	  flowStepOut(Statuses.completed,Actions.cancelPurchasing);
   };
   
   $scope.finishPurchasing = function(){
-	  Orders.done($scope.item,Orders.StatusType.delivering,'purchased',{});
-	  
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.StatusID);
-	  $state.reload();
+	  flowStepOut(Statuses.delivering,Actions.purchased);
   };
   
-
   $scope.startDelivering = function(){
-	  Orders.done($scope.item,Orders.StatusType.delivering,'delivering',$scope.action);
-	  
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.StatusID);
-	  $state.reload();
+	  flowStepOut(Statuses.delivering,Actions.delivering);
   };
   
   

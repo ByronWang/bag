@@ -1,10 +1,5 @@
-<!--
-  This template loads for the 'tab.friend-detail' state (app.js)
-  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
-  The FriendsCtrl pulls data from the Friends service (service.js)
-  The Friends service returns an array of friend data
--->
-<style>
+<ion-view title="{{item.Product.Name}}"> 
+  <style>
 .row.pager{
 	padding: 0px;
 	padding-top: 10px;
@@ -46,45 +41,76 @@
 	font-weight: bold;
 }
 
-</style>
-<ion-view title="{{item.current.name}}">
-  <ion-content has-header="true" padding="false" class="has-subheader">
+.prog .name{
+position: relative; 
+width: 5em;
+padding-left: 2em;
+padding-right: 2em;
+left: -2em
+}
 
-  <div class="list">
-	
-	   <ng-include src="'templates/order-basic.html'"></ng-include>
-</div>
-   
-<div class="item-graph">
-	  <div class="row pager">
-	  		<div class="col first"></div>
-	  		<div class="col" x-ng-class="{'done':current.StatusID>1,'doing':current.StatusID==1}"><div class="prog" x-ng-click="statusSlide($event.target,0)"><i class="icon ion-ios7-checkmark-outline" ></i>发布中</div></div>
-	  		<div class="col" x-ng-class="{'done':current.StatusID>1,'doing':current.StatusID==1}"></div>	  
-	  		<div class="col" x-ng-class="{'done':current.StatusID>2,'doing':current.StatusID==2}"><div class="prog" x-ng-click="statusSlide($event.target,1)"><i class="icon ion-ios7-checkmark-outline" ></i>代购中</div></div>
-	  		<div class="col" x-ng-class="{'done':current.StatusID>2,'doing':current.StatusID==2}"></div>
-	  		<div class="col" x-ng-class="{'done':current.StatusID>4,'doing':current.StatusID==3}"><div class="prog" x-ng-click="statusSlide($event.target,2)"><i class="icon ion-ios7-circle-outline" ></i>收货中</div></div>
-	  		<div class="col" x-ng-class="{'done':current.StatusID>4,'doing':current.StatusID==3}"></div>	  
-	  		<div class="col last"  x-ng-class="{'done':current.StatusID>5,'doing':current.StatusID==4}"><div class="prog" x-ng-click="statusSlide($event.target,3)"><i class="icon ion-ios7-circle-outline" ></i>完成</div></div>
-	</div>
-
-	<ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide">
-	  <ion-slide>
-	   <ng-include src="'templates/order-bid-p-edit.html'" ng-if="current.StatusID==1"></ng-include>
-	   <ng-include src="'templates/order-bid-p-info.html'" ng-if="current.StatusID!=1"></ng-include>
-	  </ion-slide>
-	  <ion-slide>
-	   <ng-include src="'templates/order-purchase-p-edit.html'" ng-if="current.StatusID==2"></ng-include>
-	   <ng-include src="'templates/order-purchase-p-info.html'" ng-if="current.StatusID!=2"></ng-include>
-	  </ion-slide>
-	  <ion-slide>
-	   <ng-include src="'templates/order-delivering-p-edit.html'" ng-if="current.StatusID==3"></ng-include>
-	   <ng-include src="'templates/order-delivering-p-info.html'" ng-if="current.StatusID!=3"></ng-include>
-	  </ion-slide>
-	  <ion-slide>
-	   <ng-include src="'templates/order-completed-p-info.html'"></ng-include>
-	  </ion-slide>
-	</ion-slide-box>
-</div>
-
-  </ion-content>
-</ion-view>
+</style> 
+   <ion-content has-header="true" padding="false" class="has-subheader"> 
+    <div class="list"> 
+     <ng-include src="'templates/order-basic.html'"></ng-include> 
+     <div class="item item-graph"> 
+      <div class="row pager"> 
+       <div class="col first"></div> 
+       <div class="col" x-ng-class="{'done':current.StatusID&gt;1,'doing':current.StatusID==1}">
+        <div class="prog" x-ng-click="statusSlide($event.target,0)">
+         <i class="icon ion-ios7-checkmark-outline"></i>
+         <div class="name">
+          发布中
+         </div>
+        </div>
+       </div> 
+       <div class="col" x-ng-class="{'done':current.StatusID&gt;1,'doing':current.StatusID==1}"></div> 
+       <div class="col" x-ng-class="{'done':current.StatusID&gt;2,'doing':current.StatusID==2}">
+        <div class="prog" x-ng-click="statusSlide($event.target,1)">
+         <i class="icon ion-ios7-checkmark-outline"></i>
+         <div class="name">
+          代购中
+         </div>
+        </div>
+       </div> 
+       <div class="col" x-ng-class="{'done':current.StatusID&gt;2,'doing':current.StatusID==2}"></div> 
+       <div class="col" x-ng-class="{'done':current.StatusID&gt;3,'doing':current.StatusID==3}">
+        <div class="prog" x-ng-click="statusSlide($event.target,2)">
+         <i class="icon ion-ios7-circle-outline"></i>
+         <div class="name">
+          收货中
+         </div>
+        </div>
+       </div> 
+       <div class="col" x-ng-class="{'done':current.StatusID&gt;3,'doing':current.StatusID==3}"></div> 
+       <div class="col last" x-ng-class="{'done':current.StatusID&gt;4,'doing':current.StatusID==4}">
+        <div class="prog" x-ng-click="statusSlide($event.target,3)">
+         <i class="icon ion-ios7-circle-outline"></i>
+         <div class="name">
+          完成
+         </div>
+        </div>
+       </div> 
+      </div> 
+      <ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide"> 
+       <ion-slide> 
+        <ng-include src="'templates/order-bid-p-info.html'" ng-if="current.StatusID!=1"></ng-include> 
+       </ion-slide> 
+       <ion-slide> 
+        <ng-include src="'templates/order-purchase-p-edit.html'" ng-if="current.StatusID==2"></ng-include> 
+        <ng-include src="'templates/order-purchase-p-info.html'" ng-if="current.StatusID!=2"></ng-include> 
+       </ion-slide> 
+       <ion-slide> 
+        <ng-include src="'templates/order-delivering-p-edit.html'" ng-if="current.StatusID==3"></ng-include> 
+        <ng-include src="'templates/order-delivering-p-info.html'" ng-if="current.StatusID!=3"></ng-include> 
+       </ion-slide> 
+       <ion-slide> 
+        <ng-include src="'templates/order-completed-p-info.html'"></ng-include> 
+       </ion-slide> 
+      </ion-slide-box> 
+     </div> 
+    </div> 
+   </ion-content> 
+  </ion-view> 
+ </body>
+</html>

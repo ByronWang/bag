@@ -15,9 +15,6 @@ angular.module('starter.services', [])
 .factory('Inventorys', function($resource,Host) {
 	  return $resource(Host.host +  '/d/OrderItem/:itemId');
 })
-.factory('Bid', function($resource,Host) {
-	  return $resource(Host.host +  '/d/Bid/:bidId');
-})
 .factory('DeliveryMethod', function($resource,Host) {
 	  return $resource(Host.host +  '/d/DeliveryMethod/:itemId');
 })
@@ -134,9 +131,54 @@ angular.module('starter.services', [])
 	return $resource(url);
 })
 
-.factory('OrderFlow', function($resource,Host) {
-  return $resource(Host.host +  '/d/OrderItem/:itemId/OrderItemFlow');
+.factory('Statuses', function() {
+	return {
+ 		    bid : { ID : 1,Name:"发布中"},
+ 		    purchasing :  { ID : 2,Name:"代购中"},
+ 		    delivering :  { ID : 3,Name:"收货中"},
+ 		    completed :  { ID : 4,Name:"完成"},
+   };
 })
+
+.factory('Actions', function() {
+	return{
+		  cancelPurchasing:{
+			    "ID": 7,
+			    "Name": "放弃购买"
+			  },
+		  delivered:{
+			    "ID": 6,
+			    "Name": "确认收货"
+			  },
+			  delivering:{
+			    "ID": 5,
+			    "Name": "开始发货"
+			  },
+			  purchased:{
+			    "ID": 4,
+			    "Name": "购买完成"
+			  },
+			  purchasing:{
+				    "ID": 3,
+				    "Name": "开始购买"
+				  },
+			  cancelOrder:{
+			    "ID": 2,
+			    "Name": "放弃订单"
+			  },
+			  bitSucceed:{
+			    "ID": 1,
+			    "Name": "选中买手"
+			  }
+			};
+})
+
+.factory('OrderItemFlowByItem', function($resource,Host) {
+  return $resource(Host.host +  '/d/OrderItem/:itemId/OrderItemFlow/:flowId');
+})
+.factory('OrderItemFlow', function($resource,Host) {
+	  return $resource(Host.host +  '/d/OrderItemFlow/:flowId');
+	})
 
 .factory('OrderBiding', function($resource,Host) {
   return $resource(Host.host +  '/d/Bid/:bidId');
@@ -198,7 +240,7 @@ angular.module('starter.services', [])
 				params.timestamp = new Date();
 		    	if(!item.actions){
 		    		item.actions = [];
-		    	}		    	
+		    	}
 		    	item.actions.push(params);
 		    	item.current = params;
 			},
@@ -217,13 +259,7 @@ angular.module('starter.services', [])
 		    		}; 		
 		    	}		    	
 			    return item;
-			},
-			   StatusType : {
-			  		    bid : 1,
-			  		    purchasing : 2,
-			  		    delivering : 4 ,
-			  		    completed : 5 
-			    },
+			}
 		  };
 		})
 	
