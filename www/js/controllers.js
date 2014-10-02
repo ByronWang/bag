@@ -442,10 +442,11 @@ angular.module('starter.controllers', [])
 
   var flowStepOut = function(status,action,params){	 
 	  	var step = {};
-	  	
+
 	  	step.Extends = angular.copy($scope.current.Extends);
+	  	step.Bid = angular.copy($scope.current.Bid);
 		if(params){
-			step.Extends=angular.copy(params,step.Extends);
+			step=angular.copy(params,step);
 		}
 		step.OrderItemID = $scope.item.ID;
 		step.StatusID = status.ID;
