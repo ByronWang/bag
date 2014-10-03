@@ -61,54 +61,6 @@ angular.module('starter.controllers', [])
 	  return false;
   };
 })
-.controller('NewOrderCtrl', function($scope,$ionicModal, Orders,Address,Exts) {
-	$scope.Items = [];
-	$scope.country = {};
-	$scope.submit = function(){
-		/*angular.forEach($scope.cart.Countrys,function(c){
-			var newitems = [];
-			angular.forEach(c.Items,function(i){
-				if(!i.checked){
-					newitems.push(i);
-				}
-			});
-			c.Items = newitems;
-		});*/
-		
-		angular.forEach($scope.order.Items,function(newitem){
-			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
-			newitem.Product.Exts = undefined;
-		});
-		
-	    var Order = new Orders($scope.order);
-	    Order.$save();
-	};
-	
-
-
-	$scope.popupProvinces = function(){		  
-		  $ionicModal.fromTemplateUrl('templates/modal-provinces.html', {
-		    scope: $scope,
-		    animation: 'slide-left-right'
-		  }).then(function(modal) {
-		    $scope.modal = modal;
-		    $scope.modal.show();
-		  });
-		  	
-		  $scope.ret = function(item) {
-			  if(!$scope.order.Address){$scope.order.Address={};}
-			  
-				angular.extend($scope.order.Address,item);
-		  };
-
-		  $scope.closeModal = function() {	    			  
-			  	$scope.modal.hide();
-		    	$scope.modal.remove();
-		    	$scope.datalist = undefined;
-		  };	
-		  
-	};
-})
 .controller('CartCtrl', function($scope,$ionicModal, Exts) {
 
 	$scope.next = function(){
@@ -168,13 +120,25 @@ angular.module('starter.controllers', [])
 		    $scope.modal.hide();
 		  };	
 	};
+	
+	$scope.refineCart = function(){
+		angular.forEach($scope.cart.Countrys,function(c){
+			var newitems = [];
+			angular.forEach(c.Items,function(i){
+				if(!i.checked){
+					newitems.push(i);
+				}
+			});
+			c.Items = newitems;
+		});
+	};
 })
 
 .controller('NewProductCtrl', function($scope, $ionicActionSheet,$ionicModal, $timeout,Products,Camera,Orders,Countries,Category,Exts) {
 	$scope.product = {};
 	$scope.categories = Category.level1();
 	$scope.item = {
-    		Amount:1
+    		Quantity:1
     };
 	
 	$scope.categoryInEdit=true;
@@ -281,6 +245,56 @@ angular.module('starter.controllers', [])
 	};	 
 })
 
+.controller('NewOrderCtrl', function($scope,$ionicModal, Orders,Address,Exts) {
+	$scope.Items = [];
+	$scope.country = {};
+
+	$scope.popupProvinces = function(){		  
+		  $ionicModal.fromTemplateUrl('templates/modal-provinces.html', {
+		    scope: $scope,
+		    animation: 'slide-left-right'
+		  }).then(function(modal) {
+		    $scope.modal = modal;
+		    $scope.modal.show();
+		  });
+		  	
+		  $scope.ret = function(item) {
+			  if(!$scope.order.Address){$scope.order.Address={};}
+			  
+				angular.extend($scope.order.Address,item);
+		  };
+
+		  $scope.closeModal = function() {	    			  
+			  	$scope.modal.hide();
+		    	$scope.modal.remove();
+		    	$scope.datalist = undefined;
+		  };			  
+	};
+	
+
+	$scope.submit = function(){
+		/*angular.forEach($scope.cart.Countrys,function(c){
+			var newitems = [];
+			angular.forEach(c.Items,function(i){
+				if(!i.checked){
+					newitems.push(i);
+				}
+			});
+			c.Items = newitems;
+		});*/
+		
+		angular.forEach($scope.order.Items,function(newitem){
+			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
+			newitem.Product.Exts = undefined;
+		});
+		
+	    var Order = new Orders($scope.order);
+	    Order.$save(function(){
+	    	 $scope.$parent.refineCart(); 
+			 $scope.$parent.closeModal();
+	    });
+	};
+})
 .controller('InventorysCtrl', function($scope,$ionicModal, Inventorys) {
 	$scope.countryName = "全部国家";
 	$scope.inventorys = Inventorys.query();
