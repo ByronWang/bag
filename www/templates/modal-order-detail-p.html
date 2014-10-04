@@ -64,7 +64,27 @@ left: -2em
 </style> 
    <ion-content has-header="true" padding="false" class="has-subheader"> 
     <div class="list"> 
-     <ng-include src="'templates/order-basic.html'"></ng-include> 
+		<div class="list">
+			  <div class="item item-divider">{{item.Product.CategoryDesc}}</div>
+			  <div class="item item-avatar item-product">
+			    <img x-ng-src="{{host}}/{{item.Product.Image}}">
+			  </div>
+			  <div class="item">{{item.Product.Name}}</div>
+		</div>
+		<div class="list">
+		  	 <div class="item item-divider"> 代购信息 </div>
+			  <label class="item">代购国家<span class="item-value">{{item.Product.CountryName}}</span></label>
+			  <label class="item">预想单价<span class="item-value">{{item.Product.ExpectedPrice}}元（人民币）</span></label>
+			  <label class="item">代购件数<span class="item-value">{{item.Quantity}}</span></label>
+			  
+			  <label class="item">品牌<span class="item-value">{{item.Product.Brand}}</span></label>
+			  <div class="item item-divider">
+			   	商品参数
+			  </div>
+		  	  <label class="item">功效<span class="item-value">{{item.Product.Exts.Function}}</span></label>
+		 	  <label class="item">色泽<span class="item-value">{{item.Product.Exts.Color}}</span></label>
+		 	  <label class="item">说明<span class="item-value">{{item.Product.Description}}</span></label>
+		 </div>	
      <div class="item item-graph"> 
       <div class="row pager"> 
        <div class="col first"></div> 
