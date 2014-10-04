@@ -557,6 +557,26 @@ angular.module('starter.services', [])
 	};
 })
 
+.factory('Popup', function($ionicModal) {
+	return {
+		show: function($scope,templateUrl,callback){
+				var scope = $scope.$new();
+			  $ionicModal.fromTemplateUrl(templateUrl, {
+			    scope: scope,
+			    animation: 'slide-left-right'
+			  }).then(function(modal) {
+			    $scope.modal = modal;
+			    $scope.modal.show();
+			  });
+			  
+			  scope.closeModal = function() {	    			  
+				  scope.modal.hide();
+			  };	
+		}
+	};
+})
+
+
 .factory('Cart', function($ionicModal) {
 	return {
 		cnt : 0,

@@ -313,3 +313,15 @@ img.main {
 	height: 160px;
 	width: 160px;
 }
+
+table.category .rect {
+    border: #eaedee solid;
+    border-width: 0 1px 1px 0;
+    vertical-align: middle;
+    text-align: center;
+ }
+
+table.category td.rect i {
+    background-color: #FFFFFF;
+    font-size: 350%;
+}
