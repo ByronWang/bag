@@ -14,102 +14,11 @@ angular.module('starter.services', [])
 
 .factory('Inventorys', function($resource, Host) {
 	return $resource(Host.host + '/d/OrderItem/:itemId');
-}).factory('DeliveryMethod', function($resource, Host) {
-	return $resource(Host.host + '/d/DeliveryMethod/:itemId');
 })
 
-.factory(
-		'Category',
-		function($http) {
-			// Might use a resource here that returns a JSON array
-
-			// Some fake testing data
-			var categories = [];
-			var categoriesLevel1 = [];
-			var categoriesGrouped = [];
-
-			function desc(id, name) {
-				angular.forEach(categories, function(c) {
-					if (c.ParentID == id) {
-						c.Desc = name + ">" + c.Name;
-						desc(c.ID, c.Name);
-					}
-				});
-			}
-
-			$http.get('js/Categories.json').then(
-					function(resp) {
-						var cats = resp.data;
-
-						var colors = [ "#6cc143", "#f5c132", "#fd8e35", "#ff565b", "#fe8864", "#42bde8", "#7b7ad7",
-								"#f8cc58", "#fd8e35", "#f5c132", "#da70d6" ];
-
-						angular.forEach(cats, function(c) {
-							categories.push(c);
-							if (c.Level == 1) {
-								categoriesLevel1.push(c);
-							}
-						});
-
-						var index = 0;
-
-						var nscat = [];
-						categoriesGrouped.push(nscat);
-						angular.forEach(categoriesLevel1, function(c) {
-							c.Color = colors[index];
-
-							if (index < colors.length) {
-								index = index + 1;
-							} else {
-								index = 0;
-							}
-
-							if (nscat.length >= 4) {
-								nscat = [];
-								categoriesGrouped.push(nscat);
-							}
-							nscat.push(c);
-
-							desc(c.ID, c.Name);
-						});
-
-					}, function(err) {
-						console.error('ERR', err);
-						// err.status will contain the status code
-					});
-
-			return {
-				all : function() {
-					return categories;
-				},
-				level1Grouped : function() {
-					return categoriesGrouped;
-				},
-				level1 : function() {
-					return categoriesLevel1;
-				},
-				get : function(id) {
-					var cat;
-					angular.forEach(categories, function(c) {
-						if (c.ID == id) {
-							cat = c;
-						}
-					});
-					return cat;
-				},
-				children : function(id) {
-					var cren = [];
-					angular.forEach(categories, function(c) {
-						if (c.ParentID == id) {
-							cren.push(c);
-						}
-					});
-
-					// Simple index lookup
-					return cren;
-				}
-			};
-		})
+.factory('DeliveryMethod', function($resource, Host) {
+	return $resource(Host.host + '/d/DeliveryMethod/:itemId');
+})
 
 .factory('Countries', function($resource, Host) {
 	return $resource(Host.host + '/d/Country/:countryId');
@@ -577,6 +486,99 @@ angular.module('starter.services', [])
 })
 
 
+.factory(
+		'Category',
+		function($http) {
+			// Might use a resource here that returns a JSON array
+
+			// Some fake testing data
+			var categories = [];
+			var categoriesLevel1 = [];
+			var categoriesGrouped = [];
+
+			function desc(id, name) {
+				angular.forEach(categories, function(c) {
+					if (c.ParentID == id) {
+						c.Desc = name + ">" + c.Name;
+						desc(c.ID, c.Name);
+					}
+				});
+			}
+
+			$http.get('js/Categories.json').then(
+					function(resp) {
+						var cats = resp.data;
+
+						var colors = [ "#6cc143", "#f5c132", "#fd8e35", "#ff565b", "#fe8864", "#42bde8", "#7b7ad7",
+								"#f8cc58", "#fd8e35", "#f5c132", "#da70d6" ];
+
+						angular.forEach(cats, function(c) {
+							categories.push(c);
+							if (c.Level == 1) {
+								categoriesLevel1.push(c);
+							}
+						});
+
+						var index = 0;
+
+						var nscat = [];
+						categoriesGrouped.push(nscat);
+						angular.forEach(categoriesLevel1, function(c) {
+							c.Color = colors[index];
+
+							if (index < colors.length) {
+								index = index + 1;
+							} else {
+								index = 0;
+							}
+
+							if (nscat.length >= 4) {
+								nscat = [];
+								categoriesGrouped.push(nscat);
+							}
+							nscat.push(c);
+
+							desc(c.ID, c.Name);
+						});
+
+					}, function(err) {
+						console.error('ERR', err);
+						// err.status will contain the status code
+					});
+
+			return {
+				all : function() {
+					return categories;
+				},
+				level1Grouped : function() {
+					return categoriesGrouped;
+				},
+				level1 : function() {
+					return categoriesLevel1;
+				},
+				get : function(id) {
+					var cat;
+					angular.forEach(categories, function(c) {
+						if (c.ID == id) {
+							cat = c;
+						}
+					});
+					return cat;
+				},
+				children : function(id) {
+					var cren = [];
+					angular.forEach(categories, function(c) {
+						if (c.ParentID == id) {
+							cren.push(c);
+						}
+					});
+
+					// Simple index lookup
+					return cren;
+				}
+			};
+		})
+
 .factory('Cart', function($ionicModal) {
 	return {
 		cnt : 0,
@@ -614,7 +616,7 @@ angular.module('starter.services', [])
 					}
 				});
 				if (itemAlreadyExist) {
-					itemAlready.Amount = itemAlready.Amount + item.Amount;
+					itemAlready.Quantity = itemAlready.Quantity + item.Quantity;
 				} else {
 					countryAlready.Items.push(item);
 				}

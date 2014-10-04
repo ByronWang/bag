@@ -18,17 +18,18 @@ angular.module('starter.controllers', [])
 	};
 })
 
-.controller('ProductsCategoryCtrl', function($scope, $stateParams,Category,Products) {
+.controller('ProductsCategoryCtrl', function($scope, $stateParams,Popup,Category,Products) {
   $scope.products = Products.query($stateParams);
   $scope.category = Category.get($stateParams.CategoryLevel1);
-})
-
-.controller('ProductsCtrl', function($scope, Products) {
-  $scope.products = Products.query();
+  $scope.showDetail = function(product){
+	  $scope.product = product;
+		Popup.show($scope,'templates/modal-product-detail.html');	  
+  };
+  
 })
 
 .controller('ProductDetailCtrl', function($scope, $stateParams, Products,Exts,Category) {
-  $scope.product = Products.get($stateParams,function(){;
+  $scope.product = Products.get({productId:$scope.$parent.product.ID},function(){
 	  $scope.product.Exts = Exts.decode($scope.product.Extends);
 	  $scope.product.Extends = undefined;
 	  $scope.product.CategoryDesc = Category.get($scope.product.CategoryID).Desc;
@@ -38,9 +39,11 @@ angular.module('starter.controllers', [])
 	  item.Product = $scope.product;
 	  item.Quantity = 1;
 	  $scope.cart.add(item);
+	  $scope.closeModal();
 	  return false;
   };
 })
+
 .controller('CartCtrl', function($scope,Popup, Exts) {
 
 	$scope.next = function(){
@@ -232,7 +235,12 @@ angular.module('starter.controllers', [])
 	$scope.filter = function(){
 		Popup.show($scope,'templates/modal-filter.html');
 	};
-	
+
+  $scope.showDetail = function(item){
+	  	$scope.item = item;
+		Popup.show($scope,'templates/modal-inventory-detail.html');	  
+  };
+	  
 	$scope.changeCountry = function(c){
 		$scope.countryID = c.ID;
 		$scope.countryName = c.Name;
@@ -242,7 +250,7 @@ angular.module('starter.controllers', [])
 
 
 .controller('InventoryDetailCtrl', function($scope,$state, Category,$stateParams,Exts,OrderBiding,$timeout,$state,Popup,DeliveryMethod, Inventorys) {
-	$scope.item = Inventorys.get($stateParams,function(){
+	$scope.item = Inventorys.get({itemId:$scope.$parent.item.ID},function(){
 		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 		$scope.item.Product.Extends = undefined;
 		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
@@ -310,17 +318,22 @@ angular.module('starter.controllers', [])
   $scope.realOrder =Orders.get({ orderId:$scope.$parent.order.ID});
 })
 
-.controller('OrdersCustomerCtrl', function($scope, Orders) {
+.controller('OrdersCustomerCtrl', function($scope, Orders,Popup) {
 	  $scope.orders = Orders.query({Customer:$scope.currentUser.ID});
+
+	  $scope.showDetail = function(item){
+		  $scope.item = item;
+			Popup.show($scope,'templates/modal-order-detail-c.html');	  
+	  };
 	  
 	  //Load more after 1 second delay
 	  $scope.loadMoreItems = function() {
 	     $scope.$broadcast('scroll.infiniteScrollComplete');
-	  };
+	  };	  
 })
 
 
-.controller('OrdersPurchaserCtrl', function($scope, OrderBiding) {
+.controller('OrdersPurchaserCtrl', function($scope, OrderBiding,Popup) {
   $scope.items = OrderBiding.query({Purchaser:$scope.currentUser.ID},function(){
 	  var itemsFail = [];
 	  var itemsBiding = [];
@@ -342,6 +355,10 @@ angular.module('starter.controllers', [])
   });
   
   
+  $scope.showDetail = function(item){
+	  $scope.item = item;
+		Popup.show($scope,'templates/modal-order-detail-p.html');	  
+  };
   
   //Load more after 1 second delay
   $scope.loadMoreItems = function() {
@@ -349,16 +366,11 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('OrderCustomerDetailCtrl', function($scope,OrderItemFlowByItem,OrderItemFlow, Statuses,Actions,OrderBiding,$state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,Category,Exts) {
-	$scope.order =Orders.get($stateParams,function(){
-		angular.forEach($scope.order.Items,function(i){
-			if(i.ID == $stateParams.itemId){
-				$scope.item = i;		
-				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
-				$scope.item.Product.Extends = undefined;
-				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
-			}
-		});
+.controller('OrderCustomerDetailCtrl', function($scope,OrderItems,OrderItemFlowByItem,OrderItemFlow, Statuses,Actions,OrderBiding,$state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,Category,Exts) {
+	$scope.item =OrderItems.get({itemId: $scope.$parent.item.ID},function(){
+			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+			$scope.item.Product.Extends = undefined;
+			$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
 	});
 	
 	$scope.Actions = Actions;
@@ -447,17 +459,13 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('OrderPurchaserDetailCtrl', function($scope,OrderItemFlowByItem,OrderItemFlow, Statuses,Actions,OrderBiding,$state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,Category,Exts) {
-	$scope.order =Orders.get($stateParams,function(){
-		angular.forEach($scope.order.Items,function(i){
-			if(i.ID == $stateParams.itemId){
-				$scope.item = i;		
-				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
-				$scope.item.Product.Extends = undefined;
-				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
-			}
-		});
-	});
+.controller('OrderPurchaserDetailCtrl', function($scope,OrderItems,OrderItemFlowByItem,OrderItemFlow, Statuses,Actions,OrderBiding,$state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,Category,Exts) {
+	$scope.item =OrderItems.get({itemId: $scope.$parent.item.ID},function(){
+		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+		$scope.item.Product.Extends = undefined;
+		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+});
+
 	
 	$scope.Actions = Actions;
 	

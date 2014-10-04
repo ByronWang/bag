@@ -2,7 +2,7 @@
    <ion-content class="has-subheader">
 	    <div class="list padding-top">
 	    <div class="item item-divider" x-ng-show="itemsBiding.length>0">竞购中</div>
-	       <a x-ng-repeat="bid in itemsBiding"  class="item item-thumbnail-left item-info"  href="#/tab/order/p/{{bid.OrderItem.OrderID}}/{{bid.OrderItem.ID}}">
+	       <a x-ng-repeat="bid in itemsBiding"  class="item item-thumbnail-left item-info"  x-ng-click="showDetail(bid.OrderItem);">
 				<img x-ng-src="{{host}}/{{bid.OrderItem.Product.Image}}">
 			      <div class="list info"> 
 			      		<span class="item"><h3>{{bid.OrderItem.Product.Name}}</h3></span>
@@ -11,7 +11,7 @@
 			      </div>
 	      </a>
 	    <div class="item item-divider" x-ng-show="itemsSucceed.length>0">已被选定</div>
-	       <a x-ng-repeat="bid in itemsSucceed"  class="item item-thumbnail-left item-info"  href="#/tab/order/p/{{bid.OrderItem.OrderID}}/{{bid.OrderItem.ID}}">
+	       <a x-ng-repeat="bid in itemsSucceed"  class="item item-thumbnail-left item-info"  x-ng-click="showDetail(bid.OrderItem);">
 				<img x-ng-src="{{host}}/{{bid.OrderItem.Product.Image}}">
 			      <div class="list info"> 
 			      		<span class="item"><h3>{{bid.OrderItem.Product.Name}}</h3></span>
@@ -20,7 +20,7 @@
 			      </div>
 	      </a>
 	    <div class="item item-divider" x-ng-show="itemsFail.length>0">已落选</div>
-	       <a x-ng-repeat="bid in itemsFail"  class="item item-thumbnail-left item-info"  href="#/tab/order/p/{{bid.OrderItem.OrderID}}/{{bid.OrderItem.ID}}">
+	       <a x-ng-repeat="bid in itemsFail"  class="item item-thumbnail-left item-info"  x-ng-click="showDetail(bid.OrderItem);">
 				<img x-ng-src="{{host}}/{{bid.OrderItem.Product.Image}}">
 			      <div class="list info"> 
 			      		<span class="item"><h3>{{bid.OrderItem.Product.Name}}</h3></span>

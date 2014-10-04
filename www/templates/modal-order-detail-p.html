@@ -1,0 +1,126 @@
+ <ion-modal-view ng-controller="OrderPurchaserDetailCtrl">
+ 
+ <ion-header-bar class="bar-positive">
+          <div class="buttons">
+              <button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
+          </div>
+<h1 class="title">产品详情</h1>
+  <div class="buttons">
+  		<button class="button button-icon icon ion-ios7-close-empty pull-right" 
+          ng-click="closeModal();"></button>
+  </div>
+</ion-header-bar>
+
+  <style>
+.row.pager{
+	padding: 0px;
+	padding-top: 10px;
+	color: gray;
+}
+.row.pager .col{
+	border-top: solid DarkGray 1px;
+	text-align: left;
+	padding:0px;
+}
+
+.row.pager .col div.prog{
+	background-color:white;	
+	position: relative;
+	left: -.6em;
+	top: -.8em;
+	width: 1em;
+	text-align: center;
+	height:10em;
+}
+
+.row.pager .col.done{
+	border-top: solid #f58220 1px;	
+	color: black;	
+}
+.row.pager .col.done .icon{
+	color: #f58220;	
+}
+
+.row.pager .col.doing{
+	color: #f58220;
+}
+
+.row.pager  .col.first, .row.pager .col.last{
+	border-top: solid white 1px;	
+}
+
+.prog.active{
+	font-weight: bold;
+}
+
+.prog .name{
+position: relative; 
+width: 5em;
+padding-left: 2em;
+padding-right: 2em;
+left: -2em
+}
+
+</style> 
+   <ion-content has-header="true" padding="false" class="has-subheader"> 
+    <div class="list"> 
+     <ng-include src="'templates/order-basic.html'"></ng-include> 
+     <div class="item item-graph"> 
+      <div class="row pager"> 
+       <div class="col first"></div> 
+       <div class="col" x-ng-class="{'done':current.StatusID&gt;1,'doing':current.StatusID==1}">
+        <div class="prog" x-ng-click="statusSlide($event.target,0)">
+         <i class="icon ion-ios7-checkmark-outline"></i>
+         <div class="name">
+          发布中
+         </div>
+        </div>
+       </div> 
+       <div class="col" x-ng-class="{'done':current.StatusID&gt;1,'doing':current.StatusID==1}"></div> 
+       <div class="col" x-ng-class="{'done':current.StatusID&gt;2,'doing':current.StatusID==2}">
+        <div class="prog" x-ng-click="statusSlide($event.target,1)">
+         <i class="icon ion-ios7-checkmark-outline"></i>
+         <div class="name">
+          代购中
+         </div>
+        </div>
+       </div> 
+       <div class="col" x-ng-class="{'done':current.StatusID&gt;2,'doing':current.StatusID==2}"></div> 
+       <div class="col" x-ng-class="{'done':current.StatusID&gt;3,'doing':current.StatusID==3}">
+        <div class="prog" x-ng-click="statusSlide($event.target,2)">
+         <i class="icon ion-ios7-circle-outline"></i>
+         <div class="name">
+          收货中
+         </div>
+        </div>
+       </div> 
+       <div class="col" x-ng-class="{'done':current.StatusID&gt;3,'doing':current.StatusID==3}"></div> 
+       <div class="col last" x-ng-class="{'done':current.StatusID&gt;4,'doing':current.StatusID==4}">
+        <div class="prog" x-ng-click="statusSlide($event.target,3)">
+         <i class="icon ion-ios7-circle-outline"></i>
+         <div class="name">
+          完成
+         </div>
+        </div>
+       </div> 
+      </div> 
+      <ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide"> 
+       <ion-slide> 
+        <ng-include src="'templates/order-bid-p-info.html'" ng-if="current.StatusID!=1"></ng-include> 
+       </ion-slide> 
+       <ion-slide> 
+        <ng-include src="'templates/order-purchase-p-edit.html'" ng-if="current.StatusID==2"></ng-include> 
+        <ng-include src="'templates/order-purchase-p-info.html'" ng-if="current.StatusID!=2"></ng-include> 
+       </ion-slide> 
+       <ion-slide> 
+        <ng-include src="'templates/order-delivering-p-edit.html'" ng-if="current.StatusID==3"></ng-include> 
+        <ng-include src="'templates/order-delivering-p-info.html'" ng-if="current.StatusID!=3"></ng-include> 
+       </ion-slide> 
+       <ion-slide> 
+        <ng-include src="'templates/order-completed-p-info.html'"></ng-include> 
+       </ion-slide> 
+      </ion-slide-box> 
+     </div> 
+    </div> 
+   </ion-content> 
+</ion-modal-view>

@@ -1,0 +1,42 @@
+ <ion-modal-view ng-controller="ProductDetailCtrl">
+ 
+ <ion-header-bar class="bar-positive">
+          <div class="buttons">
+              <button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
+          </div>
+<h1 class="title">产品详情</h1>
+  <div class="buttons">
+  		<button class="button button-icon icon ion-ios7-close-empty pull-right" 
+          ng-click="closeModal();"></button>
+  </div>
+</ion-header-bar>
+
+  <ion-content has-header="true">
+<div class="list">
+	  <div class="item item-divider">
+	   {{product.CategoryDesc}}
+	  </div>
+	  <div class="item item-avatar item-product">
+	    <img x-ng-src="{{host}}/{{product.Image}}">
+	  </div>
+	  <div class="item">
+	    <h2>{{product.Name}}</h2>
+	    <p>{{product.Description}}</p></div>
+	  <label class="item">品牌<span class="item-value">{{product.Brand}}</span></label>
+	  <label class="item">预想总价<span class="item-value">{{product.ExpectedPrice}}元（人民币）</span></label>
+	  <div class="item item-divider">
+	   	商品参数
+	  </div>
+  	  <label class="item">功效<span class="item-value">{{product.Exts.Function}}</span></label>
+ 	  <label class="item">色泽<span class="item-value">{{product.Exts.Color}}</span></label>
+  	 	<div class="item item-divider"> 代购信息 </div>
+	   <label class="item">代购国家<span class="item-value">{{product.CountryName}}</span></label>
+	  <label class="item">预想总价<span class="item-value">{{product.ExpectedPrice}}元（人民币）</span></label>
+ </div>
+
+<div class="padding">
+	    <button class="button button-block  button-positive" x-ng-click="selectThis();"> 我也想买</button>
+</div>
+
+  </ion-content>
+</ion-view>

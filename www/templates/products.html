@@ -10,7 +10,7 @@
     <p>{{category.Name}}分类下暂时还没有商品哦！</p></div>
 	
     <div class="list">
-      <a x-ng-repeat="product in products"  class="item item-thumbnail-left item-info"  href="#/tab/product/{{product.ID}}">
+      <a x-ng-repeat="product in products"  class="item item-thumbnail-left item-info"  x-ng-click="showDetail(product);">
 			      <img x-ng-src="{{host}}/{{product.Image}}">
 			      <div class="list info"> 
 			      		<span class="item"><h3>{{product.Name}}</h3></span>

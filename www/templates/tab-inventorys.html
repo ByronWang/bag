@@ -13,7 +13,7 @@
 	    	{inventory.country} &nbsp;	    	{inventory.date}
 	  </div> -->
 	  
-  		      <a x-ng-repeat="item in inventorys"  class="item item-thumbnail-left item-info"  href="#/tab/inventory/{{item.ID}}">
+  		      <a x-ng-repeat="item in inventorys"  class="item item-thumbnail-left item-info"    x-ng-click="showDetail(item);">
 			      <img x-ng-src="{{host}}/{{item.Product.Image}}">
 			      <div class="list info"> 
 			      		<span class="item"><h3>{{item.Product.Name}}</h3></span>
