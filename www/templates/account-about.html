@@ -1,5 +1,22 @@
 <ion-view title="关于我们">
-  	<ion-content class="has-header padding">
-    	<button class="button button-block button-energized" ng-controller="UnionpayCtrl" ng-click="pay()">付款</button>
+    <ion-content class="has-header padding">
+        <button class="button button-block button-energized" ng-controller="UnionpayCtrl" ng-click="pay()">付款</button>
+        <button class="button button-block button-energized" ng-controller="UnionpayCtrl" ng-click="toast()">提示</button>
+        <div class="list list-inset">
+            <label class="item item-input">
+                <span class="input-label" style="width: 30%;">昵称</span>
+                <i style="color: #aaa" class="icon ion-android-more"></i>
+                <input type="text">
+            </label>
+            <label class="item item-input">
+                <span class="input-label" style="width: 30%;">住址住址</span>
+                <i style="color: #aaa" class="icon ion-android-more"></i>
+                <input type="text">
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">说明</span>
+                <textarea placeholder="Last Name" rows="5"></textarea>
+            </label>
+        </div>
     </ion-content>
 </ion-view>

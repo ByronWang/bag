@@ -23,6 +23,10 @@
                         {
                             "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Unionpay\"><param name=\"ios-package\" value=\"Unionpay\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -58,6 +62,24 @@
                             "xml": "false",
                             "count": 1
                         }
+                    ],
+                    "libc++.dylib": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "QuartzCore.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "Security.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
                     ]
                 }
             }
@@ -74,6 +96,9 @@
             "PACKAGE_NAME": "cn.xj.bag.client"
         },
         "org.apache.cordova.device": {
+            "PACKAGE_NAME": "cn.xj.bag.client"
+        },
+        "cn.xj.bag.plugin.unionpay": {
             "PACKAGE_NAME": "cn.xj.bag.client"
         }
     },

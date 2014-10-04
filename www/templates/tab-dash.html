@@ -1,14 +1,30 @@
 <ion-view title="主页">
     <style>
         div.box{
-            height: 200px;
+			padding: 0;
             text-align: center;
         }
 
-        .box img{
-            width: 100%
+        div.box img {
+            border: 0;
+            display: block;
         }
 
+        .box img{
+            width: 100%;
+        }
+
+        .rect {
+            border: #eaedee solid;
+            border-width: 0 1px 1px 0;
+            vertical-align: middle;
+            text-align: center;
+         }
+
+        td.rect i {
+            background-color: #FFFFFF;
+            font-size: 350%;
+        }
     </style>
 
     <ion-nav-buttons side="left">
@@ -22,84 +38,37 @@
     <ion-content class="has-header" on-scroll="onScroll();" on-scroll-complete="onScrollComplete();">
         <ion-slide-box delegate-handle="band" does-continue=true auto-play=true slide-interval=2000>
             <ion-slide>
-                <a  href="#/tab/product/1">
-                    <div id="s1" class="box blue">
+                <a href="#/tab/product/1">
+                    <div id="s1" class="box">
                         <img alt="1111" src="img/A001.jpg">
-                    </div></a>
+                    </div>
+                </a>
             </ion-slide>
             <ion-slide>
-                <a  href="#/tab/product/2">
-                    <div id="s2" class="box yellow">
+                <a href="#/tab/product/2">
+                    <div id="s2" class="box">
                         <img alt="2222" src="img/A002.jpg">
-                    </div></a>
+                    </div>
+                </a>
             </ion-slide>
         </ion-slide-box>
 
-        <div class="layout">
-            <!--<div class="item thumbnails_lists clear">-->
-            <!--<a href="#/tab/products">-->
-            <!--<img src="img/u10.png"></img>-->
-            <!--<div class="name">个护化妆-01</div>-->
-            <!--</a>-->
-
-            <!--<a href="#/tab/products">-->
-            <!--<img src="img/u10.png"></img>-->
-            <!--<div class="name">个护化妆-01</div>-->
-            <!--</a>-->
-
-            <!--<a href="#/tab/products">-->
-            <!--<img src="img/u10.png"></img>-->
-            <!--<div class="name">个护化妆-01</div>-->
-            <!--</a>-->
-            <!--</div>-->
-
-            <div class="row" style="padding: 0 0 0 0">
-                <div class="col" style="padding: 0">
-                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">
-                        <img src="img/products/bag.jpg">
-                        <h2>皮革箱包</h2>
-                        <p>包</p>
+        <table width="100%">
+            <tbody>
+            <tr x-ng-repeat="nc in category">
+                <td x-ng-repeat="c in nc" class="rect" style="height: {{rectHeight}}px;">
+                    <br/>
+                    <a x-ng-href="#/tab/products-category/{{c.ID}}">
+                        <i class="icon iconfont {{c.Icon}}" style="color: {{c.Color}};"></i>
+                        <br/><br/>
+                        <div class="name" style="font: bold">{{c.Name}}</div>
                     </a>
-                </div>
-                <div class="col" style="padding: 0">
-                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">
-                        <img src="img/products/camera.jpg">
-                        <h2>数码</h2>
-                        <p>单反相机</p>
-                    </a>
-                </div>
-            </div>
-            <div class="row" style="padding: 0 0 10px 0">
-                <div class="col" style="padding: 0">
-                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">
-                        <img src="img/products/diamond.jpg">
-                        <h2>珠宝饰品</h2>
-                        <p>钻石</p>
-                    </a>
-                </div>
-                <div class="col" style="padding: 0">
-                    <a class="item item-avatar" href="#" style="border-width: 0 0 0 0;">
-                        <img src="img/products/mask.jpg">
-                        <h2>个护化妆</h2>
-                        <p>面膜</p>
-                    </a>
-                </div>
-            </div>
-
-            <hr noshade="noshade" style="height: 15px; border: 0; background-color: #D9D9D9"/>
-
-            <div class="row icon_lists text-center" x-ng-repeat="nc in category">
-                <div class="row">
-                    <div class="col col-25 text-center" x-ng-repeat="c in nc">
-                        <a x-ng-href="#/tab/products-category/{{c.ID}}">
-                            <i class="icon iconfont {{c.Icon}}" style="background-color: {{c.Color}}"></i>
-                            <div class="name">{{c.Name}}</div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
         </div>
     </ion-content>
+
 </ion-view>
