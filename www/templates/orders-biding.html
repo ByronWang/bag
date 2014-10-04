@@ -1,7 +1,7 @@
 <ion-view title="我的代购订单">
    <ion-content class="has-subheader">
     <div class="list padding-top">
-       <a x-ng-repeat="bid in orders"  class="item item-thumbnail-left item-info"  href="#/tab/order/c/{{bid.OrderItem.OrderID}}/{{bid.OrderItem.ID}}">
+       <a x-ng-repeat="bid in items"  class="item item-thumbnail-left item-info"  href="#/tab/order/c/{{bid.OrderItem.OrderID}}/{{bid.OrderItem.ID}}">
 			<img x-ng-src="{{host}}/{{bid.OrderItem.Product.Image}}">
 		      <div class="list info"> 
 		      		<span class="item"><h3>{{bid.OrderItem.Product.Name}}</h3></span>

@@ -228,24 +228,21 @@ angular.module('starter.controllers', [])
 				  	$scope.modal.hide();
 			    	$scope.modal.remove();
 			    	$scope.datalist = undefined;
-			  };	
-			  
+			  };				  
 		};
 		
 	$scope.step = 1;
 	$scope.submit = function(){
 		$scope.product.Extends = Exts.encode($scope.product.Exts);
 		$scope.product.Exts = undefined;
-	    var post = new Products($scope.product);
-	    post.$save();
-	    
-	    $scope.item.Product = $scope.product;
+
+		$scope.item.Product = $scope.product;
 		 $scope.cart.add($scope.item);
 		 $scope.$parent.closeModal();
 	};	 
 })
 
-.controller('NewOrderCtrl', function($scope,$ionicModal, Orders,Address,Exts) {
+.controller('NewOrderCtrl', function($scope,$ionicModal, Orders,Address,Exts,Statuses,Actions) {
 	$scope.Items = [];
 	$scope.country = {};
 
@@ -286,9 +283,17 @@ angular.module('starter.controllers', [])
 		angular.forEach($scope.order.Items,function(newitem){
 			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
 			newitem.Product.Exts = undefined;
+			newitem.StatusID = Statuses.bid.ID;
+			newitem.StatusName = Statuses.bid.Name;
+			newitem.ActionID = Actions.sendout.ID;
+			newitem.ActionName = Actions.sendout.Name;
+			newitem.CustomerID= $scope.currentUser.ID; 
+			newitem.CustomerName= $scope.currentUser.username;
 		});
-		
-	    var Order = new Orders($scope.order);
+		$scope.order.CustomerID= $scope.currentUser.ID; 
+		$scope.order.CustomerName= $scope.currentUser.username;
+
+		var Order = new Orders($scope.order);
 	    Order.$save(function(){
 	    	 $scope.$parent.refineCart(); 
 			 $scope.$parent.closeModal();
@@ -297,7 +302,7 @@ angular.module('starter.controllers', [])
 })
 .controller('InventorysCtrl', function($scope,$ionicModal, Inventorys) {
 	$scope.countryName = "全部国家";
-	$scope.inventorys = Inventorys.query();
+	$scope.inventorys = Inventorys.query({Status:1});
 	$scope.filter = function(){
 		  $ionicModal.fromTemplateUrl('templates/modal-filter.html', {
 		    scope: $scope,
@@ -306,7 +311,7 @@ angular.module('starter.controllers', [])
 		    $scope.modalFilter = modal;
 		    $scope.modalFilter.show();
 		  });
-		
+
 		  $scope.openModal = function() {
 		    $scope.modalFilter.show();
 		  };
@@ -332,7 +337,7 @@ angular.module('starter.controllers', [])
 	});
 	$scope.step = 1;
 	$scope.suitor = {
-			PurchaserID: 1, //TODO 
+			PurchaserID: $scope.currentUser.ID, //TODO 
 			PurchaserName: $scope.currentUser.username,
 			OrderItemID:parseInt($stateParams.itemId)};
 	
@@ -406,16 +411,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('OrdersCustomerCtrl', function($scope, Orders) {
-	  $scope.orders = Orders.query();
-	  
-	  //Load more after 1 second delay
-	  $scope.loadMoreItems = function() {
-	     $scope.$broadcast('scroll.infiniteScrollComplete');
-	  };
-})
-
-.controller('OrdersBidingCtrl', function($scope, OrderBiding) {
-	  $scope.orders = OrderBiding.query();
+	  $scope.orders = Orders.query({Customer:$scope.currentUser.ID});
 	  
 	  //Load more after 1 second delay
 	  $scope.loadMoreItems = function() {
@@ -424,8 +420,28 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('OrdersPurchaserCtrl', function($scope, Orders) {
-  $scope.orders = Orders.query();
+.controller('OrdersPurchaserCtrl', function($scope, OrderBiding) {
+  $scope.items = OrderBiding.query({Purchaser:$scope.currentUser.ID},function(){
+	  var itemsFail = [];
+	  var itemsBiding = [];
+	  var itemsSucceed = [];
+	  
+	  angular.forEach($scope.items,function(item){
+		  if(item.StatusID==2){
+			  itemsSucceed.push(item);
+		  }else if(item.StatusID==3){
+			  itemsFail.push(item);			  
+		  }else if(item.StatusID==1){
+			  itemsBiding.push(item);			  
+		  }
+	  });
+
+	  $scope.itemsFail = itemsFail;
+	  $scope.itemsBiding = itemsBiding;
+	  $scope.itemsSucceed = itemsSucceed;
+  });
+  
+  
   
   //Load more after 1 second delay
   $scope.loadMoreItems = function() {
