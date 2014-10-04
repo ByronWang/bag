@@ -1,6 +1,6 @@
 <div class="list">
-	<div x-ng-show="item.suitors.length<1">还没有任何人竞标</div>
-	<div class="item view-button" x-ng-repeat="suitor in item.suitors">
+	<div x-ng-show="bids.length<1">还没有任何人竞标</div>
+	<div class="item view-button" x-ng-repeat="suitor in bids">
 		<div class="item-avatar item-button-right">
 		<img src="img/mcfly.jpg">
 		{{suitor.suitor}}
@@ -8,11 +8,11 @@
 	    </div>
 		
 		<div class="list view">  	      
-			<label class="item item-input item-input-note"><span class="input-label">代购佣金</span><span class="item-note">{{suitor.commission}}元（人民币）</span></label>
-			  <a class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{suitor.deliveryMethod}}</span></a>
-			  <label class="item item-input item-input-note"><span class="input-label">代购期限</span><span class="item-note">{{suitor.deadline}}</span></label>
-			  <label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{suitor.suggestedPrice}}元（人民币）</span></label>
-			  <label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{suitor.deliveryCost}}元（人民币）</span></label>
+			<label class="item item-input item-input-note"><span class="input-label">代购佣金</span><span class="item-note">{{suitor.Commission}}元（人民币）</span></label>
+			  <a class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{suitor.DeliveryMethodName}}</span></a>
+			  <label class="item item-input item-input-note"><span class="input-label">代购期限</span><span class="item-note">{{suitor.Deadline}}</span></label>
+			  <label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{suitor.SuggestedPrice}}元（人民币）</span></label>
+			  <label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{suitor.DeliveryCost}}元（人民币）</span></label>
 		</div>
   </div>
 </div>

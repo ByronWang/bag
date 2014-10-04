@@ -1,5 +1,5 @@
 
-<ion-view title="{{category.name}}">
+<ion-view title="{{category.Name}}">
 <ion-nav-buttons side="right">      
       <a class="button button-icon icon ion-ios7-cart" href="#/tab/cart">
 	    <span  class="badge badge-positive">{{cart.size()}}</span>
@@ -7,26 +7,22 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
     <div ng-show="products.length==0">
-    <p>{{category.name}}分类下暂时还没有商品哦！</p></div>
+    <p>{{category.Name}}分类下暂时还没有商品哦！</p></div>
 	
     <div class="list">
-      <a x-ng-repeat="item in products"  class="item item-avatar"  href="#/tab/product/{{item.id}}">
- 		<img src="img/u10.png">
-      <pre>{{item.name}}      （ {{item.country}} ）
-		价格：{{item.price}}/元   
-		到货周期：{{item.lastMonth}}个月</pre>
-      </a>    
+      <a x-ng-repeat="product in products"  class="item item-thumbnail-left item-info"  href="#/tab/product/{{product.ID}}">
+			      <img x-ng-src="{{host}}/{{product.Image}}">
+			      <div class="list info"> 
+			      		<span class="item"><h3>{{product.Name}}</h3></span>
+			      		<span class="item">代购国家<span class="item-note"> {{product.ExpectedPrice}}/元</span>      </span>
+			      		<span class="item">价格 <span class="item-note"> {{product.ExpectedPrice}}/元</span>      </span><!-- 实际成交价格 -->
+			      		<span class="item">到货周期 <span class="item-note">{{item.lastMonth}}个月</span>   </span>
+			      		<!-- 确认收货日期-开始购买日期 
+			      			如果<7天 按天			      		
+			      			如果>=7 按周
+			      		-->
+			      </div>
+      </a>
 	</div>
   </ion-content>
 </ion-view>
-
-<script id="product-search.html" type="text/ng-template">
-  <ion-popover-view>
-    <ion-header-bar>
-      <h1 class="title">My Popover Title</h1>
-    </ion-header-bar>
-    <ion-content>
-      Hello!
-    </ion-content>
-  </ion-popover-view>
-</script>

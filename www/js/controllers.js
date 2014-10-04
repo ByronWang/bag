@@ -1,12 +1,14 @@
 angular.module('starter.controllers', [])
 
-.controller('GlobalCtrl', function($scope,$ionicModal,LoginUser,Cart) {
+.controller('GlobalCtrl', function($scope,$ionicModal,LoginUser,Cart,Host) {
 	$scope.currentUser = LoginUser;
 	$scope.cart = Cart;
 	$scope.editCart = function(){
 		$scope.cart.edit($scope);
 	};
+	$scope.host = Host.host;
 })
+
 
 .controller('DashCtrl', function($scope, $ionicSlideBoxDelegate,Category,$ionicModal) {
 	$scope.category = Category.level1Grouped();
@@ -30,76 +32,60 @@ angular.module('starter.controllers', [])
 	
 	$scope.onScroll = function(){
 		$ionicSlideBoxDelegate.$getByHandle('band').stop();
-	}
+	};
 	$scope.onScrollComplete = function(){
 		$ionicSlideBoxDelegate.$getByHandle('band').start();
-	}
+	};
 })
 
-.controller('CartCtrl', function($scope,$ionicModal, Orders,DeliveryMethods,Address) {
-	$scope.step = 1;
-	
-	$scope.deliveryMethods = DeliveryMethods.all();
-	$scope.order = { Items:[]};
-	$scope.Items = [];
-	$scope.country = {};
+.controller('ProductsCategoryCtrl', function($scope, $stateParams,Category,Products) {
+  $scope.products = Products.query($stateParams);
+  $scope.category = Category.get($stateParams.CategoryLevel1);
+})
+
+.controller('ProductsCtrl', function($scope, Products) {
+  $scope.products = Products.query();
+})
+
+.controller('ProductDetailCtrl', function($scope, $stateParams, Products,Exts,Category) {
+  $scope.product = Products.get($stateParams,function(){;
+	  $scope.product.Exts = Exts.decode($scope.product.Extends);
+	  $scope.product.Extends = undefined;
+	  $scope.product.CategoryDesc = Category.get($scope.product.CategoryID).Desc;
+  });
+  $scope.selectThis = function(){
+	  var item = {};
+	  item.Product = $scope.product;
+	  item.Quantity = 1;
+	  $scope.cart.add(item);
+	  return false;
+  };
+})
+.controller('CartCtrl', function($scope,$ionicModal, Exts) {
+
 	$scope.next = function(){
+		var items = [];
+		
 		angular.forEach($scope.cart.Countrys,function(c){
 			angular.forEach(c.Items,function(i){
 				if(i.checked){
-					$scope.Items.push(i);
+					items.push(i);
 					$scope.country = c;
 				}
 			});
 		});
-		$scope.order.country = $scope.country.name;
-		$scope.order.Items = $scope.Items;
-		$scope.step = 2;
-	}
+		
+		var order = {};
+		order.Items = items;
+		$scope.popupOrder(order);
+	};
+	
 	$scope.checked = function(item){
 		item.checked = !item.checked;
-	}
-	$scope.pay = function(){
-		angular.forEach($scope.cart.Countrys,function(c){
-			var newitems = [];
-			angular.forEach(c.Items,function(i){
-				if(!i.checked){
-					newitems.push(i);
-				}
-			});
-			c.Items = newitems;
-		});
-		Orders.add($scope.order);
-		$scope.step = 1;
 	};
 	
-
-	$scope.popupProvinces = function(){
-		  
-		  $ionicModal.fromTemplateUrl('templates/modal-provinces.html', {
-		    scope: $scope,
-		    animation: 'slide-left-right'
-		  }).then(function(modal) {
-		    $scope.modal = modal;
-		    $scope.modal.show();
-		  });
-		  	
-		  $scope.ret = function(item) {
-			  if(!$scope.order.address){$scope.order.address={};}
-			  
-				angular.extend($scope.order.address,item);
-		  };
-
-		  $scope.closeModal = function() {	    			  
-			  	$scope.modal.hide();
-		    	$scope.modal.remove();
-		    	$scope.datalist = undefined;
-		  };	
-		  
-	};
-	
-	$scope.neworder = function(){
-		  $ionicModal.fromTemplateUrl('templates/modal-order-new.html', {
+	$scope.newProduct = function(){
+		  $ionicModal.fromTemplateUrl('templates/modal-new-product.html', {
 		    scope: $scope,
 		    animation: 'slide-left-right'
 		  }).then(function(modal) {
@@ -115,120 +101,79 @@ angular.module('starter.controllers', [])
 		    $scope.modal.hide();
 		  };	
 	};
-})
 
-.controller('LoginCtrl', function($scope, Users) {
-	$scope.user= {};
-	
-	// for test
-	$scope.user.username = "wangshilian";
-	$scope.login = function() {
-		if($scope.currentUser.login($scope.user.username,$scope.user.pwssword)){
-	    	$scope.$parent.closeModal();
-		}
-	  };
-})
-
-.controller('InventorysCtrl', function($scope,$ionicModal, Inventorys) {
-	$scope.country = "";
-	$scope.inventorys = Inventorys.all();
-	$scope.filter = function(){
-		  $ionicModal.fromTemplateUrl('templates/modal-filter.html', {
+	$scope.popupOrder = function(order){
+		$scope.order = order;
+		  $ionicModal.fromTemplateUrl('templates/modal-new-order.html', {
 		    scope: $scope,
 		    animation: 'slide-left-right'
 		  }).then(function(modal) {
 		    $scope.modal = modal;
-		    $scope.modalFilter.show();
+		    $scope.modal.show();
 		  });
 		
 		  $scope.openModal = function() {
-		    $scope.modalFilter.show();
+		    $scope.modal.show();
 		  };
 		  
 		  $scope.closeModal = function() {	    			  
-		    $scope.modalFilter.hide();
+		    $scope.modal.hide();
 		  };	
 	};
 	
-	$scope.changeCountry = function(c){
-		$scope.country = c;
+	$scope.refineCart = function(){
+		angular.forEach($scope.cart.Countrys,function(c){
+			var newitems = [];
+			angular.forEach(c.Items,function(i){
+				if(!i.checked){
+					newitems.push(i);
+				}
+			});
+			c.Items = newitems;
+		});
 	};
 })
 
-
-.controller('tabsMenuCtrl', function($scope) {
-  $scope.showThis = function(e){
-	  var ele = angular.element(e);
-	  ele.parent().find("a").removeClass("tab-item-active"); 
-	  ele.addClass("tab-item-active");
-  };
-})
-
-.controller('InventoryDetailCtrl', function($scope,$state, $stateParams,$timeout,DeliveryMethods,$ionicSlideBoxDelegate, Inventorys) {
-	$scope.step = 1;
-	$scope.suitor = {suitor: $scope.currentUser.username};
-	$scope.deliveryMethods = DeliveryMethods.all();
-	$scope.selDeliveryMethod = function(method){
-		$scope.step = 1;
-		$scope.suitor.deliveryMethod = method.name;
-	};
-	
-	$scope.showDeliveryMethods = function(){
-		$scope.step = 2;		
-	};
-	
-  $scope.inventory = Inventorys.get($stateParams.inventoryId);
-  $scope.item  = $scope.inventory.Items[$stateParams.itemId];
-  
-  $scope.submit = function(){
-	  $scope.step =  3;
-	  $scope.item.suitors.push($scope.suitor);
-	 /*$state.go("tab.order-detail-p",{
-		  orderId:$scope.inventory.id,
-	  	  itemId:$scope.item.id
-	  });*/  
-  };
-  
-})
-.controller('OrdersCtrl', function($scope, Orders) {
-  $scope.orders = Orders.all();
-  
-  //Load more after 1 second delay
-  $scope.loadMoreItems = function() {
-     $scope.$broadcast('scroll.infiniteScrollComplete');
-  };
-})
-
-.controller('NewProductCtrl', function($scope, $ionicActionSheet,$ionicModal, $timeout,Camera,Orders,DeliveryMethods,Countries,Category) {
+.controller('NewProductCtrl', function($scope, $ionicActionSheet,$ionicModal, $timeout,Products,Camera,Orders,Countries,Category,Exts) {
 	$scope.product = {};
-	$scope.category = Category.level1();
+	$scope.categories = Category.level1();
+	$scope.item = {
+    		Quantity:1
+    };
 	
 	$scope.categoryInEdit=true;
 	
-	$scope.product.categoryDesc ="";
+	$scope.product.CategoryDesc ="";
 	
 	$scope.selectCat =function(cat){
-		var cs = Category.children(cat.id);
+		var cs = Category.children(cat.ID);
 		if(cs.length>0){
-			$scope.category = cs;
-			if($scope.product.categoryDesc != ""){
-				$scope.product.categoryDesc = $scope.product.categoryDesc + " > " + cat.name;				
+			$scope.categories = cs;
+			if($scope.product.CategoryDesc != ""){
+				$scope.product.CategoryDesc = $scope.product.CategoryDesc + " > " + cat.Name;				
 			}else{
-				$scope.product.categoryDesc = cat.name;
+				$scope.product.CategoryDesc = cat.Name;
+			}
+			if(!$scope.product.CategoryLevel1ID){
+				$scope.product.CategoryLevel1ID = cat.ID;	
+				$scope.product.CategoryLevel1Name = cat.Name;				
 			}
 		}else{
 			$scope.categoryInEdit=false;
-			$scope.product.category = cat.name;
+			if(!$scope.product.CategoryID){
+				$scope.product.CategoryID = cat.ID;			
+				$scope.product.CategoryName = cat.Name;				
+			}
 			
-			if($scope.product.categoryDesc!=""){
-				$scope.product.categoryDesc = $scope.product.categoryDesc + " > " + cat.name;				
+			if($scope.product.CategoryDesc!=""){
+				$scope.product.CategoryDesc = $scope.product.CategoryDesc + " > " + cat.Name;				
 			}else{
-				$scope.product.categoryDesc = cat.name;
+				$scope.product.CategoryDesc = cat.Name;
 			}
 		}
 	};
 
-	$scope.product.lastPhoto ="img/mcfly.jpg";
+	$scope.product.Image ="img/mcfly.jpg";
 
 	$scope.getPhotoFromCamera = function() {
 	    Camera.getPicture( {
@@ -264,7 +209,7 @@ angular.module('starter.controllers', [])
 	  };
 	  
 		$scope.popupCountries = function(){
-			  $scope.datalist = Countries.all();
+			  $scope.datalist = Countries.query();
 			  
 			  $ionicModal.fromTemplateUrl('templates/modal-select.html', {
 			    scope: $scope,
@@ -275,37 +220,294 @@ angular.module('starter.controllers', [])
 			  });
 			  	
 			  $scope.ret = function(item) {
-					$scope.product.country =item.name;
+					$scope.product.CountryID =item.ID;
+					$scope.product.CountryName =item.Name;
 			  };
 			  			  
 			  $scope.closeModal = function() {	    			  
 				  	$scope.modal.hide();
 			    	$scope.modal.remove();
 			    	$scope.datalist = undefined;
-			  };	
-			  
+			  };				  
 		};
 		
 	$scope.step = 1;
 	$scope.submit = function(){
-		 $scope.cart.add($scope.product);
-		 $scope.$parent.closeModal();		
+		$scope.product.Extends = Exts.encode($scope.product.Exts);
+		$scope.product.Exts = undefined;
+
+		$scope.item.Product = $scope.product;
+		 $scope.cart.add($scope.item);
+		 $scope.$parent.closeModal();
 	};	 
 })
 
-.controller('OrderCustomerDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders) {
-	  $scope.order = Orders.get($stateParams.orderId);
-	  $scope.item  = Orders.getItem($stateParams.orderId,$stateParams.itemId);
+.controller('NewOrderCtrl', function($scope,$ionicModal, Orders,Address,Exts,Statuses,Actions) {
+	$scope.Items = [];
+	$scope.country = {};
+
+	$scope.popupProvinces = function(){		  
+		  $ionicModal.fromTemplateUrl('templates/modal-provinces.html', {
+		    scope: $scope,
+		    animation: 'slide-left-right'
+		  }).then(function(modal) {
+		    $scope.modal = modal;
+		    $scope.modal.show();
+		  });
+		  	
+		  $scope.ret = function(item) {
+			  if(!$scope.order.Address){$scope.order.Address={};}
+			  
+				angular.extend($scope.order.Address,item);
+		  };
+
+		  $scope.closeModal = function() {	    			  
+			  	$scope.modal.hide();
+		    	$scope.modal.remove();
+		    	$scope.datalist = undefined;
+		  };			  
+	};
+	
+
+	$scope.submit = function(){
+		/*angular.forEach($scope.cart.Countrys,function(c){
+			var newitems = [];
+			angular.forEach(c.Items,function(i){
+				if(!i.checked){
+					newitems.push(i);
+				}
+			});
+			c.Items = newitems;
+		});*/
+		
+		angular.forEach($scope.order.Items,function(newitem){
+			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
+			newitem.Product.Exts = undefined;
+			newitem.StatusID = Statuses.bid.ID;
+			newitem.StatusName = Statuses.bid.Name;
+			newitem.ActionID = Actions.sendout.ID;
+			newitem.ActionName = Actions.sendout.Name;
+			newitem.CustomerID= $scope.currentUser.ID; 
+			newitem.CustomerName= $scope.currentUser.username;
+		});
+		$scope.order.CustomerID= $scope.currentUser.ID; 
+		$scope.order.CustomerName= $scope.currentUser.username;
+
+		var Order = new Orders($scope.order);
+	    Order.$save(function(){
+	    	 $scope.$parent.refineCart(); 
+			 $scope.$parent.closeModal();
+	    });
+	};
+})
+.controller('InventorysCtrl', function($scope,$ionicModal, Inventorys) {
+	$scope.countryName = "全部国家";
+	$scope.inventorys = Inventorys.query({Status:1});
+	$scope.filter = function(){
+		  $ionicModal.fromTemplateUrl('templates/modal-filter.html', {
+		    scope: $scope,
+		    animation: 'slide-left-right'
+		  }).then(function(modal) {
+		    $scope.modalFilter = modal;
+		    $scope.modalFilter.show();
+		  });
+
+		  $scope.openModal = function() {
+		    $scope.modalFilter.show();
+		  };
+		  
+		  $scope.closeModal = function() {	    			  
+		    $scope.modalFilter.hide();
+		  };	
+	};
+	
+	$scope.changeCountry = function(c){
+		$scope.countryID = c.ID;
+		$scope.countryName = c.Name;
+		$scope.Inventorys = Inventorys.query();
+	};
+})
+
+
+.controller('InventoryDetailCtrl', function($scope,$state, Category,$stateParams,Exts,OrderBiding,$timeout,$state,$ionicModal,DeliveryMethod, Inventorys) {
+	$scope.item = Inventorys.get($stateParams,function(){
+		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+		$scope.item.Product.Extends = undefined;
+		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+	});
+	$scope.step = 1;
+	$scope.suitor = {
+			PurchaserID: $scope.currentUser.ID, //TODO 
+			PurchaserName: $scope.currentUser.username,
+			OrderItemID:parseInt($stateParams.itemId)};
+	
+	$scope.showDeliveryMethods = function(){
+		  $scope.datalist = DeliveryMethod.query();
+		  
+		  $ionicModal.fromTemplateUrl('templates/modal-select.html', {
+		    scope: $scope,
+		    animation: 'slide-left-right'
+		  }).then(function(modal) {
+		    $scope.modal = modal;
+		    $scope.modal.show();
+		  });
+		  	
+		  $scope.ret = function(item) {
+				$scope.suitor.DeliveryMethodID = item.ID;
+				$scope.suitor.DeliveryMethodName = item.Name;
+		  };
+		  			  
+		  $scope.closeModal = function() {	    			  
+			  	$scope.modal.hide();
+		    	$scope.modal.remove();
+		    	$scope.datalist = undefined;
+		  };	
+		  
+	};
+
+	$scope.loadBid = function(){
+		  $scope.bids = OrderBiding.query({
+			  OrderItem:$scope.suitor.OrderItemID,
+			  Purchaser:$scope.suitor.PurchaserID
+		  },function(){
+			  if($scope.bids.length>0){
+				  $scope.step =  3;	
+				  $scope.suitor = $scope.bids[0];
+			  }
+			  
+		  });
+	};
+	
+	$scope.loadBid();
   
-  
-  $scope.fromStatusToIndex = function(status){
-	  if(status>2){
-		  return status-2;
-	  }else{
-		  return status-1;
-	  }
+  $scope.submit = function(){
+	  var post = new OrderBiding($scope.suitor);
+	  post.$save(function(){
+		  $scope.loadBid();
+	  });
+  };  
+})
+
+
+.controller('tabsMenuCtrl', function($scope) {
+  $scope.showThis = function(e){
+	  var ele = angular.element(e);
+	  ele.parent().find("a").removeClass("tab-item-active"); 
+	  ele.addClass("tab-item-active");
   };
+})
+
+.controller('OrdersCtrl', function($scope, Orders) {
+  $scope.orders = Orders.all();
   
+  //Load more after 1 second delay
+  $scope.loadMoreItems = function() {
+     $scope.$broadcast('scroll.infiniteScrollComplete');
+  };
+})
+
+.controller('OrderInListCtrl', function($scope, Orders) {
+  $scope.realOrder =Orders.get({ orderId:$scope.$parent.order.ID});
+})
+
+.controller('OrdersCustomerCtrl', function($scope, Orders) {
+	  $scope.orders = Orders.query({Customer:$scope.currentUser.ID});
+	  
+	  //Load more after 1 second delay
+	  $scope.loadMoreItems = function() {
+	     $scope.$broadcast('scroll.infiniteScrollComplete');
+	  };
+})
+
+
+.controller('OrdersPurchaserCtrl', function($scope, OrderBiding) {
+  $scope.items = OrderBiding.query({Purchaser:$scope.currentUser.ID},function(){
+	  var itemsFail = [];
+	  var itemsBiding = [];
+	  var itemsSucceed = [];
+	  
+	  angular.forEach($scope.items,function(item){
+		  if(item.StatusID==2){
+			  itemsSucceed.push(item);
+		  }else if(item.StatusID==3){
+			  itemsFail.push(item);			  
+		  }else if(item.StatusID==1){
+			  itemsBiding.push(item);			  
+		  }
+	  });
+
+	  $scope.itemsFail = itemsFail;
+	  $scope.itemsBiding = itemsBiding;
+	  $scope.itemsSucceed = itemsSucceed;
+  });
+  
+  
+  
+  //Load more after 1 second delay
+  $scope.loadMoreItems = function() {
+     $scope.$broadcast('scroll.infiniteScrollComplete');
+  };
+})
+
+.controller('OrderCustomerDetailCtrl', function($scope,OrderItemFlowByItem,OrderItemFlow, Statuses,Actions,OrderBiding,$state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,Category,Exts) {
+	$scope.order =Orders.get($stateParams,function(){
+		angular.forEach($scope.order.Items,function(i){
+			if(i.ID == $stateParams.itemId){
+				$scope.item = i;		
+				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+				$scope.item.Product.Extends = undefined;
+				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+			}
+		});
+	});
+	
+	$scope.Actions = Actions;
+	
+	var loadFlow = function(){
+		$scope.flows =OrderItemFlowByItem.query($stateParams,function(){
+			if($scope.flows.length>0){
+				$scope.current = $scope.flows[$scope.flows.length-1];
+				$scope.statusActiveSlide = $scope.current.StatusID-1;
+			}else{
+				$scope.current = {StatusID:1};
+				$scope.statusActiveSlide = $scope.current.StatusID-1;
+				$scope.loadBid();
+			}
+		});
+	};
+	
+	loadFlow();
+
+	$scope.statusActiveSlide = 0;
+ 
+
+  var flowStepOut = function(status,action,params){	 
+	  	var step = {};
+
+	  	step.Extends = angular.copy($scope.current.Extends);
+	  	step.Bid = angular.copy($scope.current.Bid);
+		if(params){
+			step=angular.copy(params,step);
+		}
+		step.OrderItemID = $scope.item.ID;
+		step.StatusID = status.ID;
+		step.StatusName = status.Name;
+		step.ActionID = action.ID;
+		step.ActionName = action.Name;
+		var post = new OrderItemFlow(step);
+		post.$save(function(){
+			loadFlow();
+			$state.reload();
+	  });
+  };
+
+	$scope.loadBid = function(){
+		  $scope.bids = OrderBiding.query({
+			  OrderItem:$stateParams.itemId
+		  },function(){	  
+		  });
+	};
+	
   $scope.statusSlide = function(e,to){
 	  $ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
 	  var ele = angular.element(e);
@@ -316,43 +518,94 @@ angular.module('starter.controllers', [])
 	  ele.addClass("active");
   };
   
-  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
 
-  $scope.bitSucceed = function(suitor){	  
-	  Orders.done($scope.item,Orders.StatusType.purchasing,'bitSucceed',suitor);
+  $scope.bitSucceed = function(suitor){
 	  
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
-	  $state.reload();
+	  var params = {
+			  Bid : {
+				  "ID": suitor.ID,
+				  "OrderItemID": suitor.OrderItemID,
+				  "PurchaserID": suitor.PurchaserID,
+				  "PurchaserName": suitor.PurchaserName,
+				  "Commission": suitor.Commission,
+				  "SuggestedPrice": suitor.SuggestedPrice,
+				  "DeliveryCost": suitor.DeliveryCost,
+				  "DeliveryMethodID": suitor.DeliveryMethodID,
+				  "DeliveryMethodName": suitor.DeliveryMethodName
+		  }
+	  };
+	  
+	  flowStepOut(Statuses.purchasing,Actions.bitSucceed,params);
   };
   
   $scope.cancelOrder = function(){
-	  Orders.done($scope.item,Orders.StatusType.completed,'cancelOrder',{});
-	  
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
-	  $state.reload();
+	  flowStepOut(Statuses.completed,Actions.cancelOrder);
   };
   
   $scope.confirmDelivering= function(){
-	  Orders.done($scope.item,Orders.StatusType.completed,'delivered',{});
-	  
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
-	  $state.reload();
+	  flowStepOut(Statuses.completed,Actions.delivered);
   };
 })
 
-.controller('OrderPurchaserDetailCtrl', function($scope, $state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders) {
-  $scope.order = Orders.get($stateParams.orderId);
-  $scope.item  = Orders.getItem($stateParams.orderId,$stateParams.itemId);
-  
-  
-  $scope.fromStatusToIndex = function(status){
-	  if(status>2){
-		  return status-2;
-	  }else{
-		  return status-1;
-	  }
+.controller('OrderPurchaserDetailCtrl', function($scope,OrderItemFlowByItem,OrderItemFlow, Statuses,Actions,OrderBiding,$state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,Category,Exts) {
+	$scope.order =Orders.get($stateParams,function(){
+		angular.forEach($scope.order.Items,function(i){
+			if(i.ID == $stateParams.itemId){
+				$scope.item = i;		
+				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+				$scope.item.Product.Extends = undefined;
+				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+			}
+		});
+	});
+	
+	$scope.Actions = Actions;
+	
+	var loadFlow = function(){
+		$scope.flows =OrderItemFlowByItem.query($stateParams,function(){
+			if($scope.flows.length>0){
+				$scope.current = $scope.flows[$scope.flows.length-1];
+				$scope.statusActiveSlide = $scope.current.StatusID-1;
+			}else{
+				$scope.current = {StatusID:1};
+				$scope.statusActiveSlide = $scope.current.StatusID-1;
+				$scope.loadBid();
+			}
+		});
+	};
+	
+	loadFlow();
+
+	$scope.statusActiveSlide = 0;
+ 
+
+  var flowStepOut = function(status,action,params){	 
+	  	var step = {};
+
+	  	step.Extends = angular.copy($scope.current.Extends);
+	  	step.Bid = angular.copy($scope.current.Bid);
+		if(params){
+			step=angular.copy(params,step);
+		}
+		step.OrderItemID = $scope.item.ID;
+		step.StatusID = status.ID;
+		step.StatusName = status.Name;
+		step.ActionID = action.ID;
+		step.ActionName = action.Name;
+		var post = new OrderItemFlow(step);
+		post.$save(function(){
+			loadFlow();
+			$state.reload();
+	  });
   };
-  
+
+	$scope.loadBid = function(){
+		  $scope.bids = OrderBiding.query({
+			  OrderItem:$stateParams.itemId
+		  },function(){	  
+		  });
+	};
+	
   $scope.statusSlide = function(e,to){
 	  $ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
 	  var ele = angular.element(e);
@@ -362,45 +615,25 @@ angular.module('starter.controllers', [])
 	  });
 	  ele.addClass("active");
   };
-
-  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
   
   $scope.beginPurchasing = function(){
-	  Orders.done($scope.item,Orders.StatusType.purchasing,'purchasing',{});
-	  
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
-	  $state.reload();
+	  flowStepOut(Statuses.purchasing,Actions.purchasing);
+  };
+  
+  $scope.cancelPurchasing = function(){
+	  flowStepOut(Statuses.completed,Actions.cancelPurchasing);
   };
   
   $scope.finishPurchasing = function(){
-	  Orders.done($scope.item,Orders.StatusType.delivering,'purchased',{});
-	  
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
-	  $state.reload();
+	  flowStepOut(Statuses.delivering,Actions.purchased);
   };
   
-
   $scope.startDelivering = function(){
-	  Orders.done($scope.item,Orders.StatusType.delivering,'delivering',$scope.action);
-	  
-	  $scope.statusActiveSlide = $scope.fromStatusToIndex($scope.item.current.statusId);
-	  $state.reload();
+	  flowStepOut(Statuses.delivering,Actions.delivering);
   };
   
+  
 })
-
-.controller('ProductsCtrl', function($scope, Products) {
-  $scope.products = Products.all();
-})
-
-.controller('ProductDetailCtrl', function($scope, $stateParams, Products) {
-  $scope.product = Products.get($stateParams.productId);
-  $scope.selectThis = function(){
-	  $scope.cart.add($scope.product);
-	  return false;
-  };
-})
-
 
 .controller('TestCtrl', function($scope, $http) {
 	  $scope.items = [];
@@ -525,7 +758,7 @@ angular.module('starter.controllers', [])
 
 
 .controller('FilterCtrl', function($scope,$state,Countries) {
-	$scope.countries = Countries.all();
+	$scope.countries = Countries.query();
 	
 	$scope.ok = function(country){
 		$scope.changeCountry(country);
@@ -567,26 +800,34 @@ angular.module('starter.controllers', [])
 
 	$scope.step = 'province';
 	$scope.selectProvince = function(c){
-		$scope.address.province = c.name;
+		$scope.address.Province = c.Name;
 		$scope.province = c;
 		$scope.step = 'city';
 	};
 	$scope.selectCity= function(c){
-		$scope.address.city = c.name;
+		$scope.address.City = c.Name;
 		$scope.city = c;
 		$scope.step = 'area';
 	};
 	$scope.selectArea = function(c){
-		$scope.address.area = c.name;
+		$scope.address.Area = c.Name;
 		$scope.$parent.ret($scope.address);
 		$scope.$parent.closeModal();
 	};
 })
 
 
-.controller('ProductsCategoryCtrl', function($scope, $stateParams,Category,Products) {
-  $scope.products = Products.byCategory($stateParams.categoryId);
-  $scope.category = Category.get($stateParams.categoryId);
+
+.controller('LoginCtrl', function($scope, Users) {
+	$scope.user= {};
+	
+	// for test
+	$scope.user.username = "wangshilian";
+	$scope.login = function() {
+		if($scope.currentUser.login($scope.user.username,$scope.user.pwssword)){
+	    	$scope.$parent.closeModal();
+		}
+	  };
 })
 
 

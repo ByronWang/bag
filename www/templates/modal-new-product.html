@@ -13,17 +13,17 @@
 <ion-content>
  <form name="mainform" novalidate>
  <div class="list" x-ng-show="categoryInEdit">
-	  <a class="item item-icon-right" x-ng-repeat="c in category" x-ng-click="selectCat(c)">
-	   	{{c.name}}
+	  <a class="item item-icon-right" x-ng-repeat="c in categories" x-ng-click="selectCat(c)">
+	   	{{c.Name}}
 	   <i class="icon ion-ios7-arrow-forward"></i>
 	  </a>
  </div>
      
  <div class="list"  x-ng-show="!categoryInEdit">      
  
-	  <div class="item item-divider">{{product.categoryDesc}}</div>
+	  <div class="item item-divider">{{product.CategoryDesc}}</div>
       <div class="item item-product-image item-options-right" >
-	      	<img  x-ng-src="{{product.lastPhoto}}" class="img-product">
+	      	<img  x-ng-src="{{product.Image}}" class="img-product">
 	      	<div class="options">
 	      	 <button class="button button-clear" x-ng-click="getPhotoFromCamera()">
 		      	<i class="icon ion-camera"></i>
@@ -38,37 +38,41 @@
 	    基本信息
 	  </div>
 	  <label class="item item-input">
-	    <span class="input-label">物品名称</span>
-	    <input type="text" x-ng-model="product.name" required>
+	    <span class="input-label">名称</span>
+	    <input type="text" x-ng-model="product.Name" required>
+	  </label>
+	  <label class="item item-input">
+	    <span class="input-label">品牌</span>
+	    <input type="text" x-ng-model="product.Brand" required>
 	  </label>
 	  <label class="item item-input">
 	    <span class="input-label">说明</span>
-	    <input type="text" x-ng-model="product.description">
+	    <input type="text" x-ng-model="product.Description">
 	  </label>
 	  <div class="item item-divider">
 	   	商品参数
 	  </div>
 	  <label class="item item-input">
 	    <span class="input-label">功效</span>
-	    <input type="text" x-ng-model="product.extends.function">
+	    <input type="text" x-ng-model="product.Exts.Function">
 	  </label>
 	  <label class="item item-input">
 	    <span class="input-label">色泽</span>
-	    <input type="text" x-ng-model="product.extends.color">
+	    <input type="text" x-ng-model="product.Exts.Color">
 	  </label>
 	  <div class="item item-divider">
 	    代购信息
 	  </div>
 	   <a class="item item-input item-icon-right"  x-ng-click="popupCountries();"><span class="input-label">代购国家</span>
-   <span class="item-note">{{product.country}}</span><i class="icon ion-ios7-arrow-forward"></i></a>
+   <span class="item-note">{{product.CountryName}}</span><i class="icon ion-ios7-arrow-forward"></i></a>
    
 	  <label class="item item-input">
-	    <span class="input-label">预想总价</span>
-	    <input type="number" x-ng-model="product.expectedPrice" required>
+	    <span class="input-label">预想价格</span>
+	    <input type="number" x-ng-model="product.ExpectedPrice" required>
 	  </label>
 	  <label class="item item-input">
 	    <span class="input-label">代购件数</span>
-	    <input type="number" x-ng-model="product.amount" required>
+	    <input type="number" x-ng-model="item.Quantity" required>
 	  </label>
  </div>
  

@@ -1,0 +1,16 @@
+<ion-view title="我的代购订单">
+   <ion-content class="has-subheader">
+    <div class="list padding-top">
+       <a x-ng-repeat="bid in items"  class="item item-thumbnail-left item-info"  href="#/tab/order/c/{{bid.OrderItem.OrderID}}/{{bid.OrderItem.ID}}">
+			<img x-ng-src="{{host}}/{{bid.OrderItem.Product.Image}}">
+		      <div class="list info"> 
+		      		<span class="item"><h3>{{bid.OrderItem.Product.Name}}</h3></span>
+		      		<span class="item">价格 <span class="item-note"> {{bid.OrderItem.Product.ExpectedPrice}}/元</span>      </span>
+		      		<span class="item">到货周期 <span class="item-note">{{bid.OrderItem.lastMonth}}个月</span>   </span>
+		      </div>
+      </a>
+  </div>
+  <ion-infinite-scroll on-infinite="loadMoreItems()" icon="ion-loading-c">
+  </ion-infinite-scroll>
+  </ion-content>
+</ion-view>

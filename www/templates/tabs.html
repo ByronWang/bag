@@ -21,13 +21,11 @@
   </ion-tab>
 
   <!-- Account Tab -->
-  <ion-tab title="订单" icon="icon ion-clipboard" href="#/tab/orders-sendout">
+  <ion-tab title="订单" icon="icon ion-clipboard" href="#/tab/orders-customer">
 	<div class="bar bar-subheader">
 		<div class="tabs tabs-stable tabs-menu" x-ng-controller="tabsMenuCtrl">
-		  <a class="tab-item tab-item-active" href="#/tab/orders-sendout" x-ng-click="showThis($event.target);">已发布</a>
-		  <a class="tab-item" href="#/tab/orders-completed" x-ng-click="showThis($event.target);">已完成</a>
-		  <a class="tab-item" href="#/tab/orders-requested" x-ng-click="showThis($event.target);" x-ng-show="currentUser.isPurchase">代购中</a>
-		  <a class="tab-item" href="#/tab/orders-requestedCompleted" x-ng-click="showThis($event.target);" x-ng-show="currentUser.isPurchase">已代购</a>
+		  <a class="tab-item tab-item-active" href="#/tab/orders-customer" x-ng-click="showThis($event.target);">已发布</a>
+		  <a class="tab-item" href="#/tab/orders-purchaser" x-ng-click="showThis($event.target);">代购中</a>
 		</div>
 	</div>
     <ion-nav-view name="tab-orders"></ion-nav-view>

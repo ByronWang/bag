@@ -1,15 +1,15 @@
 <div class="list">
 	<div class="item view-button">
 		<div class="item-avatar">
-		<img src="img/mcfly.jpg">
-		{{item.suitor.suitor}}
+		<img x-ng-src="img/mcfly.jpg">
+		{{current.Bid.PurchaserName}}
 	    </div>
 		<div class="list view">  	      
-			<label class="item item-input item-input-note"><span class="input-label">代购佣金</span><span class="item-note">{{item.suitor.commission}}元（人民币）</span></label>
-			  <a class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{item.suitor.deliveryMethod}}</span></a>
-			  <label class="item item-input item-input-note"><span class="input-label">代购期限</span><span class="item-note">{{item.suitor.deadline}}</span></label>
-			  <label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{item.suitor.suggestedPrice}}元（人民币）</span></label>
-			  <label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{item.suitor.deliveryCost}}元（人民币）</span></label>
+			<label class="item item-input item-input-note"><span class="input-label">代购佣金</span><span class="item-note">{{current.Bid.Commission}}元（人民币）</span></label>
+			  <label class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{current.Bid.DeliveryMethodName}}</span></label>
+			  <label class="item item-input item-input-note"><span class="input-label">代购期限</span><span class="item-note">{{current.Bid.Deadline}}</span></label>
+			  <label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{current.Bid.SuggestedPrice}}元（人民币）</span></label>
+			  <label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{current.Bid.DeliveryCost}}元（人民币）</span></label>
 		</div>
   </div>
 </div>
