@@ -70,16 +70,9 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-    // setup an abstract state for the tabs directive
-    .state('tab', {
-      url: "/tab",
-      abstract: true,
-      templateUrl: "templates/tabs.html"
-    })
-
     // Each tab has its own nav history stack:
 
-    .state('tab.dash', {
+    .state('dash', {
       url: '/dash',
       views: {
         'tab-dash': {
@@ -89,7 +82,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
       }
     })
     
-    .state('tab.cart', {
+    .state('cart', {
         url: '/cart',
         views: {
           'tab-cart': {
@@ -99,7 +92,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
         }
       })
 
-    .state('tab.products-caterory', {
+    .state('products-caterory', {
       url: '/products-category/:CategoryLevel1',
       views: {
         'tab-dash': {
@@ -108,18 +101,8 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
         }
       }
     })
-    
-    .state('tab.products', {
-      url: '/products',
-      views: {
-        'tab-dash': {
-          templateUrl: 'templates/products.html',
-          controller: 'ProductsCtrl'
-        }
-      }
-    })
-    
-    .state('tab.product-detail', {
+        
+    .state('product-detail', {
       url: '/product/:productId',
       views: {
         'tab-dash': {
@@ -129,7 +112,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
       }
     })
     
-    .state('tab.inventorys', {
+    .state('inventorys', {
       url: '/inventorys',
       views: {
         'tab-inventorys': {
@@ -138,28 +121,8 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
         }
       }
     })
-    .state('tab.inventory-detail', {
-      url: '/inventory/:itemId',
-      views: {
-        'tab-inventorys': {
-          templateUrl: 'templates/inventory-detail.html',
-          controller: 'InventoryDetailCtrl'
-        }
-      }
-    })
-    
-    .state('tab.orders', {
-        url: '/orders',
-        views: {
-          'tab-orders': {
-            templateUrl: 'templates/tab-orders.html',
-            controller: 'OrdersCtrl'
-          }
-        }
-      })
-      
-      
-    .state('tab.orders-customer', {
+          
+    .state('orders-customer', {
         url: '/orders-customer',
         views: {
           'tab-orders': {
@@ -168,18 +131,8 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
           }
         }
       })
-      
-      .state('tab.orders-biding', {
-          url: '/orders-biding',
-          views: {
-            'tab-orders': {
-              templateUrl: 'templates/orders-biding.html',
-              controller: 'OrdersBidingCtrl'
-            }
-          }
-        })
-      
-    .state('tab.orders-purchaser', {
+            
+    .state('orders-purchaser', {
         url: '/orders-purchaser',
         views: {
           'tab-orders': {
@@ -189,27 +142,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
         }
       })
       
-      .state('tab.order-detail-c', {
-        url: '/order/c/:orderId/:itemId',
-        views: {
-          'tab-orders': {
-            templateUrl: 'templates/order-detail-c.html',
-            controller: 'OrderCustomerDetailCtrl'
-          }
-        }
-      })
-      
-      .state('tab.order-detail-p', {
-          url: '/order/p/:orderId/:itemId',
-          views: {
-            'tab-orders': {
-              templateUrl: 'templates/order-detail-p.html',
-              controller: 'OrderPurchaserDetailCtrl'
-            }
-          }
-        })
-
-    .state('tab.account', {
+    .state('account', {
       url: '/account',
       views: {
         'tab-account': {
@@ -219,7 +152,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
       }
     })
     
-    .state('tab.account-setting', {
+    .state('account-setting', {
         url: '/accounts/setting',
         views: {
           'tab-account': {
@@ -229,7 +162,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
         }
       })
       
-      .state('tab.account-about', {
+      .state('account-about', {
           url: '/accounts/about',
           views: {
             'tab-account': {
@@ -239,7 +172,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
           }
       })
       
-      .state('tab.account-info', {
+      .state('account-info', {
           url: '/accounts/info',
           views: {
             'tab-account': {
@@ -249,7 +182,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
           }
       })
       
-      .state('tab.account-account', {
+      .state('account-account', {
           url: '/accounts/account',
           views: {
             'tab-account': {
@@ -259,7 +192,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
           }
       })
       
-      .state('tab.account-message', {
+      .state('account-message', {
           url: '/accounts/message',
           views: {
             'tab-account': {
@@ -269,7 +202,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
           }
       })
         
-      .state('tab.account-myorders', {
+      .state('account-myorders', {
           url: '/accounts/myorders',
           views: {
             'tab-account': {
@@ -278,7 +211,7 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
             }
           }
       })
-      .state('tab.account-legal', {
+      .state('account-legal', {
           url: '/accounts/legal',
           views: {
             'tab-account': {
@@ -291,6 +224,6 @@ angular.module('starter', ['ionic','ngResource', 'starter.controllers','starter.
       ;
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/dash');
 
 });

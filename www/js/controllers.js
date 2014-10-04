@@ -26,7 +26,7 @@ angular.module('starter.controllers', [])
 		Popup.show($scope,'templates/modal-product-detail.html');	  
   };
   $scope.back = function(){
-	  $state.go("tab.dash");
+	  $state.go("dash");
   };
   
 })
@@ -577,7 +577,7 @@ angular.module('starter.controllers', [])
 .controller('AccountInfoCtrl', function($scope,$state) {
 	$scope.logoff = function(){
 		$scope.currentUser.logoff();
-		$state.go('tab.dash');
+		$state.go('dash');
 	};
 })
 .controller('AccountSettingCtrl', function($scope,$ionicActionSheet,Camera,$timeout,LoginUser) {
@@ -696,7 +696,7 @@ angular.module('starter.controllers', [])
 .controller('SearchCtrl', function($scope,$state) {
 	$scope.ok = function(){
 		$scope.$parent.closeModal();
-		$state.go('tab.products');
+		$state.go('products');
 	};
 	
 	$scope.cancel = function(){

@@ -10,7 +10,7 @@
         </button>
 	</ion-header-bar>
 
-    <ion-content class="has-header" on-scroll="onScroll();" on-scroll-complete="onScrollComplete();">
+    <ion-content class="has-header">
         <ion-slide-box delegate-handle="band" does-continue=true auto-play=true slide-interval=2000>
             <ion-slide>
                 <a href="#/tab/product/1">
@@ -33,7 +33,7 @@
             <tr x-ng-repeat="nc in category">
                 <td x-ng-repeat="c in nc" class="rect" style="height: {{rectHeight}}px;">
                     <br/>
-                    <a x-ng-href="#/tab/products-category/{{c.ID}}">
+                    <a x-ng-href="#/products-category/{{c.ID}}">
                         <i class="icon iconfont {{c.Icon}}" style="color: {{c.Color}};"></i>
                         <br/><br/>
                         <div class="name" style="font: bold">{{c.Name}}</div>
