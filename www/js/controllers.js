@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('GlobalCtrl', function($scope,$ionicModal,LoginUser,Cart,Host) {
+.controller('GlobalCtrl', function($scope,LoginUser,Cart,Host) {
 	$scope.currentUser = LoginUser;
 	$scope.cart = Cart;
 	$scope.editCart = function(){
@@ -10,25 +10,11 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('DashCtrl', function($scope, $ionicSlideBoxDelegate,Category,$ionicModal) {
+.controller('DashCtrl', function($scope, $ionicSlideBoxDelegate,Category,Popup) {
     $scope.rectHeight = document.body.clientWidth / 3;
 	$scope.category = Category.level1Grouped();
 	$scope.search = function(){
-		  $ionicModal.fromTemplateUrl('templates/modal-search.html', {
-		    scope: $scope,
-		    animation: 'slide-left-right'
-		  }).then(function(modal) {
-		    $scope.modal = modal;
-		    $scope.modal.show();
-		  });
-		
-		  $scope.openModal = function() {
-		    $scope.modal.show();
-		  };
-		  
-		  $scope.closeModal = function() {	    			  
-		    $scope.modal.hide();
-		  };	
+		Popup.show($scope,'templates/modal-search.html');
 	};
 })
 
@@ -55,7 +41,7 @@ angular.module('starter.controllers', [])
 	  return false;
   };
 })
-.controller('CartCtrl', function($scope,$ionicModal, Exts) {
+.controller('CartCtrl', function($scope,Popup, Exts) {
 
 	$scope.next = function(){
 		var items = [];
@@ -79,40 +65,12 @@ angular.module('starter.controllers', [])
 	};
 	
 	$scope.newProduct = function(){
-		  $ionicModal.fromTemplateUrl('templates/modal-new-product.html', {
-		    scope: $scope,
-		    animation: 'slide-left-right'
-		  }).then(function(modal) {
-		    $scope.modal = modal;
-		    $scope.modal.show();
-		  });
-		
-		  $scope.openModal = function() {
-		    $scope.modal.show();
-		  };
-		  
-		  $scope.closeModal = function() {	    			  
-		    $scope.modal.hide();
-		  };	
+		Popup.show($scope,'templates/modal-new-product.html');
 	};
 
 	$scope.popupOrder = function(order){
 		$scope.order = order;
-		  $ionicModal.fromTemplateUrl('templates/modal-new-order.html', {
-		    scope: $scope,
-		    animation: 'slide-left-right'
-		  }).then(function(modal) {
-		    $scope.modal = modal;
-		    $scope.modal.show();
-		  });
-		
-		  $scope.openModal = function() {
-		    $scope.modal.show();
-		  };
-		  
-		  $scope.closeModal = function() {	    			  
-		    $scope.modal.hide();
-		  };	
+		Popup.show($scope,'templates/modal-new-order.html');
 	};
 	
 	$scope.refineCart = function(){
@@ -128,7 +86,7 @@ angular.module('starter.controllers', [])
 	};
 })
 
-.controller('NewProductCtrl', function($scope, $ionicActionSheet,$ionicModal, $timeout,Products,Camera,Orders,Countries,Category,Exts) {
+.controller('NewProductCtrl', function($scope, $ionicActionSheet,Popup, $timeout,Products,Camera,Orders,Countries,Category,Exts) {
 	$scope.product = {};
 	$scope.categories = Category.level1();
 	$scope.item = {
@@ -204,25 +162,12 @@ angular.module('starter.controllers', [])
 	  
 		$scope.popupCountries = function(){
 			  $scope.datalist = Countries.query();
-			  
-			  $ionicModal.fromTemplateUrl('templates/modal-select.html', {
-			    scope: $scope,
-			    animation: 'slide-left-right'
-			  }).then(function(modal) {
-			    $scope.modal = modal;
-			    $scope.modal.show();
-			  });
+			  Popup.show($scope,'templates/modal-select.html');
 			  	
 			  $scope.ret = function(item) {
 					$scope.product.CountryID =item.ID;
 					$scope.product.CountryName =item.Name;
 			  };
-			  			  
-			  $scope.closeModal = function() {	    			  
-				  	$scope.modal.hide();
-			    	$scope.modal.remove();
-			    	$scope.datalist = undefined;
-			  };				  
 		};
 		
 	$scope.step = 1;
@@ -236,30 +181,16 @@ angular.module('starter.controllers', [])
 	};	 
 })
 
-.controller('NewOrderCtrl', function($scope,$ionicModal, Orders,Address,Exts,Statuses,Actions) {
+.controller('NewOrderCtrl', function($scope,Popup, Orders,Address,Exts,Statuses,Actions) {
 	$scope.Items = [];
 	$scope.country = {};
 
 	$scope.popupProvinces = function(){		  
-		  $ionicModal.fromTemplateUrl('templates/modal-provinces.html', {
-		    scope: $scope,
-		    animation: 'slide-left-right'
-		  }).then(function(modal) {
-		    $scope.modal = modal;
-		    $scope.modal.show();
-		  });
-		  	
+		  Popup.show($scope,'templates/modal-provinces.html');		  	
 		  $scope.ret = function(item) {
-			  if(!$scope.order.Address){$scope.order.Address={};}
-			  
+			  if(!$scope.order.Address){$scope.order.Address={};}			  
 				angular.extend($scope.order.Address,item);
 		  };
-
-		  $scope.closeModal = function() {	    			  
-			  	$scope.modal.hide();
-		    	$scope.modal.remove();
-		    	$scope.datalist = undefined;
-		  };			  
 	};
 	
 
@@ -294,25 +225,12 @@ angular.module('starter.controllers', [])
 	    });
 	};
 })
-.controller('InventorysCtrl', function($scope,$ionicModal, Inventorys) {
+.controller('InventorysCtrl', function($scope,Popup, Inventorys) {
 	$scope.countryName = "全部国家";
 	$scope.inventorys = Inventorys.query({Status:1});
+	
 	$scope.filter = function(){
-		  $ionicModal.fromTemplateUrl('templates/modal-filter.html', {
-		    scope: $scope,
-		    animation: 'slide-left-right'
-		  }).then(function(modal) {
-		    $scope.modalFilter = modal;
-		    $scope.modalFilter.show();
-		  });
-
-		  $scope.openModal = function() {
-		    $scope.modalFilter.show();
-		  };
-		  
-		  $scope.closeModal = function() {	    			  
-		    $scope.modalFilter.hide();
-		  };	
+		Popup.show($scope,'templates/modal-filter.html');
 	};
 	
 	$scope.changeCountry = function(c){
@@ -323,7 +241,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('InventoryDetailCtrl', function($scope,$state, Category,$stateParams,Exts,OrderBiding,$timeout,$state,$ionicModal,DeliveryMethod, Inventorys) {
+.controller('InventoryDetailCtrl', function($scope,$state, Category,$stateParams,Exts,OrderBiding,$timeout,$state,Popup,DeliveryMethod, Inventorys) {
 	$scope.item = Inventorys.get($stateParams,function(){
 		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 		$scope.item.Product.Extends = undefined;
@@ -337,25 +255,13 @@ angular.module('starter.controllers', [])
 	
 	$scope.showDeliveryMethods = function(){
 		  $scope.datalist = DeliveryMethod.query();
-		  
-		  $ionicModal.fromTemplateUrl('templates/modal-select.html', {
-		    scope: $scope,
-		    animation: 'slide-left-right'
-		  }).then(function(modal) {
-		    $scope.modal = modal;
-		    $scope.modal.show();
-		  });
-		  	
+
+		Popup.show($scope,'templates/modal-select.html');
+			
 		  $scope.ret = function(item) {
 				$scope.suitor.DeliveryMethodID = item.ID;
 				$scope.suitor.DeliveryMethodName = item.Name;
 		  };
-		  			  
-		  $scope.closeModal = function() {	    			  
-			  	$scope.modal.hide();
-		    	$scope.modal.remove();
-		    	$scope.datalist = undefined;
-		  };	
 		  
 	};
 
