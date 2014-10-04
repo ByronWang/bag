@@ -30,13 +30,6 @@ angular.module('starter.controllers', [])
 		    $scope.modal.hide();
 		  };	
 	};
-	
-	$scope.onScroll = function(){
-		$ionicSlideBoxDelegate.$getByHandle('band').stop();
-	};
-	$scope.onScrollComplete = function(){
-		$ionicSlideBoxDelegate.$getByHandle('band').start();
-	};
 })
 
 .controller('ProductsCategoryCtrl', function($scope, $stateParams,Category,Products) {
