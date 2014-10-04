@@ -1,11 +1,14 @@
 <ion-view title="主页">
-    <ion-nav-buttons side="left">
+ 	<ion-header-bar class="bar-assertive">
         <img src="img/logo4.png" height="32px">
-    </ion-nav-buttons>
-    <ion-nav-buttons side="right">
+	  <!-- <label class="item-input-wrapper">
+	    <i class="icon ion-ios7-search placeholder-icon"></i>
+	    <input type="search" placeholder="Search">
+	  </label> -->
+		<h1 class="title">主页</h1>
         <button class="button button-icon icon ion-search" x-ng-click="search()">
         </button>
-    </ion-nav-buttons>
+	</ion-header-bar>
 
     <ion-content class="has-header" on-scroll="onScroll();" on-scroll-complete="onScrollComplete();">
         <ion-slide-box delegate-handle="band" does-continue=true auto-play=true slide-interval=2000>

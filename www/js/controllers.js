@@ -18,12 +18,15 @@ angular.module('starter.controllers', [])
 	};
 })
 
-.controller('ProductsCategoryCtrl', function($scope, $stateParams,Popup,Category,Products) {
+.controller('ProductsCategoryCtrl', function($scope, $state,$stateParams,Popup,Category,Products) {
   $scope.products = Products.query($stateParams);
   $scope.category = Category.get($stateParams.CategoryLevel1);
   $scope.showDetail = function(product){
 	  $scope.product = product;
 		Popup.show($scope,'templates/modal-product-detail.html');	  
+  };
+  $scope.back = function(){
+	  $state.go("tab.dash");
   };
   
 })

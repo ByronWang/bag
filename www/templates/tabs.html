@@ -22,6 +22,9 @@
 
   <!-- Account Tab -->
   <ion-tab title="订单" icon="icon ion-clipboard" href="#/tab/orders-customer">
+   	<ion-header-bar class="bar-assertive">
+		<h1 class="title">订单</h1>
+	</ion-header-bar>
 	<div class="bar bar-subheader">
 		<div class="tabs tabs-stable tabs-menu" x-ng-controller="tabsMenuCtrl">
 		  <a class="tab-item tab-item-active" href="#/tab/orders-customer" x-ng-click="showThis($event.target);">已发布</a>
