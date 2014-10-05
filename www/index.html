@@ -30,33 +30,33 @@
   <body ng-app="starter" animation="slide-in-up" x-ng-controller="GlobalCtrl">
 <ion-tabs class="tabs-icon-top tabs-stable">
 
-  <ion-tab title="首页" icon="icon ion-home" href="#/tab/dash">
+  <ion-tab title="首页" icon="icon ion-home" href="#/dash">
     <ion-nav-view name="tab-dash"></ion-nav-view>
   </ion-tab>
 
-  <ion-tab title="购物车" icon="icon ion-ios7-cart" href="#/tab/cart">
+  <ion-tab title="购物车" icon="icon ion-ios7-cart" href="#/cart">
     <ion-nav-view name="tab-cart"></ion-nav-view>
   </ion-tab>
   
-  <ion-tab title="清单" icon="icon ion-model-s" href="#/tab/inventorys">
+  <ion-tab title="清单" icon="icon ion-model-s" href="#/inventorys">
     <ion-nav-view name="tab-inventorys"></ion-nav-view>
   </ion-tab>
 
-  <ion-tab title="订单" icon="icon ion-clipboard" href="#/tab/orders-customer">
+  <ion-tab title="订单" icon="icon ion-clipboard" href="#/orders-customer">
    	<ion-header-bar class="bar-assertive">
 		<h1 class="title">订单</h1>
 	</ion-header-bar>
 	<div class="bar bar-subheader">
 		<div class="tabs tabs-stable tabs-menu" x-ng-controller="tabsMenuCtrl">
-		  <a class="tab-item tab-item-active" href="#/tab/orders-customer" x-ng-click="showThis($event.target);">已发布</a>
-		  <a class="tab-item" href="#/tab/orders-purchaser" x-ng-click="showThis($event.target);">代购中</a>
+		  <a class="tab-item tab-item-active" href="#/orders-customer" x-ng-click="showThis($event.target);">已发布</a>
+		  <a class="tab-item" href="#/orders-purchaser" x-ng-click="showThis($event.target);">代购中</a>
 		</div>
 	</div>
     <ion-nav-view name="tab-orders"></ion-nav-view>
   </ion-tab>
 
   <!-- Account Tab -->
-  <ion-tab title="我的" icon="icon ion-person" href="#/tab/account">
+  <ion-tab title="我的" icon="icon ion-person" href="#/account">
     <ion-nav-view name="tab-account"></ion-nav-view>
   </ion-tab>
 </ion-tabs>

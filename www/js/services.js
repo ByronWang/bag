@@ -5,8 +5,13 @@ angular.module('starter.services', [])
  */
 .factory('Host', function() {
 	var host = window.location.host;
-	host = host.substr(0, host.indexOf(":"));
-	host = "http://" + host + ":8686";
+	if(host){
+		host = host.substr(0, host.indexOf(":"));
+		host = "http://" + host + ":8686";		
+	}else{
+		host = "192.168.0.1";
+		host = "http://" + host + ":8686";		
+	}
 	return {
 		host : host
 	};
@@ -330,8 +335,44 @@ angular.module('starter.services', [])
 			PHOTOLIBRARY : 0,
 			CAMERA : 1,
 			SAVEDPHOTOALBUM : 2
-		}
-	}
+		},
+		 uploadPhoto: function(imageURI) {
+
+		       var options = new FileUploadOptions();
+
+		       //用于设置参数，服务端的Request字串
+
+		       options.fileKey = "fileAddPic";
+
+		       options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+
+		 
+
+		       //如果是图片格式，就用image/jpeg，其他文件格式上官网查API
+
+		       options.mimeType = "image/jpeg";
+
+		 
+
+		       //这里的uri根据自己的需求设定，是一个接收上传图片的地址
+
+		        varuri = encodeURI("http://192.168.0.131:88/uploadHandler.ashx");
+
+		       options.chunkedMode = false;
+
+		       var ft = newFileTransfer();
+
+		       ft.upload(imageURI, uri, uploadOK, onFail, options);
+
+			   function uploadOK(msg) {
+
+			       var response = msg.response;
+
+			       alert(response);
+
+			   }
+		   }
+	};
 } ])
 
 .factory('Address', function($http) {
@@ -427,25 +468,25 @@ angular.module('starter.services', [])
 
 	// Some fake testing data
 	var users = [ {
-		id : 0,
-		username : 'wangshilian',
-		password : '1234567',
-		nickname : "alian",
-		avatarPath : "",
+		ID : 1,
+		Name : 'wangshilian',
+		Password : '1234567',
+		Nickname : "alian",
+		AvatarPath : "",
 		isPurchase : true
 	}, {
-		id : 1,
-		username : 'jihua',
-		password : '1234567',
-		nickname : "alian",
-		avatarPath : "",
+		ID : 2,
+		Name : 'jihua',
+		Password : '1234567',
+		Nickname : "alian",
+		AvatarPath : "",
 		isPurchase : false
 	}, {
-		id : 2,
-		username : 'liubo',
-		password : '1234567',
-		nickname : "alian",
-		avatarPath : "",
+		ID : 3,
+		Name : 'liubo',
+		Password : '1234567',
+		Nickname : "alian",
+		AvatarPath : "",
 		isPurchase : false
 	} ];
 
@@ -453,10 +494,10 @@ angular.module('starter.services', [])
 		all : function() {
 			return users;
 		},
-		get : function(username) {
+		get : function(Name) {
 			var user;
 			angular.forEach(users, function(u) {
-				if (angular.equals(u.username, username)) {
+				if (angular.equals(u.Name, Name)) {
 					user = u;
 				}
 			});

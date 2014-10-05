@@ -7,8 +7,12 @@ angular.module('starter.controllers', [])
 		$scope.cart.edit($scope);
 	};
 	$scope.host = Host.host;
+	$scope.setHost = function(host){
+		if(host && host.length>1){
+			$scope.host =  host;
+		}
+	};
 })
-
 
 .controller('DashCtrl', function($scope, $ionicSlideBoxDelegate,Category,Popup) {
     $scope.rectHeight = document.body.clientWidth / 3;
@@ -252,17 +256,19 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('InventoryDetailCtrl', function($scope,$state, Category,$stateParams,Exts,OrderBiding,$timeout,$state,Popup,DeliveryMethod, Inventorys) {
+.controller('InventoryDetailCtrl', function($scope,$state, Category,Exts,OrderBiding,$timeout,$state,Popup,DeliveryMethod, Inventorys) {
 	$scope.item = Inventorys.get({itemId:$scope.$parent.item.ID},function(){
 		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 		$scope.item.Product.Extends = undefined;
 		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+		$scope.suitor = {
+				PurchaserID: $scope.currentUser.ID, //TODO 
+				PurchaserName: $scope.currentUser.Name,
+				OrderItemID:$scope.item.ID
+		};
+		$scope.loadBid();
 	});
 	$scope.step = 1;
-	$scope.suitor = {
-			PurchaserID: $scope.currentUser.ID, //TODO 
-			PurchaserName: $scope.currentUser.username,
-			OrderItemID:parseInt($stateParams.itemId)};
 	
 	$scope.showDeliveryMethods = function(){
 		  $scope.datalist = DeliveryMethod.query();
@@ -289,7 +295,6 @@ angular.module('starter.controllers', [])
 		  });
 	};
 	
-	$scope.loadBid();
   
   $scope.submit = function(){
 	  var post = new OrderBiding($scope.suitor);
@@ -369,8 +374,11 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('OrderCustomerDetailCtrl', function($scope,OrderItems,OrderItemFlowByItem,OrderItemFlow, Statuses,Actions,OrderBiding,$state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,Category,Exts) {
-	$scope.item =OrderItems.get({itemId: $scope.$parent.item.ID},function(){
+.controller('OrderCustomerDetailCtrl', function($scope,OrderItems,OrderItemFlowByItem,OrderItemFlow, Statuses,Actions,OrderBiding,$state,$ionicSlideBoxDelegate,$timeout, Orders,Category,Exts) {
+	var $stateParams = {itemId: $scope.$parent.item.ID};
+	
+	$scope.item =OrderItems.get($stateParams,function(){
+		loadFlow();
 			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 			$scope.item.Product.Extends = undefined;
 			$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
@@ -391,7 +399,6 @@ angular.module('starter.controllers', [])
 		});
 	};
 	
-	loadFlow();
 
 	$scope.statusActiveSlide = 0;
  
@@ -463,7 +470,10 @@ angular.module('starter.controllers', [])
 })
 
 .controller('OrderPurchaserDetailCtrl', function($scope,OrderItems,OrderItemFlowByItem,OrderItemFlow, Statuses,Actions,OrderBiding,$state,$stateParams,$ionicSlideBoxDelegate,$timeout, Orders,Category,Exts) {
-	$scope.item =OrderItems.get({itemId: $scope.$parent.item.ID},function(){
+	var $stateParams = {itemId: $scope.$parent.item.ID};
+	
+	$scope.item =OrderItems.get($stateParams,function(){
+		loadFlow();
 		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 		$scope.item.Product.Extends = undefined;
 		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
@@ -485,7 +495,6 @@ angular.module('starter.controllers', [])
 		});
 	};
 	
-	loadFlow();
 
 	$scope.statusActiveSlide = 0;
  
@@ -731,11 +740,13 @@ angular.module('starter.controllers', [])
 
 .controller('LoginCtrl', function($scope, Users) {
 	$scope.user= {};
+	$scope.user.host= $scope.$parent.host;
 	
 	// for test
-	$scope.user.username = "wangshilian";
+	$scope.user.Name = "wangshilian";
 	$scope.login = function() {
-		if($scope.currentUser.login($scope.user.username,$scope.user.pwssword)){
+		$scope.$parent.setHost($scope.user.host);
+		if($scope.currentUser.login($scope.user.Name,$scope.user.Password)){
 	    	$scope.$parent.closeModal();
 		}
 	  };

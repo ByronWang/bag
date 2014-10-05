@@ -12,7 +12,7 @@
 	<div class="list">
 		  <label class="item item-input">
 		    <span class="input-label">用户名</span>
-		 	<select x-ng-model="user.username">
+		 	<select x-ng-model="user.Name">
 		    	<option value="wangshilian">wangshilian</option>
 		    	<option value="jihua">jihua</option>
 		    	<option value="liubo">liubo</option>
@@ -20,7 +20,12 @@
 		  </label>
 		  <label class="item item-input">
 		    <span class="input-label">密码</span>
-		    <input type="password" x-ng-model="user.pwd">
+		    <input type="password" x-ng-model="user.Password">
+		  </label>
+		  <!-- for  test -->
+		  <label class="item item-input">
+		    <span class="input-label">Host</span>
+		 	<input type="text"  x-ng-model="user.host" class="input" value="192.168.0.101">
 		  </label>
 	</div>
 		<div class="padding">
