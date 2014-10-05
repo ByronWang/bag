@@ -17,7 +17,7 @@
 	
     <div class="list">
       <a x-ng-repeat="product in products"  class="item item-thumbnail-left item-info"  x-ng-click="showDetail(product);">
-			      <img x-ng-src="{{host}}/{{product.Image}}">
+			      <img x-ng-src="{{product.Image | URI}}">
 			      <div class="list info"> 
 			      		<span class="item"><h3>{{product.Name}}</h3></span>
 			      		<span class="item">代购国家<span class="item-note"> {{product.ExpectedPrice}}/元</span>      </span>

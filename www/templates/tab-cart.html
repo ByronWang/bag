@@ -33,7 +33,7 @@
                     {{country.Name}}
                 </div>
                 <ion-item ng-repeat="item in country.Items"  class="item-checkbox-thumbnail-left item-info">
-                    <img x-ng-src="{{host}}/{{item.Product.Image}}">
+                    <img x-ng-src="{{item.Product.Image | URI}}">
 	              <div class="list info"> 
 			      		<span class="item"><h2>{{item.Product.Name}}</h2></span>
 			      		<span class="item">价格 <span class="item-note">{{item.Product.ExpectedPrice}}/元</span></span>

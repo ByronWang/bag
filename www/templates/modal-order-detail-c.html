@@ -66,7 +66,7 @@ left: -2em
 		<div class="list">
 			  <div class="item item-divider">{{item.Product.CategoryDesc}}</div>
 			  <div class="item item-avatar item-product">
-			    <img x-ng-src="{{host}}/{{item.Product.Image}}">
+			    <img x-ng-src="{{item.Product.Image | URI}}">
 			  </div>
 			  <div class="item">{{item.Product.Name}}</div>
 		</div>

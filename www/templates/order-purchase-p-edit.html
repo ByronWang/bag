@@ -20,9 +20,9 @@
 
 	<div class="list ">
 		  <div class="item item-button-right">商品实物<button class="button icon ion-camera button-clear"></button>  </div>
-		  <div class="item image"><img  x-ng-src="{{current.Extends.ProductActualImage}}"></div>
+		  <div class="item image"><img  x-ng-src="{{current.Extends.ProductActualImage | URI}}"></div>
 		  <div class="item item-button-right">购物小票<button class="button icon ion-camera button-clear"></button>  </div>
-		  <div class="item"><img  x-ng-src="{{current.Extends.InvoiceImage}}"></div>
+		  <div class="item"><img  x-ng-src="{{current.Extends.InvoiceImage | URI}}"></div>
 	</div>
     <button class="button button-positive button-block"  x-ng-click="finishPurchasing()">完成购买</button>
 </pane>

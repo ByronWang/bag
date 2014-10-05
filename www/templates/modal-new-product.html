@@ -24,7 +24,7 @@
  
 	  <div class="item item-divider">{{product.CategoryDesc}}</div>
       <div class="item item-product-image item-options-right" >
-	      	<img  x-ng-src="{{product.Image}}" class="img-product">
+	      	<img  x-ng-src="{{product.Image | URI}}" class="img-product">
 	      	<div class="options">
 	      	 <button class="button button-clear" x-ng-click="getPhotoFromCamera()">
 		      	<i class="icon ion-camera"></i>

@@ -1,10 +1,11 @@
 angular.module('starter.filter', [])
 
-.filter('level',function(){
-    return function(items){
-        angular.forEach(items,function(item){
-            item = item + '!'
-        });
-        return items;
-    }
+.filter('URI',function(Host){
+    return function(path){
+    	if(path.indexOf("file://")>=0 || path.indexOf("http://")>=0 || path.indexOf("https://")>=0){
+    		return path;
+    	}else{
+    		return Host.host + path;
+    	}
+    };
 });  

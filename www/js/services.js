@@ -5,15 +5,18 @@ angular.module('starter.services', [])
  */
 .factory('Host', function() {
 	var host = window.location.host;
-	if(host){
+	if (host) {
 		host = host.substr(0, host.indexOf(":"));
-		host = "http://" + host + ":8686";		
-	}else{
-		host = "192.168.0.1";
-		host = "http://" + host + ":8686";		
+		host = "http://" + host + ":8686";
+	} else {
+		host = "192.168.12.100";
+		host = "http://" + host + ":8686";
 	}
 	return {
-		host : host
+		host : host,
+		setHost : function(newhost){
+			host = newhost;
+		}
 	};
 })
 
@@ -22,11 +25,21 @@ angular.module('starter.services', [])
 })
 
 .factory('DeliveryMethod', function($resource, Host) {
-	return $resource(Host.host + '/d/DeliveryMethod/:itemId');
+	var list  =  $resource(Host.host + '/d/DeliveryMethod/:itemId').query();
+	return {
+		query: function(a,b,c){
+			return list;
+		}
+	};
 })
 
 .factory('Countries', function($resource, Host) {
-	return $resource(Host.host + '/d/Country/:countryId');
+	var list  = $resource(Host.host + '/d/Country/:countryId').query();
+	return {
+		query: function(a,b,c){
+			return list;
+		}
+	};
 })
 
 .factory('Products', function($resource, Host) {
@@ -62,7 +75,9 @@ angular.module('starter.services', [])
 			Name : "完成"
 		},
 	};
-}).factory('Actions', function() {
+})
+
+.factory('Actions', function() {
 	return {
 		cancelOrder : {
 			"ID" : 8,
@@ -101,7 +116,9 @@ angular.module('starter.services', [])
 
 .factory('OrderItemFlowByItem', function($resource, Host) {
 	return $resource(Host.host + '/d/OrderItem/:itemId/OrderItemFlow/:flowId');
-}).factory('OrderItemFlow', function($resource, Host) {
+})
+
+.factory('OrderItemFlow', function($resource, Host) {
 	return $resource(Host.host + '/d/OrderItemFlow/:flowId');
 })
 
@@ -109,207 +126,7 @@ angular.module('starter.services', [])
 	return $resource(Host.host + '/d/Bid/:bidId');
 })
 
-.factory('Orders333', function() {
-	// Might use a resource here that returns a JSON array
-
-	// Some fake testing data
-	var orders = [ {
-		id : 0,
-		country : '韩国',
-		date : '2013-11-11',
-		Items : [ {
-			id : 0,
-			name : '自然堂凝时鲜颜肌活乳液',
-			type : '化妆品',
-			country : '韩国',
-			description : "",
-			Amount : 3,
-			expectedPrice : '3000',
-			StatusID : 1,
-			status : "买手已接单"
-		}, {
-			id : 1,
-			name : '苹果手机',
-			type : '数码',
-			country : '美国',
-			description : "",
-			Amount : 3,
-			expectedPrice : '5000',
-			seller : '买手一',
-			StatusID : 2,
-			status : "买手购买中"
-		}, {
-			id : 2,
-			name : '花王婴儿尿布',
-			type : '妇婴',
-			country : '日本',
-			description : "",
-			Amount : 3,
-			expectedPrice : '500',
-			seller : '买手一',
-			StatusID : 4,
-			status : "寻求买手中"
-		}, {
-			id : 3,
-			name : '惠氏奶粉',
-			type : '妇婴',
-			country : '美国',
-			description : "",
-			Amount : 3,
-			expectedPrice : '290',
-			seller : '买手一',
-			StatusID : 5,
-			status : "买手已接单"
-		} ]
-	}, {
-		id : 1,
-		country : '美国',
-		date : '2013-11-11',
-		Items : [ {
-			id : 0,
-			name : '自然堂凝时鲜颜肌活乳液',
-			type : '化妆品',
-			country : '韩国',
-			description : "",
-			Amount : 3,
-			expectedPrice : '3000',
-			StatusID : 1,
-			status : "买手已接单"
-		}, {
-			id : 1,
-			name : '苹果手机',
-			type : '数码',
-			country : '美国',
-			description : "",
-			Amount : 3,
-			expectedPrice : '5000',
-			seller : '买手一',
-			StatusID : 2,
-			status : "买手购买中"
-		}, {
-			id : 2,
-			name : '花王婴儿尿布',
-			type : '妇婴',
-			country : '日本',
-			description : "",
-			Amount : 3,
-			expectedPrice : '500',
-			seller : '买手一',
-			StatusID : 4,
-			status : "寻求买手中"
-		}, {
-			id : 3,
-			name : '惠氏奶粉',
-			type : '妇婴',
-			country : '美国',
-			description : "",
-			Amount : 3,
-			expectedPrice : '290',
-			seller : '买手一',
-			StatusID : 5,
-			status : "买手已接单"
-		} ]
-	}, {
-		id : 2,
-		country : '日本',
-		date : '2013-11-11',
-		Items : [ {
-			id : 0,
-			name : '自然堂凝时鲜颜肌活乳液',
-			type : '化妆品',
-			country : '韩国',
-			description : "",
-			Amount : 3,
-			expectedPrice : '3000',
-			StatusID : 2,
-			status : "买手已接单"
-		}, {
-			id : 1,
-			name : '苹果手机',
-			type : '数码',
-			country : '美国',
-			description : "",
-			Amount : 3,
-			expectedPrice : '5000',
-			seller : '买手一',
-			StatusID : 2,
-			status : "买手购买中"
-		}, {
-			id : 2,
-			name : '花王婴儿尿布',
-			type : '妇婴',
-			country : '日本',
-			description : "",
-			Amount : 3,
-			expectedPrice : '500',
-			seller : '买手一',
-			StatusID : 2,
-			status : "寻求买手中"
-		}, {
-			id : 3,
-			name : '惠氏奶粉',
-			type : '妇婴',
-			country : '美国',
-			description : "",
-			Amount : 3,
-			expectedPrice : '290',
-			seller : '买手一',
-			StatusID : 2,
-			status : "买手已接单"
-		} ]
-	} ];
-
-	return {
-		all : function() {
-			return orders;
-		},
-		get : function(orderId) {
-			// Simple index lookup
-			return orders[orderId];
-		},
-		add : function(order) {
-			orders.push(order);
-			order.id = orders.length - 1;
-			angular.forEach(order.Items, function(i) {
-				i.StatusID = 1;
-			});
-
-			return order.id;
-		},
-		done : function(item, StatusID, Action, params) {
-			if (!params) {
-				params = {};
-			}
-
-			params.StatusID = StatusID;
-			params.ActionId = Action;
-			params.timestamp = new Date();
-			if (!item.actions) {
-				item.actions = [];
-			}
-			item.actions.push(params);
-			item.current = params;
-		},
-		getItem : function(orderId, itemId) {
-			var item = orders[orderId].Items[itemId];
-			if (!item.actions) {
-				item.actions = [];
-				item.current = {
-					StatusID : 1
-				};
-			} else if (item.actions.length > 0) {
-				item.current = item.actions[item.actions.length - 1];
-			} else {
-				item.current = {
-					StatusID : 1
-				};
-			}
-			return item;
-		}
-	};
-})
-
-.factory('Camera', [ '$q', function($q) {
+.factory('Camera', [ '$q', 'Host', function($q, Host) {
 
 	return {
 		getPicture : function(options) {
@@ -336,42 +153,24 @@ angular.module('starter.services', [])
 			CAMERA : 1,
 			SAVEDPHOTOALBUM : 2
 		},
-		 uploadPhoto: function(imageURI) {
+		upload : function(imageURI) {
+			var q = $q.defer();
 
-		       var options = new FileUploadOptions();
+			var options = new FileUploadOptions();
+			options.fileKey = "file";
+			options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+			options.mimeType = "multipart/form-data";
+			options.chunkedMode = false;
+			ft = new FileTransfer();
+			var uploadUrl = encodeURI(Host.host + "/f/uploads/");
+			ft.upload(imageURI, uploadUrl, function(result) {
+				q.resolve(result);
+			}, function(err) {
+				q.reject(err);
+			}, options);
 
-		       //用于设置参数，服务端的Request字串
-
-		       options.fileKey = "fileAddPic";
-
-		       options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
-
-		 
-
-		       //如果是图片格式，就用image/jpeg，其他文件格式上官网查API
-
-		       options.mimeType = "image/jpeg";
-
-		 
-
-		       //这里的uri根据自己的需求设定，是一个接收上传图片的地址
-
-		        varuri = encodeURI("http://192.168.0.131:88/uploadHandler.ashx");
-
-		       options.chunkedMode = false;
-
-		       var ft = newFileTransfer();
-
-		       ft.upload(imageURI, uri, uploadOK, onFail, options);
-
-			   function uploadOK(msg) {
-
-			       var response = msg.response;
-
-			       alert(response);
-
-			   }
-		   }
+			return q.promise;
+		}
 	};
 } ])
 
@@ -418,7 +217,9 @@ angular.module('starter.services', [])
 			return o;
 		}
 	};
-}).factory('LoginUser', function($ionicModal, Users) {
+})
+
+.factory('LoginUser', function($ionicModal, Users) {
 	// Might use a resource here that returns a JSON array
 
 	var defaultUser = {
@@ -463,7 +264,9 @@ angular.module('starter.services', [])
 			angular.extend(this, defaultUser);
 		}
 	};
-}).factory('Users', function() {
+})
+
+.factory('Users', function() {
 	// Might use a resource here that returns a JSON array
 
 	// Some fake testing data
@@ -509,23 +312,22 @@ angular.module('starter.services', [])
 
 .factory('Popup', function($ionicModal) {
 	return {
-		show: function($scope,templateUrl,callback){
-				var scope = $scope.$new();
-			  $ionicModal.fromTemplateUrl(templateUrl, {
-			    scope: scope,
-			    animation: 'slide-left-right'
-			  }).then(function(modal) {
-			    $scope.modal = modal;
-			    $scope.modal.show();
-			  });
-			  
-			  scope.closeModal = function() {	    			  
-				  scope.modal.hide();
-			  };	
+		show : function($scope, templateUrl, callback) {
+			var scope = $scope.$new();
+			$ionicModal.fromTemplateUrl(templateUrl, {
+				scope : scope,
+				animation : 'slide-left-right'
+			}).then(function(modal) {
+				$scope.modal = modal;
+				$scope.modal.show();
+			});
+
+			scope.closeModal = function() {
+				scope.modal.hide();
+			};
 		}
 	};
 })
-
 
 .factory(
 		'Category',
@@ -669,23 +471,6 @@ angular.module('starter.services', [])
 				country.Items.push(item);
 				this.Countrys.push(country);
 			}
-		},
-		edit : function($scope) {
-			$ionicModal.fromTemplateUrl('templates/modal-orders-cart.html', {
-				scope : $scope,
-				animation : 'slide-in-up'
-			}).then(function(modal) {
-				$scope.modal = modal;
-				$scope.modal.show();
-			});
-
-			$scope.openModal = function() {
-				$scope.modal.show();
-			};
-
-			$scope.closeModal = function() {
-				$scope.modal.hide();
-			};
 		}
 	};
 

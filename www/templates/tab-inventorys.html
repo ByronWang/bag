@@ -16,7 +16,7 @@
 	  </div> -->
 	  
   		      <a x-ng-repeat="item in inventorys"  class="item item-thumbnail-left item-info"    x-ng-click="showDetail(item);">
-			      <img x-ng-src="{{host}}/{{item.Product.Image}}">
+			      <img x-ng-src="{{item.Product.Image | URI}}">
 			      <div class="list info"> 
 			      		<span class="item"><h3>{{item.Product.Name}}</h3></span>
 			      		<span class="item">价格 <span class="item-note"> {{item.Product.ExpectedPrice}}/元</span>      </span>
