@@ -1,4 +1,13 @@
-<ion-view title="关于我们">
+<ion-modal-view ng-controller="FilterCtrl">
+	<ion-header-bar class="bar-assertive">
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
+		</div>
+		<h1 class="title">筛选</h1>
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-close-empty pull-right"    x-ng-click="modal.hide();"></button>
+		</div>
+	</ion-header-bar>
 	<ion-content class="has-header padding">
 		<button class="button button-block button-energized" x-ng-controller="UnionpayCtrl" ng-click="pay()"> 付款 </button>
 		<button class="button button-block button-energized" x-ng-controller="UnionpayCtrl" ng-click="toast()"> 提示 </button>
@@ -13,4 +22,4 @@
 				</textarea> </label>
 		</div>
 	</ion-content>
-</ion-view>
+</ion-modal-view>

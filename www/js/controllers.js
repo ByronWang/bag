@@ -563,24 +563,24 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$http.jsonp('http://api.openbeerdatabase.com/v1/breweries.json?callback=JSON_CALLBACK').then(function(result) {
 		_this.breweries = result.data.breweries
 	})
-}).controller('AccountCtrl', function($scope) {
+}).controller('AccountCtrl', function($scope,Popup) {
 	$scope.currentUser.needLogin($scope);
 	$scope.showUser = function() {
-
+		Popup.show($scope, 'templates/modal-account-userinfo.html');
 	};
 	$scope.editUser = function() {
-
+		Popup.show($scope, 'templates/modal-account-setting.html');
 	};
 	$scope.editBanlance = function() {
-
+		Popup.show($scope, 'templates/modal-account-balance.html');
 	};
 
 	$scope.showAbout = function() {
-
+		Popup.show($scope, 'templates/modal-account-about.html');
 	};
 
 	$scope.showLegal = function() {
-
+		Popup.show($scope, 'templates/modal-account-legal.html');
 	};
 }).controller('AccountInfoCtrl', function($scope, $state) {
 	$scope.logoff = function() {
