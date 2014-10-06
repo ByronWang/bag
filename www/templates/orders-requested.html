@@ -1,6 +1,11 @@
 <ion-view title="我的代购订单">
-	<ion-content class="has-subheader">
-		<div class="list padding-top">
+	<ion-content class="has-subheader">	
+		<div x-ng-show="!currentUser.BePurchaser">
+			<p>
+				你还不是买手！
+			</p>
+		</div>
+		<div class="list padding-top" x-ng-show="currentUser.BePurchaser">
 			<div class="item item-divider" x-ng-show="itemsBiding.length>0">
 				竞购中
 			</div>

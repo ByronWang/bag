@@ -1,9 +1,17 @@
 angular.module('starter.filter', []).filter('URI', function(Host) {
 	return function(path) {
-		if (path.indexOf("file://") >= 0 || path.indexOf("http://") >= 0 || path.indexOf("https://") >= 0) {
-			return path;
+		var realPath;
+		if (path) {
+			if (path.indexOf("file://") >= 0 || path.indexOf("http://") >= 0 || path.indexOf("https://") >= 0) {
+				realPath= path;
+			} else if(path.indexOf("uploads")>=0){
+				realPath= Host.host + path;
+			}else{
+				realPath= path;
+			}
 		} else {
-			return Host.host + path;
+			realPath= "img/avatar-default.jpg";
 		}
+		return realPath;
 	};
 });

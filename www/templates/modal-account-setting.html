@@ -1,9 +1,9 @@
-<ion-modal-view ng-controller="FilterCtrl">
+<ion-modal-view ng-controller="AccountUserEditCtrl">
 	<ion-header-bar class="bar-assertive">
 		<div class="buttons">
 			<button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
 		</div>
-		<h1 class="title">筛选</h1>
+		<h1 class="title">设定</h1>
 		<div class="buttons">
 			<button class="button button-icon icon ion-ios7-close-empty pull-right"    x-ng-click="modal.hide();"></button>
 		</div>
@@ -23,26 +23,29 @@
 				修改密码
 			</div>
 			<label class="item item-input"> <span class="input-label">旧密码</span>
-				<input type="text" x-ng-model="user.pwd">
+				<input type="text" x-ng-model="user.Password">
 			</label>
 			<label class="item item-input"> <span class="input-label">密码修改</span>
-				<input type="password" x-ng-model="user.newpwd">
+				<input type="password" x-ng-model="user.NewPwd">
 			</label>
 			<label class="item item-input"> <span class="input-label">确认密码</span>
-				<input type="password" x-ng-model="user.newpwdconfirm">
+				<input type="password" x-ng-model="user.NewPwdConfirm">
 			</label>
 			<div class="item item-divider">
 				修改基本信息
 			</div>
+			<label class="item item-input"> <span class="input-label">昵称</span>
+				<input type="text" x-ng-model="user.NickName">
+			</label>
 			<label class="item item-input"> <span class="input-label">出生日期</span>
-				<input type="password" x-ng-model="user.birthday">
+				<input type="date" x-ng-model="user.Birthday">
 			</label>
 			<label class="item item-input"> <span class="input-label">地址</span>
-				<input type="password" x-ng-model="user.address">
+				<input type="text" x-ng-model="user.Address">
 			</label>
 		</div>
 		<div class="padding">
-			<button class="button button-block button-positive" x-ng-click="save();">确认</button>
+			<button class="button button-block button-positive" x-ng-click="submit();">确认</button>
 		</div>
 
 	</ion-content>
