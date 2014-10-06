@@ -1,13 +1,23 @@
 <pane>
-<div class="list">
-	  <label class="item">已经购买完成</label>
-	  <label class="item">结束时间<span class="item-value">{{current.Extends.PurchasingEndDatetime}}</span></label>
-	  <label class="item">结束地点<span class="item-value">{{current.Extends.PurchasingEndLocation}}</span></label>
-	  <label class="item">共计 ？？ 天</label>
+	<div class="list">
+		<label class="item">
+			已经购买完成</label>
+		<label class="item">
+			结束时间<span class="item-value">{{current.Extends.PurchasingEndDatetime}}</span></label>
+		<label class="item">
+			结束地点<span class="item-value">{{current.Extends.PurchasingEndLocation}}</span></label>
+		<label class="item">
+			共计 ？？ 天</label>
 
-	  <div class="item item-divider">商品实物</div>
-	  <div class="item"><img  x-ng-src="{{current.Extends.ProductActualImage | URI}}"></div>
-		<div class="item item-divider">购物小票</div>
-	  <div class="item"><img  x-ng-src="{{current.Extends.InvoiceImage | URI}}"></div>
-</div>
+		<div class="item item-divider">
+			商品实物
+		</div>
+		<div class="item"><img  x-ng-src="{{current.Extends.ProductActualImage | URI}}">
+		</div>
+		<div class="item item-divider">
+			购物小票
+		</div>
+		<div class="item"><img  x-ng-src="{{current.Extends.InvoiceImage | URI}}">
+		</div>
+	</div>
 </pane>

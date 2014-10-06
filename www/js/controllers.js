@@ -1,6 +1,4 @@
-angular.module('starter.controllers', [])
-
-.controller('GlobalCtrl', function($scope, LoginUser, Cart, Host, $q) {
+angular.module('starter.controllers', []).controller('GlobalCtrl', function($scope, LoginUser, Cart, Host, $q) {
 	$scope.currentUser = LoginUser;
 	$scope.cart = Cart;
 	$scope.editCart = function() {
@@ -13,17 +11,13 @@ angular.module('starter.controllers', [])
 			Host.setHost(host);
 		}
 	};
-})
-
-.controller('DashCtrl', function($scope, $ionicSlideBoxDelegate, Category, Popup) {
+}).controller('DashCtrl', function($scope, $ionicSlideBoxDelegate, Category, Popup) {
 	$scope.rectHeight = document.body.clientWidth / 3;
 	$scope.category = Category.level1Grouped();
 	$scope.search = function() {
 		Popup.show($scope, 'templates/modal-search.html');
 	};
-})
-
-.controller('ProductsCategoryCtrl', function($scope, $state, $stateParams, Popup, Category, Products) {
+}).controller('ProductsCategoryCtrl', function($scope, $state, $stateParams, Popup, Category, Products) {
 	$scope.products = Products.query($stateParams);
 	$scope.category = Category.get($stateParams.CategoryLevel1);
 	$scope.showDetail = function(product) {
@@ -34,9 +28,7 @@ angular.module('starter.controllers', [])
 		$state.go("dash");
 	};
 
-})
-
-.controller('ProductDetailCtrl', function($scope, $stateParams, Products, Exts, Category) {
+}).controller('ProductDetailCtrl', function($scope, $stateParams, Products, Exts, Category) {
 	$scope.product = Products.get({
 		productId : $scope.$parent.product.ID
 	}, function() {
@@ -52,9 +44,7 @@ angular.module('starter.controllers', [])
 		$scope.closeModal();
 		return false;
 	};
-})
-
-.controller('CartCtrl', function($scope, Popup, Exts) {
+}).controller('CartCtrl', function($scope, Popup, Exts) {
 
 	$scope.next = function() {
 		var items = [];
@@ -97,98 +87,93 @@ angular.module('starter.controllers', [])
 			c.Items = newitems;
 		});
 	};
-})
+}).controller('NewProductCtrl', function($scope, $ionicActionSheet, Popup, $timeout, Products, Camera, Orders, Countries, Category, Exts) {
+	$scope.product = {};
+	$scope.categories = Category.level1();
+	$scope.item = {
+		Quantity : 1
+	};
 
-.controller('NewProductCtrl',
-		function($scope, $ionicActionSheet, Popup, $timeout, Products, Camera, Orders, Countries, Category, Exts) {
-			$scope.product = {};
-			$scope.categories = Category.level1();
-			$scope.item = {
-				Quantity : 1
-			};
+	$scope.categoryInEdit = true;
 
-			$scope.categoryInEdit = true;
+	$scope.product.CategoryDesc = "";
 
-			$scope.product.CategoryDesc = "";
+	$scope.selectCat = function(cat) {
+		var cs = Category.children(cat.ID);
+		if (cs.length > 0) {
+			$scope.categories = cs;
+			if ($scope.product.CategoryDesc != "") {
+				$scope.product.CategoryDesc = $scope.product.CategoryDesc + " > " + cat.Name;
+			} else {
+				$scope.product.CategoryDesc = cat.Name;
+			}
+			if (!$scope.product.CategoryLevel1ID) {
+				$scope.product.CategoryLevel1ID = cat.ID;
+				$scope.product.CategoryLevel1Name = cat.Name;
+			}
+		} else {
+			$scope.categoryInEdit = false;
+			if (!$scope.product.CategoryID) {
+				$scope.product.CategoryID = cat.ID;
+				$scope.product.CategoryName = cat.Name;
+			}
 
-			$scope.selectCat = function(cat) {
-				var cs = Category.children(cat.ID);
-				if (cs.length > 0) {
-					$scope.categories = cs;
-					if ($scope.product.CategoryDesc != "") {
-						$scope.product.CategoryDesc = $scope.product.CategoryDesc + " > " + cat.Name;
-					} else {
-						$scope.product.CategoryDesc = cat.Name;
-					}
-					if (!$scope.product.CategoryLevel1ID) {
-						$scope.product.CategoryLevel1ID = cat.ID;
-						$scope.product.CategoryLevel1Name = cat.Name;
-					}
-				} else {
-					$scope.categoryInEdit = false;
-					if (!$scope.product.CategoryID) {
-						$scope.product.CategoryID = cat.ID;
-						$scope.product.CategoryName = cat.Name;
-					}
+			if ($scope.product.CategoryDesc != "") {
+				$scope.product.CategoryDesc = $scope.product.CategoryDesc + " > " + cat.Name;
+			} else {
+				$scope.product.CategoryDesc = cat.Name;
+			}
+		}
+	};
 
-					if ($scope.product.CategoryDesc != "") {
-						$scope.product.CategoryDesc = $scope.product.CategoryDesc + " > " + cat.Name;
-					} else {
-						$scope.product.CategoryDesc = cat.Name;
-					}
-				}
-			};
+	$scope.product.Image = "img/mcfly.jpg";
 
-			$scope.product.Image = "img/mcfly.jpg";
+	$scope.getPhoto = function(sourceType) {
+		$scope.product.ImagePromise = Camera.getPicture({
+			sourceType : sourceType,
+			correctOrientation : true,
+			quality : 50,
+			targetWidth : 320,
+			targetHeight : 320,
+			saveToPhotoAlbum : false
+		});
 
-			$scope.getPhoto = function(sourceType) {
-				$scope.product.ImagePromise = Camera.getPicture({
-					sourceType :sourceType,
-					correctOrientation : true,
-					quality : 50,
-					targetWidth : 320,
-					targetHeight : 320,
-					saveToPhotoAlbum : false
-				});
+		$scope.product.ImagePromise.then(function(imageURI) {
+			$scope.product.Image = imageURI;
+		}, function(err) {
+			console.err(err);
+		});
+	};
 
-				$scope.product.ImagePromise.then(function(imageURI) {
-					$scope.product.Image = imageURI;
-				}, function(err) {
-					console.err(err);
-				});
-			};
+	$scope.getPhotoFromCamera = function() {
+		$scope.getPhoto(Camera.PictureSourceType.CAMERA);
+	};
 
-			$scope.getPhotoFromCamera = function() {
-				$scope.getPhoto(Camera.PictureSourceType.CAMERA);
-			};
+	$scope.getPhotoFromLibrary = function() {
+		$scope.getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);
+	};
 
-			$scope.getPhotoFromLibrary = function() {
-				$scope.getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);
-			};
+	$scope.popupCountries = function() {
+		$scope.datalist = Countries.query();
+		Popup.show($scope, 'templates/modal-select.html');
 
-			$scope.popupCountries = function() {
-				$scope.datalist = Countries.query();
-				Popup.show($scope, 'templates/modal-select.html');
+		$scope.ret = function(item) {
+			$scope.product.CountryID = item.ID;
+			$scope.product.CountryName = item.Name;
+		};
+	};
 
-				$scope.ret = function(item) {
-					$scope.product.CountryID = item.ID;
-					$scope.product.CountryName = item.Name;
-				};
-			};
+	$scope.step = 1;
+	$scope.submit = function() {
+		$scope.product.Extends = Exts.encode($scope.product.Exts);
+		$scope.product.Exts = undefined;
 
-			$scope.step = 1;
-			$scope.submit = function() {
-				$scope.product.Extends = Exts.encode($scope.product.Exts);
-				$scope.product.Exts = undefined;
+		$scope.item.Product = $scope.product;
 
-				$scope.item.Product = $scope.product;
-
-				$scope.cart.add($scope.item);
-				$scope.$parent.closeModal();
-			};
-		})
-
-.controller('NewOrderCtrl', function($scope,Camera,$q, Popup, Orders, Address, Exts, Statuses, Actions) {
+		$scope.cart.add($scope.item);
+		$scope.$parent.closeModal();
+	};
+}).controller('NewOrderCtrl', function($scope, Camera, $q, Popup, Orders, Address, Exts, Statuses, Actions) {
 	$scope.Items = [];
 	$scope.country = {};
 
@@ -208,7 +193,7 @@ angular.module('starter.controllers', [])
 		 * angular.forEach(c.Items,function(i){ if(!i.checked){
 		 * newitems.push(i); } }); c.Items = newitems; });
 		 */
-		
+
 		var promiseArray = [];
 		angular.forEach($scope.order.Items, function(newitem) {
 			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
@@ -219,9 +204,9 @@ angular.module('starter.controllers', [])
 			newitem.ActionName = Actions.sendout.Name;
 			newitem.CustomerID = $scope.currentUser.ID;
 			newitem.CustomerName = $scope.currentUser.username;
-			if(newitem.Product.ImagePromise){
+			if (newitem.Product.ImagePromise) {
 				var p = Camera.upload(newitem.Product.Image);
-				p = p.then(function(result){
+				p = p.then(function(result) {
 					newitem.Product.Image = result.response;
 				});
 				promiseArray.push(p);
@@ -230,23 +215,22 @@ angular.module('starter.controllers', [])
 		$scope.order.CustomerID = $scope.currentUser.ID;
 		$scope.order.CustomerName = $scope.currentUser.username;
 
-		var submitOrder = function(){
+		var submitOrder = function() {
 			var Order = new Orders($scope.order);
 			Order.$save(function() {
 				$scope.$parent.refineCart();
 				$scope.$parent.closeModal();
 			});
 		};
-		
-		if(promiseArray.length>0){
+
+		if (promiseArray.length > 0) {
 			$q.all(promiseArray).then(function(results) {
-				  submitOrder();
-			  });
-		}else{
-			submitOrder();			
+				submitOrder();
+			});
+		} else {
+			submitOrder();
 		}
-		
-		
+
 	};
 }).controller('InventorysCtrl', function($scope, Popup, Inventorys) {
 	$scope.countryName = "全部国家";
@@ -268,82 +252,71 @@ angular.module('starter.controllers', [])
 		$scope.countryName = c.Name;
 		$scope.Inventorys = Inventorys.query();
 	};
-})
+}).controller('InventoryDetailCtrl', function($scope, $state, Category, Exts, OrderBiding, $timeout, $state, Popup, DeliveryMethod, Inventorys) {
+	$scope.item = Inventorys.get({
+		itemId : $scope.$parent.item.ID
+	}, function() {
+		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+		$scope.item.Product.Extends = undefined;
+		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+		$scope.suitor = {
+			PurchaserID : $scope.currentUser.ID, // TODO
+			PurchaserName : $scope.currentUser.Name,
+			OrderItemID : $scope.item.ID
+		};
+		$scope.loadBid();
+	});
+	$scope.step = 1;
 
-.controller('InventoryDetailCtrl',
-		function($scope, $state, Category, Exts, OrderBiding, $timeout, $state, Popup, DeliveryMethod, Inventorys) {
-			$scope.item = Inventorys.get({
-				itemId : $scope.$parent.item.ID
-			}, function() {
-				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
-				$scope.item.Product.Extends = undefined;
-				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
-				$scope.suitor = {
-					PurchaserID : $scope.currentUser.ID, // TODO
-					PurchaserName : $scope.currentUser.Name,
-					OrderItemID : $scope.item.ID
-				};
-				$scope.loadBid();
-			});
-			$scope.step = 1;
+	$scope.showDeliveryMethods = function() {
+		$scope.datalist = DeliveryMethod.query();
 
-			$scope.showDeliveryMethods = function() {
-				$scope.datalist = DeliveryMethod.query();
+		Popup.show($scope, 'templates/modal-select.html');
 
-				Popup.show($scope, 'templates/modal-select.html');
+		$scope.ret = function(item) {
+			$scope.suitor.DeliveryMethodID = item.ID;
+			$scope.suitor.DeliveryMethodName = item.Name;
+		};
 
-				$scope.ret = function(item) {
-					$scope.suitor.DeliveryMethodID = item.ID;
-					$scope.suitor.DeliveryMethodName = item.Name;
-				};
+	};
 
-			};
+	$scope.loadBid = function() {
+		$scope.bids = OrderBiding.query({
+			OrderItem : $scope.suitor.OrderItemID,
+			Purchaser : $scope.suitor.PurchaserID
+		}, function() {
+			if ($scope.bids.length > 0) {
+				$scope.step = 3;
+				$scope.suitor = $scope.bids[0];
+			}
 
-			$scope.loadBid = function() {
-				$scope.bids = OrderBiding.query({
-					OrderItem : $scope.suitor.OrderItemID,
-					Purchaser : $scope.suitor.PurchaserID
-				}, function() {
-					if ($scope.bids.length > 0) {
-						$scope.step = 3;
-						$scope.suitor = $scope.bids[0];
-					}
+		});
+	};
 
-				});
-			};
-
-			$scope.submit = function() {
-				var post = new OrderBiding($scope.suitor);
-				post.$save(function() {
-					$scope.loadBid();
-				});
-			};
-		})
-
-.controller('tabsMenuCtrl', function($scope) {
+	$scope.submit = function() {
+		var post = new OrderBiding($scope.suitor);
+		post.$save(function() {
+			$scope.loadBid();
+		});
+	};
+}).controller('tabsMenuCtrl', function($scope) {
 	$scope.showThis = function(e) {
 		var ele = angular.element(e);
 		ele.parent().find("a").removeClass("tab-item-active");
 		ele.addClass("tab-item-active");
 	};
-})
-
-.controller('OrdersCtrl', function($scope, Orders) {
+}).controller('OrdersCtrl', function($scope, Orders) {
 	$scope.orders = Orders.all();
 
 	// Load more after 1 second delay
 	$scope.loadMoreItems = function() {
 		$scope.$broadcast('scroll.infiniteScrollComplete');
 	};
-})
-
-.controller('OrderInListCtrl', function($scope, Orders) {
+}).controller('OrderInListCtrl', function($scope, Orders) {
 	$scope.realOrder = Orders.get({
 		orderId : $scope.$parent.order.ID
 	});
-})
-
-.controller('OrdersCustomerCtrl', function($scope, Orders, Popup) {
+}).controller('OrdersCustomerCtrl', function($scope, Orders, Popup) {
 	$scope.orders = Orders.query({
 		Customer : $scope.currentUser.ID
 	});
@@ -357,9 +330,7 @@ angular.module('starter.controllers', [])
 	$scope.loadMoreItems = function() {
 		$scope.$broadcast('scroll.infiniteScrollComplete');
 	};
-})
-
-.controller('OrdersPurchaserCtrl', function($scope, OrderBiding, Popup) {
+}).controller('OrdersPurchaserCtrl', function($scope, OrderBiding, Popup) {
 	$scope.items = OrderBiding.query({
 		Purchaser : $scope.currentUser.ID
 	}, function() {
@@ -391,201 +362,189 @@ angular.module('starter.controllers', [])
 	$scope.loadMoreItems = function() {
 		$scope.$broadcast('scroll.infiniteScrollComplete');
 	};
-})
+}).controller('OrderCustomerDetailCtrl', function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts) {
+	var $stateParams = {
+		itemId : $scope.$parent.item.ID
+	};
 
-.controller(
-		'OrderCustomerDetailCtrl',
-		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state,
-				$ionicSlideBoxDelegate, $timeout, Orders, Category, Exts) {
-			var $stateParams = {
-				itemId : $scope.$parent.item.ID
-			};
+	$scope.item = OrderItems.get($stateParams, function() {
+		loadFlow();
+		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+		$scope.item.Product.Extends = undefined;
+		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+	});
 
-			$scope.item = OrderItems.get($stateParams, function() {
-				loadFlow();
-				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
-				$scope.item.Product.Extends = undefined;
-				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
-			});
+	$scope.Actions = Actions;
 
-			$scope.Actions = Actions;
-
-			var loadFlow = function() {
-				$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
-					if ($scope.flows.length > 0) {
-						$scope.current = $scope.flows[$scope.flows.length - 1];
-						$scope.statusActiveSlide = $scope.current.StatusID - 1;
-					} else {
-						$scope.current = {
-							StatusID : 1
-						};
-						$scope.statusActiveSlide = $scope.current.StatusID - 1;
-						$scope.loadBid();
-					}
-				});
-			};
-
-			$scope.statusActiveSlide = 0;
-
-			var flowStepOut = function(status, action, params) {
-				var step = {};
-
-				step.Extends = angular.copy($scope.current.Extends);
-				step.Bid = angular.copy($scope.current.Bid);
-				if (params) {
-					step = angular.copy(params, step);
-				}
-				step.OrderItemID = $scope.item.ID;
-				step.StatusID = status.ID;
-				step.StatusName = status.Name;
-				step.ActionID = action.ID;
-				step.ActionName = action.Name;
-				var post = new OrderItemFlow(step);
-				post.$save(function() {
-					loadFlow();
-					$state.reload();
-				});
-			};
-
-			$scope.loadBid = function() {
-				$scope.bids = OrderBiding.query({
-					OrderItem : $stateParams.itemId
-				}, function() {
-				});
-			};
-
-			$scope.statusSlide = function(e, to) {
-				$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
-				var ele = angular.element(e);
-				angular.forEach(ele.parent().parent().find("div"), function(i) {
-					var ie = angular.element(i);
-					if (ie.hasClass("active"))
-						ie.removeClass("active");
-				});
-				ele.addClass("active");
-			};
-
-			$scope.bitSucceed = function(suitor) {
-
-				var params = {
-					Bid : {
-						"ID" : suitor.ID,
-						"OrderItemID" : suitor.OrderItemID,
-						"PurchaserID" : suitor.PurchaserID,
-						"PurchaserName" : suitor.PurchaserName,
-						"Commission" : suitor.Commission,
-						"SuggestedPrice" : suitor.SuggestedPrice,
-						"DeliveryCost" : suitor.DeliveryCost,
-						"DeliveryMethodID" : suitor.DeliveryMethodID,
-						"DeliveryMethodName" : suitor.DeliveryMethodName
-					}
+	var loadFlow = function() {
+		$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
+			if ($scope.flows.length > 0) {
+				$scope.current = $scope.flows[$scope.flows.length - 1];
+				$scope.statusActiveSlide = $scope.current.StatusID - 1;
+			} else {
+				$scope.current = {
+					StatusID : 1
 				};
+				$scope.statusActiveSlide = $scope.current.StatusID - 1;
+				$scope.loadBid();
+			}
+		});
+	};
 
-				flowStepOut(Statuses.purchasing, Actions.bitSucceed, params);
-			};
+	$scope.statusActiveSlide = 0;
 
-			$scope.cancelOrder = function() {
-				flowStepOut(Statuses.completed, Actions.cancelOrder);
-			};
+	var flowStepOut = function(status, action, params) {
+		var step = {};
 
-			$scope.confirmDelivering = function() {
-				flowStepOut(Statuses.completed, Actions.delivered);
-			};
-		})
+		step.Extends = angular.copy($scope.current.Extends);
+		step.Bid = angular.copy($scope.current.Bid);
+		if (params) {
+			step = angular.copy(params, step);
+		}
+		step.OrderItemID = $scope.item.ID;
+		step.StatusID = status.ID;
+		step.StatusName = status.Name;
+		step.ActionID = action.ID;
+		step.ActionName = action.Name;
+		var post = new OrderItemFlow(step);
+		post.$save(function() {
+			loadFlow();
+			$state.reload();
+		});
+	};
 
-.controller(
-		'OrderPurchaserDetailCtrl',
-		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state,
-				$stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts) {
-			var $stateParams = {
-				itemId : $scope.$parent.item.ID
-			};
+	$scope.loadBid = function() {
+		$scope.bids = OrderBiding.query({
+			OrderItem : $stateParams.itemId
+		}, function() {
+		});
+	};
 
-			$scope.item = OrderItems.get($stateParams, function() {
-				loadFlow();
-				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
-				$scope.item.Product.Extends = undefined;
-				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
-			});
+	$scope.statusSlide = function(e, to) {
+		$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
+		var ele = angular.element(e);
+		angular.forEach(ele.parent().parent().find("div"), function(i) {
+			var ie = angular.element(i);
+			if (ie.hasClass("active"))
+				ie.removeClass("active");
+		});
+		ele.addClass("active");
+	};
 
-			$scope.Actions = Actions;
+	$scope.bitSucceed = function(suitor) {
 
-			var loadFlow = function() {
-				$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
-					if ($scope.flows.length > 0) {
-						$scope.current = $scope.flows[$scope.flows.length - 1];
-						$scope.statusActiveSlide = $scope.current.StatusID - 1;
-					} else {
-						$scope.current = {
-							StatusID : 1
-						};
-						$scope.statusActiveSlide = $scope.current.StatusID - 1;
-						$scope.loadBid();
-					}
-				});
-			};
+		var params = {
+			Bid : {
+				"ID" : suitor.ID,
+				"OrderItemID" : suitor.OrderItemID,
+				"PurchaserID" : suitor.PurchaserID,
+				"PurchaserName" : suitor.PurchaserName,
+				"Commission" : suitor.Commission,
+				"SuggestedPrice" : suitor.SuggestedPrice,
+				"DeliveryCost" : suitor.DeliveryCost,
+				"DeliveryMethodID" : suitor.DeliveryMethodID,
+				"DeliveryMethodName" : suitor.DeliveryMethodName
+			}
+		};
 
-			$scope.statusActiveSlide = 0;
+		flowStepOut(Statuses.purchasing, Actions.bitSucceed, params);
+	};
 
-			var flowStepOut = function(status, action, params) {
-				var step = {};
+	$scope.cancelOrder = function() {
+		flowStepOut(Statuses.completed, Actions.cancelOrder);
+	};
 
-				step.Extends = angular.copy($scope.current.Extends);
-				step.Bid = angular.copy($scope.current.Bid);
-				if (params) {
-					step = angular.copy(params, step);
-				}
-				step.OrderItemID = $scope.item.ID;
-				step.StatusID = status.ID;
-				step.StatusName = status.Name;
-				step.ActionID = action.ID;
-				step.ActionName = action.Name;
-				var post = new OrderItemFlow(step);
-				post.$save(function() {
-					loadFlow();
-					$state.reload();
-				});
-			};
+	$scope.confirmDelivering = function() {
+		flowStepOut(Statuses.completed, Actions.delivered);
+	};
+}).controller('OrderPurchaserDetailCtrl', function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts) {
+	var $stateParams = {
+		itemId : $scope.$parent.item.ID
+	};
 
-			$scope.loadBid = function() {
-				$scope.bids = OrderBiding.query({
-					OrderItem : $stateParams.itemId
-				}, function() {
-				});
-			};
+	$scope.item = OrderItems.get($stateParams, function() {
+		loadFlow();
+		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+		$scope.item.Product.Extends = undefined;
+		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+	});
 
-			$scope.statusSlide = function(e, to) {
-				$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
-				var ele = angular.element(e);
-				angular.forEach(ele.parent().parent().find("div"), function(i) {
-					var ie = angular.element(i);
-					if (ie.hasClass("active"))
-						ie.removeClass("active");
-				});
-				ele.addClass("active");
-			};
+	$scope.Actions = Actions;
 
-			$scope.beginPurchasing = function() {
-				flowStepOut(Statuses.purchasing, Actions.purchasing);
-			};
+	var loadFlow = function() {
+		$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
+			if ($scope.flows.length > 0) {
+				$scope.current = $scope.flows[$scope.flows.length - 1];
+				$scope.statusActiveSlide = $scope.current.StatusID - 1;
+			} else {
+				$scope.current = {
+					StatusID : 1
+				};
+				$scope.statusActiveSlide = $scope.current.StatusID - 1;
+				$scope.loadBid();
+			}
+		});
+	};
 
-			$scope.cancelPurchasing = function() {
-				flowStepOut(Statuses.completed, Actions.cancelPurchasing);
-			};
+	$scope.statusActiveSlide = 0;
 
-			$scope.finishPurchasing = function() {
-				flowStepOut(Statuses.delivering, Actions.purchased);
-			};
+	var flowStepOut = function(status, action, params) {
+		var step = {};
 
-			$scope.startDelivering = function() {
-				flowStepOut(Statuses.delivering, Actions.delivering);
-			};
+		step.Extends = angular.copy($scope.current.Extends);
+		step.Bid = angular.copy($scope.current.Bid);
+		if (params) {
+			step = angular.copy(params, step);
+		}
+		step.OrderItemID = $scope.item.ID;
+		step.StatusID = status.ID;
+		step.StatusName = status.Name;
+		step.ActionID = action.ID;
+		step.ActionName = action.Name;
+		var post = new OrderItemFlow(step);
+		post.$save(function() {
+			loadFlow();
+			$state.reload();
+		});
+	};
 
-		})
+	$scope.loadBid = function() {
+		$scope.bids = OrderBiding.query({
+			OrderItem : $stateParams.itemId
+		}, function() {
+		});
+	};
 
-.controller('TestCtrl', function($scope, $http) {
+	$scope.statusSlide = function(e, to) {
+		$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
+		var ele = angular.element(e);
+		angular.forEach(ele.parent().parent().find("div"), function(i) {
+			var ie = angular.element(i);
+			if (ie.hasClass("active"))
+				ie.removeClass("active");
+		});
+		ele.addClass("active");
+	};
+
+	$scope.beginPurchasing = function() {
+		flowStepOut(Statuses.purchasing, Actions.purchasing);
+	};
+
+	$scope.cancelPurchasing = function() {
+		flowStepOut(Statuses.completed, Actions.cancelPurchasing);
+	};
+
+	$scope.finishPurchasing = function() {
+		flowStepOut(Statuses.delivering, Actions.purchased);
+	};
+
+	$scope.startDelivering = function() {
+		flowStepOut(Statuses.delivering, Actions.delivering);
+	};
+
+}).controller('TestCtrl', function($scope, $http) {
 	$scope.items = [];
-	for ( var i = 0; i < 20; i++) {
+	for (var i = 0; i < 20; i++) {
 		$scope.items.push(i);
 	}
 
@@ -598,18 +557,31 @@ angular.module('starter.controllers', [])
 		}
 		$scope.$broadcast('scroll.infiniteScrollComplete');
 	};
-})
-
-.controller('LoadingCtrl', function($http, $ionicLoading) {/* test */
+}).controller('LoadingCtrl', function($http, $ionicLoading) {/* test */
 	var _this = this
 
 	$http.jsonp('http://api.openbeerdatabase.com/v1/breweries.json?callback=JSON_CALLBACK').then(function(result) {
 		_this.breweries = result.data.breweries
 	})
-})
-
-.controller('AccountCtrl', function($scope) {
+}).controller('AccountCtrl', function($scope) {
 	$scope.currentUser.needLogin($scope);
+	$scope.showUser = function() {
+
+	};
+	$scope.editUser = function() {
+
+	};
+	$scope.editBanlance = function() {
+
+	};
+
+	$scope.showAbout = function() {
+
+	};
+
+	$scope.showLegal = function() {
+
+	};
 }).controller('AccountInfoCtrl', function($scope, $state) {
 	$scope.logoff = function() {
 		$scope.currentUser.logoff();
@@ -672,11 +644,11 @@ angular.module('starter.controllers', [])
 
 		// Show the action sheet
 		var hideSheet = $ionicActionSheet.show({
-			buttons : [ {
+			buttons : [{
 				text : '拍照'
 			}, {
 				text : '从手机相册选择'
-			} ],
+			}],
 			titleText : '更改头像',
 			cancelText : '取消',
 			cancel : function() {
@@ -698,9 +670,7 @@ angular.module('starter.controllers', [])
 		}, 2000);
 
 	};
-})
-
-.controller('FilterCtrl', function($scope, $state, Countries) {
+}).controller('FilterCtrl', function($scope, $state, Countries) {
 	$scope.countries = Countries.query();
 
 	$scope.ok = function(country) {
@@ -711,9 +681,7 @@ angular.module('starter.controllers', [])
 	$scope.cancel = function() {
 		$scope.$parent.closeModal();
 	};
-})
-
-.controller('SelectCtrl', function($scope, $state) {
+}).controller('SelectCtrl', function($scope, $state) {
 	$scope.ok = function(item) {
 		$scope.$parent.ret(item);
 		$scope.$parent.closeModal();
@@ -722,9 +690,7 @@ angular.module('starter.controllers', [])
 	$scope.cancel = function() {
 		$scope.$parent.closeModal();
 	};
-})
-
-.controller('SearchCtrl', function($scope, $state) {
+}).controller('SearchCtrl', function($scope, $state) {
 	$scope.ok = function() {
 		$scope.$parent.closeModal();
 		$state.go('products');
@@ -733,9 +699,7 @@ angular.module('starter.controllers', [])
 	$scope.cancel = function() {
 		$scope.$parent.closeModal();
 	};
-})
-
-.controller('ProvincesCtrl', function($scope, $state, Address) {
+}).controller('ProvincesCtrl', function($scope, $state, Address) {
 	$scope.provinces = Address.provinces();
 
 	$scope.address = {};
@@ -756,9 +720,7 @@ angular.module('starter.controllers', [])
 		$scope.$parent.ret($scope.address);
 		$scope.$parent.closeModal();
 	};
-})
-
-.controller('LoginCtrl', function($scope, Users) {
+}).controller('LoginCtrl', function($scope, Users) {
 	$scope.user = {};
 	$scope.user.host = $scope.$parent.host;
 
@@ -771,36 +733,31 @@ angular.module('starter.controllers', [])
 		}
 	};
 })
-
 // for unionpay test by jih ++++++++++++++++++++++++++
-.controller(
-		'UnionpayCtrl',
-		function($scope, $http) {
-			$scope.pay = function() {
+.controller('UnionpayCtrl', function($scope, $http) {
+	$scope.pay = function() {
 
-				$http.jsonp("http://www.gouwudai.net.cn:8080/bag-unionpay-server/trade?callback=JSON_CALLBACK")
-						.success(function(data, status) {
-							cn.xj.bag.plugin.Unionpay.payForTest(data.tn, function(msg) {
-								// 支付控件返回字符串:success、fail、cancel
-								// 分别代表支付成功，支付失败，支付取消
-								alert(msg);
-							});
-						}).error(function(data, status) {
-							alert("error " + data + " " + status);
-						});
-			}
+		$http.jsonp("http://www.gouwudai.net.cn:8080/bag-unionpay-server/trade?callback=JSON_CALLBACK").success(function(data, status) {
+			cn.xj.bag.plugin.Unionpay.payForTest(data.tn, function(msg) {
+				// 支付控件返回字符串:success、fail、cancel
+				// 分别代表支付成功，支付失败，支付取消
+				alert(msg);
+			});
+		}).error(function(data, status) {
+			alert("error " + data + " " + status);
+		});
+	}
 
-			$scope.toast = function() {
-				// https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin
+	$scope.toast = function() {
+		// https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin
 
-				// cordova plugin add
-				// https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
-				// cordova prepare
+		// cordova plugin add
+		// https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
+		// cordova prepare
 
-				window.plugins.toast.showShortCenter("这是一个警告！！！\n这是第二个警告！！！\n这是第三个警告！！！")
-			}
-
-		})
+		window.plugins.toast.showShortCenter("这是一个警告！！！\n这是第二个警告！！！\n这是第三个警告！！！")
+	}
+})
 // ---------------------------------------------------
 
 ;

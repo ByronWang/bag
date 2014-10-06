@@ -1,35 +1,31 @@
- <ion-modal-view ng-controller="LoginCtrl">
-	  <ion-header-bar class="bar-assertive">
-          <div class="buttons">
-              <button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
-          </div>
-	      <h1 class="title">登录</h1>
-	        <div class="buttons">           	        
-  		<button class="button button-icon icon ion-ios7-close-empty pull-right"    x-ng-click="modal.hide();"></button>
-  			</div>
-	    </ion-header-bar>
-    <ion-content>
-	<div class="list">
-		  <label class="item item-input">
-		    <span class="input-label">用户名</span>
-		 	<select x-ng-model="user.Name">
-		    	<option value="wangshilian">wangshilian</option>
-		    	<option value="jihua">jihua</option>
-		    	<option value="liubo">liubo</option>
-			</select>
-		  </label>
-		  <label class="item item-input">
-		    <span class="input-label">密码</span>
-		    <input type="password" x-ng-model="user.Password">
-		  </label>
-		  <!-- for  test -->
-		  <label class="item item-input">
-		    <span class="input-label">Host</span>
-		 	<input type="text"  x-ng-model="user.host" class="input">
-		  </label>
-	</div>
+<ion-modal-view ng-controller="LoginCtrl">
+	<ion-header-bar class="bar-assertive">
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
+		</div>
+		<h1 class="title">登录</h1>
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-close-empty pull-right"    x-ng-click="modal.hide();"></button>
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<div class="list">
+			<label class="item item-input"> <span class="input-label">用户名</span>
+				<select x-ng-model="user.Name">
+					<option value="wangshilian">wangshilian</option>
+					<option value="jihua">jihua</option>
+					<option value="liubo">liubo</option>
+				</select> </label>
+			<label class="item item-input"> <span class="input-label">密码</span>
+				<input type="password" x-ng-model="user.Password">
+			</label>
+			<!-- for  test -->
+			<label class="item item-input"> <span class="input-label">Host</span>
+				<input type="text"  x-ng-model="user.host" class="input">
+			</label>
+		</div>
 		<div class="padding">
 			<button class="button button-block button-positive" x-ng-click="login();">登录</button>
 		</div>
-    </ion-content>
+	</ion-content>
 </ion-modal-view>

@@ -1,42 +1,40 @@
 <ion-view title="Account-Setting">
 
-  <ion-content class="has-header">
-      <div class="item item-thumbnail-left"  x-ng-click="editAvatar();">
-      	<img  x-ng-src="{{lastPhoto}}" >
-      	<h2>{{user.username}}</h2>
-    </div>
-    
-	<div class="list">
-	   <div class="item item-divider">
-	   	修改密码
-	   </div>
-		  <label class="item item-input">
-		    <span class="input-label">旧密码</span>
-		    <input type="text" x-ng-model="user.pwd">
-		  </label>
-		  <label class="item item-input">
-		    <span class="input-label">密码修改</span>
-		    <input type="password" x-ng-model="user.newpwd">
-		  </label>
-		  <label class="item item-input">
-		    <span class="input-label">确认密码</span>
-		    <input type="password" x-ng-model="user.newpwdconfirm">
-		  </label>
-	   <div class="item item-divider">
-	   	修改基本信息
-	   </div>
-		  <label class="item item-input">
-		    <span class="input-label">出生日期</span>
-		    <input type="password" x-ng-model="user.birthday">
-		  </label>
-		  <label class="item item-input">
-		    <span class="input-label">地址</span>
-		    <input type="password" x-ng-model="user.address">
-		  </label>
-	</div>
+	<ion-content class="has-header">
+		<div class="list">
+			<div class="item item-product-image item-options-right" >
+				<img  x-ng-src="{{user.Image | URI}}" class="img-product">
+				<div class="options">
+					<button class="button button-clear" x-ng-click="getPhotoFromCamera()"><i class="icon ion-camera"></i></button>
+					<button class="button button-clear" x-ng-click="getPhotoFromLibrary()"><i class="icon ion-ios7-albums"></i></button>
+				</div>
+			</div>
+
+			<div class="item item-divider">
+				修改密码
+			</div>
+			<label class="item item-input"> <span class="input-label">旧密码</span>
+				<input type="text" x-ng-model="user.pwd">
+			</label>
+			<label class="item item-input"> <span class="input-label">密码修改</span>
+				<input type="password" x-ng-model="user.newpwd">
+			</label>
+			<label class="item item-input"> <span class="input-label">确认密码</span>
+				<input type="password" x-ng-model="user.newpwdconfirm">
+			</label>
+			<div class="item item-divider">
+				修改基本信息
+			</div>
+			<label class="item item-input"> <span class="input-label">出生日期</span>
+				<input type="password" x-ng-model="user.birthday">
+			</label>
+			<label class="item item-input"> <span class="input-label">地址</span>
+				<input type="password" x-ng-model="user.address">
+			</label>
+		</div>
 		<div class="padding">
 			<button class="button button-block button-positive" x-ng-click="save();">确认</button>
 		</div>
-		
-    </ion-content>
+
+	</ion-content>
 </ion-view>

@@ -1,96 +1,114 @@
 <ion-modal-view ng-controller="InventoryDetailCtrl">
- 
- <ion-header-bar class="bar-assertive">
-          <div class="buttons">
-              <button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
-          </div>
-<h1 class="title">清单详情</h1>
-  <div class="buttons">
-  		<button class="button button-icon icon ion-ios7-close-empty pull-right" 
-          ng-click="closeModal();"></button>
-  </div>
-</ion-header-bar>
-  <ion-content has-header="true" padding="false">
-  
-  <pane x-ng-show="step==1">
-    <div class="list">
-		<div class="list">
-			  <div class="item item-divider">{{item.Product.CategoryDesc}}</div>
-			  <div class="item item-avatar item-product">
-			    <img x-ng-src="{{item.Product.Image | URI}}">
-			  </div>
-			  <div class="item">{{item.Product.Name}}</div>
-		</div>
-		<div class="list">
-		  	 <div class="item item-divider"> 代购信息 </div>
-			  <label class="item">代购国家<span class="item-value">{{item.Product.CountryName}}</span></label>
-			  <label class="item">预想单价<span class="item-value">{{item.Product.ExpectedPrice}}元（人民币）</span></label>
-			  <label class="item">代购件数<span class="item-value">{{item.Quantity}}</span></label>
-			  
-			  <label class="item">品牌<span class="item-value">{{item.Product.Brand}}</span></label>
-			  <div class="item item-divider">
-			   	商品参数
-			  </div>
-		  	  <label class="item">功效<span class="item-value">{{item.Product.Exts.Function}}</span></label>
-		 	  <label class="item">色泽<span class="item-value">{{item.Product.Exts.Color}}</span></label>
-		 	  <label class="item">说明<span class="item-value">{{item.Product.Description}}</span></label>
-		 </div>	
-  	</div>
-  	<div  class="list">
-	   		<h3>已有{{item.suitors.length}}位买手参与此次购买</h3>
-    	      <label class="item item-input item-input-note"><span class="input-label">代购佣金</span><input type="number" x-ng-model="suitor.Commission"><span class="item-note">元（人民币）</span></label>
-			  <a class="item item-input item-icon-right"  x-ng-click="showDeliveryMethods();"><span class="input-label">邮寄方式</span>
-   <span class="item-note">{{suitor.DeliveryMethodName}}</span><i class="icon ion-ios7-arrow-forward"></i></a>
-			  <label class="item item-input item-input-note"><span class="input-label">建议价格</span><input type="number" x-ng-model="suitor.SuggestedPrice"><span class="item-note">元（人民币）</span></label>
-			  <label class="item item-input item-input-note"><span class="input-label">运费</span><input type="number" x-ng-model="suitor.DeliveryCost"><span class="item-note">元（人民币）</span></label>
-    	</div>	  
-    	
-    	<div class="padding">
-	    <button class="button button-block  button-positive" x-ng-click="submit()"> 确认</button>
-</div>
-</pane>
 
-  <pane x-ng-show="step==2">
-  	<div class="list">
-		<a class="item"  x-ng-click="selDeliveryMethod(c);" x-ng-repeat="c in deliveryMethods">{{c.Name}}</a>
-	</div>
-  </pane>
-  
-  <pane x-ng-show="step==3">
-  <div class="list">
-	<div class="list">
-			  <div class="item item-divider">{{item.Product.CategoryDesc}}</div>
-			  <div class="item item-avatar item-product">
-			    <img x-ng-src="{{item.Product.Image | URI}}">
-			  </div>
-			  <div class="item">{{item.Product.Name}}</div>
+	<ion-header-bar class="bar-assertive">
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
 		</div>
-		<div class="list">
-		  	 <div class="item item-divider"> 代购信息 </div>
-			  <label class="item">代购国家<span class="item-value">{{item.Product.CountryName}}</span></label>
-			  <label class="item">预想单价<span class="item-value">{{item.Product.ExpectedPrice}}元（人民币）</span></label>
-			  <label class="item">代购件数<span class="item-value">{{item.Quantity}}</span></label>
-			  
-			  <label class="item">品牌<span class="item-value">{{item.Product.Brand}}</span></label>
-			  <div class="item item-divider">
-			   	商品参数
-			  </div>
-		  	  <label class="item">功效<span class="item-value">{{item.Product.Exts.Function}}</span></label>
-		 	  <label class="item">色泽<span class="item-value">{{item.Product.Exts.Color}}</span></label>
-		 	  <label class="item">说明<span class="item-value">{{item.Product.Description}}</span></label>
-		 </div>	
-  	</div>
-  	</div>
-  	<div  class="list">
-	   		<h3>已有{{item.suitors.length}}位买手参与此次购买</h3>
-    	      <label class="item item-input item-input-note"><span class="input-label">代购佣金</span><span class="item-note">{{suitor.Commission}}元（人民币）</span></label>
-			  <a class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{suitor.DeliveryMethodName}}</span></a>
-			   <label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{suitor.SuggestedPrice}}元（人民币）</span></label>
-			  <label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{suitor.DeliveryCost}}元（人民币）</span></label>
-    	</div>	  <div class="padding">
-	    已经参与竞标！
-</div>
-  </pane>
+		<h1 class="title">清单详情</h1>
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-close-empty pull-right"
+			ng-click="closeModal();"></button>
+		</div>
+	</ion-header-bar>
+	<ion-content has-header="true" padding="false">
 
-  </ion-content>
-</ion-view>
+		<pane x-ng-show="step==1">
+			<div class="list">
+				<div class="list">
+					<div class="item item-divider">
+						{{item.Product.CategoryDesc}}
+					</div>
+					<div class="item item-avatar item-product">
+						<img x-ng-src="{{item.Product.Image | URI}}">
+					</div>
+					<div class="item">
+						{{item.Product.Name}}
+					</div>
+				</div>
+				<div class="list">
+					<div class="item item-divider">
+						代购信息
+					</div>
+					<label class="item">代购国家<span class="item-value">{{item.Product.CountryName}}</span></label>
+					<label class="item">预想单价<span class="item-value">{{item.Product.ExpectedPrice}}元（人民币）</span></label>
+					<label class="item">代购件数<span class="item-value">{{item.Quantity}}</span></label>
+
+					<label class="item">品牌<span class="item-value">{{item.Product.Brand}}</span></label>
+					<div class="item item-divider">
+						商品参数
+					</div>
+					<label class="item">功效<span class="item-value">{{item.Product.Exts.Function}}</span></label>
+					<label class="item">色泽<span class="item-value">{{item.Product.Exts.Color}}</span></label>
+					<label class="item">说明<span class="item-value">{{item.Product.Description}}</span></label>
+				</div>
+			</div>
+			<div  class="list">
+				<h3>已有{{item.suitors.length}}位买手参与此次购买</h3>
+				<label class="item item-input item-input-note"><span class="input-label">代购佣金</span>
+					<input type="number" x-ng-model="suitor.Commission">
+					<span class="item-note">元（人民币）</span></label>
+				<a class="item item-input item-icon-right"  x-ng-click="showDeliveryMethods();"><span class="input-label">邮寄方式</span> <span class="item-note">{{suitor.DeliveryMethodName}}</span><i class="icon ion-ios7-arrow-forward"></i></a>
+				<label class="item item-input item-input-note"><span class="input-label">建议价格</span>
+					<input type="number" x-ng-model="suitor.SuggestedPrice">
+					<span class="item-note">元（人民币）</span></label>
+				<label class="item item-input item-input-note"><span class="input-label">运费</span>
+					<input type="number" x-ng-model="suitor.DeliveryCost">
+					<span class="item-note">元（人民币）</span></label>
+			</div>
+
+			<div class="padding">
+				<button class="button button-block  button-positive" x-ng-click="submit()"> 确认</button>
+			</div>
+		</pane>
+
+		<pane x-ng-show="step==2">
+			<div class="list">
+				<a class="item"  x-ng-click="selDeliveryMethod(c);" x-ng-repeat="c in deliveryMethods">{{c.Name}}</a>
+			</div>
+		</pane>
+
+		<pane x-ng-show="step==3">
+			<div class="list">
+				<div class="list">
+					<div class="item item-divider">
+						{{item.Product.CategoryDesc}}
+					</div>
+					<div class="item item-avatar item-product">
+						<img x-ng-src="{{item.Product.Image | URI}}">
+					</div>
+					<div class="item">
+						{{item.Product.Name}}
+					</div>
+				</div>
+				<div class="list">
+					<div class="item item-divider">
+						代购信息
+					</div>
+					<label class="item">代购国家<span class="item-value">{{item.Product.CountryName}}</span></label>
+					<label class="item">预想单价<span class="item-value">{{item.Product.ExpectedPrice}}元（人民币）</span></label>
+					<label class="item">代购件数<span class="item-value">{{item.Quantity}}</span></label>
+
+					<label class="item">品牌<span class="item-value">{{item.Product.Brand}}</span></label>
+					<div class="item item-divider">
+						商品参数
+					</div>
+					<label class="item">功效<span class="item-value">{{item.Product.Exts.Function}}</span></label>
+					<label class="item">色泽<span class="item-value">{{item.Product.Exts.Color}}</span></label>
+					<label class="item">说明<span class="item-value">{{item.Product.Description}}</span></label>
+				</div>
+			</div>
+			</div>
+			<div  class="list">
+				<h3>已有{{item.suitors.length}}位买手参与此次购买</h3>
+				<label class="item item-input item-input-note"><span class="input-label">代购佣金</span><span class="item-note">{{suitor.Commission}}元（人民币）</span></label>
+				<a class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{suitor.DeliveryMethodName}}</span></a>
+				<label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{suitor.SuggestedPrice}}元（人民币）</span></label>
+				<label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{suitor.DeliveryCost}}元（人民币）</span></label>
+			</div>
+			<div class="padding">
+				已经参与竞标！
+			</div>
+		</pane>
+
+	</ion-content>
+	</ion-view>

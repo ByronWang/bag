@@ -1,38 +1,34 @@
- <ion-modal-view ng-controller="SearchCtrl">
-	  <ion-header-bar class="bar-assertive">
-          <div class="buttons">
-              <button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
-          </div>
-	      <h1 class="title">筛选</h1>
-	        <div class="buttons">
-  		<button class="button button-icon icon ion-ios7-close-empty pull-right"    x-ng-click="closeModal();"></button>
-  			</div>
+<ion-modal-view ng-controller="SearchCtrl">
+	<ion-header-bar class="bar-assertive">
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
+		</div>
+		<h1 class="title">筛选</h1>
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-close-empty pull-right"    x-ng-click="closeModal();"></button>
+		</div>
 	</ion-header-bar>
-    <ion-content>
-	<div class="list">
-		  <label class="item item-input">
-		    <span class="input-label">名称</span>
-		    <input type="text" x-ng-model="user.username">
-		  </label>
-		  <label class="item item-input  item-select">
-		    <span class="input-label">国家</span>
-		    <select>
-		      <option>美国</option>
-		      <option selected>韩国</option>
-		      <option>日本</option>
-		    </select>
-		  </label>		  
-		  <div class="item item-input item-range-input">
-		  <label>
-		    <span class="input-label">价格区间</span>
-		  </label>
-		    <input type="number"  x-ng-model="user.priceFrom">
-		    <span class="seperator text-center">~</span>
-		    <input type="number" x-ng-model="user.priceTo"></div>
-	</div>
+	<ion-content>
+		<div class="list">
+			<label class="item item-input"> <span class="input-label">名称</span>
+				<input type="text" x-ng-model="user.username">
+			</label>
+			<label class="item item-input  item-select"> <span class="input-label">国家</span>
+				<select>
+					<option>美国</option>
+					<option selected>韩国</option>
+					<option>日本</option>
+				</select> </label>
+			<div class="item item-input item-range-input">
+				<label> <span class="input-label">价格区间</span> </label>
+				<input type="number"  x-ng-model="user.priceFrom">
+				<span class="seperator text-center">~</span>
+				<input type="number" x-ng-model="user.priceTo">
+			</div>
+		</div>
 		<div class="button-bar">
 			<button class="button button-light" x-ng-click="cancel();">取消</button>
 			<button class="button button-positive" x-ng-click="ok();">确定</button>
 		</div>
-    </ion-content>
+	</ion-content>
 </ion-modal-view>
