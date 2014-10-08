@@ -99,18 +99,26 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
 				controller : 'InventorysCtrl'
 			}
 		}
-	}).state('orders-customer', {
-		url : '/orders-customer',
+	}).state('orders', {
+		url : '/orders',
 		views : {
 			'tab-orders' : {
+				templateUrl : 'templates/tab-orders.html',
+				controller : 'OrdersCtrl'
+			}
+		}
+	}).state('orders.customer', {
+		url : '/customer',
+		views : {
+			'x-orders' : {
 				templateUrl : 'templates/orders-sendout.html',
 				controller : 'OrdersCustomerCtrl'
 			}
 		}
-	}).state('orders-purchaser', {
-		url : '/orders-purchaser',
+	}).state('orders.purchaser', {
+		url : '/purchaser',
 		views : {
-			'tab-orders' : {
+			'x-orders' : {
 				templateUrl : 'templates/orders-requested.html',
 				controller : 'OrdersPurchaserCtrl'
 			}

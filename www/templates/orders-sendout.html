@@ -1,5 +1,10 @@
 <ion-view title="已发布订单">
 	<ion-content class="has-subheader">
+		<div class="padding-top" x-ng-show="orders.length==0">
+				<p>
+					暂时还没有订单哦！
+				</p>
+			</div>
 		<div class="list padding-top" x-ng-repeat="order in orders">
 			<div class="item item-divider">
 				订单号: {{order.ID}}  {{order.Country}}
