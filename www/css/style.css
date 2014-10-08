@@ -45,6 +45,9 @@
 	text-align: left;
 }
 
+.button-bar.button-menu .button.active {
+	color: red;
+}
 .item-product-image img:first-child, .item-image .list-img {
 	vertical-align: middle;
 }
@@ -302,6 +305,60 @@ input.ng-invalid.ng-dirty {
 	max-height: 160px;
 	height: 160px;
 	width: 160px;
+}
+
+.bar-subheader .button-bar > .button,.bar-subheader .buttons > .button {
+	height: 34px;
+	min-height: 32px;
+	line-height: 32px;
+}
+
+.bar-subheader {
+	border-top: none;
+	border-bottom: none;
+}
+
+.bar.bar-subheader {
+	height: 34px;
+}
+
+.has-subheader {
+	top: 80px;
+}
+
+.platform-ios.platform-cordova .modal-wrapper .modal .has-header,.platform-ios.platform-cordova .modal-wrapper .modal .bar-subheader
+	{
+	top: 34px;
+}
+
+.platform-ios.platform-cordova:not (.fullscreen ) .has-header,.platform-ios.platform-cordova:not
+	(.fullscreen ) .bar-subheader {
+	top: 64px;
+}
+
+.platform-ios.platform-cordova .modal-wrapper .modal .has-subheader {
+	top: 76px;
+}
+
+.platform-ios.platform-cordova:not  (.fullscreen  ) .has-subheader {
+	top: 108px;
+}
+
+.bar-subheader .button-bar > .button,.bar-subheader .buttons > .button {
+	border-bottom: 1px #DDDDDD solid;
+	border-top: none;
+}
+
+.bar-subheader .button-bar > .button.active,.bar-subheader .buttons > .button.active
+	{
+	border-bottom: 2px red solid;
+	border-right-width: 1px;
+	border-radius: 0px 0px 0px 0px;
+	color: red;
+}
+
+.button-clear.active,.button-clear.activated {
+	opacity: 1;
 }
 
 table.category .rect {
