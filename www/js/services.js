@@ -205,7 +205,7 @@ angular.module('starter.services', []).factory('Host', function() {
 	return {
 		isLogin : false,
 		BePurchaser : false,
-		needLogin : function($scope) {
+		needLogin : function($scope,funcSucceed) {
 			if (!this.isLogin) { // f/login
 				$scope.user = {};
 				$ionicModal.fromTemplateUrl('templates/modal-login.html', {
@@ -222,6 +222,15 @@ angular.module('starter.services', []).factory('Host', function() {
 				$scope.closeModal = function() {
 					$scope.modal.hide();
 				};
+				$scope.ret = function(user){
+					if(funcSucceed){
+						funcSucceed(user);						
+					}					
+				};
+			}else{
+				if(funcSucceed){
+					funcSucceed();						
+				}
 			}
 		},
 		login : function(username, pwd, funcSucceed) {

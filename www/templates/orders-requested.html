@@ -6,6 +6,11 @@
 			</p>
 		</div>
 		<div class="list padding-top" x-ng-show="currentUser.BePurchaser">
+			<div x-ng-show="items.length==0">
+				<p>
+					暂时还没有代购哦！
+				</p>
+			</div>
 			<div class="item item-divider" x-ng-show="itemsBiding.length>0">
 				竞购中
 			</div>

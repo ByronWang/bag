@@ -4,9 +4,6 @@
 			<button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
 		</div>
 		<h1 class="title">设定</h1>
-		<div class="buttons">
-			<button class="button button-icon icon ion-ios7-close-empty pull-right"    x-ng-click="modal.hide();"></button>
-		</div>
 	</ion-header-bar>
 
 	<ion-content class="has-header">
@@ -23,7 +20,7 @@
 				修改密码
 			</div>
 			<label class="item item-input"> <span class="input-label">旧密码</span>
-				<input type="text" x-ng-model="user.Password">
+				<input type="text" x-ng-model="user.OldPassword">
 			</label>
 			<label class="item item-input"> <span class="input-label">密码修改</span>
 				<input type="password" x-ng-model="user.NewPwd">

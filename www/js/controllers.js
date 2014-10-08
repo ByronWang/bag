@@ -11,6 +11,30 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			Host.setHost(host);
 		}
 	};
+}).controller('TabsCtrl', function($scope, $ionicTabsDelegate,$state,LoginUser,Popup) {
+	var navs = ['','cart','inventorys','orders.customer','account'];
+	$scope.makeSureLogin = function(e,index){
+		LoginUser.needLogin($scope,function(){
+			$ionicTabsDelegate.$getByHandle('rootTabs').select(index);
+			$state.go(navs[index]);
+		});
+	};
+
+}).controller('LoginCtrl', function($scope, Users) {
+	$scope.user = {};
+	$scope.user.host = $scope.$parent.host;
+
+	// for test
+	$scope.user.Name = "wangshilian";
+	$scope.login = function() {
+		$scope.$parent.setHost($scope.user.host);
+		$scope.currentUser.login($scope.user.Name, $scope.user.Password, function(user) {
+			if (user) {
+				$scope.ret(user);
+				$scope.$parent.closeModal();
+			}
+		});
+	};
 }).controller('DashCtrl', function($scope, $ionicSlideBoxDelegate, Category, Popup) {
 	$scope.rectHeight = document.body.clientWidth / 3;
 	$scope.category = Category.level1Grouped();
@@ -204,7 +228,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			newitem.ActionID = Actions.sendout.ID;
 			newitem.ActionName = Actions.sendout.Name;
 			newitem.CustomerID = $scope.currentUser.ID;
-			newitem.CustomerName = $scope.currentUser.username;
+			newitem.CustomerName = $scope.currentUser.Name;
+			newitem.CountryID = newitem.Product.CountryID;
+			newitem.CountryName = newitem.Product.CountryName;
 			if (newitem.Product.ImagePromise) {
 				var p = Camera.upload(newitem.Product.Image);
 				p = p.then(function(result) {
@@ -214,7 +240,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			}
 		});
 		$scope.order.CustomerID = $scope.currentUser.ID;
-		$scope.order.CustomerName = $scope.currentUser.username;
+		$scope.order.CustomerName = $scope.currentUser.Name;
+		$scope.order.CountryID = $scope.order.Items[0].CountryID;
+		$scope.order.CountryName = $scope.order.Items[0].CountryName;
 
 		var submitOrder = function() {
 			var Order = new Orders($scope.order);
@@ -234,7 +262,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	};
 }).controller('InventorysCtrl', function($scope, Popup, Inventorys) {
-	$scope.currentUser.needLogin($scope);
 	$scope.countryName = "全部国家";
 	$scope.inventorys = Inventorys.query({
 		Status : 1
@@ -242,6 +269,14 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.filter = function() {
 		Popup.show($scope, 'templates/modal-filter.html');
+		$scope.changeCountry = function(country){
+			$scope.inventorys = Inventorys.query({
+				Status : 1,
+				Country: country.ID
+			},function(){
+				$scope.countryName = country.Name;	
+			});
+		};
 	};
 
 	$scope.showDetail = function(item) {
@@ -302,25 +337,17 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					$scope.loadBid();
 				});
 			};
-		}).controller('tabsMenuCtrl', function($scope) {
-	$scope.showThis = function(e) {
+}).controller('OrdersCtrl', function($scope) {
+	$scope.chooseMe = function(e) {
 		var ele = angular.element(e);
-		ele.parent().find("a").removeClass("tab-item-active");
-		ele.addClass("tab-item-active");
-	};
-}).controller('OrdersCtrl', function($scope, Orders) {
-	$scope.orders = Orders.all();
-
-	// Load more after 1 second delay
-	$scope.loadMoreItems = function() {
-		$scope.$broadcast('scroll.infiniteScrollComplete');
-	};
+		ele.parent().find("a").removeClass("active");
+		ele.addClass("active");
+	};	
 }).controller('OrderInListCtrl', function($scope, Orders) {
 	$scope.realOrder = Orders.get({
 		orderId : $scope.$parent.order.ID
 	});
 }).controller('OrdersCustomerCtrl', function($scope, Orders, Popup) {
-	$scope.currentUser.needLogin($scope);
 	$scope.orders = Orders.query({
 		Customer : $scope.currentUser.ID
 	});
@@ -335,7 +362,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.$broadcast('scroll.infiniteScrollComplete');
 	};
 }).controller('OrdersPurchaserCtrl', function($scope, OrderBiding, Popup) {
-	$scope.currentUser.needLogin($scope);
 	$scope.items = OrderBiding.query({
 		Purchaser : $scope.currentUser.ID
 	}, function() {
@@ -553,9 +579,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				flowStepOut(Statuses.delivering, Actions.delivering);
 			};
 
-		}).controller('AccountCtrl', function($scope, Popup) {
+}).controller('AccountCtrl', function($scope, Popup) {
 
-	$scope.currentUser.needLogin($scope);
 	$scope.showUser = function() {
 		Popup.show($scope, 'templates/modal-account-userinfo.html');
 	};
@@ -643,7 +668,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.countries = Countries.query();
 
 	$scope.ok = function(country) {
-		$scope.changeCountry(country);
+		$scope.$parent.changeCountry(country);
 		$scope.$parent.closeModal();
 	};
 
@@ -688,20 +713,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.address.Area = c.Name;
 		$scope.$parent.ret($scope.address);
 		$scope.$parent.closeModal();
-	};
-}).controller('LoginCtrl', function($scope, Users) {
-	$scope.user = {};
-	$scope.user.host = $scope.$parent.host;
-
-	// for test
-	$scope.user.Name = "wangshilian";
-	$scope.login = function() {
-		$scope.$parent.setHost($scope.user.host);
-		$scope.currentUser.login($scope.user.Name, $scope.user.Password, function(user) {
-			if (user) {
-				$scope.$parent.closeModal();
-			}
-		});
 	};
 }).controller(
 		'UnionpayCtrl',
