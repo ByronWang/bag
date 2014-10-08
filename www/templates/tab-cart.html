@@ -1,64 +1,68 @@
 <ion-view>
-	<ion-header-bar class="bar-assertive">
-		<h1 class="title">购物车</h1>
-		<div class="buttons">
-			<a class="button button-icon icon ion-plus" x-ng-click="newProduct()"></a>
-		</div>
-	</ion-header-bar>
-	<ion-content class="has-header">
+    <ion-header-bar class="bar-assertive">
+        <h1 class="title">购物车</h1>
 
-		<div class="list">
-			<div class="item" x-ng-repeat="p in provinces">
-				{{p.name}}
-			</div>
-		</div>
-		<div x-ng-show="cart.size()==0">
-			<div class="card">
-				<div class="item item-text-wrap text-center">
-					<p>
-						<i class="icon ion-ios7-cart" style="font-size: 600%; color: #aaa;"></i>
-					</p>
-					<h2>亲，您还没有任何订单哦~~~</h2>
-				</div>
-			</div>
-			<div class="padding">
-				<button class="button button-block button-positive" x-ng-click="newProduct()">新建订单</button>
-			</div>
-		</div>
+        <div class="buttons">
+            <a class="button button-icon icon ion-plus" x-ng-click="newProduct()"></a>
+        </div>
+    </ion-header-bar>
+    <ion-content class="has-header">
 
-		<pane x-ng-show="cart.size()!=0">
+        <div class="list">
+            <div class="item" x-ng-repeat="p in provinces">
+                {{p.name}}
+            </div>
+        </div>
+        <div x-ng-show="cart.size()==0">
+            <div class="card">
+                <div class="item item-text-wrap text-center">
+                    <p>
+                        <i class="icon ion-ios7-cart" style="font-size: 600%; color: #aaa;"></i>
+                    </p>
 
-			<ion-list   ng-repeat="country in cart.Countrys"  class="padding-horizontal"
-			show-delete="false"
-			show-reorder="false"
-			can-swipe="true" ng-if="country.Items.length>0">
-				<div class="item item-divider item-checkbox-left">
-					<input type="checkbox"  x-ng-model="data.checkall"/>
-					{{country.Name}}
-				</div>
-				<ion-item ng-repeat="item in country.Items"  class="item-checkbox-thumbnail-left item-info">
-					<img x-ng-src="{{item.Product.Image | URI}}">
-					<div class="list info">
-						<span class="item"><h2>{{item.Product.Name}}</h2></span>
-						<span class="item">价格 <span class="item-note">{{item.Product.ExpectedPrice}}/元</span></span>
-						<span class="item">数量 <span class="item-note">{{item.Quantity}}</span></span>
-						<span class="item">到货周期 <span class="item-note">{{item.lastMonth}}个月</span></span>
-					</div>
+                    <h2>亲，您还没有任何订单哦~~~</h2>
+                </div>
+            </div>
+            <div class="padding">
+                <button class="button button-block button-positive" x-ng-click="newProduct()">新建订单</button>
+            </div>
+        </div>
 
-					<input type="checkbox"  x-ng-modal="item.isChecked" x-ng-click="checked(item)"/>
-					<ion-option-button class="button-info button-assertive"    ng-click="country.Items.splice($index, 1)">
-						删除
-					</ion-option-button>
-					<ion-delete-button class="ion-minus-circled"                   ng-click="country.Items.splice($index, 1)"></ion-delete-button>
-				</ion-item>
-				<div class="item item-divider item-checkbox-left">
-					合计
-				</div>
-			</ion-list>
-			<div class="padding">
-				<button class="button button-block  button-positive" x-ng-click="next()"> 发布</button>
-			</div>
-		</pane>
+        <pane x-ng-show="cart.size()!=0">
 
-	</ion-content>
+            <ion-list ng-repeat="country in cart.Countrys" class="padding-horizontal"
+                      show-delete="false"
+                      show-reorder="false"
+                      can-swipe="true" ng-if="country.Items.length>0">
+                <div class="item item-divider item-checkbox-left">
+                    <input type="checkbox" x-ng-model="data.checkall"/>
+                    {{country.Name}}
+                </div>
+                <ion-item ng-repeat="item in country.Items" class="item-checkbox-thumbnail-left item-info">
+                    <img x-ng-src="{{item.Product.Image | URI}}">
+
+                    <div class="list info">
+                        <span class="item"><h2>{{item.Product.Name}}</h2></span>
+                        <span class="item">价格 <span class="item-note">{{item.Product.ExpectedPrice}}/元</span></span>
+                        <span class="item">数量 <span class="item-note">{{item.Quantity}}</span></span>
+                        <span class="item">到货周期 <span class="item-note">{{item.lastMonth}}个月</span></span>
+                    </div>
+
+                    <input type="checkbox" x-ng-modal="item.isChecked" x-ng-click="checked(item)"/>
+                    <ion-option-button class="button-info button-assertive" ng-click="country.Items.splice($index, 1)">
+                        删除
+                    </ion-option-button>
+                    <ion-delete-button class="ion-minus-circled"
+                                       ng-click="country.Items.splice($index, 1)"></ion-delete-button>
+                </ion-item>
+                <div class="item item-divider item-checkbox-left">
+                    合计
+                </div>
+            </ion-list>
+            <div class="padding">
+                <button class="button button-block  button-positive" x-ng-click="next()"> 发布</button>
+            </div>
+        </pane>
+
+    </ion-content>
 </ion-view>
