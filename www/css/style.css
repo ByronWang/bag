@@ -55,7 +55,7 @@
 .item-product-image .img-product {
 	padding: 3px;
 	height: 160px;
-	width: 120px;
+	width: 160px;
 }
 
 .scroll-content {
@@ -377,4 +377,8 @@ table.category tr th {
 table.category td.rect i {
 	background-color: #FFFFFF;
 	font-size: 350%;
+}
+
+textarea {
+    resize: none;
 }

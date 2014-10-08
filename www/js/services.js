@@ -333,13 +333,13 @@ angular.module('starter.services', []).factory('Host', function() {
 						angular.forEach(categoriesLevel1, function(c) {
 							c.Color = colors[index];
 
-							if (index < colors.length) {
+							if (index < colors.length - 1) {
 								index = index + 1;
 							} else {
 								index = 0;
 							}
 
-							if (nscat.length >= 4) {
+							if (nscat.length >= 3) {
 								nscat = [];
 								categoriesGrouped.push(nscat);
 							}
