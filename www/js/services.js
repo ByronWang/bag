@@ -14,7 +14,22 @@ angular.module('starter.services', []).factory('Host', function() {
 			host = newhost;
 		}
 	};
-}).factory('Inventorys', function($resource, Host) {
+}).factory('$localstorage', [ '$window', function($window) {
+	return {
+		set : function(key, value) {
+			$window.localStorage[key] = value;
+		},
+		get : function(key, defaultValue) {
+			return $window.localStorage[key] || defaultValue;
+		},
+		setObject : function(key, value) {
+			$window.localStorage[key] = JSON.stringify(value);
+		},
+		getObject : function(key) {
+			return JSON.parse($window.localStorage[key] || '{}');
+		}
+	};
+} ]).factory('Inventorys', function($resource, Host) {
 	return $resource(Host.host + '/d/OrderItem/:itemId');
 }).factory('DeliveryMethod', function($resource, Host) {
 	var list = $resource(Host.host + '/d/DeliveryMethod/:itemId').query();
@@ -40,7 +55,9 @@ angular.module('starter.services', []).factory('Host', function() {
 	return $resource(url);
 }).factory('Users', function($resource, Host) {
 	var url = Host.host + '/d/User/:userId';
-	return $resource(url, {userId:'@ID'}, {
+	return $resource(url, {
+		userId : '@ID'
+	}, {
 		'save' : {
 			method : 'PUT'
 		}
@@ -205,7 +222,7 @@ angular.module('starter.services', []).factory('Host', function() {
 	return {
 		isLogin : false,
 		BePurchaser : false,
-		needLogin : function($scope,funcSucceed) {
+		needLogin : function($scope, funcSucceed) {
 			if (!this.isLogin) { // f/login
 				$scope.user = {};
 				$ionicModal.fromTemplateUrl('templates/modal-login.html', {
@@ -222,14 +239,14 @@ angular.module('starter.services', []).factory('Host', function() {
 				$scope.closeModal = function() {
 					$scope.modal.hide();
 				};
-				$scope.ret = function(user){
-					if(funcSucceed){
-						funcSucceed(user);						
-					}					
+				$scope.ret = function(user) {
+					if (funcSucceed) {
+						funcSucceed(user);
+					}
 				};
-			}else{
-				if(funcSucceed){
-					funcSucceed();						
+			} else {
+				if (funcSucceed) {
+					funcSucceed();
 				}
 			}
 		},
@@ -238,7 +255,7 @@ angular.module('starter.services', []).factory('Host', function() {
 			$http.post(Host.host + '/f/access/', {
 				Name : username,
 				Password : pwd
-			}).success(function(response) { //TODO 
+			}).success(function(response) { // TODO
 				var users = loginUsers.query({
 					Name : username
 				}, function() {
@@ -257,13 +274,14 @@ angular.module('starter.services', []).factory('Host', function() {
 			var user = loginUsers.get({
 				userId : this.ID
 			}, function() {
-				_this.ID = user.ID;;
+				_this.ID = user.ID;
+				;
 				_this.isLogin = user.isLogin;
 				_this.isPurchase = user.isPurchase;
 				_this.Name = user.Name;
 				_this.NickName = user.NickName;
 				_this.Image = user.Image;
-				_this.BePurchaser= user.BePurchaser;
+				_this.BePurchaser = user.BePurchaser;
 			});
 		},
 		logoff : function(funcSucceed) {
@@ -272,7 +290,7 @@ angular.module('starter.services', []).factory('Host', function() {
 			this.Name = defaultUser.Name;
 			this.NickName = defaultUser.NickName;
 			this.Image = defaultUser.Image;
-			this.BePurchaser= defaultUser.BePurchaser;
+			this.BePurchaser = defaultUser.BePurchaser;
 			funcSucceed();
 		}
 	};
@@ -384,10 +402,15 @@ angular.module('starter.services', []).factory('Host', function() {
 					return cren;
 				}
 			};
-		}).factory('Cart', function($ionicModal) {
+		}).factory('Cart', function($localstorage) {
+
+	var savedCart = $localstorage.getObject("Cart");
+	if (!savedCart.Countrys) {
+		savedCart.Countrys = [];
+	}
+
 	return {
-		cnt : 0,
-		Countrys : [],
+		Countrys : savedCart.Countrys,
 
 		size : function() {
 			var len = 0;
@@ -433,7 +456,10 @@ angular.module('starter.services', []).factory('Host', function() {
 				country.Items.push(item);
 				this.Countrys.push(country);
 			}
+			var _this = this;
+			$localstorage.setObject("Cart", {
+				Countrys : _this.Countrys
+			});
 		}
 	};
-
 });
