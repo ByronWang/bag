@@ -1,9 +1,6 @@
 <ion-view>
     <style>
         .bag-subfooter {
-            height: 54px;
-            bottom: 44px;
-            display: block;
             display: -webkit-box;
             display: -webkit-flex;
             display: -moz-box;
@@ -24,26 +21,65 @@
             box-sizing: border-box;
             padding: 5px;
             width: 100%;
+            height: 68px;
             border-width: 0;
             border-style: solid;
             border-top: 1px solid transparent;
             border-bottom: 1px solid #ddd;
-            background-color: ghostwhite;
+            background-color: white;
             /* border-width: 1px will actually create 2 device pixels on retina */
             /* this nifty trick sets an actual 1px border on hi-res displays */
             background-size: 0;
+            bottom: 44px;
         }
 
-        .has-bag-subfooter {
-            bottom: 98px;
+        /*.has-bag-subfooter {*/
+        /*bottom: 98px;*/
+        /*}*/
+
+        label.checkbox input[type=checkbox].samll-checkbox {
+            position: relative;
+            top: 0;
+            left: 0;
+            max-width: 20px;
+            max-height: 20px;
+            width: 20px;
+            height: 20px;
         }
 
-        .checkbox input:before, .checkbox .checkbox-icon:before {
+        label.checkbox input:before, .checkbox .checkbox-icon:before {
             border-color: red;
         }
 
-        .checkbox input:checked:before, .checkbox input:checked + .checkbox-icon:before {
+        label.checkbox input:checked:before, .checkbox input:checked + .checkbox-icon:before {
             background: red;
+        }
+
+        label.checkbox input:after, .checkbox-icon:after {
+            -webkit-transition: opacity 0.05s ease-in-out;
+            -moz-transition: opacity 0.05s ease-in-out;
+            transition: opacity 0.05s ease-in-out;
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            position: absolute;
+            top: 30%;
+            left: 21%;
+            display: table;
+            width: 12px;
+            height: 8.33333px;
+            border: 3px solid #fff;
+            border-top: 0;
+            border-right: 0;
+            content: ' ';
+            opacity: 0;
+        }
+
+        .title.left-title {
+            position: absolute;
+            /*margin-left: 50px;*/
+            margin-left: 20px;
+            text-align: left;
         }
     </style>
 
@@ -54,7 +90,7 @@
             <a class="button button-icon icon ion-plus" x-ng-click="newProduct()"></a>
         </div>
     </ion-header-bar>
-    <ion-content class="has-header">
+    <ion-content class="has-header has-subfooter" style="top: 44px; bottom: 112px">
 
         <!--<div class="list">-->
         <!--<div class="item" x-ng-repeat="p in provinces">-->
@@ -77,13 +113,17 @@
             </div>
         </div>
 
-        <pane class="has-bag-subfooter" x-ng-show="cart.size()!=0">
-            <ion-list ng-repeat="country in cart.Countrys" class="padding-horizontal"
+        <pane x-ng-show="cart.size()!=0">
+            <!--class="padding-horizontal"-->
+            <ion-list ng-repeat="country in cart.Countrys"
                       show-delete="false"
                       show-reorder="false"
                       can-swipe="true" ng-if="country.Items.length>0">
-                <div class="item item-divider item-checkbox-left">
-                    <input type="checkbox" x-ng-model="data.checkall"/>
+                <!--<div class="item item-divider item-checkbox-left">-->
+                <div class="item item-divider">
+                    <label class="checkbox" style="left: -11px;">
+                        <input type="checkbox" class="samll-checkbox" x-ng-model="data.checkall"/>
+                    </label>
                     {{country.Name}}
                 </div>
                 <ion-item ng-repeat="item in country.Items" class="item-checkbox-thumbnail-left item-info">
@@ -97,8 +137,9 @@
                         <span class="item">到货周期 <span class="item-note">{{item.lastMonth}}个月</span></span>
                     </div>
 
-                    <label class="checkbox" style="position: absolute; top: 20px; left: 5px;">
-                        <input type="checkbox" style="position: absolute; top: 20px; left: 5px; max-width: 28px; max-height: 28px; width: 28px"/>
+                    <label class="checkbox" style="position: absolute; top: 40px; left: 5px;">
+                        <input type="checkbox" class="samll-checkbox" x-ng-modal="item.isChecked"
+                               x-ng-click="checked(item)"/>
                     </label>
 
                     <ion-option-button class="button-info button-assertive" ng-click="country.Items.splice($index, 1)">
@@ -107,21 +148,25 @@
                     <ion-delete-button class="ion-minus-circled"
                                        ng-click="country.Items.splice($index, 1)"></ion-delete-button>
                 </ion-item>
-                <div class="item item-divider item-checkbox-left">
-                    合计
-                </div>
+                <!--<div class="item item-divider item-checkbox-left">-->
+                <!--合计-->
+                <!--</div>-->
             </ion-list>
-            <div class="padding">
-                <button class="button button-block  button-positive" x-ng-click="next()"> 发布</button>
-            </div>
+            <!--<div class="padding">-->
+            <!--<button class="button button-block  button-positive" x-ng-click="next()"> 发布</button>-->
+            <!--</div>-->
         </pane>
 
     </ion-content>
 
-    <div class="bag-subfooter">
-        <label class="checkbox">
-            <input type="checkbox">
-        </label>
-        <span style="vertical-align: middle">总计：元（人民币）</span>
+    <div class="bar bag-subfooter bar-stable" x-ng-show="cart.size()!=0">
+        <!--<label class="checkbox" style="margin: auto 0">-->
+        <!--<input type="checkbox" class="samll-checkbox">-->
+        <!--</label>-->
+
+        <h1 class="title left-title" style="color: red;">总计：12.00元</h1>
+
+        <h1 class="title left-title" style="color: red; margin-top: 20px;">美国，3/4种商品</h1>
+        <button class="button button-assertive" style="width: 80px; bottom: 10px;" x-ng-click="next()">发布</button>
     </div>
 </ion-view>
