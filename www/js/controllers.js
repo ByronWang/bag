@@ -198,6 +198,30 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				$scope.cart.add($scope.item);
 				$scope.$parent.closeModal();
 			};
+
+            $scope.showCameraMenu = function() {
+                $ionicActionSheet.show({
+                    buttons: [
+                        { text: '拍照' },
+                        { text: '从相册选择' }
+                    ],
+                    cancelText: '取消',
+                    cancel: function() {
+                        // add cancel code..
+                    },
+                    buttonClicked: function(index) {
+                        switch (index) {
+                            case 0:
+                                $scope.getPhotoFromCamera();
+                                break;
+                            case 1:
+                                $scope.getPhotoFromLibrary();
+                                break;
+                        }
+                        return true;
+                    }
+                });
+            };
 		}).controller('NewOrderCtrl', function($scope, Camera, $q, Popup, Orders, Address, Exts, Statuses, Actions) {
 	$scope.Items = [];
 	$scope.country = {};
