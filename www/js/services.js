@@ -6,7 +6,8 @@ angular.module('starter.services', []).factory('Host', function() {
 	} else {
 		// host = "192.168.12.100";
 //		host = "192.168.0.101";
-        host = "10.0.0.57";
+//        host = "10.0.0.57";
+        host = "www.gouwudai.net.cn";
 		host = "http://" + host + ":8686";
 	}
 	return {
