@@ -190,8 +190,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 			$scope.step = 1;
 			$scope.submit = function() {
-				$scope.product.Extends = Exts.encode($scope.product.Exts);
-				$scope.product.Exts = undefined;
+//				$scope.product.Extends = Exts.encode($scope.product.Exts);
+//				$scope.product.Exts = undefined;
 
 				$scope.item.Product = $scope.product;
 
