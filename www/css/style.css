@@ -102,12 +102,6 @@ a {
 	background: none;
 }
 
-.item-value {
-	float: right;
-	color: black;
-	font-size: 14px;
-}
-
 .item-lang-value {
 	padding-top: 5px;
 	float: left;
@@ -142,7 +136,7 @@ img.main {
 
 .item-graph {
 	overflow: auto;
-	text-overflow: inherit;
+    /*text-overflow: inherit;*/
 	white-space: normal;
 }
 
@@ -296,8 +290,10 @@ input.ng-invalid.ng-dirty {
 	background: none;
 }
 .item-product {
-	padding-left: 200px;
-	height: 200px;
+	/*padding-left: 200px;*/
+    padding: 0;
+	height: 180px;
+    text-align: center;
 }
 
 .item-avatar.item-product img {
@@ -305,6 +301,10 @@ input.ng-invalid.ng-dirty {
 	max-height: 160px;
 	height: 160px;
 	width: 160px;
+    padding: 0;
+    top: 10px;
+    left: 0;
+    position: relative;
 }
 
 .bar-subheader .button-bar > .button,.bar-subheader .buttons > .button {
@@ -381,4 +381,63 @@ table.category td.rect i {
 
 textarea {
     resize: none;
+}
+
+div.item-product-title {
+    padding: 8px 12px;
+}
+
+div.item-product-title h2 {
+    padding-bottom: 10px;
+    font-size: 120%;
+    font-weight:bold;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+div.item-product-title div {
+    font-size: 80%;
+    color: gray;
+    display: inline-block;
+}
+
+div.item-product-title div.right {
+    float: right;
+    right: 8px;
+}
+
+div.item-product-title div i {
+    padding-right: 5px;
+}
+
+div.item-product-info {
+    padding: 8px 12px;
+}
+
+div.item-product-info div {
+    padding: 6px 0px;
+}
+
+div.item-product-info div label {
+    font-weight: bold;
+}
+
+.item-value {
+    /*float: right;*/
+    position: absolute;
+    left: 100px;
+    color: gray;
+    font-size: 14px;
+}
+
+div.item-product-info.item-product-desc div .item-icon-right i {
+    display: inline-block;
+    padding-top: 8px;
+}
+
+div.item-product-info.item-product-desc .item-value {
+    position: relative;
+    left: 0;
+    word-wrap: break-word;
+    white-space: normal;
 }
