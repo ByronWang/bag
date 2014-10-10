@@ -32,13 +32,15 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
 		};
 	})
 }).run(function($rootScope, $ionicLoading) {
-	/*  $rootScope.$on('loading:show', function() {
-	 $ionicLoading.show({template: 'Loading...'});
-	 });
+			$rootScope.$on('loading:show', function() {
+				$ionicLoading.show({
+					template : 'Loading...'
+				},500);
+			});
 
-	 $rootScope.$on('loading:hide', function() {
-	 $ionicLoading.hide();
-	 });*/
+			$rootScope.$on('loading:hide', function() {
+				$ionicLoading.hide();
+			});
 })
 /* Photo */.config(function($compileProvider) {
 	$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
@@ -83,14 +85,6 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
 				controller : 'ProductsCategoryCtrl'
 			}
 		}
-	}).state('product-detail', {
-		url : '/product/:productId',
-		views : {
-			'tab-dash' : {
-				templateUrl : 'templates/product-detail.html',
-				controller : 'ProductDetailCtrl'
-			}
-		}
 	}).state('inventorys', {
 		url : '/inventorys',
 		views : {
@@ -129,62 +123,6 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
 			'tab-account' : {
 				templateUrl : 'templates/tab-account.html',
 				controller : 'AccountCtrl'
-			}
-		}
-	}).state('account-setting', {
-		url : '/accounts/setting',
-		views : {
-			'tab-account' : {
-				templateUrl : 'templates/account-setting.html',
-				controller : 'AccountSettingCtrl'
-			}
-		}
-	}).state('account-about', {
-		url : '/accounts/about',
-		views : {
-			'tab-account' : {
-				templateUrl : 'templates/account-about.html',
-				controller : 'AccountCtrl'
-			}
-		}
-	}).state('account-info', {
-		url : '/accounts/info',
-		views : {
-			'tab-account' : {
-				templateUrl : 'templates/account-info.html',
-				controller : 'AccountInfoCtrl'
-			}
-		}
-	}).state('account-account', {
-		url : '/accounts/account',
-		views : {
-			'tab-account' : {
-				templateUrl : 'templates/account-account.html',
-				controller : 'AccountCtrl'
-			}
-		}
-	}).state('account-message', {
-		url : '/accounts/message',
-		views : {
-			'tab-account' : {
-				templateUrl : 'templates/account-message.html',
-				controller : 'AccountCtrl'
-			}
-		}
-	}).state('account-myorders', {
-		url : '/accounts/myorders',
-		views : {
-			'tab-account' : {
-				templateUrl : 'templates/account-myorders.html',
-				controller : 'AccountCtrl'
-			}
-		}
-	}).state('account-legal', {
-		url : '/accounts/legal',
-		views : {
-			'tab-account' : {
-				templateUrl : 'templates/account-legal.html',
-				controller : 'TestCtrl'
 			}
 		}
 	});

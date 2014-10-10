@@ -13,7 +13,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 }).controller('TabsCtrl', function($scope, $ionicTabsDelegate,$state,LoginUser,Popup) {
 	var navs = ['','cart','inventorys','orders.customer','account'];
-	$scope.makeSureLogin = function(e,index){
+	$scope.makeSureLogin = function(index){
 		LoginUser.needLogin($scope,function(){
 			$ionicTabsDelegate.$getByHandle('rootTabs').select(index);
 			$state.go(navs[index]);
@@ -363,7 +363,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			};
 }).controller('OrdersCtrl', function($scope) {
 	$scope.chooseMe = function(e) {
-		var ele = angular.element(e);
+		var ele = angular.element(e.target);
 		ele.parent().find("a").removeClass("active");
 		ele.addClass("active");
 	};	
