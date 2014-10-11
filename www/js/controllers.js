@@ -513,8 +513,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				flowStepOut(Statuses.purchasing, Actions.bitSucceed, params);
 			};
 
-			$scope.pay = function() {
-				Unipay.pay().then(function(){
+			$scope.pay = function() {				
+				Unipay.pay($scope.current.TradeNo).then(function(){
 					flowStepOut(Statuses.bid, Actions.payFinished);					
 				});				
 			};

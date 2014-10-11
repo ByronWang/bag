@@ -5,8 +5,8 @@ angular.module('starter.services', []).factory('Host', function() {
 		host = "http://" + host + ":8686";
 	} else {
 		// host = "192.168.12.100";
-//		host = "192.168.0.101";
-        host = "10.0.0.57";
+		host = "192.168.0.101";
+//        host = "10.0.0.57";
 		host = "http://" + host + ":8686";
 	}
 	return {
@@ -312,14 +312,13 @@ angular.module('starter.services', []).factory('Host', function() {
 		pay : function(tradeNo) {
 			var q = $q.defer();
 
-			q.resolve("succeed");
-			/*
-			navigator.camera.getPicture(function(result) {
+//			q.resolve("succeed");
+			cn.xj.bag.plugin.Unionpay.payForTest(tradeNo, function(result) {
 				// Do any magic you need
 				q.resolve(result);
 			}, function(err) {
 				q.reject(err);
-			}, options);*/
+			});
 
 			return q.promise;
 		},

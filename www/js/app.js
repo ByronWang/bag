@@ -22,11 +22,11 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
 	$httpProvider.interceptors.push(function($rootScope) {
 		return {
 			request : function(config) {
-				$rootScope.$broadcast('loading:show');
+//				$rootScope.$broadcast('loading:show');
 				return config;
 			},
 			response : function(response) {
-				$rootScope.$broadcast('loading:hide');
+//				$rootScope.$broadcast('loading:hide');
 				return response;
 			}
 		};
