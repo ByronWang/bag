@@ -47,16 +47,39 @@
         border-top: solid white 1px;
     }
 
+    div.prog {
+        text-align: center;
+    }
+
     .prog.active {
         font-weight: bold;
     }
 
     .prog .name {
-        position: relative;
-        width: 5em;
-        padding-left: 2em;
-        padding-right: 2em;
-        left: -2em
+        /*position: relative;*/
+        /*width: 5em;*/
+        /*padding-left: 2em;*/
+        /*padding-right: 2em;*/
+        /*left: -2em*/
+
+        width: 1.1em;
+        margin: 0 auto;
+        /*font-weight: bold;*/
+        color: #ff6767;
+    }
+
+    .prog i {
+        font-size: 2em;
+        color: #ff6767;
+    }
+
+    .item-value.strength {
+        color: #ff6767;
+    }
+
+    .item-value.strength b {
+        font-weight: bold;
+        font-size: 16px;
     }
 
 </style>
@@ -68,19 +91,20 @@
     <div class="item item-product-title">
         <h2>{{item.Product.Name}}</h2>
 
-        <div><i class="ion-ios7-clock-outline"></i>发布时间：2014-08-21</div>
-        <div class="right"><i class="ion-ios7-pricetag-outline"></i>订单编号：123456789</div>
+        <div><i class="ion-ios7-pricetag-outline"></i>订单编号：1234567890123456</div>
+        <div class="right"><i class="ion-ios7-clock-outline"></i>发布时间：2014-08-21</div>
     </div>
 
     <div class="item item-product-info">
         <div>
             <label>发布者</label><span class="item-value">这是假数据</span>
+            <a class="item-icon-right" onclick="alert('click')"><i style="font-size: 180%; color: #4a87ee;" class="ion-chatbox-working item-note"></i></a>
         </div>
         <div x-ng-show="item.Product.CountryName">
             <label>代购国家</label><span class="item-value">{{item.Product.CountryName}}</span>
         </div>
         <div x-ng-show="item.Product.ExpectedPrice">
-            <label>预想单价</label><span class="item-value">{{item.Product.ExpectedPrice}}元（人民币）</span>
+            <label>预想单价</label><span class="item-value strength"><b>{{item.Product.ExpectedPrice}}</b>&nbsp;元</span>
         </div>
         <div x-ng-show="item.Quantity">
             <label>代购件数</label><span class="item-value">{{item.Quantity}}</span>
@@ -96,59 +120,138 @@
         </div>
     </div>
 
-    <div class="item item-product-info item-product-desc" x-ng-show="item.Product.Description">
+    <!--x-ng-show="item.Product.Description"-->
+    <div class="item item-product-info item-product-desc">
         <div>
             <label>说明</label>
             <a class="item-icon-right" onclick="alert('click')"><i class="icon ion-ios7-arrow-up item-note"></i></a>
         </div>
         <div>
-            <span class="item-value">{{item.Product.Description}}</span>
+            <span class="item-value">{{item.Product.Description}}这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除</span>
         </div>
     </div>
 
-    <div class="item item-graph">
-        <div class="row pager">
-            <div class="col first"></div>
-            <div class="col" x-ng-class="{'done':current.StatusID&gt;1,'doing':current.StatusID==1}">
-                <div class="prog" x-ng-click="statusSlide($event.target,0)">
-                    <i class="icon ion-ios7-checkmark-outline"></i>
-
-                    <div class="name">
-                        发布中
-                    </div>
-                </div>
-            </div>
-            <div class="col" x-ng-class="{'done':current.StatusID&gt;1,'doing':current.StatusID==1}"></div>
-            <div class="col" x-ng-class="{'done':current.StatusID&gt;2,'doing':current.StatusID==2}">
-                <div class="prog" x-ng-click="statusSlide($event.target,1)">
-                    <i class="icon ion-ios7-checkmark-outline"></i>
-
-                    <div class="name">
-                        代购中
-                    </div>
-                </div>
-            </div>
-            <div class="col" x-ng-class="{'done':current.StatusID&gt;2,'doing':current.StatusID==2}"></div>
-            <div class="col" x-ng-class="{'done':current.StatusID&gt;3,'doing':current.StatusID==3}">
-                <div class="prog" x-ng-click="statusSlide($event.target,2)">
-                    <i class="icon ion-ios7-circle-outline"></i>
-
-                    <div class="name">
-                        收货中
-                    </div>
-                </div>
-            </div>
-            <div class="col" x-ng-class="{'done':current.StatusID&gt;3,'doing':current.StatusID==3}"></div>
-            <div class="col last" x-ng-class="{'done':current.StatusID&gt;4,'doing':current.StatusID==4}">
-                <div class="prog" x-ng-click="statusSlide($event.target,3)">
-                    <i class="icon ion-ios7-circle-outline"></i>
-
-                    <div class="name">
-                        完成
-                    </div>
-                </div>
+    <div class="row">
+        <div class="prog col" x-ng-click="statusSlide($event.target,0)">
+            <i class="icon ion-ios7-clock"></i>
+            <div class="name">
+                发布中
             </div>
         </div>
+
+        <div class="prog col" x-ng-click="statusSlide($event.target,1)">
+            <i class="icon ion-ios7-checkmark" style="color: #4a87ee;"></i>
+            <div class="name" style="color: #4a87ee;">
+                代购中
+            </div>
+        </div>
+
+        <div class="prog col" x-ng-click="statusSlide($event.target,2)">
+            <i class="icon ion-ios7-circle-filled" style="color: #f0b840"></i>
+
+            <div class="name" style="color: #f0b840">
+                收货中
+            </div>
+        </div>
+
+        <div class="prog col" x-ng-click="statusSlide($event.target,3)" onclick="alert('click div');">
+            <i class="ion-ios7-close" style="color: #aaaaaa"></i>
+
+            <div class="name"style="color: #aaaaaa">
+                完成
+            </div>
+        </div>
+
+        <ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide">
+            <ion-slide>
+                <ng-include src="'templates/order-bid-c-edit.html'" ng-if="current.StatusID==1"></ng-include>
+                <ng-include src="'templates/order-bid-c-info.html'" ng-if="current.StatusID!=1"></ng-include>
+            </ion-slide>
+            <ion-slide>
+                <ng-include src="'templates/order-purchase-c-edit.html'"
+                            ng-if="current.StatusID==2"></ng-include>
+                <ng-include src="'templates/order-purchase-c-info.html'"
+                            ng-if="current.StatusID!=2"></ng-include>
+            </ion-slide>
+            <ion-slide>
+                <ng-include src="'templates/order-delivering-c-edit.html'"
+                            ng-if="current.StatusID==3"></ng-include>
+                <ng-include src="'templates/order-delivering-c-info.html'"
+                            ng-if="current.StatusID!=3"></ng-include>
+            </ion-slide>
+            <ion-slide>
+                <ng-include src="'templates/order-completed-c-info.html'"></ng-include>
+            </ion-slide>
+        </ion-slide-box>
+
+
+        <!--<div class="row pager">-->
+            <!--<div class="col first"></div>-->
+            <!--<div class="col" x-ng-class="{'done':current.StatusID&gt;1,'doing':current.StatusID==1}">-->
+                <!--<div class="prog" x-ng-click="statusSlide($event.target,0)">-->
+                    <!--<i class="icon ion-ios7-checkmark"></i>-->
+
+                    <!--<div class="name">-->
+                        <!--发布中-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col" x-ng-class="{'done':current.StatusID&gt;1,'doing':current.StatusID==1}"></div>-->
+            <!--<div class="col" x-ng-class="{'done':current.StatusID&gt;2,'doing':current.StatusID==2}">-->
+                <!--<div class="prog" x-ng-click="statusSlide($event.target,1)">-->
+                    <!--<i class="icon ion-ios7-checkmark"></i>-->
+
+                    <!--<div class="name">-->
+                        <!--代购中-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col" x-ng-class="{'done':current.StatusID&gt;2,'doing':current.StatusID==2}"></div>-->
+            <!--<div class="col" x-ng-class="{'done':current.StatusID&gt;3,'doing':current.StatusID==3}">-->
+                <!--<div class="prog" x-ng-click="statusSlide($event.target,2)">-->
+                    <!--<i class="icon ion-ios7-circle-filled"></i>-->
+
+                    <!--<div class="name">-->
+                        <!--收货中-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col" x-ng-class="{'done':current.StatusID&gt;3,'doing':current.StatusID==3}"></div>-->
+            <!--<div class="col last" x-ng-class="{'done':current.StatusID&gt;4,'doing':current.StatusID==4}">-->
+                <!--<div class="prog" x-ng-click="statusSlide($event.target,3)">-->
+                    <!--<i class="icon ion-ios7-circle-filled"></i>-->
+
+                    <!--<div class="name">-->
+                        <!--完成-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+    </div>
+
+    <div class="item item-product-info">
+        <div>
+            <label>发布者</label><span class="item-value">这是假数据</span>
+            <a class="item-icon-right" onclick="alert('click')"><i style="font-size: 180%" class="ion-chatbox-working item-note"></i></a>
+        </div>
+        <div x-ng-show="item.Product.CountryName">
+            <label>代购国家</label><span class="item-value">{{item.Product.CountryName}}</span>
+        </div>
+        <div x-ng-show="item.Product.ExpectedPrice">
+            <label>预想单价</label><span class="item-value">{{item.Product.ExpectedPrice}}元</span>
+        </div>
+        <div x-ng-show="item.Quantity">
+            <label>代购件数</label><span class="item-value">{{item.Quantity}}</span>
+        </div>
+        <div x-ng-show="item.Product.Brand">
+            <label>品牌</label><span class="item-value">{{item.Product.Brand}}</span>
+        </div>
+        <div x-ng-show="item.Product.Exts.Function">
+            <label>功效</label><span class="item-value">{{item.Product.Exts.Function}}</span>
+        </div>
+        <div x-ng-show="item.Product.Exts.Color">
+            <label>色泽</label><span class="item-value">{{item.Product.Exts.Color}}</span>
+        </div>
+    </div>
 
         <!--<div class="list">-->
         <!--<div class="list">-->

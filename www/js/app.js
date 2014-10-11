@@ -28,7 +28,11 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
 			response : function(response) {
 				$rootScope.$broadcast('loading:hide');
 				return response;
-			}
+			},
+            responseError : function(response) {
+                alert("adf");
+                return response;
+            }
 		};
 	})
 }).run(function($rootScope, $ionicLoading) {

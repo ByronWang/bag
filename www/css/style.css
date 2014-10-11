@@ -388,7 +388,7 @@ div.item-product-title {
 }
 
 div.item-product-title h2 {
-    padding-bottom: 10px;
+    padding-bottom: 8px;
     font-size: 120%;
     font-weight:bold;
     word-wrap: break-word;
@@ -396,14 +396,16 @@ div.item-product-title h2 {
 }
 
 div.item-product-title div {
-    font-size: 80%;
+    font-size: 70%;
     color: gray;
-    display: inline-block;
+    display: inline;
 }
 
 div.item-product-title div.right {
-    float: right;
+    position: absolute;
     right: 8px;
+    bottom: 8px;
+    display: inline;
 }
 
 div.item-product-title div i {
@@ -415,7 +417,7 @@ div.item-product-info {
 }
 
 div.item-product-info div {
-    padding: 6px 0px;
+    padding: 3px 0px;
 }
 
 div.item-product-info div label {
@@ -425,7 +427,7 @@ div.item-product-info div label {
 .item-value {
     /*float: right;*/
     position: absolute;
-    left: 100px;
+    left: 7em;
     color: gray;
     font-size: 14px;
 }
