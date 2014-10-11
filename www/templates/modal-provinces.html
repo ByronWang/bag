@@ -8,15 +8,15 @@
 	<ion-content>
 
 		<div class="list" x-ng-show="step=='province'">
-			<a class="item item-icon-right" x-ng-repeat="c in provinces" x-ng-click="selectProvince(c)"> {{c.Name}} <i class="icon ion-ios7-arrow-forward"></i> </a>
+			<a class="item item-icon-right" x-ng-repeat="c in provinces" x-ng-click="selectProvince(c)"> {{c.Name}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 		</div>
 
 		<div class="list" x-ng-show="step=='city'">
-			<a class="item item-icon-right" x-ng-repeat="c in province.City" x-ng-click="selectCity(c)"> {{c.Name}} <i class="icon ion-ios7-arrow-forward"></i> </a>
+			<a class="item item-icon-right" x-ng-repeat="c in province.City" x-ng-click="selectCity(c)"> {{c.Name}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 		</div>
 
 		<div class="list" x-ng-show="step=='area'">
-			<a class="item item-icon-right" x-ng-repeat="c in city.Area" x-ng-click="selectArea(c)"> {{c.Name}} <i class="icon ion-ios7-arrow-forward"></i> </a>
+			<a class="item item-icon-right" x-ng-repeat="c in city.Area" x-ng-click="selectArea(c)"> {{c.Name}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 		</div>
 	</ion-content>
 </ion-modal-view>
