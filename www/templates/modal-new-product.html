@@ -93,15 +93,8 @@
                         <span class="input-label">品牌</span>
                         <input type="text" x-ng-model="product.Brand" required>
                     </label>
-                    <label class="item item-input">
-                        <span class="input-label">功效</span>
-                        <input type="text" x-ng-model="product.Exts.Function">
-                    </label>
-                    <label class="item item-input">
-                        <span class="input-label">色泽</span>
-                        <input type="text" x-ng-model="product.Exts.Color">
-                    </label>
-                    <!-- 弹出大窗口单独填写该值 -->
+                    <ng-include src="'templates/extends/edit-'+product.CategoryID+'.html'" x-ng-exts="product.Exts"></ng-include>	
+					<!-- 弹出大窗口单独填写该值 -->
                     <a class="item item-input item-icon-right" x-ng-click="popupCountries();">
                         <span class="input-label">说明</span>
                         <span>{{product.CountryName}}</span>

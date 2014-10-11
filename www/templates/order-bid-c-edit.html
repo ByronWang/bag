@@ -1,3 +1,6 @@
+[[{{current}}]]
+
+<pane  x-ng-show="current.ActionID==Actions.sendout.ID">
 <div class="list">
 	<div x-ng-show="bids.length<1">
 		还没有任何人竞标
@@ -18,4 +21,24 @@
 		</div>
 	</div>
 </div>
+</pane>
+<pane  x-ng-show="current.ActionID==Actions.payPrepare.ID">
+<div class="list">
+	<div class="item view-button">
+		<div class="item-avatar">
+			<img x-ng-src="img/mcfly.jpg">
+			{{current.Bid.PurchaserName}}
+		</div>
+		<div class="list view">
+			<label class="item item-input item-input-note"><span class="input-label">代购佣金</span><span class="item-note">{{current.Bid.Commission}}元（人民币）</span></label>
+			<label class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{current.Bid.DeliveryMethodName}}</span></label>
+			<label class="item item-input item-input-note"><span class="input-label">代购期限</span><span class="item-note">{{current.Bid.Deadline}}</span></label>
+			<label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{current.Bid.SuggestedPrice}}元（人民币）</span></label>
+			<label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{current.Bid.DeliveryCost}}元（人民币）</span></label>
+		</div>
+	</div>
+</div>	
+<button class="button button-positive button-block" x-ng-click="pay();">支付</button>
+</pane>
+&nbsp;
 

@@ -84,6 +84,18 @@ angular.module('starter.services', []).factory('Host', function() {
 	};
 }).factory('Actions', function() {
 	return {
+		payConfirmed: {
+			"ID" : 11,
+			"Name" : "支付已确认"
+		},
+		payFinished : {
+			"ID" : 10,
+			"Name" : "支付已提交"
+		},
+		payPrepare : {
+			"ID" : 9,
+			"Name" : "支付准备"
+		},
 		cancelOrder : {
 			"ID" : 8,
 			"Name" : "放弃订单"
@@ -294,6 +306,24 @@ angular.module('starter.services', []).factory('Host', function() {
 			this.BePurchaser = defaultUser.BePurchaser;
 			funcSucceed();
 		}
+	};
+}).factory('Unipay', function($q) {
+	return {
+		pay : function(tradeNo) {
+			var q = $q.defer();
+
+			q.resolve("succeed");
+			/*
+			navigator.camera.getPicture(function(result) {
+				// Do any magic you need
+				q.resolve(result);
+			}, function(err) {
+				q.reject(err);
+			}, options);*/
+
+			return q.promise;
+		},
+		
 	};
 }).factory('Popup', function($ionicModal) {
 	return {

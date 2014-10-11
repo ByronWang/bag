@@ -26,8 +26,7 @@
 			<div class="item item-divider">
 				商品参数
 			</div>
-			<label class="item">功效<span class="item-value">{{product.Exts.Function}}</span></label>
-			<label class="item">色泽<span class="item-value">{{product.Exts.Color}}</span></label>
+				<ng-include src="'templates/extends/edit-'+product.CategoryID+'.html'"></ng-include>			</div>
 			<div class="item item-divider">
 				代购信息
 			</div>

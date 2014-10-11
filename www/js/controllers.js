@@ -320,6 +320,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			}, function() {
 				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 				$scope.item.Product.Extends = undefined;
+				$scope.product  = $scope.item.Product;
 				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
 				$scope.suitor = {
 					PurchaserID : $scope.currentUser.ID, // TODO
@@ -370,7 +371,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 }).controller('OrderInListCtrl', function($scope, Orders) {
 	$scope.realOrder = Orders.get({
 		orderId : $scope.$parent.order.ID
-	});
+	});	
 }).controller('OrdersCustomerCtrl', function($scope, Orders, Popup) {
 	$scope.orders = Orders.query({
 		Customer : $scope.currentUser.ID
@@ -420,7 +421,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 }).controller(
 		'OrderCustomerDetailCtrl',
 		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state,
-				$ionicSlideBoxDelegate, $timeout, Orders, Category, Exts) {
+				$ionicSlideBoxDelegate, $timeout, Orders, Category, Exts,Unipay) {
 			var $stateParams = {
 				itemId : $scope.$parent.item.ID
 			};
@@ -429,7 +430,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				loadFlow();
 				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 				$scope.item.Product.Extends = undefined;
+				$scope.product  = $scope.item.Product;
 				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+			
 			});
 
 			$scope.Actions = Actions;
@@ -441,7 +444,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 						$scope.statusActiveSlide = $scope.current.StatusID - 1;
 					} else {
 						$scope.current = {
-							StatusID : 1
+							StatusID : 1,
+							ActionID : 1
 						};
 						$scope.statusActiveSlide = $scope.current.StatusID - 1;
 						$scope.loadBid();
@@ -464,6 +468,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				step.StatusName = status.Name;
 				step.ActionID = action.ID;
 				step.ActionName = action.Name;
+				step.PaymentID = $scope.current.PaymentID;
 				var post = new OrderItemFlow(step);
 				post.$save(function() {
 					loadFlow();
@@ -508,6 +513,12 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				flowStepOut(Statuses.purchasing, Actions.bitSucceed, params);
 			};
 
+			$scope.pay = function() {
+				Unipay.pay().then(function(){
+					flowStepOut(Statuses.bid, Actions.payFinished);					
+				});				
+			};
+			
 			$scope.cancelOrder = function() {
 				flowStepOut(Statuses.completed, Actions.cancelOrder);
 			};
@@ -527,6 +538,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				loadFlow();
 				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 				$scope.item.Product.Extends = undefined;
+				$scope.product  = $scope.item.Product;
 				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
 			});
 
@@ -562,6 +574,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				step.StatusName = status.Name;
 				step.ActionID = action.ID;
 				step.ActionName = action.Name;
+				step.PaymentID = $scope.current.PaymentID;
 				var post = new OrderItemFlow(step);
 				post.$save(function() {
 					loadFlow();
