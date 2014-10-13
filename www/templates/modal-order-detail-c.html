@@ -97,9 +97,13 @@
     </div>
 
     <div class="item item-product-info">
+        <div class="item-avatar">
+            <img src="img/mcfly.jpg">
+            <span>用户名会覆盖私信图标</span>
+            <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
+        </div>
         <div>
-            <label>发布者</label><span class="item-value">这是假数据</span>
-            <a class="item-icon-right" onclick="alert('click')"><i style="font-size: 180%; color: #4a87ee;" class="ion-chatbox-working item-note"></i></a>
+            <label>收件地址</label><span class="item-value">中国 上海 上海市 虹口区</span>
         </div>
         <div x-ng-show="item.Product.CountryName">
             <label>代购国家</label><span class="item-value">{{item.Product.CountryName}}</span>
@@ -155,7 +159,7 @@
             </div>
         </div>
 
-        <div class="prog col" x-ng-click="statusSlide($event,3)" onclick="alert('click div');">
+        <div class="prog col" x-ng-click="statusSlide($event,3)">
             <i class="ion-ios7-close" style="color: #aaaaaa"></i>
 
             <div class="name"style="color: #aaaaaa">
@@ -164,27 +168,27 @@
         </div>
     </div>
 
-        <ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide">
-            <ion-slide>
-                <ng-include src="'templates/order-bid-c-edit.html'" ng-if="current.StatusID==1"></ng-include>
-                <ng-include src="'templates/order-bid-c-info.html'" ng-if="current.StatusID!=1"></ng-include>
-            </ion-slide>
-            <ion-slide>
-                <ng-include src="'templates/order-purchase-c-edit.html'"
-                            ng-if="current.StatusID==2"></ng-include>
-                <ng-include src="'templates/order-purchase-c-info.html'"
-                            ng-if="current.StatusID!=2"></ng-include>
-            </ion-slide>
-            <ion-slide>
-                <ng-include src="'templates/order-delivering-c-edit.html'"
-                            ng-if="current.StatusID==3"></ng-include>
-                <ng-include src="'templates/order-delivering-c-info.html'"
-                            ng-if="current.StatusID!=3"></ng-include>
-            </ion-slide>
-            <ion-slide>
-                <ng-include src="'templates/order-completed-c-info.html'"></ng-include>
-            </ion-slide>
-        </ion-slide-box>
+    <ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide">
+        <ion-slide>
+            <ng-include src="'templates/order-bid-c-edit.html'" ng-if="current.StatusID==1"></ng-include>
+            <ng-include src="'templates/order-bid-c-info.html'" ng-if="current.StatusID!=1"></ng-include>
+        </ion-slide>
+        <ion-slide>
+            <ng-include src="'templates/order-purchase-c-edit.html'"
+                        ng-if="current.StatusID==2"></ng-include>
+            <ng-include src="'templates/order-purchase-c-info.html'"
+                        ng-if="current.StatusID!=2"></ng-include>
+        </ion-slide>
+        <ion-slide>
+            <ng-include src="'templates/order-delivering-c-edit.html'"
+                        ng-if="current.StatusID==3"></ng-include>
+            <ng-include src="'templates/order-delivering-c-info.html'"
+                        ng-if="current.StatusID!=3"></ng-include>
+        </ion-slide>
+        <ion-slide>
+            <ng-include src="'templates/order-completed-c-info.html'"></ng-include>
+        </ion-slide>
+    </ion-slide-box>
 
 
         <!--<div class="row pager">-->
@@ -228,31 +232,6 @@
                     <!--</div>-->
                 <!--</div>-->
             <!--</div>-->
-
-    <div class="item item-product-info">
-        <div>
-            <label>发布者</label><span class="item-value">这是假数据</span>
-            <a class="item-icon-right" onclick="alert('click')"><i style="font-size: 180%" class="ion-chatbox-working item-note"></i></a>
-        </div>
-        <div x-ng-show="item.Product.CountryName">
-            <label>代购国家</label><span class="item-value">{{item.Product.CountryName}}</span>
-        </div>
-        <div x-ng-show="item.Product.ExpectedPrice">
-            <label>预想单价</label><span class="item-value">{{item.Product.ExpectedPrice}}元</span>
-        </div>
-        <div x-ng-show="item.Quantity">
-            <label>代购件数</label><span class="item-value">{{item.Quantity}}</span>
-        </div>
-        <div x-ng-show="item.Product.Brand">
-            <label>品牌</label><span class="item-value">{{item.Product.Brand}}</span>
-        </div>
-        <div x-ng-show="item.Product.Exts.Function">
-            <label>功效</label><span class="item-value">{{item.Product.Exts.Function}}</span>
-        </div>
-        <div x-ng-show="item.Product.Exts.Color">
-            <label>色泽</label><span class="item-value">{{item.Product.Exts.Color}}</span>
-        </div>
-    </div>
 
         <!--<div class="list">-->
         <!--<div class="list">-->

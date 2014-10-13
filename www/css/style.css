@@ -412,6 +412,11 @@ div.item-product-title div i {
     padding-right: 5px;
 }
 
+div.item-product-info span.comment {
+    font-size: 80%;
+    color: gray;
+}
+
 div.item-product-info {
     padding: 8px 12px;
 }
@@ -420,14 +425,42 @@ div.item-product-info div {
     padding: 3px 0px;
 }
 
+div.item-product-info div.item-avatar {
+    margin-bottom: 6px;
+    min-height: 44px;
+}
+
+div.item-product-info div.item-avatar img {
+    position: relative;
+    top: 0;
+    left: 0;
+    vertical-align: middle;
+}
+
+div.item-product-info div.item-avatar img + span {
+    margin-left: 6px;
+    font-weight: bold;
+}
+
+div.item-product-info i.chatbox {
+    position: absolute;
+    font-size: 40px;
+    color: #4a87ee;
+    top: 11px;
+    right: 8px;
+}
+
 div.item-product-info div label {
     font-weight: bold;
+    width: 7em;
+    display: inline-block;
 }
 
 .item-value {
     /*float: right;*/
-    position: absolute;
-    left: 7em;
+    /*position: absolute;*/
+    /*left: 7em;*/
+    position: relative;
     color: gray;
     font-size: 14px;
 }
@@ -442,4 +475,9 @@ div.item-product-info.item-product-desc .item-value {
     left: 0;
     word-wrap: break-word;
     white-space: normal;
+}
+
+.flow-block {
+    /*min-height: 10em;*/
+    padding: 0px;
 }
