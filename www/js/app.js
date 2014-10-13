@@ -30,7 +30,7 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
 				return response;
 			},
             responseError : function(response) {
-                alert("adf");
+//                alert("adf");
                 return response;
             }
 		};
