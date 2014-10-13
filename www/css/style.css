@@ -388,7 +388,7 @@ div.item-product-title {
 }
 
 div.item-product-title h2 {
-    padding-bottom: 8px;
+    padding-bottom: 0.3em;
     font-size: 120%;
     font-weight:bold;
     word-wrap: break-word;
@@ -415,6 +415,7 @@ div.item-product-title div i {
 div.item-product-info span.comment {
     font-size: 80%;
     color: gray;
+    margin-left: 0.5em;
 }
 
 div.item-product-info {
@@ -452,7 +453,7 @@ div.item-product-info i.chatbox {
 
 div.item-product-info div label {
     font-weight: bold;
-    width: 7em;
+    width: 6em;
     display: inline-block;
 }
 
@@ -465,12 +466,12 @@ div.item-product-info div label {
     font-size: 14px;
 }
 
-div.item-product-info.item-product-desc div .item-icon-right i {
+div.item-product-desc div .item-icon-right i {
     display: inline-block;
     padding-top: 8px;
 }
 
-div.item-product-info.item-product-desc .item-value {
+div.item-product-desc .item-value {
     position: relative;
     left: 0;
     word-wrap: break-word;

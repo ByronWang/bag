@@ -9,6 +9,7 @@ angular.module('starter.services', []).factory('Host', function() {
 //        host = "10.0.0.57";
 		host = "http://" + host + ":8686";
 	}
+    host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
 		setHost : function(newhost) {
