@@ -438,6 +438,10 @@ div.item-product-info div.item-avatar img {
     vertical-align: middle;
 }
 
+div.item-product-info div.item-avatar a + span {
+    font-weight: bold;
+}
+
 div.item-product-info div.item-avatar img + span {
     margin-left: 6px;
     font-weight: bold;
@@ -464,6 +468,11 @@ div.item-product-info div label {
     position: relative;
     color: gray;
     font-size: 14px;
+}
+
+div.item.item-product-desc.no-border {
+    border: 0;
+    margin: 0 -12px 0 0;
 }
 
 div.item-product-desc div .item-icon-right i {

@@ -21,7 +21,7 @@
         box-sizing: border-box;
         padding: 5px;
         width: 100%;
-        height: 68px;
+        height: 52px;
         border-width: 0;
         border-style: solid;
         border-top: 1px solid transparent;
@@ -33,9 +33,9 @@
         bottom: 44px;
     }
 
-    /*.has-bag-subfooter {*/
-    /*bottom: 98px;*/
-    /*}*/
+    .has-bag-subfooter {
+        bottom: 96px;
+    }
 
     label.checkbox input[type=checkbox].samll-checkbox {
         position: relative;
@@ -80,6 +80,22 @@
         /*margin-left: 50px;*/
         margin-left: 20px;
         text-align: left;
+        line-height: 20px;
+    }
+
+    .title.left-title.title-strong {
+        top: 5px;
+        font-size: 18px;
+        color: red;
+    }
+
+    .title.left-title.title-strong b {
+    }
+
+    .title.left-title.title-sub {
+        font-size: 12px;
+        top: 25px;
+        color: #aaaaaa;
     }
 
     /*div.list span.item {*/
@@ -100,7 +116,7 @@
         <a class="button button-icon icon ion-plus" x-ng-click="newProduct()"></a>
     </div>
 </ion-header-bar>
-<ion-content class="has-header has-subfooter" style="bottom: 112px">
+<ion-content class="has-header has-subfooter" x-ng-class="'has-bag-subfooter':cart.size()!=0">
 
     <!--<div class="list">-->
     <!--<div class="item" x-ng-repeat="p in provinces">-->
@@ -195,10 +211,10 @@
     <!--<input type="checkbox" class="samll-checkbox">-->
     <!--</label>-->
 
-    <h1 class="title left-title" style="color: red;">总计：12.00元</h1>
+    <h1 class="title left-title title-strong">总计：<b>12.00</b>&nbsp;元</h1>
 
-    <h1 class="title left-title" style="color: red; margin-top: 20px;">美国，3/4种商品</h1>
-    <button class="button button-assertive" style="width: 80px; bottom: 10px; font-size: 120%" x-ng-click="next()">
+    <h1 class="title left-title title-sub">美国，3 种商品</h1>
+    <button class="button button-assertive" style="width: 60px; bottom: 10px; font-size: 120%" x-ng-click="next()">
         发布
     </button>
 </div>

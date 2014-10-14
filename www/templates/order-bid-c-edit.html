@@ -40,8 +40,8 @@
                     <label>运费</label><span class="item-value">{{suitor.DeliveryCost}} 元</span>
                 </div>
                 <!--x-ng-show="item.Product.Description"-->
-                <div class="item-product-desc">
-                    <label>买手留言</label>
+                <div class="item item-product-desc no-border">
+                    <label>备注</label>
                     <a class="item-icon-right" onclick="alert('click')"><i class="icon ion-ios7-arrow-up item-note"></i></a>
                 </div>
                 <div class="item-product-desc">
@@ -102,7 +102,7 @@
             </div>
             <!--【{{current.TradeNo}}】-->
             <div style="padding-top: 6px; color: #f0b840;">
-                <i class="ion-alert-circled" style="vertical-align: middle; margin-right: 0.3em;"></i>
+                <i class="ion-ios7-information-outline" style="vertical-align: middle; margin-right: 0.3em;"></i>
                 <span>您已选定买手，请点击按钮支付定金</span>
             </div>
             <button class="button button-energized button-block" x-ng-click="pay();">支付</button>
@@ -114,7 +114,7 @@
         <div class="item item-product-info">
             <div class="item-avatar">
                 <img src="img/mcfly.jpg">
-                <span >买手1假数据</span>
+                <span>买手1假数据</span>
                 <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
             </div>
             <div>
@@ -136,7 +136,7 @@
             </div>
             <!--【{{current.TradeNo}}】-->
             <div style="padding-top: 6px; color: #f0b840;">
-                <i class="ion-alert-circled" style="vertical-align: middle; margin-right: 0.3em;"></i>
+                <i class="ion-ios7-information-outline" style="vertical-align: middle; margin-right: 0.3em;"></i>
                 <span>支付结果确认中，请点击按钮刷新</span>
             </div>
             <button class="button button-energized button-block" x-ng-click="confirmPay();">支付</button>
