@@ -227,7 +227,7 @@ angular.module('starter.services', []).factory('Host', function() {
 			return o;
 		}
 	};
-}).factory('LoginUser', function($ionicModal, $resource, $http, Host, Users) {
+}).factory('LoginUser', function($ionicModal, $resource, $http, Host, Users,Cart) {
 	var loginUsers = $resource(Host.host + '/d/User/:userId');
 
 	var defaultUser = {
@@ -258,6 +258,7 @@ angular.module('starter.services', []).factory('Host', function() {
 					$scope.modal.hide();
 				};
 				$scope.ret = function(user) {
+					Cart.load(user);
 					if (funcSucceed) {
 						funcSucceed(user);
 					}
@@ -443,13 +444,19 @@ angular.module('starter.services', []).factory('Host', function() {
 			};
 		}).factory('Cart', function($localstorage) {
 
-	var savedCart = $localstorage.getObject("Cart");
-	if (!savedCart.Countrys) {
-		savedCart.Countrys = [];
-	}
+	var _user = {};
 
 	return {
-		Countrys : savedCart.Countrys,
+		Countrys : [],
+		load : function(user){
+			_user = user;
+			var localCart = $localstorage.getObject("Cart" + _user.ID);
+			if (localCart.Countrys) {
+				this.Countrys = localCart.Countrys;
+			}else{
+				this.Countrys  = [];
+			}
+		},
 
 		size : function() {
 			var len = 0;
@@ -495,14 +502,11 @@ angular.module('starter.services', []).factory('Host', function() {
 				country.Items.push(item);
 				this.Countrys.push(country);
 			}
-			var _this = this;
-			$localstorage.setObject("Cart", {
-				Countrys : _this.Countrys
-			});
+			this.save();
 		},
 		save: function(){
 			var _this = this;
-			$localstorage.setObject("Cart", {
+			$localstorage.setObject("Cart"+ _user.ID, {
 				Countrys : _this.Countrys
 			});
 		}

@@ -30,7 +30,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 }).controller('TabsCtrl', function($scope, $ionicTabsDelegate,$state,LoginUser,Popup) {
 	var navs = ['','cart','inventorys','orders.customer','account'];
 	$scope.makeSureLogin = function(index){
-		LoginUser.needLogin($scope,function(){
+		LoginUser.needLogin($scope.$new(),function(){
 			$ionicTabsDelegate.$getByHandle('rootTabs').select(index);
 			$state.go(navs[index]);
 		});
@@ -68,7 +68,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$state.go("dash");
 	};
 
-}).controller('ProductDetailCtrl', function($scope, $stateParams, Products, Exts, Category) {
+}).controller('ProductDetailCtrl', function($scope, $stateParams, Products, Exts, LoginUser,Category) {
 	$scope.product = Products.get({
 		productId : $scope.$parent.product.ID
 	}, function() {
@@ -76,12 +76,16 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.product.Extends = undefined;
 		$scope.product.CategoryDesc = Category.get($scope.product.CategoryID).Desc;
 	});
+	
 	$scope.selectThis = function() {
-		var item = {};
-		item.Product = $scope.product;
-		item.Quantity = 1;
-		$scope.cart.add(item);
-		$scope.closeModal();
+		LoginUser.needLogin($scope.$new(),function(){
+			var item = {};
+			item.Product = $scope.product;
+			item.Quantity = 1;
+			$scope.cart.add(item);
+			$scope.closeModal();
+		});
+		
 		return false;
 	};
 }).controller('CartCtrl', function($scope, Popup, Exts) {
