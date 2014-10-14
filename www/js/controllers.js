@@ -1,3 +1,19 @@
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+};
+
 angular.module('starter.controllers', []).controller('GlobalCtrl', function($scope, LoginUser, Cart, Host, $q) {
 	$scope.currentUser = LoginUser;
 	$scope.cart = Cart;
@@ -243,18 +259,34 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		 * newitems.push(i); } }); c.Items = newitems; });
 		 */
 
+		$scope.order.CustomerID = $scope.currentUser.ID;
+		$scope.order.CustomerName = $scope.currentUser.Name;
+		$scope.order.CustomerNickName = $scope.currentUser.NickName;
+		$scope.order.CustomerImage = $scope.currentUser.Image;
+		$scope.order.Datetime = new Date().Format("yyyy-MM-dd hh:mm:ss"); 
+		
 		var promiseArray = [];
 		angular.forEach($scope.order.Items, function(newitem) {
 			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
 			newitem.Product.Exts = undefined;
+			
 			newitem.StatusID = Statuses.bid.ID;
 			newitem.StatusName = Statuses.bid.Name;
+			
 			newitem.ActionID = Actions.sendout.ID;
 			newitem.ActionName = Actions.sendout.Name;
+			
 			newitem.CustomerID = $scope.currentUser.ID;
 			newitem.CustomerName = $scope.currentUser.Name;
+			newitem.CustomerNickName = $scope.currentUser.NickName;
+			newitem.CustomerImage = $scope.currentUser.Image;
+			
 			newitem.CountryID = newitem.Product.CountryID;
 			newitem.CountryName = newitem.Product.CountryName;
+			
+			newitem.Datetime = $scope.order.Datetime;
+			
+			newitem.Address = $scope.order.Address;
 			if (newitem.Product.ImagePromise) {
 				var p = Camera.upload(newitem.Product.Image);
 				p = p.then(function(result) {
@@ -263,8 +295,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				promiseArray.push(p);
 			}
 		});
-		$scope.order.CustomerID = $scope.currentUser.ID;
-		$scope.order.CustomerName = $scope.currentUser.Name;
 		$scope.order.CountryID = $scope.order.Items[0].CountryID;
 		$scope.order.CountryName = $scope.order.Items[0].CountryName;
 
