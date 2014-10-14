@@ -1,17 +1,21 @@
 angular.module('starter.services', []).factory('Host', function() {
 	var host = window.location.host;
+	var pc = false;// For Test
 	if (host) {
 		host = host.substr(0, host.indexOf(":"));
 		host = "http://" + host + ":8686";
+		pc = true;
 	} else {
 		// host = "192.168.12.100";
 		host = "192.168.0.101";
 //        host = "10.0.0.57";
 		host = "http://" + host + ":8686";
+		pc =false;
 	}
-    host = "http://www.gouwudai.net.cn:8686";
+//    host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
+		pc : pc,
 		setHost : function(newhost) {
 			host = newhost;
 		}
@@ -223,7 +227,7 @@ angular.module('starter.services', []).factory('Host', function() {
 			return o;
 		}
 	};
-}).factory('LoginUser', function($ionicModal, $resource, $http, Host, Users) {
+}).factory('LoginUser', function($ionicModal, $resource, $http, Host, Users,Cart) {
 	var loginUsers = $resource(Host.host + '/d/User/:userId');
 
 	var defaultUser = {
@@ -254,6 +258,7 @@ angular.module('starter.services', []).factory('Host', function() {
 					$scope.modal.hide();
 				};
 				$scope.ret = function(user) {
+					Cart.load(user);
 					if (funcSucceed) {
 						funcSucceed(user);
 					}
@@ -308,11 +313,15 @@ angular.module('starter.services', []).factory('Host', function() {
 			funcSucceed();
 		}
 	};
-}).factory('Unipay', function($q) {
+}).factory('Unipay', function($q,Host) {
 	return {
 		pay : function(tradeNo) {
 			var q = $q.defer();
 
+			if(Host.pc){
+				q.resolve("succeed");
+				return q.promise;				
+			}
 //			q.resolve("succeed");
 			cn.xj.bag.plugin.Unionpay.payForTest(tradeNo, function(result) {
 				// Do any magic you need
@@ -435,13 +444,19 @@ angular.module('starter.services', []).factory('Host', function() {
 			};
 		}).factory('Cart', function($localstorage) {
 
-	var savedCart = $localstorage.getObject("Cart");
-	if (!savedCart.Countrys) {
-		savedCart.Countrys = [];
-	}
+	var _user = {};
 
 	return {
-		Countrys : savedCart.Countrys,
+		Countrys : [],
+		load : function(user){
+			_user = user;
+			var localCart = $localstorage.getObject("Cart" + _user.ID);
+			if (localCart.Countrys) {
+				this.Countrys = localCart.Countrys;
+			}else{
+				this.Countrys  = [];
+			}
+		},
 
 		size : function() {
 			var len = 0;
@@ -487,8 +502,11 @@ angular.module('starter.services', []).factory('Host', function() {
 				country.Items.push(item);
 				this.Countrys.push(country);
 			}
+			this.save();
+		},
+		save: function(){
 			var _this = this;
-			$localstorage.setObject("Cart", {
+			$localstorage.setObject("Cart"+ _user.ID, {
 				Countrys : _this.Countrys
 			});
 		}

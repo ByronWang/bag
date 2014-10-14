@@ -1,3 +1,19 @@
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+};
+
 angular.module('starter.controllers', []).controller('GlobalCtrl', function($scope, LoginUser, Cart, Host, $q) {
 	$scope.currentUser = LoginUser;
 	$scope.cart = Cart;
@@ -14,7 +30,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 }).controller('TabsCtrl', function($scope, $ionicTabsDelegate,$state,LoginUser,Popup) {
 	var navs = ['','cart','inventorys','orders.customer','account'];
 	$scope.makeSureLogin = function(index){
-		LoginUser.needLogin($scope,function(){
+		LoginUser.needLogin($scope.$new(),function(){
 			$ionicTabsDelegate.$getByHandle('rootTabs').select(index);
 			$state.go(navs[index]);
 		});
@@ -52,7 +68,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$state.go("dash");
 	};
 
-}).controller('ProductDetailCtrl', function($scope, $stateParams, Products, Exts, Category) {
+}).controller('ProductDetailCtrl', function($scope, $stateParams, Products, Exts, LoginUser,Category) {
 	$scope.product = Products.get({
 		productId : $scope.$parent.product.ID
 	}, function() {
@@ -60,12 +76,16 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.product.Extends = undefined;
 		$scope.product.CategoryDesc = Category.get($scope.product.CategoryID).Desc;
 	});
+	
 	$scope.selectThis = function() {
-		var item = {};
-		item.Product = $scope.product;
-		item.Quantity = 1;
-		$scope.cart.add(item);
-		$scope.closeModal();
+		LoginUser.needLogin($scope.$new(),function(){
+			var item = {};
+			item.Product = $scope.product;
+			item.Quantity = 1;
+			$scope.cart.add(item);
+			$scope.closeModal();
+		});
+		
 		return false;
 	};
 }).controller('CartCtrl', function($scope, Popup, Exts) {
@@ -110,6 +130,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			});
 			c.Items = newitems;
 		});
+		$scope.cart.save();
 	};
 }).controller('NewProductCtrl',
 		function($scope, $ionicActionSheet, Popup, $timeout, Products, Camera, Orders, Countries, Category, Exts) {
@@ -243,18 +264,34 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		 * newitems.push(i); } }); c.Items = newitems; });
 		 */
 
+		$scope.order.CustomerID = $scope.currentUser.ID;
+		$scope.order.CustomerName = $scope.currentUser.Name;
+		$scope.order.CustomerNickName = $scope.currentUser.NickName;
+		$scope.order.CustomerImage = $scope.currentUser.Image;
+		$scope.order.Datetime = new Date().Format("yyyy-MM-dd hh:mm:ss"); 
+		
 		var promiseArray = [];
 		angular.forEach($scope.order.Items, function(newitem) {
 			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
 			newitem.Product.Exts = undefined;
+			
 			newitem.StatusID = Statuses.bid.ID;
 			newitem.StatusName = Statuses.bid.Name;
+			
 			newitem.ActionID = Actions.sendout.ID;
 			newitem.ActionName = Actions.sendout.Name;
+			
 			newitem.CustomerID = $scope.currentUser.ID;
 			newitem.CustomerName = $scope.currentUser.Name;
+			newitem.CustomerNickName = $scope.currentUser.NickName;
+			newitem.CustomerImage = $scope.currentUser.Image;
+			
 			newitem.CountryID = newitem.Product.CountryID;
 			newitem.CountryName = newitem.Product.CountryName;
+			
+			newitem.Datetime = $scope.order.Datetime;
+			
+			newitem.Address = $scope.order.Address;
 			if (newitem.Product.ImagePromise) {
 				var p = Camera.upload(newitem.Product.Image);
 				p = p.then(function(result) {
@@ -263,8 +300,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				promiseArray.push(p);
 			}
 		});
-		$scope.order.CustomerID = $scope.currentUser.ID;
-		$scope.order.CustomerName = $scope.currentUser.Name;
 		$scope.order.CountryID = $scope.order.Items[0].CountryID;
 		$scope.order.CountryName = $scope.order.Items[0].CountryName;
 
@@ -325,6 +360,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				$scope.suitor = {
 					PurchaserID : $scope.currentUser.ID, // TODO
 					PurchaserName : $scope.currentUser.Name,
+					PurchaserNickName : $scope.currentUser.NickName,
+					PurchaserImage : $scope.currentUser.Image,
 					OrderItemID : $scope.item.ID
 				};
 				$scope.loadBid();
@@ -502,6 +539,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 						"OrderItemID" : suitor.OrderItemID,
 						"PurchaserID" : suitor.PurchaserID,
 						"PurchaserName" : suitor.PurchaserName,
+						"PurchaserNickName" : suitor.PurchaserNickName,
+						"PurchaserImage" : suitor.PurchaserImage,
 						"Commission" : suitor.Commission,
 						"SuggestedPrice" : suitor.SuggestedPrice,
 						"DeliveryCost" : suitor.DeliveryCost,
@@ -529,7 +568,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		}).controller(
 		'OrderPurchaserDetailCtrl',
 		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state,
-				$stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts) {
+				$stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts,$ionicActionSheet,Camera) {
 			var $stateParams = {
 				itemId : $scope.$parent.item.ID
 			};
@@ -609,12 +648,108 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			};
 
 			$scope.finishPurchasing = function() {
-				flowStepOut(Statuses.delivering, Actions.purchased);
+				var promiseArray = [];
+				if($scope.current.Extends.ProductActualImageSucceed){
+					var p = Camera.upload($scope.current.Extends.ProductActualImage);
+					p = p.then(function(result) {
+						$scope.current.Extends.ProductActualImage = result.response;
+					});
+					promiseArray.push(p);
+				};
+				if($scope.current.Extends.InvoiceImageSucceed){
+					var p = Camera.upload($scope.current.Extends.InvoiceImage);
+					p = p.then(function(result) {
+						$scope.current.Extends.InvoiceImage = result.response;
+					});
+					promiseArray.push(p);
+				};
+				if (promiseArray.length > 0) {
+					$q.all(promiseArray).then(function(results) {
+						flowStepOut(Statuses.delivering, Actions.purchased);
+					});
+				} else {
+					flowStepOut(Statuses.delivering, Actions.purchased);
+				}
 			};
 
 			$scope.startDelivering = function() {
 				flowStepOut(Statuses.delivering, Actions.delivering);
 			};
+			
+			$scope.getPhoto = function(sourceType) {
+				 return Camera.getPicture({
+					sourceType : sourceType,
+					correctOrientation : true,
+					quality : 50,
+					targetWidth : 320,
+					targetHeight : 320,
+					saveToPhotoAlbum : false
+				});
+			};
+			
+            $scope.showProductCameraMenu = function() {
+            	var imagePromise = {};
+            	
+                $ionicActionSheet.show({
+                    buttons: [
+                        { text: '拍照' },
+                        { text: '从相册选择' }
+                    ],
+                    cancelText: '取消',
+                    cancel: function() {
+                        // add cancel code..
+                    },
+                    buttonClicked: function(index) {
+                        switch (index) {
+                            case 0:
+                            	imagePromise = $scope.getPhoto(Camera.PictureSourceType.CAMERA);
+                                break;
+                            case 1:
+                            	imagePromise=$scope.getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);
+                                break;
+                        }
+                        
+        				
+                    	imagePromise.then(function(imageURI) {
+            				$scope.current.Extends.ProductActualImage = imageURI;
+            				$scope.current.Extends.ProductActualImageSucceed = true;
+            			});
+                        return true;
+                    }
+                });
+            };
+
+            $scope.showInvoiceCameraMenu = function() {
+            	var imagePromise = {};
+            	
+                $ionicActionSheet.show({
+                    buttons: [
+                        { text: '拍照' },
+                        { text: '从相册选择' }
+                    ],
+                    cancelText: '取消',
+                    cancel: function() {
+                        // add cancel code..
+                    },
+                    buttonClicked: function(index) {
+                        switch (index) {
+                            case 0:
+                            	imagePromise = $scope.getPhoto(Camera.PictureSourceType.CAMERA);
+                                break;
+                            case 1:
+                            	imagePromise=$scope.getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);
+                                break;
+                        }
+                        
+        				
+                    	imagePromise.then(function(imageURI) {
+            				$scope.current.Extends.InvoiceImage = imageURI;
+            				$scope.current.Extends.InvoiceImageSucceed = true;
+            			});
+                        return true;
+                    }
+                });
+            };
 
 }).controller('AccountCtrl', function($scope, Popup) {
 

@@ -15,7 +15,7 @@
 						{{item.Product.CategoryDesc}}
 					</div>
 					<div class="item item-avatar item-product">
-						<img x-ng-src="{{item.Product.Image | URI}}">
+						<img x-ng-src="{{item.Product.Image | URI:'product'}}">
 					</div>
 					<div class="item">
 						{{item.Product.Name}}
@@ -41,8 +41,8 @@
 			<div  class="list">
 				<h3>已有{{item.suitors.length}}位买手参与此次购买</h3>
 				<label class="item item-input item-input-note"><span class="input-label">代购佣金</span>
-					<input type="number" x-ng-model="suitor.Commission">
-					<span class="item-note">元（人民币）</span></label>
+					<input type="number" class="percent" x-ng-model="suitor.Commission">
+					<span class="item-note">%</span></label>
 				<a class="item item-input item-icon-right"  x-ng-click="showDeliveryMethods();"><span class="input-label">邮寄方式</span> <span class="item-note">{{suitor.DeliveryMethodName}}</span><i class="icon ion-ios7-arrow-forward"></i></a>
 				<label class="item item-input item-input-note"><span class="input-label">建议价格</span>
 					<input type="number" x-ng-model="suitor.SuggestedPrice">
@@ -50,6 +50,8 @@
 				<label class="item item-input item-input-note"><span class="input-label">运费</span>
 					<input type="number" x-ng-model="suitor.DeliveryCost">
 					<span class="item-note">元（人民币）</span></label>
+				<label class="item item-input item-input-note"><span class="input-label">备注</span>
+					<input type="number" x-ng-model="suitor.Comment"></label>
 			</div>
 
 			<div class="padding">
@@ -100,6 +102,7 @@
 				<a class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{suitor.DeliveryMethodName}}</span></a>
 				<label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{suitor.SuggestedPrice}}元（人民币）</span></label>
 				<label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{suitor.DeliveryCost}}元（人民币）</span></label>
+				<label class="item item-input item-input-note"><span class="input-label">备注</span><span class="item-note">{{suitor.Comment}}</span></label>
 			</div>
 			<div class="padding">
 				已经参与竞标！

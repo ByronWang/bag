@@ -1,14 +1,29 @@
-<div class="list">
-	<div class="item view-button">
-		<div class="list view">
-			<label class="item item-input item-input-note"><span class="input-label">代购佣金</span><span class="item-note">{{mysuitor.commission}}元（人民币）</span></label>
-			<a class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{mysuitor.deliveryMethod}}</span></a>
-			<label class="item item-input item-input-note"><span class="input-label">代购期限</span><span class="item-note">{{mysuitor.deadline}}</span></label>
-			<label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{mysuitor.suggestedPrice}}元（人民币）</span></label>
-			<label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{mysuitor.deliveryCost}}元（人民币）</span></label>
-		</div>
-	</div>
-</div>
+
+    <div class="list">
+        <div class="item item-product-info">
+            <div class="item-avatar">
+                    <img src="{{current.Bid.Purchaser.Image | URI}}">
+                    <span >{{current.Bid.PurchaserNickName}}</span>
+                <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
+            </div>
+            <div>
+                <label>代购佣金</label><span class="item-value">{{current.Bid.Commission | percent}}</span>
+            </div>
+            <div>
+                <label>邮寄方式</label><span class="item-value">{{current.Bid.DeliveryMethodName}}</span>
+            </div>
+            <div>
+                <label>代购期限</label><span class="item-value">{{current.Bid.Deadline}}</span>
+            </div>
+                <div>
+                    <label>建议价格</label><span class="item-value strength"><b>{{current.Bid.SuggestedPrice}}</b> 元</span>
+                    <span class="comment" x-bg-price-hint="current.Bid.SuggestedPrice" x-price-from="item.Product.ExpectedPrice"></span>
+                </div>
+            <div>
+                <label>运费</label><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
+            </div>
+        </div>
+    </div>
 
 <div class="list" x-ng-show="item.suitor">
 	<div class="item item-button-right">
