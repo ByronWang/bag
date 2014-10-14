@@ -560,7 +560,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		}).controller(
 		'OrderPurchaserDetailCtrl',
 		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state,
-				$stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts) {
+				$stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts,$ionicActionSheet,Camera) {
 			var $stateParams = {
 				itemId : $scope.$parent.item.ID
 			};
@@ -640,12 +640,108 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			};
 
 			$scope.finishPurchasing = function() {
-				flowStepOut(Statuses.delivering, Actions.purchased);
+				var promiseArray = [];
+				if($scope.current.Extends.ProductActualImageSucceed){
+					var p = Camera.upload($scope.current.Extends.ProductActualImage);
+					p = p.then(function(result) {
+						$scope.current.Extends.ProductActualImage = result.response;
+					});
+					promiseArray.push(p);
+				};
+				if($scope.current.Extends.InvoiceImageSucceed){
+					var p = Camera.upload($scope.current.Extends.InvoiceImage);
+					p = p.then(function(result) {
+						$scope.current.Extends.InvoiceImage = result.response;
+					});
+					promiseArray.push(p);
+				};
+				if (promiseArray.length > 0) {
+					$q.all(promiseArray).then(function(results) {
+						flowStepOut(Statuses.delivering, Actions.purchased);
+					});
+				} else {
+					flowStepOut(Statuses.delivering, Actions.purchased);
+				}
 			};
 
 			$scope.startDelivering = function() {
 				flowStepOut(Statuses.delivering, Actions.delivering);
 			};
+			
+			$scope.getPhoto = function(sourceType) {
+				 return Camera.getPicture({
+					sourceType : sourceType,
+					correctOrientation : true,
+					quality : 50,
+					targetWidth : 320,
+					targetHeight : 320,
+					saveToPhotoAlbum : false
+				});
+			};
+			
+            $scope.showProductCameraMenu = function() {
+            	var imagePromise = {};
+            	
+                $ionicActionSheet.show({
+                    buttons: [
+                        { text: '拍照' },
+                        { text: '从相册选择' }
+                    ],
+                    cancelText: '取消',
+                    cancel: function() {
+                        // add cancel code..
+                    },
+                    buttonClicked: function(index) {
+                        switch (index) {
+                            case 0:
+                            	imagePromise = $scope.getPhoto(Camera.PictureSourceType.CAMERA);
+                                break;
+                            case 1:
+                            	imagePromise=$scope.getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);
+                                break;
+                        }
+                        
+        				
+                    	imagePromise.then(function(imageURI) {
+            				$scope.current.Extends.ProductActualImage = imageURI;
+            				$scope.current.Extends.ProductActualImageSucceed = true;
+            			});
+                        return true;
+                    }
+                });
+            };
+
+            $scope.showInvoiceCameraMenu = function() {
+            	var imagePromise = {};
+            	
+                $ionicActionSheet.show({
+                    buttons: [
+                        { text: '拍照' },
+                        { text: '从相册选择' }
+                    ],
+                    cancelText: '取消',
+                    cancel: function() {
+                        // add cancel code..
+                    },
+                    buttonClicked: function(index) {
+                        switch (index) {
+                            case 0:
+                            	imagePromise = $scope.getPhoto(Camera.PictureSourceType.CAMERA);
+                                break;
+                            case 1:
+                            	imagePromise=$scope.getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);
+                                break;
+                        }
+                        
+        				
+                    	imagePromise.then(function(imageURI) {
+            				$scope.current.Extends.InvoiceImage = imageURI;
+            				$scope.current.Extends.InvoiceImageSucceed = true;
+            			});
+                        return true;
+                    }
+                });
+            };
 
 }).controller('AccountCtrl', function($scope, Popup) {
 

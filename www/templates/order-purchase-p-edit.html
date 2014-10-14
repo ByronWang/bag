@@ -1,39 +1,93 @@
-<pane  x-ng-show="current.ActionID==Actions.payConfirmed.ID">
+<style>
+div.image div {
+	overflow: hidden;
+	vertical-align: middle;
+	width: 100px;
+	height: 100px;
+	display: inline-block;
+}
+
+div.image img {
+	border: 0;
+	margin-top: -50%;
+	margin-left: -50%;
+	height: 200px;
+}
+
+div.image a {
+	padding: 0 15px;
+	background: #54BCDE none;
+	text-align: center;
+	vertical-align: middle;
+	width: 100px;
+	height: 100px;
+	position: relative;
+	z-index: 2;
+	display: inline-block;
+	margin: 0 10px;
+}
+
+div.image a i {
+	border: 0;
+	font-size: 70px;
+	color: #FFF;
+}
+
+div.image a h2 {
+	color: #FFF;
+	margin: 0 0 0px 0;
+	font-size: 16px;
+}
+</style>
+<div x-ng-show="current.ActionID==Actions.payConfirmed.ID">
 	<div class="list">
-		<label class="item">
-			买家已经选择您为他代购,并支付保证金</label>
+		<label class="item"> 买家已经选择您为他代购,并支付保证金 </label>
 	</div>
 	<button class="button button-positive button-block" x-ng-click="beginPurchasing()">开始购买</button>
 	<button class="button button-assertive button-block" x-ng-click="cancelPurchasing()">取消购买</button>
-</pane>
-
-<pane  x-ng-show="current.ActionID==Actions.cancelPurchasing.ID">
+</div>
+<div x-ng-show="current.ActionID==Actions.cancelPurchasing.ID">
 	<div class="list">
-		<label class="item">
-			你已经取消本次代购</label>
+		<label class="item"> 你已经取消本次代购 </label>
 	</div>
-</pane>
-
-<pane  x-ng-show="current.ActionID==Actions.purchasing.ID">
+</div>
+<div x-ng-show="current.ActionID==Actions.purchasing.ID">
 	<div class="list">
-		<div class="item">
-			你已经开始购买
-		</div>
-		<label class="item">
-			开始时间<span class="item-value">{{current.Extends.PurchasingStartDatetime}}</span></label>
+		<div class="item">你已经开始购买</div>
+		<label class="item"> 开始时间<span class="item-value">{{current.Extends.PurchasingStartDatetime}}</span>
+		</label>
 	</div>
-
 	<div class="list ">
 		<div class="item item-button-right">
-			商品实物<button class="button icon ion-camera button-clear"></button>
+			商品实物
 		</div>
-		<div class="item image"><img  x-ng-src="{{current.Extends.ProductActualImage | URI}}">
+		<div class="item">
+			<div style="padding: 10px 0; text-align: center;">
+				<div class="image">
+					<a x-ng-click="showProductCameraMenu()"> <i class="icon ion-ios7-camera"></i>
+						<h2>更新图片</h2>
+					</a>
+					<div>
+						<img x-ng-src="{{current.Extends.ProductActualImage | URI:'productActual' }}" x-ng-click="">
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="item item-button-right">
-			购物小票<button class="button icon ion-camera button-clear"></button>
+			购物小票
 		</div>
-		<div class="item"><img  x-ng-src="{{current.Extends.InvoiceImage | URI}}">
+		<div class="item">
+			<div style="padding: 10px 0; text-align: center;">
+				<div class="image">
+					<a x-ng-click="showInvoiceCameraMenu()"> <i class="icon ion-ios7-camera"></i>
+						<h2>更新图片</h2>
+					</a>
+					<div>
+						<img x-ng-src="{{current.Extends.InvoiceImage | URI:'invoice'}}" x-ng-click="">
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	<button class="button button-positive button-block"  x-ng-click="finishPurchasing()">完成购买</button>
-</pane>
+	<button class="button button-positive button-block" x-ng-click="finishPurchasing()">完成购买</button>
+</div>
