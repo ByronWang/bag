@@ -16,6 +16,10 @@
                     <span >{{suitor.PurchaserNickName}}</span>
                     <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
                 </div>
+                <div class="message font-energized">
+                    <i class="ion-card"></i>
+                    <span>总定金：3244 元</span>
+                </div>
                 <div>
                 <label>代购佣金</label><span class="item-value">{{suitor.Commission | percent}}</span>
                 </div>
@@ -52,7 +56,7 @@
         <div class="item item-product-info">
             <div class="item-avatar">
                     <img src="{{current.Bid.Purchaser.Image | URI}}">
-                    <span >{{current.Bid.PurchaserNickName}}</span>
+                    <span>{{current.Bid.PurchaserNickName}}</span>
                 <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
             </div>
             <div>
@@ -72,8 +76,8 @@
                 <label>运费</label><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
             </div>
             <!--【{{current.TradeNo}}】-->
-            <div style="padding-top: 6px; color: #f0b840;">
-                <i class="ion-ios7-information-outline" style="vertical-align: middle; margin-right: 0.3em;"></i>
+            <div class="message font-energized">
+                <i class="ion-ios7-information-outline"></i>
                 <span>您已选定买手，请点击按钮支付定金</span>
             </div>
             <button class="button button-energized button-block" x-ng-click="pay();">支付</button>
@@ -104,8 +108,8 @@
             <div>
                 <label>运费</label><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
             </div>
-            <div style="padding-top: 6px; color: #f0b840;">
-                <i class="ion-ios7-information-outline" style="vertical-align: middle; margin-right: 0.3em;"></i>
+            <div class="message font-energized" style="padding-top: 6px;">
+                <i class="ion-ios7-information-outline"></i>
                 <span>支付结果确认中，请点击按钮刷新</span>
             </div>
             <button class="button button-energized button-block" x-ng-click="confirmPay();">支付</button>

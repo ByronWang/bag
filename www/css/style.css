@@ -491,3 +491,16 @@ div.item-product-desc .item-value {
     /*min-height: 10em;*/
     padding: 0px;
 }
+
+div.message i {
+    vertical-align: middle;
+    margin-right: 0.3em;
+}
+
+.font-energized {
+    color: #f0b840;
+}
+
+.font-note {
+    color: #aaaaaa;
+}
