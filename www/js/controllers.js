@@ -126,6 +126,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			});
 			c.Items = newitems;
 		});
+		$scope.cart.save();
 	};
 }).controller('NewProductCtrl',
 		function($scope, $ionicActionSheet, Popup, $timeout, Products, Camera, Orders, Countries, Category, Exts) {
@@ -356,6 +357,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					PurchaserID : $scope.currentUser.ID, // TODO
 					PurchaserName : $scope.currentUser.Name,
 					PurchaserNickName : $scope.currentUser.NickName,
+					PurchaserImage : $scope.currentUser.Image,
 					OrderItemID : $scope.item.ID
 				};
 				$scope.loadBid();
@@ -533,6 +535,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 						"OrderItemID" : suitor.OrderItemID,
 						"PurchaserID" : suitor.PurchaserID,
 						"PurchaserName" : suitor.PurchaserName,
+						"PurchaserNickName" : suitor.PurchaserNickName,
+						"PurchaserImage" : suitor.PurchaserImage,
 						"Commission" : suitor.Commission,
 						"SuggestedPrice" : suitor.SuggestedPrice,
 						"DeliveryCost" : suitor.DeliveryCost,

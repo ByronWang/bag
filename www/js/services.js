@@ -499,6 +499,12 @@ angular.module('starter.services', []).factory('Host', function() {
 			$localstorage.setObject("Cart", {
 				Countrys : _this.Countrys
 			});
+		},
+		save: function(){
+			var _this = this;
+			$localstorage.setObject("Cart", {
+				Countrys : _this.Countrys
+			});
 		}
 	};
 });
