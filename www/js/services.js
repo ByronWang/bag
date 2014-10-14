@@ -1,17 +1,21 @@
 angular.module('starter.services', []).factory('Host', function() {
 	var host = window.location.host;
+	var pc = false;// For Test
 	if (host) {
 		host = host.substr(0, host.indexOf(":"));
 		host = "http://" + host + ":8686";
+		pc = true;
 	} else {
 		// host = "192.168.12.100";
 		host = "192.168.0.101";
 //        host = "10.0.0.57";
 		host = "http://" + host + ":8686";
+		pc =false;
 	}
-    host = "http://www.gouwudai.net.cn:8686";
+//    host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
+		pc : pc,
 		setHost : function(newhost) {
 			host = newhost;
 		}
@@ -308,11 +312,15 @@ angular.module('starter.services', []).factory('Host', function() {
 			funcSucceed();
 		}
 	};
-}).factory('Unipay', function($q) {
+}).factory('Unipay', function($q,Host) {
 	return {
 		pay : function(tradeNo) {
 			var q = $q.defer();
 
+			if(Host.pc){
+				q.resolve("succeed");
+				return q.promise;				
+			}
 //			q.resolve("succeed");
 			cn.xj.bag.plugin.Unionpay.payForTest(tradeNo, function(result) {
 				// Do any magic you need

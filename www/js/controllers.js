@@ -325,6 +325,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				$scope.suitor = {
 					PurchaserID : $scope.currentUser.ID, // TODO
 					PurchaserName : $scope.currentUser.Name,
+					PurchaserNickName : $scope.currentUser.NickName,
 					OrderItemID : $scope.item.ID
 				};
 				$scope.loadBid();

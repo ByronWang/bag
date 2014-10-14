@@ -10,20 +10,14 @@
             </div>
         </div>
         <div x-ng-repeat="suitor in bids">
-            <!--<div class="item-avatar item-button-right">-->
-            <!--<img src="img/mcfly.jpg">-->
-            <!--{{suitor.suitor}}-->
-            <!--<button class="button button-positive" x-ng-click="bitSucceed(suitor);">就是你</button>-->
-            <!--</div>-->
-
             <div class="item item-product-info">
                 <div class="item-avatar">
-                    <img src="img/mcfly.jpg">
-                    <span >买手1假数据</span>
+                    <img src="{{suitor.Purchaser.Image | URI}}">
+                    <span >{{suitor.PurchaserNickName}}</span>
                     <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
                 </div>
                 <div>
-                    <label>代购佣金</label><span class="item-value">{{suitor.Commission}} 元</span>
+                <label>代购佣金</label><span class="item-value">{{suitor.Commission | percent}}</span>
                 </div>
                 <div>
                     <label>邮寄方式</label><span class="item-value">{{suitor.DeliveryMethodName}}</span>
@@ -33,8 +27,7 @@
                 </div>
                 <div>
                     <label>建议价格</label><span class="item-value strength"><b>{{suitor.SuggestedPrice}}</b> 元</span>
-                    <!--ion-arrow-up-a-->
-                    <span class="comment"><i class="ion-arrow-down-a">&nbsp;</i>999.99 元</span>
+                    <span class="comment" x-bg-price-hint="suitor.SuggestedPrice" x-price-from="item.Product.ExpectedPrice"></span>
                 </div>
                 <div>
                     <label>运费</label><span class="item-value">{{suitor.DeliveryCost}} 元</span>
@@ -45,60 +38,38 @@
                     <a class="item-icon-right" onclick="alert('click')"><i class="icon ion-ios7-arrow-up item-note"></i></a>
                 </div>
                 <div class="item-product-desc">
-                    <span class="item-value">{{item.Product.Description}}这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除</span>
+                    <span class="item-value">{{suitor.Comment}}这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除</span>
                 </div>
                 <button class="button button-block button-balanced" x-ng-click="bitSucceed(suitor);">
                     就是你
                 </button>
             </div>
-
-            <!--<div class="list view">-->
-            <!--<label class="item item-input item-input-note"><span class="input-label">代购佣金</span><span class="item-note">{{suitor.Commission}}元（人民币）</span></label>-->
-            <!--<a class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{suitor.DeliveryMethodName}}</span></a>-->
-            <!--<label class="item item-input item-input-note"><span class="input-label">代购期限</span><span class="item-note">{{suitor.Deadline}}</span></label>-->
-            <!--<label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{suitor.SuggestedPrice}}元（人民币）</span></label>-->
-            <!--<label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{suitor.DeliveryCost}}元（人民币）</span></label>-->
-            <!--</div>-->
         </div>
     </div>
 </div>
 <div class="flow-block" x-ng-show="current.ActionID==Actions.payPrepare.ID">
     <div class="list">
-        <!--<div class="item view-button">-->
-        <!--<div class="item-avatar">-->
-        <!--<img x-ng-src="img/mcfly.jpg">-->
-        <!--{{current.Bid.PurchaserName}}-->
-        <!--</div>-->
-        <!--<div class="list view">-->
-        <!--<label class="item item-input item-input-note"><span class="input-label">代购佣金</span><span class="item-note">{{current.Bid.Commission}}元（人民币）</span></label>-->
-        <!--<label class="item item-input item-input-note"><span class="input-label">邮寄方式</span><span class="item-note">{{current.Bid.DeliveryMethodName}}</span></label>-->
-        <!--<label class="item item-input item-input-note"><span class="input-label">代购期限</span><span class="item-note">{{current.Bid.Deadline}}</span></label>-->
-        <!--<label class="item item-input item-input-note"><span class="input-label">建议价格</span><span class="item-note">{{current.Bid.SuggestedPrice}}元（人民币）</span></label>-->
-        <!--<label class="item item-input item-input-note"><span class="input-label">运费</span><span class="item-note">{{current.Bid.DeliveryCost}}元（人民币）</span></label>-->
-        <!--</div>-->
-        <!--</div>-->
         <div class="item item-product-info">
             <div class="item-avatar">
-                <img src="img/mcfly.jpg">
-                <span >买手1假数据</span>
+                    <img src="{{current.Bid.Purchaser.Image | URI}}">
+                    <span >{{current.Bid.PurchaserNickName}}</span>
                 <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
             </div>
             <div>
-                <label>代购佣金</label><span class="item-value">{{suitor.Commission}} 元</span>
+                <label>代购佣金</label><span class="item-value">{{current.Bid.Commission | percent}}</span>
             </div>
             <div>
-                <label>邮寄方式</label><span class="item-value">{{suitor.DeliveryMethodName}}</span>
+                <label>邮寄方式</label><span class="item-value">{{current.Bid.DeliveryMethodName}}</span>
             </div>
             <div>
-                <label>代购期限</label><span class="item-value">{{suitor.Deadline}}</span>
+                <label>代购期限</label><span class="item-value">{{current.Bid.Deadline}}</span>
             </div>
             <div>
-                <label>建议价格</label><span class="item-value strength"><b>{{suitor.SuggestedPrice}}</b> 元</span>
-                <!--ion-arrow-up-a-->
-                <span class="comment"><i class="ion-arrow-down-a">&nbsp;</i>999.99 元</span>
+                <label>建议价格</label><span class="item-value strength"><b>{{current.Bid.SuggestedPrice}}</b> 元</span>
+                    <span class="comment" x-bg-price-hint="current.Bid.SuggestedPrice" x-price-from="item.Product.ExpectedPrice"></span>
             </div>
             <div>
-                <label>运费</label><span class="item-value">{{suitor.DeliveryCost}} 元</span>
+                <label>运费</label><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
             </div>
             <!--【{{current.TradeNo}}】-->
             <div style="padding-top: 6px; color: #f0b840;">
@@ -113,28 +84,26 @@
     <div class="list">
         <div class="item item-product-info">
             <div class="item-avatar">
-                <img src="img/mcfly.jpg">
-                <span >买手1假数据</span>
+                    <img src="{{current.Bid.Purchaser.Image | URI}}">
+                    <span >{{current.Bid.PurchaserNickName}}</span>
                 <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
             </div>
             <div>
-                <label>代购佣金</label><span class="item-value">{{suitor.Commission}} 元</span>
+                <label>代购佣金</label><span class="item-value">{{current.Bid.Commission | percent}}</span>
             </div>
             <div>
-                <label>邮寄方式</label><span class="item-value">{{suitor.DeliveryMethodName}}</span>
+                <label>邮寄方式</label><span class="item-value">{{current.Bid.DeliveryMethodName}}</span>
             </div>
             <div>
-                <label>代购期限</label><span class="item-value">{{suitor.Deadline}}</span>
+                <label>代购期限</label><span class="item-value">{{current.Bid.Deadline}}</span>
             </div>
             <div>
-                <label>建议价格</label><span class="item-value strength"><b>{{suitor.SuggestedPrice}}</b> 元</span>
-                <!--ion-arrow-up-a-->
-                <span class="comment"><i class="ion-arrow-down-a">&nbsp;</i>999.99 元</span>
+                <label>建议价格</label><span class="item-value strength"><b>{{current.Bid.SuggestedPrice}}</b> 元</span>
+                    <span class="comment" x-bg-price-hint="current.Bid.SuggestedPrice" x-price-from="item.Product.ExpectedPrice"></span>
             </div>
             <div>
-                <label>运费</label><span class="item-value">{{suitor.DeliveryCost}} 元</span>
+                <label>运费</label><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
             </div>
-            <!--【{{current.TradeNo}}】-->
             <div style="padding-top: 6px; color: #f0b840;">
                 <i class="ion-alert-circled" style="vertical-align: middle; margin-right: 0.3em;"></i>
                 <span>支付结果确认中，请点击按钮刷新</span>

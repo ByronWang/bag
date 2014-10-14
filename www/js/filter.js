@@ -14,4 +14,8 @@ angular.module('starter.filter', []).filter('URI', function(Host) {
 		}
 		return realPath;
 	};
+}).filter('percent', function() {
+	return function(value) {		
+		return (value * 100) + '%';
+	};
 });
