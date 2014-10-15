@@ -497,6 +497,19 @@ div.message i {
     margin-right: 0.3em;
 }
 
+div.message.message-strong {
+    padding-bottom: 8px;
+}
+
+div.message.message-strong i, div.message.message-strong span {
+    font-size: 150%;
+    vertical-align: middle;
+}
+
+div.item-product-info div.message + .item-avatar .item-note i.chatbox {
+    top: 44px;
+}
+
 .font-energized {
     color: #f0b840;
 }

@@ -36,7 +36,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
-}).controller('LoginCtrl', function($scope, Users) {
+}).controller('LoginCtrl', function($scope, Users,Popup) {
+	$scope.users = Users.query();
 	$scope.user = {};
 	$scope.user.host = $scope.$parent.host;
 
@@ -49,6 +50,19 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				$scope.ret(user);
 				$scope.$parent.closeModal();
 			}
+		});
+	};
+	$scope.showSignup = function() {
+		Popup.show($scope, 'templates/modal-signup.html');
+	};
+}).controller('SignupCtrl', function($scope, Users) {
+	$scope.user = {};
+
+	$scope.signup = function() {		
+		var User = new Users($scope.user);
+		User.$save(function() {
+			$scope.ret(user);
+			$scope.$parent.closeModal();
 		});
 	};
 }).controller('DashCtrl', function($scope, $ionicSlideBoxDelegate, Category, Popup) {

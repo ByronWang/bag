@@ -1,4 +1,4 @@
-<ion-modal-view ng-controller="LoginCtrl">
+<ion-modal-view ng-controller="SignupCtrl">
 	<ion-header-bar class="bar-assertive">
 		<div class="buttons">
 			<button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
@@ -7,23 +7,35 @@
 	</ion-header-bar>
 	<ion-content>
 		<div class="list">
-			<label class="item item-input"> <span class="input-label">用户名</span>
-				<select x-ng-model="user.Name">
-					<option value="jihua">jihua-买家A</option>
-					<option value="wangshilian">wangshilian-买家B</option>
-					<option value="liubo">liubo-买手1</option>
-					<option value="p2">买手2</option>
-				</select> </label>
-			<label class="item item-input"> <span class="input-label">密码</span>
+			<label class="item item-input">
+				<span class="input-label">用户名</span>
+				<input type="text" x-ng-model="user.Name">
+			</label>
+			<label class="item item-input">
+				<span class="input-label">昵称</span>
+				<input type="text" x-ng-model="user.Name">
+			</label>
+			<label class="item item-input">
+				<span class="input-label">密码</span>
 				<input type="password" x-ng-model="user.Password">
 			</label>
-			<!-- for  test -->
-			<label class="item item-input"> <span class="input-label">Host</span>
-				<input type="text"  x-ng-model="user.host" class="input">
+			<label class="item item-input">
+				<span class="input-label">确认密码</span>
+				<input type="checkbox">
 			</label>
-		</div>
-		<div class="padding">
-			<button class="button button-block button-positive" x-ng-click="login();">登录</button>
-		</div>
+
+			<label class="item item-toggle">
+				HTML5
+				<label class="toggle toggle-assertive">
+					<input type="checkbox">
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+				</label>
+			</label>
+
+			<div class="padding">
+				<button class="button button-block button-positive" x-ng-click="signup()">登录</button>
+			</div>
 	</ion-content>
 </ion-modal-view>
