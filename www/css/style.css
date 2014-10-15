@@ -520,6 +520,10 @@ div.item-product-info div.message + .item-avatar .item-note i.chatbox {
     color: #f0b840;
 }
 
+.font-assertive {
+    color: #ef4e3a;
+}
+
 .font-note {
     color: #aaaaaa;
 }
