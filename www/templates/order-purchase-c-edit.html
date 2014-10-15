@@ -63,12 +63,34 @@
                 <i class="ion-ios7-paper-outline"></i>
                 <span>购物小票</span>
             </div>
-            <div class="item item-avatar item-product" style="border: 0;">
-                <img align="center" x-ng-src="{{item.Product.Image | URI}}">
-            </div>
-            <div class="item item-avatar item-product" style="border: 0;">
-                <img align="center" x-ng-src="{{item.Product.Image | URI}}">
-            </div>
+            <table style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%;">
+                            <div class="item item-avatar item-product" style="border: 0;">
+                                <img style="width: 90%; max-width: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
+                            </div>
+                        </td>
+                        <td style="width: 50%;">
+                            <div class="item item-avatar item-product" style="border: 0;">
+                                <img style="width: 90%; max-width: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;">
+                            <div class="item item-avatar item-product" style="border: 0;">
+                                <img style="width: 90%; max-width: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
+                            </div>
+                        </td>
+                        <td style="width: 50%;">
+                            <div class="item item-avatar item-product" style="border: 0;">
+                                <img style="width: 90%; max-width: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="item item-product-info">
             <div class="message" style="font-weight: bold;">
