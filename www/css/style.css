@@ -61,9 +61,15 @@
 .scroll-content {
 }
 
-a {
+
+.category  a {
 	text-decoration: none;
 	color: black;
+}
+
+a.link{
+	cursor: pointer;
+	color: blue;
 }
 
 .button .badge {

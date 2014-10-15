@@ -9,7 +9,7 @@
 		<div class="list">
 			<label class="item item-input">
 				<span class="input-label">用户名</span>
-				<select x-ng-model="user.Name" x-ng-options="m.Name as (u.NickName + ' - ' + u.Name ) for u in users">
+				<select x-ng-model="user.Name" x-ng-options="u.Name as (u.NickName + ' - ' + u.Name ) for u in users">
 					<option value="">-- 请选择 --</option>
 				</select>
 			</label>
@@ -22,12 +22,10 @@
 				<span class="input-label">Host</span>
 				<input type="text"  x-ng-model="user.host" class="input">
 			</label>
-			<label class="item item-input">
-			</label>
 		</div>
 		<div class="padding">
 			<button class="button button-block button-positive" x-ng-click="login();">登录</button>
 		</div>
-		<a x-ng-click="showSignup()">免费注册</a>
+		<div class="right"><a x-ng-click="showSignup()">免费注册</a></div>
 	</ion-content>
 </ion-modal-view>

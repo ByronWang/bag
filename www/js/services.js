@@ -12,7 +12,7 @@ angular.module('starter.services', []).factory('Host', function() {
 		host = "http://" + host + ":8686";
 		pc =false;
 	}
-    host = "http://www.gouwudai.net.cn:8686";
+//    host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
 		pc : pc,
@@ -61,13 +61,7 @@ angular.module('starter.services', []).factory('Host', function() {
 	return $resource(url);
 }).factory('Users', function($resource, Host) {
 	var url = Host.host + '/d/User/:userId';
-	return $resource(url, {
-		userId : '@ID'
-	}, {
-		'save' : {
-			method : 'PUT'
-		}
-	});
+	return $resource(url, {userId : '@ID'});
 }).factory('Statuses', function() {
 	return {
 		bid : {
@@ -346,7 +340,10 @@ angular.module('starter.services', []).factory('Host', function() {
 				$scope.modal.show();
 			});
 
-			scope.closeModal = function() {
+			scope.closeModal = function(result) {
+				if(callback){
+					callback(result);
+				}
 				scope.modal.hide();
 			};
 		}

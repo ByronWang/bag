@@ -47,23 +47,28 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.$parent.setHost($scope.user.host);
 		$scope.currentUser.login($scope.user.Name, $scope.user.Password, function(user) {
 			if (user) {
-				$scope.ret(user);
-				$scope.$parent.closeModal();
+				$scope.$parent.closeModal(user);
 			}
 		});
 	};
 	$scope.showSignup = function() {
-		Popup.show($scope, 'templates/modal-signup.html');
+		Popup.show($scope, 'templates/modal-signup.html',function(user){
+			$scope.users = Users.query(function(){
+				$scope.user.Name = user.Name;				
+			});
+		});
 	};
-}).controller('SignupCtrl', function($scope, Users) {
+}).controller('SignupCtrl', function($scope, Users,Popup) {
 	$scope.user = {};
 
 	$scope.signup = function() {		
 		var User = new Users($scope.user);
 		User.$save(function() {
-			$scope.ret(user);
-			$scope.$parent.closeModal();
+			$scope.$parent.closeModal($scope.user);
 		});
+	};
+	$scope.showPurchaserLagel = function(){
+		Popup.show($scope, 'templates/modal-purchaser-lagel.html')
 	};
 }).controller('DashCtrl', function($scope, $ionicSlideBoxDelegate, Category, Popup) {
 	$scope.rectHeight = document.body.clientWidth / 3;
