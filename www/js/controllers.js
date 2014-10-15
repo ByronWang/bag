@@ -888,7 +888,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 }).controller(
 		'UnionpayCtrl',
-		function($scope, $http) {
+		function($scope, $http, Popup) {
 			// for unionpay test by jih ++++++++++++++++++++++++++
 			$scope.pay = function() {
 
@@ -913,6 +913,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 				window.plugins.toast.showShortCenter("这是一个警告！！！\n这是第二个警告！！！\n这是第三个警告！！！")
 			}
+
+            $scope.popupPay = function() {
+                Popup.show($scope, 'templates/modal-order-pay.html');
+            }
 		})
 // ---------------------------------------------------
 
