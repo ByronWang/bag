@@ -57,19 +57,85 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				$scope.user.Name = user.Name;				
 			});
 		});
-	};
-}).controller('SignupCtrl', function($scope, Users,Popup) {
+	};	
+}).controller('PaymentCtrl', function($scope, Users,Popup,UserPayFlow,Unipay) {
+	
+}).controller('SignupCtrl', function($scope, Users,Popup,UserPayFlow,Unipay) {
 	$scope.user = {};
 
 	$scope.signup = function() {		
-		var User = new Users($scope.user);
-		User.$save(function() {
-			$scope.$parent.closeModal($scope.user);
+		if($scope.user.TobePurchaser){		
+			var User = new Users($scope.user);
+			User.$save(function(resp) {
+				$scope.user.ID = resp.ID;
+				getTradeNo($scope.user.ID);
+			});
+		}else{
+			var User = new Users($scope.user);
+			User.$save(function() {
+				$scope.$parent.closeModal($scope.user);
+			});
+		}
+	};
+	
+	
+	// getTradeNO	
+	
+	$scope.current = {};
+	var getTradeNo = function(userId){
+		flowStepOut(1,{UserID:userId},function(resp){
+			$scope.current = resp;
+			doPay(resp.TradeNo);		
 		});
 	};
-	$scope.showPurchaserLagel = function(){
-		Popup.show($scope, 'templates/modal-purchaser-lagel.html')
+	
+	var doPay = function(tradeNo){
+		Unipay.pay(tradeNo).then(function(){
+			finishPayment();
+		});
 	};
+	
+	var finishPayment = function(){
+		flowStepOut(2,{UserID : $scope.current.UserID,PaymentID:$scope.current.PaymentID},function(step){
+			checkPayResult(step);
+		});
+	};
+	
+	var checkPayResult = function(step){
+		$scope.current = step;
+		Popup.show($scope, 'templates/modal-user-pay-result.html',function(){
+			$scope.done($scope.user);
+		},function(){
+			$scope.done($scope.user);
+		});
+	};
+	
+	$scope.showPurchaserLagel = function(){
+		Popup.show($scope, 'templates/modal-purchaser-lagel.html');
+	};
+	
+	
+	var flowStepOut = function(actionID, params,succeed) {
+		var step = {};
+
+		if (params) {
+			step = angular.copy(params, step);
+		}
+		step.ActionID = actionID;
+		step.PaymentID = params.PaymentID;
+		var UserPay = new UserPayFlow(step);
+		UserPay.$save(function(resp) {
+			succeed(resp);
+		});
+	};
+
+	$scope.loadBid = function() {
+		$scope.bids = OrderBiding.query({
+			OrderItem : $stateParams.itemId
+		}, function() {
+		});
+	};
+	
 }).controller('DashCtrl', function($scope, $ionicSlideBoxDelegate, Category, Popup) {
 	$scope.rectHeight = document.body.clientWidth / 3;
 	$scope.category = Category.level1Grouped();

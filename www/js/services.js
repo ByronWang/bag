@@ -132,6 +132,10 @@ angular.module('starter.services', []).factory('Host', function() {
 	return $resource(Host.host + '/d/OrderItem/:itemId/OrderItemFlow/:flowId');
 }).factory('OrderItemFlow', function($resource, Host) {
 	return $resource(Host.host + '/d/OrderItemFlow/:flowId');
+}).factory('UserPayFlow', function($resource, Host) {
+	return $resource(Host.host + '/d/UserPayFlow/:flowId');
+}).factory('UserPayFlowByUser', function($resource, Host) {
+	return $resource(Host.host + '/d/User/:userId/UserPayFlow/:flowId');
 }).factory('OrderBiding', function($resource, Host) {
 	return $resource(Host.host + '/d/Bid/:bidId');
 }).factory('Camera', [ '$q', 'Host', function($q, Host) {
@@ -330,7 +334,7 @@ angular.module('starter.services', []).factory('Host', function() {
 	};
 }).factory('Popup', function($ionicModal) {
 	return {
-		show : function($scope, templateUrl, callback) {
+		show : function($scope, templateUrl, onSucceed,onCancel) {
 			var scope = $scope.$new();
 			$ionicModal.fromTemplateUrl(templateUrl, {
 				scope : scope,
@@ -341,8 +345,21 @@ angular.module('starter.services', []).factory('Host', function() {
 			});
 
 			scope.closeModal = function(result) {
-				if(callback){
-					callback(result);
+				if(onSucceed){
+					onSucceed(result);
+				}
+				scope.modal.hide();
+			};
+
+			scope.done = function(result) {
+				if(onSucceed){
+					onSucceed(result);
+				}
+				scope.modal.hide();
+			};
+			scope.cancel = function(result) {
+				if(onCancel){
+					onCancel(result);
 				}
 				scope.modal.hide();
 			};
