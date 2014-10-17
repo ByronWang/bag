@@ -405,6 +405,7 @@ div.item-product-title div {
     font-size: 70%;
     color: gray;
     display: inline;
+    font-weight: normal;
 }
 
 div.item-product-title div.right {
@@ -516,14 +517,16 @@ div.item-product-info div.message + .item-avatar .item-note i.chatbox {
     top: 44px;
 }
 
-.font-energized {
-    color: #f0b840;
-}
-
-.font-assertive {
-    color: #ef4e3a;
-}
 
 .font-note {
     color: #aaaaaa;
+}
+
+.item-value.strength {
+    color: #ff6767;
+}
+
+.item-value.strength b {
+    font-weight: bold;
+    font-size: 16px;
 }

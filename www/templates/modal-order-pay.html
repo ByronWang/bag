@@ -1,26 +1,101 @@
 <ion-view ng-controller="OrderPurchaserDetailCtrl">
 
+    <style>
+        .order-content {
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+    </style>
+
     <ion-header-bar class="bar-assertive">
         <div class="buttons">
             <button class="button button-icon icon ion-ios7-arrow-back pull-right" x-ng-click="closeModal();"></button>
         </div>
-        <h1 class="title">支付</h1>
+        <h1 class="title">订单支付</h1>
     </ion-header-bar>
 
     <ion-content class="has-header" has-header="true" padding="false">
-        <div class="item item-product-info">
-            <div class="message message-strong font-assertive">
-                <i class="ion-card"></i>
-                <span>定金：3244 元</span>
+        <!--<div class="item item-product-info">-->
+        <!--<div class="message message-strong">-->
+        <!--<i class="ion-ios7-pricetag-outline"></i>-->
+        <!--<span>订单编号：1234567890123456</span>-->
+        <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="list list-inset">-->
+        <!--<div class="item item-divider item-assertive">-->
+        <!--订单金额<span style="float: right">3244.00 元</span>-->
+        <!--</div>-->
+
+        <!--<div class="item order-content">-->
+        <!--<div class="order-content">-->
+        <!--商品总额-->
+        <!--<span class="assertive" style="float: right">-->
+        <!--123.00 元-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--<div class="order-content">-->
+        <!--佣金-->
+        <!--<span class="assertive" style="float: right">-->
+        <!--45.00 元-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--<div class="order-content">-->
+        <!--运费-->
+        <!--<span class="assertive" style="float: right">-->
+        <!--12.00 元-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
+
+        <div class="list list-inset">
+            <div class="item item item-divider" style="background-color: #ffffff;">
+                <!--<div><i class="ion-ios7-pricetag-outline"></i>-->
+                订单编号：{{item.OrderID}}
+                <!--</div>-->
+                <!--<div class="right"><i class="ion-ios7-clock-outline"></i>发布时间：{{item.Datetime}}</div>-->
+            </div>
+            <div class="item">
+                商品<span style="float: right">123.00 元</span>
+            </div>
+            <div class="item">
+                佣金<span style="float: right">45.00 元</span>
+            </div>
+            <div class="item">
+                运费<span style="float: right">12.00 元</span>
+            </div>
+            <div class="item item item-divider" style="background-color: #ffffff;">
+                总计<span class="assertive" style="float: right">123.00 元</span>
             </div>
         </div>
 
         <div class="list list-inset">
-            <a class="item item-icon-right">
-                <i class="ion-card" style="padding-right: 0.5em;"></i>银联支付
-                <i class="icon ion-ios7-arrow-forward item-note"></i>
-            </a>
+            <!--<a class="item item-icon-right">-->
+            <!--<i class="ion-card" style="padding-right: 0.5em;"></i>银联支付-->
+            <!--<i class="icon ion-ios7-arrow-forward item-note"></i>-->
+            <!--</a>-->
+
+            <label class="item item-radio">
+                <input type="radio" name="group" checked="true">
+
+                <div class="item-content">
+                    <i class="ion-card energized" style="margin-right: 10px; font-size: 180%; vertical-align: middle;"></i>银联支付
+                </div>
+                <i class="radio-icon ion-checkmark energized"></i>
+            </label>
+
+            <div class="message energized" style="padding-top: 10px;">
+                <i class="ion-ios7-information-outline"></i>
+                <span>更多支付方式随后就到</span>
+            </div>
         </div>
+
+        <div class="padding">
+            <button class="button button-block button-positive">支付</button>
+        </div>
+
     </ion-content>
 
 </ion-view>
