@@ -329,7 +329,7 @@ input.ng-invalid.ng-dirty {
 }
 
 .has-subheader {
-	top: 80px;
+	top: 78px;
 }
 
 .platform-ios.platform-cordova .modal-wrapper .modal .has-header,.platform-ios.platform-cordova .modal-wrapper .modal .bar-subheader
