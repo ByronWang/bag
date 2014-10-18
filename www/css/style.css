@@ -1,3 +1,40 @@
+
+/* 订单Action布局*/
+
+.list{
+	padding-left: 0;
+	padding-right:0;
+}
+
+.list.data{
+	border: none;
+	
+}
+.list.data>.item>.label {
+	font-weight: bold;
+	width: 6em ;
+	max-width: 6em ;
+	display: inline-block;
+}
+
+.list.top >.item{
+	padding: 4px 0px;
+	border: 1px solid #ddd;
+}
+
+.list.data>.item {
+	padding: 4px 8px;;
+	border: none;
+}
+
+.list.data>.item.item-avatar{
+	padding-left: 60px;
+}
+
+.list.data>.item>.item-value{
+	color: gray;
+}
+
 .item-options-right {
 	padding-right: 120px;
 }
@@ -421,30 +458,25 @@ div.item-product-title div i {
 
 .item-product-user {
     margin-bottom: 6px;
-    min-height: 44px;
+    min-height: 48px;
 }
 
-.item-product-user img {
-    position: relative;
-    top: 0;
-    left: 0;
-    vertical-align: middle;
-}
-
-.item-product-user a + span {
-    font-weight: bold;
+.item-avatar.item-product-user img:first-child {
+    top: 6px;
+    left: 10px;
 }
 
 .item-product-user img + span {
-    margin-left: 6px;
     font-weight: bold;
+	margin-top: 12px;
+	display: inline-block;
 }
 
 .item-product-user i.chatbox {
     position: absolute;
     font-size: 40px;
     color: #4a87ee;
-    top: 11px;
+    top: 6px;
     right: 8px;
 }
 
@@ -517,36 +549,9 @@ div.item-product-info div.message + .item-avatar .item-note i.chatbox {
     font-size: 16px;
 }
 
-/* 订单Action布局*/
-
-.list{
-	padding-left: 0;
-	padding-right:0;
-}
-.item .label {
-	font-weight: bold;
-	width: 6em ;
-	max-width: 6em ;
-	display: inline-block;
-}
-
-.item {
-	padding: 4px 8px;
-	border: none;
-}
-
-.list.action .item:not(.message) .item-value{
-	color: gray;
-}
 
 .item.comment{
 } 
-
-.list.top >.item{
-	border: 1px solid #ddd;
-	padding-left: 0px;
-	padding-right: 0px;
-}
 
 .item.comment .label{
 	padding-bottom: 4px;
@@ -557,9 +562,18 @@ div.item-product-info div.message + .item-avatar .item-note i.chatbox {
 	white-space: normal;	
 }
 
+.item.comment .trigger i{
+	background-color: orange;	
+}
 .item.comment .trigger{
 	position: absolute;
 	top:14px;
 	right:0px;
+}
+
+.list.suitor{
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 4px 6px;
 }
 	

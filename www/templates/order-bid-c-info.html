@@ -1,5 +1,5 @@
-<div class="list action item-product-info">
-	<div class="item item-avatar">
+<div class="list action data">
+	<div class="item item-avatar item-product-user">
 		<img src="{{current.Bid.Image | URI}}">
 		<span >{{current.Bid.PurchaserNickName}}</span>
 		<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
@@ -24,11 +24,9 @@
 		<span class="label"> 运费 </span><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
 	</div>
 	<!--x-ng-show="item.Product.Description"-->
-	<div class="item item-product-desc no-border">
+	<div class="item comment item-icon-right">
 		<span class="label"> 备注 </span>
-		<a class="item-icon-right" onclick="alert('click')"><i class="icon ion-ios7-arrow-up item-note"></i></a>
-	</div>
-	<div class="item-product-desc">
-		<span class="item-value">{{current.Bid.Comment}}这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除</span>
+		<a class="trigger" onclick="showDescription=!showDescription"><i class="icon ion-ios7-arrow-up item-note"></i></a>
+						<span class="item-value">{{current.Bid.Comment}}这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除</span>
 	</div>
 </div>

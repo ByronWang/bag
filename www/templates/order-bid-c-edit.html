@@ -1,5 +1,5 @@
 <div class="flow-block" x-ng-show="current.ActionID==Actions.sendout.ID">
-	<div class="list action" x-ng-show="bids.length<1">
+	<div class="list action data" x-ng-show="bids.length<1">
 		<div class="item item-text-wrap text-center">
 			<p>
 				<i class="icon ion-sad" style="font-size: 600%; color: #aaa;"></i>
@@ -9,8 +9,8 @@
 		</div>
 	</div>
 
-	<div class="list action" x-ng-repeat="suitor in bids">
-		<div class="item item-avatar">
+	<div class="list action suitor data" x-ng-repeat="suitor in bids">
+		<div class="item item-avatar item-product-user">
 			<img src="{{suitor.Purchaser.Image | URI}}">
 			<span >{{suitor.PurchaserNickName}}</span>
 			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
@@ -37,13 +37,9 @@
 			<span class="label"> 运费 </span><span class="item-value">{{suitor.DeliveryCost}} 元</span>
 		</div>
 		<!--x-ng-show="item.Product.Description"-->
-		<div class="item item-product-desc no-border">
-			<label>
-				备注
-			</label>
+		<div class="item comment item-icon-right">
+			<span class="label"> 备注 </span>
 			<a class="item-icon-right" onclick="alert('click')"><i class="icon ion-ios7-arrow-up item-note"></i></a>
-		</div>
-		<div class="item-product-desc">
 			<span class="item-value">{{suitor.Comment}}这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除</span>
 		</div>
 		<button class="button button-block button-balanced" x-ng-click="bitSucceed(suitor);"> 就是你 </button>
@@ -51,8 +47,8 @@
 </div>
 
 <div class="flow-block" x-ng-show="current.ActionID==Actions.payPrepare.ID">
-	<div class="list action">
-		<div class="item item-avatar">
+	<div class="list action data">
+		<div class="item item-avatar item-product-user">
 			<img src="{{current.Bid.Purchaser.Image | URI}}">
 			<span>{{current.Bid.PurchaserNickName}}</span>
 			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
@@ -88,7 +84,7 @@
 
 <div  x-ng-show="current.ActionID==Actions.payFinished.ID">
 	<div class="list action">
-		<div class="item item-avatar">
+		<div class="item item-avatar item-product-user">
 			<img src="{{current.Bid.Purchaser.Image | URI}}">
 			<span >{{current.Bid.PurchaserNickName}}</span>
 			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>

@@ -77,11 +77,12 @@
 	<ion-content has-header="true" padding="false">
 		<div class="list top">
 			<div class="item">
-				<div class="item item-avatar item-product">
+				<div class="item-avatar item-product">
 					<img align="center" x-ng-src="{{item.Product.Image | URI:'product' }}">
 				</div>
 			</div>
 			<div class="item">
+				<div class="list data">
 				<div class="item item-product-title">
 					<h2>{{item.Product.Name}}</h2>
 					<div>
@@ -91,11 +92,11 @@
 						<i class="ion-ios7-clock-outline"></i>发布时间：{{item.Datetime}}
 					</div>
 				</div>
-
+</div>
 			</div>
 			<div class="item">
-				<div class="list">
-					<div class="item-avatar item-product-user">
+				<div class="list data">
+					<div class="item item-avatar item-product-user">
 						<img src="{{item.CustomerImage | URI}}">
 						<span>{{item.CustomerNickName}}</span>
 						<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
@@ -124,12 +125,11 @@
 				</div>
 			</div>
 			<div class="item">
-				<div class="list">
-
+				<div class="list data">
 					<!--x-ng-show="item.Product.Description"-->
-					<div class="item comment">
+					<div class="item comment item-icon-right">
 						<span class="label"> 说明 </span>
-						<a class="item-icon-right trigger" onclick="showDescription=!showDescription"><i class="icon ion-ios7-arrow-up item-note"></i></a>
+						<a class="trigger" onclick="showDescription=!showDescription"><i class="icon ion-ios7-arrow-up item-note"></i></a>
 						<span class="item-value" data-ng-hide="showDescription">{{item.Product.Description}}这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除</span>
 					</div>
 				</div>
