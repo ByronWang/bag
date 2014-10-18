@@ -1,8 +1,30 @@
-<pane>
-	<div class="list">
-		<div class="item">
-			该订单已完结
+<pane x-ng-show="current.ActionID==Actions.delivered.ID">
+	<div class="list action">
+		<div class="item message message-strong energized">
+			<i class="ion-ios7-information-outline"></i><span>该订单已完结！</span>
 		</div>
-		<label class="item item-input"><span class="input-label">完结时间</span>{{current.Extends.DeliveryArriveDatetime}}</label>
+		<div class="item item-input">
+			<span class="label">完结时间</span><span class="item-value">{{current.Extends.DeliveryArriveDatetime}}</span>
+		</div>
+	</div>
+</pane>
+<pane x-ng-show="current.ActionID==Actions.cancelPurchasing.ID">
+	<div class="list action">
+		<div class="item message message-strong energized">
+			<i class="ion-ios7-information-outline"></i><span>该订单已被买手放弃购买！</span>
+		</div>
+		<div class="item item-input">
+			<span class="label">放弃时间</span><span class="item-value">{{current.Extends.CancelPurchasingDatetime}}</span>
+		</div>
+	</div>
+</pane>
+<pane x-ng-show="current.ActionID==Actions.cancelOrder.ID">
+	<div class="list action">
+		<div class="item message message-strong energized">
+			<i class="ion-ios7-information-outline"></i><span>该订单已被买家放弃！</span>
+		</div>
+		<div class="item item-input">
+			<span class="label">放弃时间</span><span class="item-value">{{current.Extends.CancelOrderDatetime}}</span>
+		</div>
 	</div>
 </pane>

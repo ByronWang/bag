@@ -1,104 +1,37 @@
 <pane x-ng-show="current.ActionID==Actions.payConfirmed.ID">
-    <div class="list">
-        <div class="item item-product-info">
-            <div class="message message-strong energized">
-                <i class="ion-ios7-information-outline"></i>
-                <span>您选定的买手尚未开始购买</span>
-            </div>
-            <div class="item-avatar">
-                <img src="img/mcfly.jpg">
-                <span >买手1假数据</span>
-                <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
-            </div>
-            <!--<div style="text-align: center;">-->
-                <!--<h1 style="color: #4a87ee"><i class="ion-ios7-information"></i><b> 买手尚未开始购买</b></h1>-->
-            <!--</div>-->
-            <button class="button button-assertive button-block" x-ng-click="cancelOrder();">取消订单</button>
-        </div>
-    </div>
+	<div class="list action">
+		<div class="item message message-strong energized">
+			<i class="ion-ios7-information-outline"></i>
+			<span>您选定的买手尚未开始购买</span>
+		</div>
+		<div class="item item-avatar">
+			<img src="{{current.Bid.Purchaser.Image | URI}}">
+			<span>{{current.Bid.PurchaserNickName}}</span>
+			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
+		</div>
+		<!--<div style="text-align: center;">-->
+		<!--<h1 style="color: #4a87ee"><i class="ion-ios7-information"></i><b> 买手尚未开始购买</b></h1>-->
+		<!--</div>-->
+	</div>
+	<button class="button button-assertive button-block" x-ng-click="cancelOrder();">取消订单</button>
 </pane>
 
-
-<!--<pane x-ng-show="current.ActionID==Actions.purchasing.ID">-->
-<pane x-ng-show="current.ActionID==Actions.payConfirmed.ID">
-    <!--<div class="list">-->
-        <!--<div class="item">-->
-            <!--买手已经开始购买-->
-        <!--</div>-->
-        <!--<label class="item">-->
-            <!--开始时间 <span class="item-value">{{current.Extends.PurchasingStartDatetime}}</span>-->
-        <!--</label>-->
-    <!--</div>-->
-
-    <div class="list">
-        <div class="item item-product-info">
-            <div class="message message-strong energized">
-                <i class="ion-ios7-information-outline"></i>
-                <span>您选定的买手已经开始购买</span>
-            </div>
-            <div class="item-avatar">
-                <img src="img/mcfly.jpg">
-                <span >买手1假数据</span>
-                <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
-            </div>
-            <div>
-                <label>开始时间</label><span class="item-value">2014-08-07 13:32:56</span>
-            </div>
-            <div>
-                <label>开始地点</label><span class="item-value">中国 上海</span>
-            </div>
-            <div>
-                <label>结束时间</label><span class="item-value">--</span>
-            </div>
-            <div>
-                <label>结束地点</label><span class="item-value">--</span>
-            </div>
-            <div class="message font-note">
-                <i class="ion-ios7-timer-outline"></i>
-                <span>购买时长：20天15小时</span>
-            </div>
-        </div>
-        <div class="item item-product-info">
-            <div class="message" style="font-weight: bold;">
-                <i class="ion-ios7-paper-outline"></i>
-                <span>购物小票</span>
-            </div>
-            <div class="row">
-                <div class="item item-avatar item-product col" style="border: 0;">
-                    <img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
-                    <!--<div style="position: absolute; left: 15px; bottom: 23px; font-size: 5px; color: #aaa;" class="message">-->
-                        <!--<i class="ion-ios7-paper-outline"></i>-->
-                        <!--<span>2014-08-09 12:15:16</span>-->
-                    <!--</div>-->
-                    <!--<div style="position: absolute; left: 15px; bottom: 8px; font-size: 5px; color: #aaa;" class="message">-->
-                        <!--<i class="ion-ios7-paper-outline"></i>-->
-                        <!--<span>美国 加利福尼亚州</span>-->
-                    <!--</div>-->
-                </div>
-                <div class="item item-avatar item-product col" style="border: 0;">
-                    <img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
-                </div>
-            </div>
-            <div class="row">
-                <div class="item item-avatar item-product col" style="border: 0;">
-                    <img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
-                </div>
-                <div class="item item-avatar item-product col" style="border: 0;">
-                    <img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
-                </div>
-            </div>
-        </div>
-        <div class="item item-product-info">
-            <div class="message" style="font-weight: bold;">
-                <i class="ion-image"></i>
-                <span>商品照片</span>
-            </div>
-            <div class="item item-avatar item-product" style="border: 0;">
-                <img align="center" x-ng-src="{{item.Product.Image | URI}}">
-            </div>
-            <div class="item item-avatar item-product" style="border: 0;">
-                <img align="center" x-ng-src="{{item.Product.Image | URI}}">
-            </div>
-        </div>
-    </div>
+<pane x-ng-show="current.ActionID==Actions.purchasing.ID">
+	<div class="list action">
+		<div class="item message message-strong energized">
+			<i class="ion-ios7-information-outline"></i>
+			<span>您选定的买手已经开始购买</span>
+		</div>
+		<div class="item item-avatar">
+			<img src="{{current.Bid.Purchaser.Image | URI}}">
+			<span>{{current.Bid.PurchaserNickName}}</span>
+			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
+		</div>
+		<div class="item">
+			<span class="label"> 开始时间 </span><span class="item-value">{{current.Extends.PurchasingStartDatetime}}</span>
+		</div>
+		<div class="item">
+			<span class="label"> 开始地点 </span><span class="item-value">中国 上海</span>
+		</div>
+	</div>
 </pane>

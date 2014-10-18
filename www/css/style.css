@@ -530,3 +530,21 @@ div.item-product-info div.message + .item-avatar .item-note i.chatbox {
     font-weight: bold;
     font-size: 16px;
 }
+
+/* 订单Action布局*/
+
+.list.action .label {
+	font-weight: bold;
+	width: 6em;
+	max-width: 6em;
+	display: inline-block;
+}
+
+.list.action .item {
+	padding: 4px 10px;
+	border: none;
+}
+
+.list.action .item:not(.message) .item-value{
+	color: gray;
+}
