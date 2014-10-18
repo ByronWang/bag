@@ -60,7 +60,7 @@
 	</div>
 </div>
 <div x-ng-show="current.ActionID==Actions.purchasing.ID">
-	<div class="list action">
+	<div class="list action item-product-info">
 		<div class="item message message-strong energized">
 			<i class="ion-ios7-information-outline"></i><span>你已经开始购买</span>
 		</div>
@@ -76,9 +76,6 @@
 			<span class="label"> 开始地点 </span><span class="item-value">中国 上海</span>
 		</div>
 		<div class="item">
-			<span class="label"> 结束时间 </span><span class="item-value">--</span>
-		</div>
-		<div class="item">
 			<span class="label"> 结束地点 </span><span class="item-value">--</span>
 		</div>
 		<div class="message font-note">
@@ -92,14 +89,6 @@
 		<div class="row">
 			<div class="item item-avatar item-product col" style="border: 0;">
 				<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
-				<!--<div style="position: absolute; left: 15px; bottom: 23px; font-size: 5px; color: #aaa;" class="message">-->
-				<!--<i class="ion-ios7-paper-outline"></i>-->
-				<!--<span>2014-08-09 12:15:16</span>-->
-				<!--</div>-->
-				<!--<div style="position: absolute; left: 15px; bottom: 8px; font-size: 5px; color: #aaa;" class="message">-->
-				<!--<i class="ion-ios7-paper-outline"></i>-->
-				<!--<span>美国 加利福尼亚州</span>-->
-				<!--</div>-->
 			</div>
 			<div class="item item-avatar item-product col" style="border: 0;">
 				<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
