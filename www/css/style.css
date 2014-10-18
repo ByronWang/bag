@@ -1,3 +1,40 @@
+
+/* 订单Action布局*/
+
+.list{
+	padding-left: 0;
+	padding-right:0;
+}
+
+.list.data{
+	border: none;
+	
+}
+.list.data>.item>.label {
+	font-weight: bold;
+	width: 6em ;
+	max-width: 6em ;
+	display: inline-block;
+}
+
+.list.top >.item{
+	padding: 4px 0px;
+	border: 1px solid #ddd;
+}
+
+.list.data>.item {
+	padding: 4px 8px;;
+	border: none;
+}
+
+.list.data>.item.item-avatar{
+	padding-left: 60px;
+}
+
+.list.data>.item>.item-value{
+	color: gray;
+}
+
 .item-options-right {
 	padding-right: 120px;
 }
@@ -419,50 +456,31 @@ div.item-product-title div i {
     padding-right: 5px;
 }
 
-div.item-product-info span.comment {
-    font-size: 80%;
-    color: gray;
-    margin-left: 0.5em;
-}
-
-div.item-product-info {
-    padding: 8px 12px;
-}
-
-div.item-product-info div {
-    padding: 3px 0px;
-}
-
-div.item-product-info div.item-avatar {
+.item-product-user {
     margin-bottom: 6px;
-    min-height: 44px;
+    min-height: 48px;
 }
 
-div.item-product-info div.item-avatar img {
-    position: relative;
-    top: 0;
-    left: 0;
-    vertical-align: middle;
+.item-avatar.item-product-user img:first-child {
+    top: 6px;
+    left: 10px;
 }
 
-div.item-product-info div.item-avatar a + span {
+.item-product-user img + span {
     font-weight: bold;
+	margin-top: 12px;
+	display: inline-block;
 }
 
-div.item-product-info div.item-avatar img + span {
-    margin-left: 6px;
-    font-weight: bold;
-}
-
-div.item-product-info i.chatbox {
+.item-product-user i.chatbox {
     position: absolute;
     font-size: 40px;
     color: #4a87ee;
-    top: 11px;
+    top: 6px;
     right: 8px;
 }
 
-div.item-product-info div label {
+.item-product-user div label {
     font-weight: bold;
     width: 6em;
     display: inline-block;
@@ -530,3 +548,32 @@ div.item-product-info div.message + .item-avatar .item-note i.chatbox {
     font-weight: bold;
     font-size: 16px;
 }
+
+
+.item.comment{
+} 
+
+.item.comment .label{
+	padding-bottom: 4px;
+}
+.item.comment .item-value{
+	display: block;
+	clear: both;
+	white-space: normal;	
+}
+
+.item.comment .trigger i{
+	background-color: orange;	
+}
+.item.comment .trigger{
+	position: absolute;
+	top:14px;
+	right:0px;
+}
+
+.list.suitor{
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 4px 6px;
+}
+	

@@ -1,16 +1,17 @@
 <pane>
-	<div class="list">
-		<div class="item">
-			已发货
+	<div class="list action">
+		<div class="item message message-strong energized">
+			<i class="ion-ios7-information-outline"></i><span>买家已确认收货！</span>
 		</div>
-		<label class="item item-input item-input-note"><span class="input-label">预计</span>{{current.Extends.EstimateArriveDatetime}}<span class="item-note">天后到达</span></label>
-		<label class="item item-input"><span class="input-label">快递单号</span>{{current.Extends.TrackingNo}}</label>
+		<div class="item item-input item-input-note">
+			<span class="label">预计</span>{{current.Extends.EstimateArriveDatetime}}<span class="item-note">天后到达</span></span>
+		</div>
+		<div class="item item-input">
+			<span class="label">快递单号</span><span class="item-value">{{current.Extends.TrackingNo}}</span>
+		</div>
+		<div class="item item-input">
+			<span	class="label">确认时间</span><span class="item-value">{{current.Extends.DeliveryArriveDatetime}}</span>
+		</div>
 	</div>
-
-	<div class="list">
-		<div class="item">
-			买家已确认收货
-		</div>
-		<label class="item item-input"><span class="input-label">确认时间</span>{{current.Extends.DeliveryArriveDatetime}}</label>
 	</div>
 </pane>
