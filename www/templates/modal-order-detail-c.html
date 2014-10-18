@@ -1,180 +1,192 @@
 <ion-modal-view ng-controller="OrderCustomerDetailCtrl">
 
-<ion-header-bar class="bar-assertive">
-    <div class="buttons">
-        <button class="button button-icon icon ion-ios7-arrow-back pull-right" x-ng-click="closeModal();"></button>
-    </div>
-    <h1 class="title">产品详情</h1>
-</ion-header-bar>
+	<ion-header-bar class="bar-assertive">
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-arrow-back pull-right" x-ng-click="closeModal();"></button>
+		</div>
+		<h1 class="title">产品详情</h1>
+	</ion-header-bar>
 
-<style>
-    .row.pager {
-        padding: 0px;
-        padding-top: 10px;
-        color: gray;
-    }
+	<style>
+		.row.pager {
+			padding: 0px;
+			padding-top: 10px;
+			color: gray;
+		}
 
-    .row.pager .col {
-        border-top: solid DarkGray 1px;
-        text-align: left;
-        padding: 0px;
-    }
+		.row.pager .col {
+			border-top: solid DarkGray 1px;
+			text-align: left;
+			padding: 0px;
+		}
 
-    .row.pager .col div.prog {
-        background-color: white;
-        position: relative;
-        left: -.6em;
-        top: -.8em;
-        width: 1em;
-        text-align: center;
-        height: 10em;
-    }
+		.row.pager .col div.prog {
+			background-color: white;
+			position: relative;
+			left: -.6em;
+			top: -.8em;
+			width: 1em;
+			text-align: center;
+			height: 10em;
+		}
 
-    .row.pager .col.done {
-        border-top: solid #f58220 1px;
-        color: black;
-    }
+		.row.pager .col.done {
+			border-top: solid #f58220 1px;
+			color: black;
+		}
 
-    .row.pager .col.done .icon {
-        color: #f58220;
-    }
+		.row.pager .col.done .icon {
+			color: #f58220;
+		}
 
-    .row.pager .col.doing {
-        color: #f58220;
-    }
+		.row.pager .col.doing {
+			color: #f58220;
+		}
 
-    .row.pager .col.first, .row.pager .col.last {
-        border-top: solid white 1px;
-    }
+		.row.pager .col.first, .row.pager .col.last {
+			border-top: solid white 1px;
+		}
 
-    div.prog {
-        text-align: center;
-    }
+		div.prog {
+			text-align: center;
+		}
 
-    .prog.active {
-        font-weight: bold;
-    }
+		.prog.active {
+			font-weight: bold;
+		}
 
-    .prog .name {
-        /*position: relative;*/
-        /*width: 5em;*/
-        /*padding-left: 2em;*/
-        /*padding-right: 2em;*/
-        /*left: -2em*/
+		.prog .name {
+			/*position: relative;*/
+			/*width: 5em;*/
+			/*padding-left: 2em;*/
+			/*padding-right: 2em;*/
+			/*left: -2em*/
 
-        width: 1.1em;
-        margin: 0 auto;
-        /*font-weight: bold;*/
-        color: #ff6767;
-    }
+			width: 1.1em;
+			margin: 0 auto;
+			/*font-weight: bold;*/
+			color: #ff6767;
+		}
 
-    .prog i {
-        font-size: 2em;
-        color: #ff6767;
-    }
+		.prog i {
+			font-size: 2em;
+			color: #ff6767;
+		}
 
-</style>
-<ion-content has-header="true" padding="false">
-    <div class="item item-avatar item-product">
-        <img align="center" x-ng-src="{{item.Product.Image | URI:'product' }}">
-    </div>
+	</style>
+	<ion-content has-header="true" padding="false">
+		<div class="list top">
+			<div class="item">
+				<div class="item item-avatar item-product">
+					<img align="center" x-ng-src="{{item.Product.Image | URI:'product' }}">
+				</div>
+			</div>
+			<div class="item">
+				<div class="item item-product-title">
+					<h2>{{item.Product.Name}}</h2>
+					<div>
+						<i class="ion-ios7-pricetag-outline"></i>订单编号：{{item.OrderID}}
+					</div>
+					<div class="right">
+						<i class="ion-ios7-clock-outline"></i>发布时间：{{item.Datetime}}
+					</div>
+				</div>
 
-    <div class="item item-product-title">
-        <h2>{{item.Product.Name}}</h2>
+			</div>
+			<div class="item">
+				<div class="list">
+					<div class="item-avatar item-product-user">
+						<img src="{{item.CustomerImage | URI}}">
+						<span>{{item.CustomerNickName}}</span>
+						<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
+					</div>
+					<div class="item">
+						<span class="label"> 收件地址 </span><span class="item-value">中国 {{item.Address.Province}}-{{item.Address.City}}-{{item.Address.Area}}</span>
+					</div>
+					<div  class="item" x-ng-show="item.Product.CountryName">
+						<span class="label"> 代购国家 </span><span class="item-value">{{item.Product.CountryName}}</span>
+					</div>
+					<div class="item" x-ng-show="item.Product.ExpectedPrice">
+						<span class="label"> 预想单价 </span><span class="item-value strength"><b>{{item.Product.ExpectedPrice}}</b>&nbsp;元</span>
+					</div>
+					<div class="item" x-ng-show="item.Quantity">
+						<span class="label"> 代购件数 </span><span class="item-value">{{item.Quantity}}</span>
+					</div>
+					<div class="item" x-ng-show="item.Product.Brand">
+						<span class="label"> 品牌 </span><span class="item-value">{{item.Product.Brand}}</span>
+					</div>
+					<div class="item" x-ng-show="item.Product.Exts.Function">
+						<span class="label"> 功效 </span><span class="item-value">{{item.Product.Exts.Function}}</span>
+					</div>
+					<div class="item" x-ng-show="item.Product.Exts.Color">
+						<span class="label"> 色泽 </span><span class="item-value">{{item.Product.Exts.Color}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="list">
 
-        <div><i class="ion-ios7-pricetag-outline"></i>订单编号：{{item.OrderID}}</div>
-        <div class="right"><i class="ion-ios7-clock-outline"></i>发布时间：{{item.Datetime}}</div>
-    </div>
+					<!--x-ng-show="item.Product.Description"-->
+					<div class="item comment">
+						<span class="label"> 说明 </span>
+						<a class="item-icon-right trigger" onclick="showDescription=!showDescription"><i class="icon ion-ios7-arrow-up item-note"></i></a>
+						<span class="item-value" data-ng-hide="showDescription">{{item.Product.Description}}这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除</span>
+					</div>
+				</div>
+			</div>
+			<div class="item">
 
-    <div class="item item-product-info">
-        <div class="item-avatar">
-             <img src="{{item.CustomerImage | URI}}">
-            <span>{{item.CustomerNickName}}</span>
-            <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
-        </div>
-        <div>
-            <label>收件地址</label><span class="item-value">中国 {{item.Address.Province}}-{{item.Address.City}}-{{item.Address.Area}}</span>
-        </div>
-        <div x-ng-show="item.Product.CountryName">
-            <label>代购国家</label><span class="item-value">{{item.Product.CountryName}}</span>
-        </div>
-        <div x-ng-show="item.Product.ExpectedPrice">
-            <label>预想单价</label><span class="item-value strength"><b>{{item.Product.ExpectedPrice}}</b>&nbsp;元</span>
-        </div>
-        <div x-ng-show="item.Quantity">
-            <label>代购件数</label><span class="item-value">{{item.Quantity}}</span>
-        </div>
-        <div x-ng-show="item.Product.Brand">
-            <label>品牌</label><span class="item-value">{{item.Product.Brand}}</span>
-        </div>
-        <div x-ng-show="item.Product.Exts.Function">
-            <label>功效</label><span class="item-value">{{item.Product.Exts.Function}}</span>
-        </div>
-        <div x-ng-show="item.Product.Exts.Color">
-            <label>色泽</label><span class="item-value">{{item.Product.Exts.Color}}</span>
-        </div>
-    </div>
+				<div class="row">
+					<div class="prog col" x-ng-click="statusSlide($event,0)">
+						<i class="icon ion-ios7-clock"></i>
+						<div class="name">
+							发布中
+						</div>
+					</div>
 
-    <!--x-ng-show="item.Product.Description"-->
-    <div class="item item-product-info item-product-desc">
-        <div>
-            <label>说明</label>
-            <a class="item-icon-right" onclick="alert('click')"><i class="icon ion-ios7-arrow-up item-note"></i></a>
-        </div>
-        <div>
-            <span class="item-value">{{item.Product.Description}}这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除</span>
-        </div>
-    </div>
+					<div class="prog col" x-ng-click="statusSlide($event,1)">
+						<i class="icon ion-ios7-checkmark" style="color: #4a87ee;"></i>
+						<div class="name" style="color: #4a87ee;">
+							代购中
+						</div>
+					</div>
 
-    <div class="row">
-        <div class="prog col" x-ng-click="statusSlide($event,0)">
-            <i class="icon ion-ios7-clock"></i>
-            <div class="name">
-                发布中
-            </div>
-        </div>
+					<div class="prog col" x-ng-click="statusSlide($event,2)">
+						<i class="icon ion-ios7-circle-filled" style="color: #f0b840"></i>
 
-        <div class="prog col" x-ng-click="statusSlide($event,1)">
-            <i class="icon ion-ios7-checkmark" style="color: #4a87ee;"></i>
-            <div class="name" style="color: #4a87ee;">
-                代购中
-            </div>
-        </div>
+						<div class="name" style="color: #f0b840">
+							收货中
+						</div>
+					</div>
 
-        <div class="prog col" x-ng-click="statusSlide($event,2)">
-            <i class="icon ion-ios7-circle-filled" style="color: #f0b840"></i>
+					<!--#aaaaaa 66cc33-->
+					<div class="prog col" x-ng-click="statusSlide($event,3)">
+						<i class="ion-ios7-close" style="color: #66cc33"></i>
 
-            <div class="name" style="color: #f0b840">
-                收货中
-            </div>
-        </div>
+						<div class="name"style="color: #66cc33">
+							完成
+						</div>
+					</div>
+				</div>
 
-        <!--#aaaaaa 66cc33-->
-        <div class="prog col" x-ng-click="statusSlide($event,3)">
-            <i class="ion-ios7-close" style="color: #66cc33"></i>
-
-            <div class="name"style="color: #66cc33">
-                完成
-            </div>
-        </div>
-    </div>
-
-    <ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide">
-        <ion-slide>
-            <ng-include src="'templates/order-bid-c-edit.html'" ng-if="current.StatusID==1"></ng-include>
-            <ng-include src="'templates/order-bid-c-info.html'" ng-if="current.StatusID!=1"></ng-include>
-        </ion-slide>
-        <ion-slide>
-            <ng-include src="'templates/order-purchase-c-edit.html'" ng-if="current.StatusID==2"></ng-include>
-            <ng-include src="'templates/order-purchase-c-info.html'" ng-if="current.StatusID!=2"></ng-include>
-        </ion-slide>
-        <ion-slide>
-            <ng-include src="'templates/order-delivering-c-edit.html'" ng-if="current.StatusID==3"></ng-include>
-            <ng-include src="'templates/order-delivering-c-info.html'" ng-if="current.StatusID!=3"></ng-include>
-        </ion-slide>
-        <ion-slide>
-            <ng-include src="'templates/order-completed-c-info.html'"></ng-include>
-        </ion-slide>
-    </ion-slide-box>
-</ion-content>
+				<ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide">
+					<ion-slide>
+						<ng-include src="'templates/order-bid-c-edit.html'" ng-if="current.StatusID==1"></ng-include>
+						<ng-include src="'templates/order-bid-c-info.html'" ng-if="current.StatusID!=1"></ng-include>
+					</ion-slide>
+					<ion-slide>
+						<ng-include src="'templates/order-purchase-c-edit.html'" ng-if="current.StatusID==2"></ng-include>
+						<ng-include src="'templates/order-purchase-c-info.html'" ng-if="current.StatusID!=2"></ng-include>
+					</ion-slide>
+					<ion-slide>
+						<ng-include src="'templates/order-delivering-c-edit.html'" ng-if="current.StatusID==3"></ng-include>
+						<ng-include src="'templates/order-delivering-c-info.html'" ng-if="current.StatusID!=3"></ng-include>
+					</ion-slide>
+					<ion-slide>
+						<ng-include src="'templates/order-completed-c-info.html'"></ng-include>
+					</ion-slide>
+				</ion-slide-box>
+			</div>
+		</div>
+	</ion-content>
 </ion-modal-view>

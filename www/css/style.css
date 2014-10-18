@@ -419,42 +419,28 @@ div.item-product-title div i {
     padding-right: 5px;
 }
 
-div.item-product-info span.comment {
-    font-size: 80%;
-    color: gray;
-    margin-left: 0.5em;
-}
-
-div.item-product-info {
-    padding: 8px 12px;
-}
-
-div.item-product-info div {
-    padding: 3px 0px;
-}
-
-div.item-product-info div.item-avatar {
+.item-product-user {
     margin-bottom: 6px;
     min-height: 44px;
 }
 
-div.item-product-info div.item-avatar img {
+.item-product-user img {
     position: relative;
     top: 0;
     left: 0;
     vertical-align: middle;
 }
 
-div.item-product-info div.item-avatar a + span {
+.item-product-user a + span {
     font-weight: bold;
 }
 
-div.item-product-info div.item-avatar img + span {
+.item-product-user img + span {
     margin-left: 6px;
     font-weight: bold;
 }
 
-div.item-product-info i.chatbox {
+.item-product-user i.chatbox {
     position: absolute;
     font-size: 40px;
     color: #4a87ee;
@@ -462,7 +448,7 @@ div.item-product-info i.chatbox {
     right: 8px;
 }
 
-div.item-product-info div label {
+.item-product-user div label {
     font-weight: bold;
     width: 6em;
     display: inline-block;
@@ -533,18 +519,47 @@ div.item-product-info div.message + .item-avatar .item-note i.chatbox {
 
 /* 订单Action布局*/
 
-.list.action .label {
+.list{
+	padding-left: 0;
+	padding-right:0;
+}
+.item .label {
 	font-weight: bold;
-	width: 6em;
-	max-width: 6em;
+	width: 6em ;
+	max-width: 6em ;
 	display: inline-block;
 }
 
-.list.action .item {
-	padding: 4px 10px;
+.item {
+	padding: 4px 8px;
 	border: none;
 }
 
 .list.action .item:not(.message) .item-value{
 	color: gray;
 }
+
+.item.comment{
+} 
+
+.list.top >.item{
+	border: 1px solid #ddd;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.item.comment .label{
+	padding-bottom: 4px;
+}
+.item.comment .item-value{
+	display: block;
+	clear: both;
+	white-space: normal;	
+}
+
+.item.comment .trigger{
+	position: absolute;
+	top:14px;
+	right:0px;
+}
+	
