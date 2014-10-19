@@ -23,10 +23,10 @@
 	<div class="item">
 		<span class="label"> 运费 </span><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
 	</div>
-	<!--x-ng-show="item.Product.Description"-->
-	<div class="item comment item-icon-right">
+
+	<div class="item comment item-icon-right" x-ng-show="current.Bid.Description">
 		<span class="label"> 备注 </span>
-		<a class="trigger" onclick="showDescription=!showDescription"><i class="icon ion-ios7-arrow-up item-note"></i></a>
-						<span class="item-value">{{current.Bid.Comment}}这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除</span>
+		<a class="trigger"  data-ng-click="showDescription=!showDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
+		<span class="item-value" data-ng-hide="showDescription">{{current.Bid.Comment}}</span>
 	</div>
 </div>

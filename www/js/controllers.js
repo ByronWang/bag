@@ -435,6 +435,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 }).controller('InventoryDetailCtrl',
 		function($scope, $state, Category, Exts, OrderBiding, $timeout, $state, Popup, DeliveryMethod, Inventorys) {
+			$scope.triger1 = false;
 			$scope.item = Inventorys.get({
 				itemId : $scope.$parent.item.ID
 			}, function() {
@@ -544,6 +545,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		'OrderCustomerDetailCtrl',
 		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state,
 				$ionicSlideBoxDelegate, $timeout, Orders, Category, Exts,Unipay) {
+			
 			var $stateParams = {
 				itemId : $scope.$parent.item.ID
 			};
@@ -654,6 +656,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		'OrderPurchaserDetailCtrl',
 		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state,
 				$stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts,$ionicActionSheet,Camera) {
+
 			var $stateParams = {
 				itemId : $scope.$parent.item.ID
 			};

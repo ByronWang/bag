@@ -58,19 +58,17 @@
 						</div>
 					</div>
 				</div>
-				<div class="item">
+				<div class="item" x-ng-show="item.Product.Description">
 					<div class="list data">
-						<!--x-ng-show="item.Product.Description"-->
 						<div class="item comment item-icon-right">
 							<span class="label"> 说明 </span>
-							<a class="trigger" onclick="showDescription=!showDescription"><i class="icon ion-ios7-arrow-up item-note"></i></a>
-							<span class="item-value" data-ng-hide="showDescription">{{item.Product.Description}}这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除这是注释测试用请删除</span>
+							<a class="trigger"  data-ng-click="showDescription=!showDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
+							<span class="item-value" data-ng-hide="showDescription">{{item.Product.Description}}</span>
 						</div>
 					</div>
 				</div>
 				<div class="item">
 					<div  class="list">
-						<h3>已有{{item.suitors.length}}位买手参与此次购买</h3>
 						<label class="item item-input item-input-note"><span class="input-label">代购佣金</span>
 							<input type="number" class="percent" x-ng-model="suitor.Commission">
 							<span class="item-note">%</span></label>
@@ -81,8 +79,8 @@
 						<label class="item item-input item-input-note"><span class="input-label">运费</span>
 							<input type="number" x-ng-model="suitor.DeliveryCost">
 							<span class="item-note">元（人民币）</span></label>
-						<label class="item item-input item-input-note"><span class="input-label">备注</span>
-							<textarea type="text" x-ng-model="suitor.Comment"></textarea>
+						<label class="item item-input input-comment item-input-note"><span class="input-label">备注</span>
+							<span class="input-value"><textarea x-ng-model="suitor.Comment"></textarea></span>
 						</label>
 					</div>
 				</div>

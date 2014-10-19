@@ -36,11 +36,10 @@
 		<div class="item">
 			<span class="label"> 运费 </span><span class="item-value">{{suitor.DeliveryCost}} 元</span>
 		</div>
-		<!--x-ng-show="item.Product.Description"-->
-		<div class="item comment item-icon-right">
+		<div class="item comment item-icon-right" x-ng-show="suitor.Description">
 			<span class="label"> 备注 </span>
-			<a class="item-icon-right" onclick="alert('click')"><i class="icon ion-ios7-arrow-up item-note"></i></a>
-			<span class="item-value">{{suitor.Comment}}</span>
+			<a class="trigger"  data-ng-click="showDescription=!showDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
+			<span class="item-value" data-ng-hide="showDescription">{{suitor.Comment}}</span>
 		</div>
 		<button class="button button-block button-balanced" x-ng-click="bitSucceed(suitor);"> 就是你 </button>
 	</div>
@@ -72,6 +71,11 @@
 		</div>
 		<div class="item">
 			<span class="label"> 运费 </span><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
+		</div>
+		<div class="item comment item-icon-right" x-ng-show="current.Bid.Description">
+			<span class="label"> 备注 </span>
+			<a class="trigger"  data-ng-click="showDescription=!showDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
+			<span class="item-value" data-ng-hide="showDescription">{{current.Bid.Comment}}</span>
 		</div>
 		<!--【{{current.TradeNo}}】-->
 		<div class="message energized">
@@ -108,6 +112,11 @@
 		</div>
 		<div class="item">
 			<span class="label"> 运费 </span><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
+		</div>
+		<div class="item comment item-icon-right" x-ng-show="current.Bid.Description">
+			<span class="label"> 备注 </span>
+			<a class="trigger"  data-ng-click="showDescription=!showDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
+			<span class="item-value" data-ng-hide="showDescription">{{current.Bid.Comment}}</span>
 		</div>
 		<div class="message energized" style="padding-top: 6px;">
 			<i class="ion-ios7-information-outline"></i>

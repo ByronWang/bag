@@ -8,7 +8,7 @@
 	border: none;
 }
 
-.list.data>.item>.label,.item-extends>.label {
+.list.data>.item>.label,.data-view .item-extends>.label {
 	font-weight: bold;
 	width: 6em;
 	max-width: 6em;
@@ -20,7 +20,7 @@
 	border: 1px solid #ddd;
 }
 
-.list.data>.item,.item.item-extends {
+.list.data>.item,.data-view .item.item-extends {
 	padding: 4px 8px;;
 	border: none;
 }
@@ -650,6 +650,31 @@ div.item-product-info div.message+.item-avatar .item-note i.chatbox {
 	font-weight: bold;
 	font-size: 16px;
 }
+
+.item.input-comment{
+	
+}
+
+.item.input-comment .input-label {
+	padding-bottom: 4px;
+}
+
+.item.input-comment .input-value {
+	display: block;
+	clear: both;
+	white-space: normal;
+}
+
+.item.input-comment .trigger i {
+	background-color: orange;
+}
+
+.item.input-comment .trigger {
+	position: absolute;
+	top: 14px;
+	right: 0px;
+}
+
 
 .item.comment {
 	
