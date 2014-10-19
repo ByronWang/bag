@@ -1,5 +1,5 @@
 <pane x-ng-show="current.ActionID==Actions.purchased.ID">
-	<div class="list action">
+	<div class="list action data">
 		<div class="item item-product-info">
 			<div class="message message-strong energized">
 				<i class="ion-ios7-information-outline"></i><span>买手尚未发货，请等待！</span>
@@ -8,9 +8,8 @@
 	</div>
 </pane>
 <pane x-ng-show="current.ActionID==Actions.delivering.ID">
-	<div class="list action">
-		<div class="item item-product-info">
-			<div class="message message-strong energized">
+	<div class="list action data">
+		<div class="item message message-strong energized">
 				<i class="ion-ios7-information-outline"></i><span>买手已发货！</span>
 			</div>
 			<div class="item">

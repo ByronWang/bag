@@ -1,12 +1,11 @@
 <pane x-ng-show="current.ActionID==Actions.purchased.ID">
-	<div class="list action">
+	<div class="list action data">
 		<div class="item message message-strong energized">
 			<i class="ion-ios7-information-outline"></i><span>已经购买完成，请尽快发货！</span>
 		</div>
-		<label class="item item-input item-input-note"><span class="label">预计</span>
-			<input type="number"
-			x-ng-model="current.Extends.EstimateArriveDatetime"
-			>
+		<label class="item item-input item-input-note">
+			<span class="label">预计</span>
+			<input type="number" x-ng-model="current.Extends.EstimateArriveDatetime">
 			<span class="item-note">天后到达</span></label>
 		<label class="item item-input"><span class="label">快递单号</span>
 			<input type="number" x-ng-model="current.Extends.TrackingNo"	>
@@ -15,7 +14,7 @@
 	<button class="button button-positive button-block" x-ng-click="startDelivering()">确认发货</button>
 </pane>
 <pane x-ng-show="current.ActionID==Actions.delivering.ID">
-	<div class="list action">
+	<div class="list action data">
 		<div class="item message message-strong energized">
 			<i class="ion-ios7-information-outline"></i><span>已发货，等待买家确认收货！</span>
 		</div>

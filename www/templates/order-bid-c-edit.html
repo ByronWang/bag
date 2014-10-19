@@ -1,5 +1,5 @@
 <div class="flow-block" x-ng-show="current.ActionID==Actions.sendout.ID">
-	<div class="list action data" x-ng-show="bids.length<1">
+	<div class="list action data data" x-ng-show="bids.length<1">
 		<div class="item item-text-wrap text-center">
 			<p>
 				<i class="icon ion-sad" style="font-size: 600%; color: #aaa;"></i>
@@ -9,7 +9,7 @@
 		</div>
 	</div>
 
-	<div class="list action suitor data" x-ng-repeat="suitor in bids">
+	<div class="list action data suitor data" x-ng-repeat="suitor in bids">
 		<div class="item item-avatar item-product-user">
 			<img src="{{suitor.Purchaser.Image | URI}}">
 			<span >{{suitor.PurchaserNickName}}</span>
@@ -47,7 +47,7 @@
 </div>
 
 <div class="flow-block" x-ng-show="current.ActionID==Actions.payPrepare.ID">
-	<div class="list action data">
+	<div class="list action data data">
 		<div class="item item-avatar item-product-user">
 			<img src="{{current.Bid.Purchaser.Image | URI}}">
 			<span>{{current.Bid.PurchaserNickName}}</span>
@@ -83,7 +83,7 @@
 </div>
 
 <div  x-ng-show="current.ActionID==Actions.payFinished.ID">
-	<div class="list action">
+	<div class="list action data">
 		<div class="item item-avatar item-product-user">
 			<img src="{{current.Bid.Purchaser.Image | URI}}">
 			<span >{{current.Bid.PurchaserNickName}}</span>

@@ -1,5 +1,5 @@
-<div class="list action item-product-info">
-	<div class="item item-avatar">
+<div class="list action data item-product-info">
+	<div class="item item-avatar item-product-user">
 		<img src="{{current.Bid.Image | URI}}">
 		<span >{{current.Bid.PurchaserNickName}}</span>
 		<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
@@ -21,13 +21,13 @@
 		<span class="label"> 运费 </span><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
 	</div>
 </div>
-<div class="list action" x-ng-show="item.suitor">
+<div class="list action data" x-ng-show="item.suitor">
 	<div class="item message message-strong energized">
 		<i class="ion-ios7-information-outline"></i><span>正在等待买家选择买手！</span>
 	</div>
 	<button class="button button-positive">取消代购</button>
 </div>
-<div class="list action">
+<div class="list action data">
 	<div class="item message message-strong energized">
 		<i class="ion-ios7-information-outline"></i><span>竞标失败!</span>
 	</div>

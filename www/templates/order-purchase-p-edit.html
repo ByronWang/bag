@@ -40,7 +40,7 @@
 	}
 </style>
 <div x-ng-show="current.ActionID==Actions.payConfirmed.ID">
-	<div class="list action">
+	<div class="list action data">
 		<div class="item item-product-info">
 			<div class="message message-strong energized">
 				<i class="ion-ios7-information-outline"></i><span>买家已经选择您为他代购,并支付保证金 </span>
@@ -51,7 +51,7 @@
 	<button class="button button-assertive button-block" x-ng-click="cancelPurchasing()">取消购买</button>
 </div>
 <div x-ng-show="current.ActionID==Actions.cancelPurchasing.ID">
-	<div class="list action">
+	<div class="list action data">
 		<div class="item item-product-info">
 			<div class="message message-strong energized">
 				<i class="ion-ios7-information-outline"></i><span> 你已经取消本次代购</span>
@@ -60,7 +60,7 @@
 	</div>
 </div>
 <div x-ng-show="current.ActionID==Actions.purchasing.ID">
-	<div class="list action item-product-info">
+	<div class="list action data">
 		<div class="item message message-strong energized">
 			<i class="ion-ios7-information-outline"></i><span>你已经开始购买</span>
 		</div>
