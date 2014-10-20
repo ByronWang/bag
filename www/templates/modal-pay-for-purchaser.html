@@ -22,6 +22,7 @@
         </div>
 
 <pane data-ng-controller="PaymentCtrl">
+<pane x-ng-show="payment.ActionID == 1">
         <div class="list list-inset">
             <div class="item item item-divider" style="background-color: #ffffff;">
                 总计<span class="assertive" style="float: right">{{payment.Amount}} 元</span>
@@ -45,6 +46,21 @@
         <div class="padding">
             <button class="button button-block button-positive" x-ng-click="doPay()">支付</button>
         </div>
+        </pane>
+        
+        <pane x-ng-show="payment.ActionID == 3">
+        <div class="list data">
+			<div class="item"><span class="label">支付时间</span><span class="item-value">{{payment.Datetime}}</span></div>
+			<div class="item"><span class="label">订单号</span><span class="item-value">{{payment.TradeNo}}</span></div>
+			<div class="item"><span class="label">金额</span><span class="item-value">{{payment.Amount}}</span></div>
+			<div class="item"><span class="label">用途</span><span class="item-value">{{payment.Description}}</span></div>
+			<div class="item"><span class="label">支付方式</span><span class="item-value">{{payment.PayMethodName}}</span></div>
+        </div>
+
+        <div class="padding">
+            <button class="button button-block button-positive" x-ng-click="done();">确定</button>
+        </div>
+        </pane>
         </pane>
 
     </ion-content>

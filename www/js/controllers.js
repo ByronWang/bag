@@ -64,49 +64,52 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			FromUserID:$scope.user.ID,
 			ToUserID:$scope.user.ID,
 			Amount:200,//金额
-			PayMethod:2,//Bank
-			PayType: 1,//买手保证金
-			FromAccountType:2,//银行
-			ToAccountType:3,//保证金
-			OrderNo:$scope.user.ID
-	};	
+			PayTypeID: 1,//买手保证金
+			PayMethodID:2,//Bank
+			Description:"买手支付保证金",//Bank
+			OrderNo:$scope.user.ID,
+			ActionID:1
+	};
+	$scope.done = function(){
+		$scope.$parent.done($scope.user);
+	};
 }).controller('PaymentCtrl', function($scope, Users,Popup,PaymentFlow,Unipay) {
 	// getTradeNO	PaymentRequest
 	$scope.payment = $scope.$parent.payment;
 	$scope.current = {};
 	
 	$scope.doPay = function(){
-		getTradeNo();		
+		if($scope.payment.PayMethod==1){
+			payByPersonalAccount();
+		}else{
+			payByBank();
+		}
 	};
-		
-	var getTradeNo = function(){
+
+	var payByPersonalAccount = function(){
 		flowStepOut(1,$scope.payment,function(payment){
-			$scope.payment = payment;
-			doPay(payment.TradeNo);		
+			$scope.payment = payment;	
 		});
 	};
 	
-	var doPay = function(tradeNo){
+	var payByBank = function(){
+		flowStepOut(1,$scope.payment,function(payment){
+			$scope.payment = payment;
+			doPayFromBank(payment.TradeNo);		
+		});
+	};
+	
+	var doPayFromBank = function(tradeNo){
 		Unipay.pay(tradeNo).then(function(){
 			finishPayment();
 		});
 	};
 	
 	var finishPayment = function(){
-		flowStepOut(2,{UserID : $scope.current.UserID,PaymentID:$scope.current.PaymentID},function(payment){
-			checkPayResult(payment);
+		flowStepOut(2,$scope.payment,function(payment){
+			$scope.payment  = payment;
 		});
 	};
-	
-	var checkPayResult = function(payment){
-		$scope.current = payment;
-		Popup.show($scope, 'templates/modal-user-pay-result.html',function(){
-			$scope.done($scope.user);
-		},function(){
-			$scope.done($scope.user);
-		});
-	};
-	
 
 	var flowStepOut = function(actionID, params,succeed) {
 		var step = {};
@@ -131,7 +134,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			User.$save(function(resp) {
 				$scope.user.ID = resp.ID;
 				Popup.show($scope, 'templates/modal-pay-for-purchaser.html',function(){
-					
+					$scope.$parent.done($scope.user);
 				});
 			});
 		}else{
