@@ -58,34 +58,31 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			});
 		});
 	};	
-}).controller('PaymentCtrl', function($scope, Users,Popup,UserPayFlow,Unipay) {
-	
-}).controller('SignupCtrl', function($scope, Users,Popup,UserPayFlow,Unipay) {
-	$scope.user = {};
-
-	$scope.signup = function() {		
-		if($scope.user.TobePurchaser){		
-			var User = new Users($scope.user);
-			User.$save(function(resp) {
-				$scope.user.ID = resp.ID;
-				getTradeNo($scope.user.ID);
-			});
-		}else{
-			var User = new Users($scope.user);
-			User.$save(function() {
-				$scope.$parent.closeModal($scope.user);
-			});
-		}
-	};
-	
-	
-	// getTradeNO	
-	
+}).controller('PayForPurchaserCtrl', function($scope, Users,Popup) {
+	$scope.user= $scope.$parent.user;
+	$scope.payment = {
+			FromUserID:$scope.user.ID,
+			ToUserID:$scope.user.ID,
+			Amount:200,//金额
+			PayMethod:2,//Bank
+			PayType: 1,//买手保证金
+			FromAccountType:2,//银行
+			ToAccountType:3,//保证金
+			OrderNo:$scope.user.ID
+	};	
+}).controller('PaymentCtrl', function($scope, Users,Popup,PaymentFlow,Unipay) {
+	// getTradeNO	PaymentRequest
+	$scope.payment = $scope.$parent.payment;
 	$scope.current = {};
-	var getTradeNo = function(userId){
-		flowStepOut(1,{UserID:userId},function(resp){
-			$scope.current = resp;
-			doPay(resp.TradeNo);		
+	
+	$scope.doPay = function(){
+		getTradeNo();		
+	};
+		
+	var getTradeNo = function(){
+		flowStepOut(1,$scope.payment,function(payment){
+			$scope.payment = payment;
+			doPay(payment.TradeNo);		
 		});
 	};
 	
@@ -96,13 +93,13 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 	
 	var finishPayment = function(){
-		flowStepOut(2,{UserID : $scope.current.UserID,PaymentID:$scope.current.PaymentID},function(step){
-			checkPayResult(step);
+		flowStepOut(2,{UserID : $scope.current.UserID,PaymentID:$scope.current.PaymentID},function(payment){
+			checkPayResult(payment);
 		});
 	};
 	
-	var checkPayResult = function(step){
-		$scope.current = step;
+	var checkPayResult = function(payment){
+		$scope.current = payment;
 		Popup.show($scope, 'templates/modal-user-pay-result.html',function(){
 			$scope.done($scope.user);
 		},function(){
@@ -110,11 +107,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 	
-	$scope.showPurchaserLagel = function(){
-		Popup.show($scope, 'templates/modal-purchaser-lagel.html');
-	};
-	
-	
+
 	var flowStepOut = function(actionID, params,succeed) {
 		var step = {};
 
@@ -123,11 +116,38 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		}
 		step.ActionID = actionID;
 		step.PaymentID = params.PaymentID;
-		var UserPay = new UserPayFlow(step);
-		UserPay.$save(function(resp) {
+		var paymentFlow = new PaymentFlow(step);
+		paymentFlow.$save(function(resp) {
 			succeed(resp);
 		});
 	};
+	
+}).controller('SignupCtrl', function($scope, Users,Popup) {
+	$scope.user = {};
+
+	$scope.signup = function() {		
+		if($scope.user.TobePurchaser){		
+			var User = new Users($scope.user);
+			User.$save(function(resp) {
+				$scope.user.ID = resp.ID;
+				Popup.show($scope, 'templates/modal-pay-for-purchaser.html',function(){
+					
+				});
+			});
+		}else{
+			var User = new Users($scope.user);
+			User.$save(function() {
+				$scope.$parent.closeModal($scope.user);
+			});
+		}
+	};
+	
+	
+	$scope.showPurchaserLagel = function(){
+		Popup.show($scope, 'templates/modal-purchaser-lagel.html');
+	};
+	
+	
 
 	$scope.loadBid = function() {
 		$scope.bids = OrderBiding.query({

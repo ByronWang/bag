@@ -132,10 +132,10 @@ angular.module('starter.services', []).factory('Host', function() {
 	return $resource(Host.host + '/d/OrderItem/:itemId/OrderItemFlow/:flowId');
 }).factory('OrderItemFlow', function($resource, Host) {
 	return $resource(Host.host + '/d/OrderItemFlow/:flowId');
-}).factory('UserPayFlow', function($resource, Host) {
-	return $resource(Host.host + '/d/UserPayFlow/:flowId');
-}).factory('UserPayFlowByUser', function($resource, Host) {
-	return $resource(Host.host + '/d/User/:userId/UserPayFlow/:flowId');
+}).factory('PaymentFlow', function($resource, Host) {
+	return $resource(Host.host + '/d/PaymentFlow/:flowId');
+}).factory('PaymentFlowByUser', function($resource, Host) {
+	return $resource(Host.host + '/d/User/:userId/PaymentFlow/:flowId');
 }).factory('OrderBiding', function($resource, Host) {
 	return $resource(Host.host + '/d/Bid/:bidId');
 }).factory('Camera', [ '$q', 'Host', function($q, Host) {
