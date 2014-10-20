@@ -1,8 +1,13 @@
 <pane x-ng-hide="current.ActionID==Actions.cancelPurchasing.ID || current.ActionID==Actions.cancelOrder.ID">
 	<div class="list action data">
 		<div class="item message message-strong energized">
-			<i class="ion-ios7-information-outline"></i><span>买家已确认收货！</span>
+			<i class="ion-ios7-information-outline"></i><span>买家已确认收货</span>
 		</div>
+        <div class="item item-avatar item-product-user">
+            <img src="{{suitor.Purchaser.Image | URI}}">
+            <span >{{suitor.PurchaserNickName}}</span>
+            <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
+        </div>
 		<div class="item item-input item-input-note">
 			<span class="label">预计</span>{{current.Extends.EstimateArriveDatetime}}<span class="item-note">天后到达</span>
 		</div>

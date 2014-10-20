@@ -4,9 +4,12 @@
 			<button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
 		</div>
 		<h1 class="title">登录</h1>
+        <div class="buttons">
+            <button class="button button-clear" x-ng-click="showSignup()">注册</button>
+        </div>
 	</ion-header-bar>
 	<ion-content>
-		<div class="list">
+		<div class="list list-inset" style="margin: 10px;">
 			<label class="item item-input">
 				<span class="input-label">用户名</span>
 				<select x-ng-model="user.Name" x-ng-options="u.Name as (u.NickName + ' - ' + u.Name ) for u in users">
@@ -23,9 +26,17 @@
 				<input type="text"  x-ng-model="user.host" class="input">
 			</label>
 		</div>
+        <div class="list" style="margin: 0px 10px;">
+            <div class="item" style="border: none; padding: 0px">
+                <label class="checkbox note">
+                    <input type="checkbox" class="samll-checkbox" x-ng-model="data.checkall"/>
+                    <span class="font-note" style="position: absolute; top: 0.6em; left: 2.5em;">记住密码</span>
+                </label>
+            </div>
+        </div>
 		<div class="padding">
 			<button class="button button-block button-positive" x-ng-click="login();">登录</button>
 		</div>
-		<div class="right"><a x-ng-click="showSignup()">免费注册</a></div>
+		<!--<div class="right"><a x-ng-click="showSignup()">免费注册</a></div>-->
 	</ion-content>
 </ion-modal-view>

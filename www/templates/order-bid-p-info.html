@@ -1,6 +1,6 @@
 <div class="list action data item-product-info">
 	<div class="item message message-strong energized">
-		<i class="ion-ios7-information-outline"></i><span>成功竞标！</span>
+		<i class="ion-ios7-information-outline"></i><span>竞标成功</span>
 	</div>
 	<div class="item item-avatar item-product-user">
 		<img src="{{current.Bid.Image | URI}}">
@@ -23,7 +23,7 @@
 	<div class="item">
 		<span class="label"> 运费 </span><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
 	</div>
-	<div class="item comment item-icon-right" x-ng-show="current.Bid.Description">
+	<div class="item comment item-icon-right" x-ng-show="current.Bid.Comment">
 		<span class="label"> 备注 </span>
 		<a class="trigger"  data-ng-click="showDescription=!showDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
 		<span class="item-value" data-ng-hide="showDescription">{{current.Bid.Comment}}</span>

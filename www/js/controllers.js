@@ -860,7 +860,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
             };
 
 }).controller('AccountCtrl', function($scope, Popup) {
-
+    $scope.showLogin = function() {
+        Popup.show($scope, 'templates/modal-login.html');
+    };
 	$scope.showUser = function() {
 		Popup.show($scope, 'templates/modal-account-userinfo.html');
 	};

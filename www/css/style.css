@@ -423,13 +423,21 @@ img.main {
 }
 
 .item-input-note .item-note {
-	-webkit-box-flex: 10;
-	-webkit-flex: 10 0 20px;
-	-moz-box-flex: 10;
-	-moz-flex: 10 0 20px;
-	-ms-flex: 10 0 20px;
-	flex: 10 0 20px;
-	padding-left: 10px;
+	/*-webkit-box-flex: 10;*/
+	/*-webkit-flex: 10 0 20px;*/
+	/*-moz-box-flex: 10;*/
+	/*-moz-flex: 10 0 20px;*/
+	/*-ms-flex: 10 0 20px;*/
+	/*flex: 10 0 20px;*/
+	/*padding-left: 10px;*/
+    /*float: right;*/
+    top: 13px;
+    right: 11px;
+    text-align: center;
+    min-width: 32px;
+    position: absolute;
+    height: 100%;
+    font-size: 16px;
 }
 
 input.ng-invalid.ng-dirty {
@@ -657,6 +665,10 @@ div.item-product-info div.message+.item-avatar .item-note i.chatbox {
 .item-value.strength b {
 	font-weight: bold;
 	font-size: 16px;
+    margin-left: 0px;
+}
+
+.list.action .item-value.strength b {
     margin-left: -4px;
 }
 
@@ -746,7 +758,7 @@ div.prog {
 }
 
 .item.item-info.item-outline img {
-    top: 15px;
+    top: 17px;
 }
 
 .item.item-info.item-outline h2 {
@@ -776,6 +788,51 @@ div.prog {
     border-radius: 4px 4px;
     padding: 3px 6px;
     vertical-align: middle;
+}
+label.checkbox input[type=checkbox].samll-checkbox {
+    position: relative;
+    top: 0;
+    left: 0;
+    max-width: 20px;
+    max-height: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+label.checkbox input:before, .checkbox .checkbox-icon:before {
+    border-color: red;
+}
+
+label.checkbox input:checked:before, .checkbox input:checked + .checkbox-icon:before {
+    background: red;
+}
+
+label.checkbox.note input:before, .checkbox.note .checkbox-icon:before {
+    border-color: #aaaaaa;
+}
+
+label.checkbox.note input:checked:before, .checkbox.note input:checked + .checkbox-icon:before {
+    background: #aaaaaa;
+}
+
+label.checkbox input:after, .checkbox-icon:after {
+    -webkit-transition: opacity 0.05s ease-in-out;
+    -moz-transition: opacity 0.05s ease-in-out;
+    transition: opacity 0.05s ease-in-out;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 30%;
+    left: 21%;
+    display: table;
+    width: 12px;
+    height: 8.33333px;
+    border: 3px solid #fff;
+    border-top: 0;
+    border-right: 0;
+    content: ' ';
+    opacity: 0;
 }
 
 .order-state-bid {
