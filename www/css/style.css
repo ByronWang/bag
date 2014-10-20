@@ -423,13 +423,21 @@ img.main {
 }
 
 .item-input-note .item-note {
-	-webkit-box-flex: 10;
-	-webkit-flex: 10 0 20px;
-	-moz-box-flex: 10;
-	-moz-flex: 10 0 20px;
-	-ms-flex: 10 0 20px;
-	flex: 10 0 20px;
-	padding-left: 10px;
+	/*-webkit-box-flex: 10;*/
+	/*-webkit-flex: 10 0 20px;*/
+	/*-moz-box-flex: 10;*/
+	/*-moz-flex: 10 0 20px;*/
+	/*-ms-flex: 10 0 20px;*/
+	/*flex: 10 0 20px;*/
+	/*padding-left: 10px;*/
+    /*float: right;*/
+    top: 13px;
+    right: 11px;
+    text-align: center;
+    min-width: 32px;
+    position: absolute;
+    height: 100%;
+    font-size: 16px;
 }
 
 input.ng-invalid.ng-dirty {
@@ -657,6 +665,10 @@ div.item-product-info div.message+.item-avatar .item-note i.chatbox {
 .item-value.strength b {
 	font-weight: bold;
 	font-size: 16px;
+    margin-left: 0px;
+}
+
+.list.action .item-value.strength b {
     margin-left: -4px;
 }
 
@@ -746,7 +758,7 @@ div.prog {
 }
 
 .item.item-info.item-outline img {
-    top: 15px;
+    top: 17px;
 }
 
 .item.item-info.item-outline h2 {

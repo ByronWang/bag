@@ -2,23 +2,34 @@
 	<div class="list action data">
 		<div class="item item-product-info">
 			<div class="message message-strong energized">
-				<i class="ion-ios7-information-outline"></i><span>买手尚未发货，请等待！</span>
+				<i class="ion-ios7-information-outline"></i><span>买手尚未发货</span>
 			</div>
 		</div>
+        <div class="item item-avatar item-product-user">
+            <img src="{{suitor.Purchaser.Image | URI}}">
+            <span >{{suitor.PurchaserNickName}}</span>
+            <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
+        </div>
 	</div>
 </pane>
 <pane x-ng-show="current.ActionID==Actions.delivering.ID">
-	<div class="list action data">
-		<div class="item message message-strong energized">
-				<i class="ion-ios7-information-outline"></i><span>买手已发货！</span>
-			</div>
-			<div class="item">
-				<span class="label">预计</span><span class="item-value">{{current.Extends.EstimateArriveDatetime}}天后到达</span>
-			</div>
-			<div class="item">
-				<span class="label">快递单号</span><span class="item-value">{{current.Extends.TrackingNo}}</span>
-			</div>
-		</div>
-	</div>
-	<button class="button button-positive button-block" x-ng-click="confirmDelivering();">确认收货</button>
+    <div class="list action data">
+        <div class="item message message-strong energized">
+            <i class="ion-ios7-information-outline"></i><span>买手已发货</span>
+        </div>
+        <div class="item item-avatar item-product-user">
+            <img src="{{suitor.Purchaser.Image | URI}}">
+            <span>{{suitor.PurchaserNickName}}</span>
+            <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
+        </div>
+        <div class="item">
+            <span class="label">预计</span><span class="item-value">{{current.Extends.EstimateArriveDatetime}}天后到达</span>
+        </div>
+        <div class="item">
+            <span class="label">快递单号</span><span class="item-value">{{current.Extends.TrackingNo}}</span>
+        </div>
+        <div class="item">
+            <button class="button button-positive button-block" x-ng-click="confirmDelivering();">确认收货</button>
+        </div>
+    </div>
 </pane>

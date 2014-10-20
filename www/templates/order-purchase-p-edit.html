@@ -43,7 +43,7 @@
 	<div class="list action data">
 		<div class="item item-product-info">
 			<div class="message message-strong energized">
-				<i class="ion-ios7-information-outline"></i><span>买家已经选择您为他代购,并支付保证金 </span>
+				<i class="ion-ios7-information-outline"></i><span>请开始购买</span>
 			</div>
 		</div>
 	</div>
@@ -54,7 +54,7 @@
 	<div class="list action data">
 		<div class="item item-product-info">
 			<div class="message message-strong energized">
-				<i class="ion-ios7-information-outline"></i><span> 你已经取消本次代购</span>
+				<i class="ion-ios7-information-outline"></i><span> 您已经取消本次代购</span>
 			</div>
 		</div>
 	</div>
@@ -62,9 +62,9 @@
 <div x-ng-show="current.ActionID==Actions.purchasing.ID">
 	<div class="list action data">
 		<div class="item message message-strong energized">
-			<i class="ion-ios7-information-outline"></i><span>你已经开始购买</span>
+			<i class="ion-ios7-information-outline"></i><span>您已经开始购买</span>
 		</div>
-		<div class="item item-avatar">
+		<div class="item item-avatar item-product-user">
 			<img src="{{current.Bid.Purchaser.Image | URI}}">
 			<span>{{current.Bid.PurchaserNickName}}</span>
 			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
@@ -114,5 +114,7 @@
 			<img align="center" x-ng-src="{{item.Product.Image | URI}}">
 		</div>
 	</div>
-	<button class="button button-positive button-block" x-ng-click="finishPurchasing()">完成购买</button>
+    <div>
+	    <button class="button button-positive button-block" x-ng-click="finishPurchasing()">完成购买</button>
+    </div>
 </div>
