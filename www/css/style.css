@@ -5,7 +5,15 @@
 }
 
 .list.data {
-	border: none;
+    border: none;
+}
+
+.list.action.data {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 0px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .list.data>.item>.label,.data-view .item-extends>.label {
@@ -625,7 +633,7 @@ div.message i {
 	margin-right: 0.3em;
 }
 
-div.message.message-strong {
+.list.action.data div.message.message-strong {
 	padding-bottom: 8px;
 }
 
@@ -649,10 +657,16 @@ div.item-product-info div.message+.item-avatar .item-note i.chatbox {
 .item-value.strength b {
 	font-weight: bold;
 	font-size: 16px;
+    margin-left: -4px;
+}
+
+.item-value.strength + .comment {
+    margin-left: 1em;
+    font-size: 80%;
+    color: #aaaaaa;
 }
 
 .item.input-comment{
-	
 }
 
 .item.input-comment .input-label {
@@ -705,6 +719,7 @@ div.item-product-info div.message+.item-avatar .item-note i.chatbox {
 	border-bottom: 1px solid #ddd;
 	padding: 4px 6px;
 }
+
 div.prog {
     text-align: center;
 }
@@ -723,13 +738,11 @@ div.prog {
     width: 1.1em;
     margin: 0 auto;
     /*font-weight: bold;*/
-    color: #ff6767;
     white-space: normal;
 }
 
 .prog i {
     font-size: 2em;
-    color: #ff6767;
 }
 
 .item.item-info.item-outline img {
@@ -762,6 +775,37 @@ div.prog {
     color: white;
     border-radius: 4px 4px;
     padding: 3px 6px;
-    margin-right: 3px;
     vertical-align: middle;
+}
+
+.order-state-bid {
+    color: #f0b840;
+}
+
+.order-state-purchase {
+    color: #8a6de9;
+}
+
+.order-state-delivering {
+    color: #4a87ee;
+}
+
+.order-state-completed {
+    color: #66cc33;
+}
+
+.order-state-bid-bg {
+    background-color: #f0b840;
+}
+
+.order-state-purchase-bg {
+    background-color: #8a6de9;
+}
+
+.order-state-delivering-bg {
+    background-color: #4a87ee;
+}
+
+.order-state-completed-bg {
+    background-color: #66cc33;
 }

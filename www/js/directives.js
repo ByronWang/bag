@@ -15,9 +15,9 @@ angular.module('starter.directives', []).directive('ngExts', [ '$http', '$contro
 				return scope.$eval(attr.bgPriceHint) - scope.$eval(attr.priceFrom);
 			}, function() {
 				var result = scope.$eval(attr.bgPriceHint) - scope.$eval(attr.priceFrom);
-				if (result > 0)	 element.html('<i class="ion-arrow-up-a">&nbsp;</i>' + result+ '元');
-				else if (result < 0)	element.html('<i class="ion-arrow-down-a">&nbsp;</i>' + result + '元');
-				else	element.html('' + result+ '元');
+				if (result > 0)	 element.html('<i class="ion-arrow-up-a">&nbsp;</i>' + result+ ' 元');
+				else if (result < 0)	element.html('<i class="ion-arrow-down-a">&nbsp;</i>' + result + ' 元');
+				else	element.html('' + result+ ' 元');
 			});
 		}
 	};

@@ -1,18 +1,6 @@
 <ion-view title="已发布订单">
     <ion-content class="has-subheader">
 
-        <style>
-            span.order-state {
-                font-size: 70%;
-                font-weight: normal;
-                color: white;
-                border-radius: 4px 4px;
-                padding: 3px 6px;
-                margin-right: 3px;
-                vertical-align: middle;
-            }
-        </style>
-
         <div class="padding-top" x-ng-show="orders.length==0">
             <p>
                 暂时还没有订单哦！
@@ -41,7 +29,8 @@
                         <span class="label">件数</span><span class="item-value">{{item.Quantity}}</span>
                     </div>
                     <div class="item">
-                        <span class="label">状态</span><span class="order-state energized-bg">{{item.StatusName}}</span>
+                        <span class="label">状态</span><span class="order-state"
+                                                           x-ng-class="{'1': 'order-state-bid-bg', 2: 'order-state-purchase-bg', 3: 'order-state-delivering-bg', 4: 'order-state-completed-bg'}[item.StatusID]">{{item.StatusName}}</span>
                     </div>
                 </div>
 

@@ -47,6 +47,7 @@
 			border-top: solid white 1px;
 		}
 
+
 	</style>
 	<ion-content has-header="true" padding="false">
 		<div class="list top">
@@ -109,36 +110,36 @@
 			</div>
 			<div class="item">
 
-				<div class="row">
-					<div class="prog col" x-ng-click="statusSlide($event,0)">
-						<i class="icon ion-ios7-clock"></i>
-						<div class="name">
+                <div class="row">
+                    <div class="prog col" x-ng-click="statusSlide($event,0)">
+                        <i class="icon ion-ios7-clock order-state-bid"></i>
+                        <div class="name order-state-bid">
                             发布中
                         </div>
-					</div>
+                    </div>
 
-					<div class="prog col" x-ng-click="statusSlide($event,1)">
-						<i class="icon ion-ios7-checkmark" style="color: #4a87ee;"></i>
-						<div class="name" style="color: #4a87ee;">
+                    <div class="prog col" x-ng-click="statusSlide($event,1)">
+                        <i class="icon ion-ios7-checkmark order-state-purchase"></i>
+                        <div class="name order-state-purchase">
                             代购中
                         </div>
-					</div>
+                    </div>
 
-					<div class="prog col" x-ng-click="statusSlide($event,2)">
-						<i class="icon ion-ios7-circle-filled" style="color: #f0b840"></i>
-						<div class="name" style="color: #f0b840">
+                    <div class="prog col" x-ng-click="statusSlide($event,2)">
+                        <i class="icon ion-ios7-circle-filled order-state-delivering"></i>
+                        <div class="name order-state-delivering">
                             收货中
                         </div>
-					</div>
+                    </div>
 
-					<!--#aaaaaa 66cc33-->
-					<div class="prog col" x-ng-click="statusSlide($event,3)">
-						<i class="ion-ios7-close" style="color: #66cc33"></i>
-						<div class="name"style="color: #66cc33">
-                            完成
+                    <!--#aaaaaa 66cc33-->
+                    <div class="prog col" x-ng-click="statusSlide($event,3)">
+                        <i class="ion-ios7-close order-state-completed"></i>
+                        <div class="name order-state-completed">
+                            已完成
                         </div>
-					</div>
-				</div>
+                    </div>
+                </div>
 
 				<ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide">
 					<ion-slide>

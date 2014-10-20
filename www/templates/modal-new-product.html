@@ -62,13 +62,13 @@
             <div x-ng-show="!categoryInEdit">
                 <div style="padding: 10px 0; text-align: center;">
                     <div class="image">
+                        <div>
+                            <img x-ng-src="{{product.Image | URI:'product'}}" x-ng-click="">
+                        </div>
                         <a x-ng-click="showCameraMenu()">
                             <i class="icon ion-ios7-camera"></i>
                             <h2>更新图片</h2>
                         </a>
-                        <div>
-                            <img x-ng-src="{{product.Image | URI:'product'}}" x-ng-click="">
-                        </div>
                     </div>
                 </div>
 

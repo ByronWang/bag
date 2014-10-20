@@ -16,6 +16,13 @@
 		<div class="item item-input">
 			<span class="label">放弃时间</span><span class="item-value">{{current.Extends.CancelPurchasingDatetime}}</span>
 		</div>
+        <div class="item comment item-icon-right">
+            <span class="label">放弃原因</span>
+            <a class="trigger" data-ng-click="showDescription=!showDescription"><i
+                    class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i
+                    class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
+            <span class="item-value" data-ng-hide="showDescription">该商品以售罄！</span>
+        </div>
 	</div>
 </pane>
 <pane x-ng-show="current.ActionID==Actions.cancelOrder.ID">
@@ -26,5 +33,12 @@
 		<div class="item">
 			<span class="label">放弃时间</span><span class="item-value">{{current.Extends.CancelOrderDatetime}}</span>
 		</div>
+        <div class="item comment item-icon-right">
+            <span class="label">放弃原因</span>
+            <a class="trigger" data-ng-click="showDescription=!showDescription"><i
+                    class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i
+                    class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
+            <span class="item-value" data-ng-hide="showDescription">突然不想买了！</span>
+        </div>
 	</div>
 </pane>
