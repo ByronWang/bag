@@ -1,4 +1,4 @@
-<pane>
+<pane x-ng-hide="current.ActionID==Actions.cancelPurchasing.ID || current.ActionID==Actions.cancelOrder.ID">
 	<div class="list action data item-product-info">
 		<div class="item message message-strong energized">
 			<i class="ion-ios7-information-outline"></i><span>购买已经完成</span>
@@ -9,7 +9,7 @@
 			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
 		</div>
 		<div class="item">
-			<span class="label"> 开始时间 </span><span class="item-value">{{current.Extends.PurchasingStartDatetime}}</span></span>
+			<span class="label"> 开始时间 </span><span class="item-value">{{current.Extends.PurchasingStartDatetime}}</span>
 		</div>
 		<div class="item">
 			<span class="label"> 开始地点 </span><span class="item-value">中国 上海</span>
@@ -43,7 +43,6 @@
 			<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
 		</div>
 	</div>
-	</div>
 	<div class="item item-product-info">
 		<div class="message" style="font-weight: bold;">
 			<i class="ion-image"></i><span>商品照片</span>
@@ -55,6 +54,17 @@
 			<img align="center" x-ng-src="{{item.Product.Image | URI}}">
 		</div>
 	</div>
+</pane>
+<div x-ng-show="current.ActionID==Actions.cancelPurchasing.ID">
+	<div class="list action data">
+		<div class="item message message-strong energized">
+			<i class="ion-ios7-information-outline"></i><span>该订单已被买手放弃购买！</span>
+		</div>
+		<div class="item item-input">
+			<span class="label">放弃时间</span><span class="item-value">{{current.Extends.CancelPurchasingDatetime}}</span>
+		</div>
 	</div>
-	</div>
+</div>
+<pane x-ng-show="current.ActionID==Actions.cancelOrder.ID">
+	&nbsp;
 </pane>
