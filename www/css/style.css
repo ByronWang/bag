@@ -642,7 +642,7 @@ div.item-product-info div.message+.item-avatar .item-note i.chatbox {
 	color: #aaaaaa;
 }
 
-.item-value.strength {
+.list.data>.item>.item-value.strength {
 	color: #ff6767;
 }
 
@@ -704,4 +704,64 @@ div.item-product-info div.message+.item-avatar .item-note i.chatbox {
 	border-top: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
 	padding: 4px 6px;
+}
+div.prog {
+    text-align: center;
+}
+
+.prog.active {
+    font-weight: bold;
+}
+
+.prog .name {
+    /*position: relative;*/
+    /*width: 5em;*/
+    /*padding-left: 2em;*/
+    /*padding-right: 2em;*/
+    /*left: -2em*/
+
+    width: 1.1em;
+    margin: 0 auto;
+    /*font-weight: bold;*/
+    color: #ff6767;
+    white-space: normal;
+}
+
+.prog i {
+    font-size: 2em;
+    color: #ff6767;
+}
+
+.item.item-info.item-outline img {
+    top: 15px;
+}
+
+.item.item-info.item-outline h2 {
+    font-weight: bold;
+    margin-bottom: 1px;
+}
+
+.item.item-info.item-outline .notify {
+    position: absolute;
+    top: 45px;
+    right: 32px;
+}
+
+.item.item-info.item-outline .list .item {
+    padding: 1px;
+}
+
+.item.item-info.item-outline .list .item .label {
+    width: 3em;
+    font-weight: normal;
+}
+
+.item.item-outline .order-state {
+    font-size: 70%;
+    font-weight: normal;
+    color: white;
+    border-radius: 4px 4px;
+    padding: 3px 6px;
+    margin-right: 3px;
+    vertical-align: middle;
 }

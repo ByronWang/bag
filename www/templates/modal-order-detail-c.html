@@ -47,32 +47,6 @@
 			border-top: solid white 1px;
 		}
 
-		div.prog {
-			text-align: center;
-		}
-
-		.prog.active {
-			font-weight: bold;
-		}
-
-		.prog .name {
-			/*position: relative;*/
-			/*width: 5em;*/
-			/*padding-left: 2em;*/
-			/*padding-right: 2em;*/
-			/*left: -2em*/
-
-			width: 1.1em;
-			margin: 0 auto;
-			/*font-weight: bold;*/
-			color: #ff6767;
-		}
-
-		.prog i {
-			font-size: 2em;
-			color: #ff6767;
-		}
-
 	</style>
 	<ion-content has-header="true" padding="false">
 		<div class="list top">
@@ -139,32 +113,30 @@
 					<div class="prog col" x-ng-click="statusSlide($event,0)">
 						<i class="icon ion-ios7-clock"></i>
 						<div class="name">
-							发布中
-						</div>
+                            发布中
+                        </div>
 					</div>
 
 					<div class="prog col" x-ng-click="statusSlide($event,1)">
 						<i class="icon ion-ios7-checkmark" style="color: #4a87ee;"></i>
 						<div class="name" style="color: #4a87ee;">
-							代购中
-						</div>
+                            代购中
+                        </div>
 					</div>
 
 					<div class="prog col" x-ng-click="statusSlide($event,2)">
 						<i class="icon ion-ios7-circle-filled" style="color: #f0b840"></i>
-
 						<div class="name" style="color: #f0b840">
-							收货中
-						</div>
+                            收货中
+                        </div>
 					</div>
 
 					<!--#aaaaaa 66cc33-->
 					<div class="prog col" x-ng-click="statusSlide($event,3)">
 						<i class="ion-ios7-close" style="color: #66cc33"></i>
-
 						<div class="name"style="color: #66cc33">
-							完成
-						</div>
+                            完成
+                        </div>
 					</div>
 				</div>
 
