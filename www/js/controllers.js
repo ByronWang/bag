@@ -862,9 +862,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
                 });
             };
 
-}).controller('AccountCtrl', function($scope, Popup) {
+}).controller('AccountCtrl', function($scope, Popup, LoginUser) {
     $scope.showLogin = function() {
-        Popup.show($scope, 'templates/modal-login.html');
+//        Popup.show($scope, 'templates/modal-login.html');
+        LoginUser.needLogin($scope.$new(),function(){
+        });
     };
 	$scope.showUser = function() {
 		Popup.show($scope, 'templates/modal-account-userinfo.html');
@@ -1029,6 +1031,38 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
             $scope.popupPay = function() {
                 Popup.show($scope, 'templates/modal-order-pay.html');
+            }
+
+            $scope.local = function() {
+//                navigator.geolocation.getCurrentPosition(function(position) {
+//                    alert('Latitude: '          + position.coords.latitude          + '\n' +
+//                        'Longitude: '         + position.coords.longitude         + '\n' +
+//                        'Altitude: '          + position.coords.altitude          + '\n' +
+//                        'Accuracy: '          + position.coords.accuracy          + '\n' +
+//                        'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+//                        'Heading: '           + position.coords.heading           + '\n' +
+//                        'Speed: '             + position.coords.speed             + '\n' +
+//                        'Timestamp: '         + position.timestamp                + '\n');
+//                });
+
+                var latitude = position.coords.latitude;    // 31.2836014
+                var longitude = position.coords.longitude;  // 121.471375
+
+                var url = 'http://apis.map.qq.com/ws/geocoder/v1/?location='
+                    + latitude + ',' + longitude + '&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&get_poi=1';
+
+                var address = null;
+                $http.get(url).success(function(resp) {
+                    address = '';
+                });
+
+                navigator.geolocation.getCurrentPosition(function(psoition) {
+                    alert(
+                        '北纬：' + latitude + '\n' +
+                        '东经：' + longitude + '\n' +
+                        '位置：' + ''
+                    );
+                });
             }
 		})
 // ---------------------------------------------------
