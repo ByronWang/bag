@@ -1034,7 +1034,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
             }
 
             $scope.local = function() {
-//                navigator.geolocation.getCurrentPosition(function(position) {
+
+                navigator.geolocation.getCurrentPosition(function(position) {
 //                    alert('Latitude: '          + position.coords.latitude          + '\n' +
 //                        'Longitude: '         + position.coords.longitude         + '\n' +
 //                        'Altitude: '          + position.coords.altitude          + '\n' +
@@ -1043,26 +1044,101 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 //                        'Heading: '           + position.coords.heading           + '\n' +
 //                        'Speed: '             + position.coords.speed             + '\n' +
 //                        'Timestamp: '         + position.timestamp                + '\n');
-//                });
 
-                var latitude = position.coords.latitude;    // 31.2836014
-                var longitude = position.coords.longitude;  // 121.471375
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
 
-                var url = 'http://apis.map.qq.com/ws/geocoder/v1/?location='
-                    + latitude + ',' + longitude + '&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&get_poi=1';
+                    var url = 'http://dev.virtualearth.net/REST/v1/Locations/' + latitude + ',' + longitude
+                        + '?includeEntityTypes=Address&o=json&key=AlVuxcZtD7dY3Hb8ZFcOx_JSm0Vnqq1m82cx77HLguQ-7Em9e0Hul0pNfFLuPCwg&c=zh-Hans'
+                        + "&jsonp=JSON_CALLBACK";
 
-                var address = null;
-                $http.get(url).success(function(resp) {
-                    address = '';
+                    $http.jsonp(url).success(function(obj) {
+                        var resources = obj.resourceSets[0].resources;
+                        var a = resources[resources.length - 1];
+                        // see http://msdn.microsoft.com/zh-cn/library/ff701725.aspx
+                        alert(
+                                '北　纬：' + latitude + '\n' +
+                                '东　经：' + longitude + '\n' +
+                                '国　家：' + a.address.countryRegion + '\n' +
+                                '行政区：' + a.address.adminDistrict + '\n' +
+                                '行政区：' + a.address.adminDistrict2 + '\n' +
+                                '位　置：' + a.address.locality + '\n' +
+                                '地址线：' + a.address.addressLine + '\n' +
+                                '地　址：' + a.address.formattedAddress
+                        );
+                    });
+
+
                 });
 
-                navigator.geolocation.getCurrentPosition(function(psoition) {
-                    alert(
-                        '北纬：' + latitude + '\n' +
-                        '东经：' + longitude + '\n' +
-                        '位置：' + ''
-                    );
-                });
+//                var example = {
+//                    "authenticationResultCode": "ValidCredentials",
+//                    "brandLogoUri": "http:\/\/dev.virtualearth.net\/Branding\/logo_powered_by.png",
+//                    "copyright": "Copyright © 2014 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.",
+//                    "resourceSets": [
+//                        {
+//                            "estimatedTotal": 2,
+//                            "resources": [
+//                                {
+//                                    "__type": "Location:http:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1",
+//                                    "bbox": [31.267987282429324,121.47002949976184,31.275712717570677,121.48208050023817],
+//                                    "name": "MajorRoad, 中国大陆",
+//                                    "point": {
+//                                        "type": "Point",
+//                                        "coordinates": [31.27185, 121.476055]
+//                                    },
+//                                    "address": {
+//                                        "addressLine": "MajorRoad",
+//                                        "countryRegion": "中国大陆",
+//                                        "formattedAddress": "MajorRoad, 中国大陆"
+//                                    },
+//                                    "confidence": "Medium",
+//                                    "entityType": "Address",
+//                                    "geocodePoints": [
+//                                        {
+//                                            "type": "Point",
+//                                            "coordinates": [31.27185, 121.476055],
+//                                            "calculationMethod": "Interpolation",
+//                                            "usageTypes": ["Display", "Route"]
+//                                        }
+//                                    ],
+//                                    "matchCodes": ["Good"]
+//                                },
+//                                {
+//                                    "__type": "Location:http:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1",
+//                                    "bbox": [31.267987282429324, 121.47002949976184, 31.275712717570677, 121.48208050023817],
+//                                    "name": "上海市虹口区中山北一路121号",
+//                                    "point": {
+//                                        "type": "Point",
+//                                        "coordinates": [31.27185, 121.476055]
+//                                    },
+//                                    "address": {
+//                                        "addressLine": "中山北一路121号",
+//                                        "adminDistrict": "上海市",
+//                                        "countryRegion": "中华人民共和国",
+//                                        "formattedAddress": "上海市虹口区中山北一路121号",
+//                                        "locality": "虹口区"
+//                                    },
+//                                    "confidence": "Medium",
+//                                    "entityType": "Address",
+//                                    "geocodePoints": [
+//                                        {
+//                                            "type": "Point",
+//                                            "coordinates": [31.27185, 121.476055],
+//                                            "calculationMethod": "InterpolationOffset",
+//                                            "usageTypes": ["Display"]
+//                                        }
+//                                    ], "matchCodes": ["Good"]
+//                                }
+//                            ]
+//                        }
+//                    ],
+//                    "statusCode": 200,
+//                    "statusDescription": "OK",
+//                    "traceId": "3f3d51e69784433fa5b19041a6ec93d0|HK20271643|02.00.106.800|HK2SCH010280521, HK2SCH010290230, BJ1SCH010032715"
+//                };
+
+
             }
 		})
 // ---------------------------------------------------
