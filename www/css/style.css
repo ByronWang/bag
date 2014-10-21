@@ -851,6 +851,10 @@ label.checkbox input:after, .checkbox-icon:after {
     color: #66cc33;
 }
 
+.order-state-disabled {
+    color: #aaaaaa;
+}
+
 .order-state-bid-bg {
     background-color: #f0b840;
 }
@@ -865,4 +869,8 @@ label.checkbox input:after, .checkbox-icon:after {
 
 .order-state-completed-bg {
     background-color: #66cc33;
+}
+
+.order-state-disabled-bg {
+    background-color: #aaaaaa;
 }
