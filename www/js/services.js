@@ -12,7 +12,7 @@ angular.module('starter.services', []).factory('Host', function() {
 		host = "http://" + host + ":8686";
 		pc =false;
 	}
-    host = "http://www.gouwudai.net.cn:8686";
+//    host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
 		pc : pc,
@@ -132,6 +132,8 @@ angular.module('starter.services', []).factory('Host', function() {
 	return $resource(Host.host + '/d/OrderItem/:itemId/OrderItemFlow/:flowId');
 }).factory('OrderItemFlow', function($resource, Host) {
 	return $resource(Host.host + '/d/OrderItemFlow/:flowId');
+}).factory('Payments', function($resource, Host) {
+	return $resource(Host.host + '/d/Payment/:paymentId');
 }).factory('PaymentFlow', function($resource, Host) {
 	return $resource(Host.host + '/d/PaymentFlow/:flowId');
 }).factory('PaymentFlowByUser', function($resource, Host) {
@@ -276,13 +278,20 @@ angular.module('starter.services', []).factory('Host', function() {
 				var users = loginUsers.query({
 					Name : username
 				}, function() {
-					var resultUser = users[0];
-					angular.extend(_this, resultUser);
+					var user = users[0];					
+					_this.ID = user.ID;
+					_this.isLogin = true;
+					_this.isPurchase = user.isPurchase;
+					_this.Name = user.Name;
+					_this.NickName = user.NickName;
+					_this.Image = user.Image;
+					_this.BePurchaser = user.BePurchaser;
+					
 					if (!_this.Image) {
 						_this.Image = "img/avatar-default.jpg";
 					}
 					_this.isLogin = true;
-					funcSucceed(resultUser);
+					funcSucceed(user);
 				});
 			});
 		},
@@ -292,8 +301,7 @@ angular.module('starter.services', []).factory('Host', function() {
 				userId : this.ID
 			}, function() {
 				_this.ID = user.ID;
-				;
-				_this.isLogin = user.isLogin;
+				_this.isLogin = true;
 				_this.isPurchase = user.isPurchase;
 				_this.Name = user.Name;
 				_this.NickName = user.NickName;
@@ -336,32 +344,36 @@ angular.module('starter.services', []).factory('Host', function() {
 	return {
 		show : function($scope, templateUrl, onSucceed,onCancel) {
 			var scope = $scope.$new();
+			var thisModal = {};
 			$ionicModal.fromTemplateUrl(templateUrl, {
 				scope : scope,
 				animation : 'slide-left-right'
 			}).then(function(modal) {
-				$scope.modal = modal;
-				$scope.modal.show();
+				thisModal = modal;
+				thisModal.show();
 			});
 
 			scope.closeModal = function(result) {
 				if(onSucceed){
 					onSucceed(result);
 				}
-				scope.modal.hide();
+				thisModal.hide();
+				thisModal.remove();
 			};
 
 			scope.done = function(result) {
 				if(onSucceed){
 					onSucceed(result);
 				}
-				scope.modal.hide();
+				thisModal.hide();
+				thisModal.remove();
 			};
 			scope.cancel = function(result) {
 				if(onCancel){
 					onCancel(result);
 				}
-				scope.modal.hide();
+				thisModal.hide();
+				thisModal.remove();
 			};
 		}
 	};

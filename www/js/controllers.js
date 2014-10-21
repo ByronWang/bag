@@ -58,6 +58,14 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			});
 		});
 	};	
+
+}).controller('BecomePurchaserCtrl', function($scope, Users,Popup) {
+	$scope.user = $scope.currentUser;
+	$scope.pay = function(){
+		Popup.show($scope, 'templates/modal-pay-for-purchaser.html',function(user){
+			 $scope.currentUser.reload();
+		});
+	};
 }).controller('PayForPurchaserCtrl', function($scope, Users,Popup) {
 	$scope.user= $scope.$parent.user;
 	$scope.payment = {
@@ -79,7 +87,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.current = {};
 	
 	$scope.doPay = function(){
-		if($scope.payment.PayMethod==1){
+		if($scope.payment.PayMethodID==1){
 			payByPersonalAccount();
 		}else{
 			payByBank();
@@ -124,7 +132,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			succeed(resp);
 		});
 	};
-	
 }).controller('SignupCtrl', function($scope, Users,Popup) {
 	$scope.user = {};
 
@@ -868,6 +875,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
         LoginUser.needLogin($scope.$new(),function(){
         });
     };
+    
+    $scope.becomePurchaser = function(){
+		Popup.show($scope, 'templates/modal-become-purchaser.html');    	
+    };
+    
 	$scope.showUser = function() {
 		Popup.show($scope, 'templates/modal-account-userinfo.html');
 	};
@@ -945,8 +957,24 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			});
 		}
 	};
-}).controller('AccountBalanceCtrl', function($scope, $state) {
-
+}).controller('AccountBalanceCtrl', function($scope, Payments) {
+	$scope.payments =  Payments.query();
+	$scope.paymentsFromBank =  Payments.query({
+			FromUser : $scope.currentUser.ID,
+			FromAccountType:1
+	});
+	$scope.paymentsFromPersonal =  Payments.query({
+		FromUser : $scope.currentUser.ID,
+		FromAccountType:2
+	});
+	$scope.recieveToBank =  Payments.query({
+			ToUser : $scope.currentUser.ID,
+			ToAccountType:1
+	});
+	$scope.recieveToPersonal =  Payments.query({
+		ToUser : $scope.currentUser.ID,
+		ToAccountType:2
+	});
 }).controller('AccountLegalCtrl', function($scope, $state) {
 
 }).controller('AccountAboutCtrl', function($scope, $state) {

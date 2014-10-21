@@ -6,6 +6,47 @@
 		<h1 class="title">筛选</h1>
 	</ion-header-bar>
 	<ion-content class="has-header padding">
-		账本
+
+		<div class="list" x-ng-show="paymentsFromBank.length>0">
+			<a class="item item-icon-right" x-ng-repeat="c in paymentsFromBank"> 
+
+			
+	{{c.FromAccountTypeName}}
+	{{c.FromAccountTypeID}}
+    {{c.ToAccountTypeName}}
+    {{c.ToAccountTypeID}}
+	{{c.FromUserID}}
+	{{c.ToUserID}}
+	{{c.Description}}
+    {{c.Amount}}
+	
+	{{c.PayTypeName}}
+	{{c.PayMethodName}}
+	{{c.Datetime}}
+	{{c.OrderNo}}
+	{{c.TradeNo}}
+	{{c.DeadlineDatetime}}
+	
+	 <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
+		</div>
+		<div class="list" x-ng-show="paymentsFromPersonal.length>0">
+			<a class="item item-icon-right" x-ng-repeat="c in paymentsFromPersonal"> 
+	{{c.FromAccountTypeName}}
+	{{c.FromAccountTypeID}}
+    {{c.ToAccountTypeName}}
+    {{c.ToAccountTypeID}}
+	{{c.FromUserID}}
+	{{c.ToUserID}}
+	{{c.Description}}
+    {{c.Amount}}
+	
+	{{c.PayTypeName}}
+	{{c.PayMethodName}}
+	{{c.Datetime}}
+	{{c.OrderNo}}
+	{{c.TradeNo}}
+	{{c.DeadlineDatetime}}
+	 <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
+		</div>
 	</ion-content>
 </ion-modal-view>
