@@ -1048,11 +1048,14 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
                     var latitude = position.coords.latitude;
                     var longitude = position.coords.longitude;
 
-                    var url = 'http://dev.virtualearth.net/REST/v1/Locations/' + latitude + ',' + longitude
+                    alert(latitude + ', ' + longitude);
+
+                    var url = 'http://111.221.29.14/REST/v1/Locations/' + latitude + ',' + longitude
                         + '?includeEntityTypes=Address&o=json&key=AlVuxcZtD7dY3Hb8ZFcOx_JSm0Vnqq1m82cx77HLguQ-7Em9e0Hul0pNfFLuPCwg&c=zh-Hans'
                         + "&jsonp=JSON_CALLBACK";
 
                     $http.jsonp(url).success(function(obj) {
+
                         var resources = obj.resourceSets[0].resources;
                         var a = resources[resources.length - 1];
                         // see http://msdn.microsoft.com/zh-cn/library/ff701725.aspx
@@ -1066,11 +1069,17 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
                                 '地址线：' + a.address.addressLine + '\n' +
                                 '地　址：' + a.address.formattedAddress
                         );
+                    }).error(function(data, status) {
+                        alert("error " + data + " " + status);
                     });
 
 
-                });
-
+                }, function(error) {
+                    alert('code: '    + error.code    + '\n' +
+                        'message: ' + error.message + '\n');
+                }, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
+				
+				
 //                var example = {
 //                    "authenticationResultCode": "ValidCredentials",
 //                    "brandLogoUri": "http:\/\/dev.virtualearth.net\/Branding\/logo_powered_by.png",
@@ -1137,6 +1146,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 //                    "statusDescription": "OK",
 //                    "traceId": "3f3d51e69784433fa5b19041a6ec93d0|HK20271643|02.00.106.800|HK2SCH010280521, HK2SCH010290230, BJ1SCH010032715"
 //                };
+
 
 
             }
