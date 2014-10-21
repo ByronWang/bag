@@ -1,3 +1,4 @@
 cn.xj.bag.plugin.unionpay
 nl.x-services.plugins.toast
 org.apache.cordova.dialogs
+org.apache.cordova.geolocation
