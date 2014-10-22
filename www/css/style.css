@@ -569,8 +569,10 @@ div.item-product-title div {
 div.item-product-title div.right {
 	position: absolute;
 	right: 8px;
-	bottom: 8px;
+	bottom: 4px;
 	display: inline;
+    /*position: relative;*/
+    /*display: block;*/
 }
 
 div.item-product-title div i {
@@ -757,8 +759,12 @@ div.prog {
     font-size: 2em;
 }
 
+.prog i.prog-arrow {
+    font-size: 1em;
+}
+
 .item.item-info.item-outline img {
-    top: 17px;
+    /*top: 17px;*/
 }
 
 .item.item-info.item-outline h2 {
@@ -789,6 +795,7 @@ div.prog {
     padding: 3px 6px;
     vertical-align: middle;
 }
+
 label.checkbox input[type=checkbox].samll-checkbox {
     position: relative;
     top: 0;

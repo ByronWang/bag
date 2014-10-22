@@ -116,12 +116,18 @@
                         <div class="name order-state-bid">
                             发布中
                         </div>
+                        <div class="name order-state-bid" x-ng-show="statusActiveSlide==0">
+                            <i class="ion-arrow-up-b prog-arrow"></i>
+                        </div>
                     </div>
 
                     <div class="prog col" x-ng-click="statusSlide($event,1)">
                         <i class="icon ion-ios7-checkmark order-state-purchase"></i>
                         <div class="name order-state-purchase">
                             代购中
+                        </div>
+                        <div class="name order-state-purchase" x-ng-show="statusActiveSlide==1">
+                            <i class="ion-arrow-up-b prog-arrow"></i>
                         </div>
                     </div>
 
@@ -130,6 +136,9 @@
                         <div class="name order-state-delivering">
                             收货中
                         </div>
+                        <div class="name order-state-delivering" x-ng-show="statusActiveSlide==2">
+                            <i class="ion-arrow-up-b prog-arrow"></i>
+                        </div>
                     </div>
 
                     <!--#aaaaaa 66cc33-->
@@ -137,6 +146,9 @@
                         <i class="ion-ios7-close order-state-completed"></i>
                         <div class="name order-state-completed">
                             已完结
+                        </div>
+                        <div class="name order-state-completed" x-ng-show="statusActiveSlide==3">
+                            <i class="ion-arrow-up-b prog-arrow"></i>
                         </div>
                     </div>
                 </div>
