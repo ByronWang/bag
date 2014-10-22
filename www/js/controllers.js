@@ -1059,6 +1059,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
             $scope.popupPay = function() {
                 Popup.show($scope, 'templates/modal-order-pay.html');
+                alert(window.document.getElementsByTagName("body")[0].clientWidth);
+                alert(window.devicePixelRatio);
+                alert(screen.width);
             }
 
             $scope.local = function() {
