@@ -111,43 +111,55 @@
 			<div class="item">
 
                 <div class="row">
-                    <div class="prog col" x-ng-click="statusSlide($event,0)">
-                        <i class="icon ion-ios7-clock order-state-bid"></i>
-                        <div class="name order-state-bid">
+                    <div class="prog col"
+                         x-ng-class="{true: 'prog-order-state-bid', false: 'prog-order-state-disabled'}[current.StatusID>=1]"
+                         x-ng-click="statusSlide($event,0)">
+                        <i class="icon"
+                           x-ng-class="{'ion-ios7-clock': current.StatusID==1, 'ion-ios7-checkmark': current.StatusID>1}"></i>
+                        <div class="name">
                             发布中
                         </div>
-                        <div class="name order-state-bid" x-ng-show="statusActiveSlide==0">
+                        <div class="name" x-ng-show="statusActiveSlide==0">
                             <i class="ion-arrow-up-b prog-arrow"></i>
                         </div>
                     </div>
 
-                    <div class="prog col" x-ng-click="statusSlide($event,1)">
-                        <i class="icon ion-ios7-checkmark order-state-purchase"></i>
-                        <div class="name order-state-purchase">
+                    <div class="prog col"
+                         x-ng-class="{true: 'prog-order-state-purchase', false: 'prog-order-state-disabled'}[current.StatusID>=2]"
+                         x-ng-click="statusSlide($event,1)">
+                        <i class="icon"
+                           x-ng-class="{'ion-ios7-clock': current.StatusID==2, 'ion-ios7-checkmark': current.StatusID>2, 'ion-ios7-circle-filled': current.StatusID<2}"></i>
+                        <div class="name">
                             代购中
                         </div>
-                        <div class="name order-state-purchase" x-ng-show="statusActiveSlide==1">
+                        <div class="name" x-ng-show="statusActiveSlide==1">
                             <i class="ion-arrow-up-b prog-arrow"></i>
                         </div>
                     </div>
 
-                    <div class="prog col" x-ng-click="statusSlide($event,2)">
-                        <i class="icon ion-ios7-circle-filled order-state-delivering"></i>
-                        <div class="name order-state-delivering">
+                    <div class="prog col"
+                         x-ng-class="{true: 'prog-order-state-delivering', false: 'prog-order-state-disabled'}[current.StatusID>=3]"
+                         x-ng-click="statusSlide($event,2)">
+                        <i class="icon"
+                           x-ng-class="{'ion-ios7-clock': current.StatusID==3, 'ion-ios7-checkmark': current.StatusID>3, 'ion-ios7-circle-filled': current.StatusID<3}"></i>
+                        <div class="name">
                             收货中
                         </div>
-                        <div class="name order-state-delivering" x-ng-show="statusActiveSlide==2">
+                        <div class="name" x-ng-show="statusActiveSlide==2">
                             <i class="ion-arrow-up-b prog-arrow"></i>
                         </div>
                     </div>
 
                     <!--#aaaaaa 66cc33-->
-                    <div class="prog col" x-ng-click="statusSlide($event,3)">
-                        <i class="ion-ios7-close order-state-completed"></i>
-                        <div class="name order-state-completed">
+                    <div class="prog col"
+                         x-ng-class="{true: 'prog-order-state-completed', false: 'prog-order-state-disabled'}[current.StatusID>=4]"
+                         x-ng-click="statusSlide($event,3)">
+                        <i class="icon"
+                           x-ng-class="{'ion-ios7-clock': current.StatusID==4, 'ion-ios7-checkmark': current.StatusID>4, 'ion-ios7-circle-filled': current.StatusID<4}"></i>
+                        <div class="name">
                             已完结
                         </div>
-                        <div class="name order-state-completed" x-ng-show="statusActiveSlide==3">
+                        <div class="name" x-ng-show="statusActiveSlide==3">
                             <i class="ion-arrow-up-b prog-arrow"></i>
                         </div>
                     </div>

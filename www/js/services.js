@@ -78,7 +78,7 @@ angular.module('starter.services', []).factory('Host', function() {
 		},
 		completed : {
 			ID : 4,
-			Name : "完成"
+			Name : "已完结"
 		},
 	};
 }).factory('Actions', function() {

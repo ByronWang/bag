@@ -1,9 +1,6 @@
 <ion-view title="我的">
 	<ion-header-bar class="bar-assertive">
 		<h1 class="title">我的</h1>
-        <div class="buttons" x-ng-show="!Currentlyuser.login">
-            <button class="button button-clear" x-ng-click="!Currentlyuserl.logoff()">注销</button>
-        </div>
 	</ion-header-bar>
 	<style>
 		/*#ffd670*/
@@ -75,24 +72,25 @@
 	</style>
 
 	<ion-content class="has-header">
-        <div class="account" style="background-color: red; text-align: center;" x-ng-if="!Currentlyuser.login">
+        <div class="account" style="background-color: red; text-align: center;" x-ng-if="!currentUser.isLogin">
             <div style="margin: auto auto;">
                 <button class="button button-outline button-assertive" style="border-radius: 4px; font-weight: bold;"
                         x-ng-click="showLogin();">登陆&nbsp;/&nbsp;注册
                 </button>
             </div>
         </div>
-        <div class="account" x-ng-if="!Currentlyuser.login">
-            <a class="item avatar" x-ng-click="showUser();"> <img x-ng-src="{{currentUser.Image | URI}}"> </a>
-
-            <p>
+        <div class="account" x-ng-if="currentUser.isLogin">
+            <a class="item avatar" x-ng-click="showUser();">
+                <img x-ng-src="{{currentUser.Image | URI}}">
+            </a>
+            <p x-ng-click="showUser();">
                 <a style="font-size: 120%">{{currentUser.NickName}} <span x-ng-show="currentUser.BePurchaser">(买手)</span></a>
             </p>
         </div>
 
 		<div class="list">
 
-			<a class="item item-icon-left item-icon-right" x-ng-click="becomePurchaser();"> <i class="icon ion-ios7-gear-outline color-icon" style="background-color: #ffd670"></i> 成为买手 <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
+			<a class="item item-icon-left item-icon-right" x-ng-click="becomePurchaser();"> <i class="icon ion-ios7-people-outline color-icon" style="background-color: #ff565b"></i> 成为买手 <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 
 			<a class="item item-icon-left item-icon-right" x-ng-click="editUser();"> <i class="icon ion-ios7-gear-outline color-icon" style="background-color: #ffd670"></i> 设置 <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 
