@@ -566,14 +566,14 @@ div.item-product-title div {
 	font-weight: normal;
 }
 
-@media (max-width : 400px) {
+@media screen and (max-device-width : 400px) {
     div.item-product-title div.right {
         position: relative;
         display: block;
     }
 }
 
-@media (min-width : 400px) {
+@media screen and (min-device-width : 400px) {
     div.item-product-title div.right {
         position: absolute;
         right: 8px;
