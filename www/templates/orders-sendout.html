@@ -9,9 +9,14 @@
         <div class="list" style="margin-bottom: 0px;" x-ng-repeat="order in orders">
             <div class="item item-divider item-product-title" style="background-color: #ffffff; padding-bottom: 4px;">
                 <!--订单号: {{order.ID}} {{order.Country}}-->
-                <h2 style="padding-bottom: 0px; margin-bottom: 0;">{{order.CountryName}}</h2>
+                <h2 style="padding-bottom: 0px; margin-bottom: 0; vertical-align: middle;">{{order.CountryName}}</h2>
 
                 <div><i class="ion-ios7-clock-outline"></i>发布时间：{{order.Datetime}}</div>
+
+                <a class="item-icon-right" onclick="">
+                    <i class="icon ion-ios7-arrow-up item-note"></i>
+                </a>
+
                 <!--<div class="right"><a class="item-icon-right"><i class="icon ion-ios7-arrow-up item-note"></i></a></div>-->
 
                 <!-- <h2 class="item-note assertive" style="position: absolute; top: 8px; right: 8px;">2365 元</h2> -->

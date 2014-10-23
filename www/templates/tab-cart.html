@@ -108,16 +108,16 @@
                   show-reorder="false"
                   can-swipe="true" ng-if="country.Items.length>0">
             <!--<div class="item item-divider item-checkbox-left">-->
-            <div class="item item-divider">
-                <label class="checkbox" style="left: -11px;">
+            <div class="item item-divider item-product-title">
+                <label class="checkbox" style="padding: 0px; vertical-align: middle;">
                     <input type="checkbox" class="samll-checkbox" x-ng-model="data.checkall"/>
                 </label>
-                {{country.Name}}
-                <a class="item-icon-right" onclick="alert('click')">
+                <h2 style="display: inline-block; padding: 0; margin: 0 0 0 10px; vertical-align: bottom;">{{country.Name}}美国</h2>
+                <a class="item-icon-right" onclick="">
                     <i class="icon ion-ios7-arrow-up item-note"></i>
                 </a>
             </div>
-            <ion-item ng-repeat="item in country.Items" class="item-checkbox-thumbnail-left item-info">
+            <ion-item ng-repeat="item in country.Items" class="item-checkbox-thumbnail-left item-info item-outline">
 
                 <img x-ng-src="{{item.Product.Image | URI}}">
 
@@ -129,9 +129,19 @@
                 <!--</div>-->
 
 
-                <div><h2>{{item.Product.Name}}</h2></div>
-                <div>单价：{{item.Product.ExpectedPrice}}元</div>
-                <div>数量：{{item.Quantity}}</div>
+                <h2>{{item.Product.Name}}</h2>
+
+                <!--<div>单价：{{item.Product.ExpectedPrice}}元</div>-->
+                <!--<div>数量：{{item.Quantity}}</div>-->
+
+                <div class="list data" style="pointer-events: none;">
+                    <div class="item">
+                        <span class="label">单价</span><span class="item-value strength"><b>{{item.Product.ExpectedPrice}}</b>&nbsp;元</span>
+                    </div>
+                    <div class="item">
+                        <span class="label">件数</span><span class="item-value">{{item.Quantity}}</span>
+                    </div>
+                </div>
 
                 <!--<div class="row" style="padding: 0">-->
                 <!--<div class="col">数量：{{item.Quantity}}</div>-->

@@ -566,11 +566,20 @@ div.item-product-title div {
 	font-weight: normal;
 }
 
-div.item-product-title div.right {
-	position: absolute;
-	right: 8px;
-	bottom: 8px;
-	display: inline;
+@media (max-width : 340px) {
+    div.item-product-title div.right {
+        position: relative;
+        display: block;
+    }
+}
+
+@media (min-width : 340px) {
+    div.item-product-title div.right {
+        position: absolute;
+        right: 8px;
+        bottom: 4px;
+        display: inline;
+    }
 }
 
 div.item-product-title div i {
@@ -757,8 +766,12 @@ div.prog {
     font-size: 2em;
 }
 
+.prog i.prog-arrow {
+    font-size: 1em;
+}
+
 .item.item-info.item-outline img {
-    top: 17px;
+    /*top: 17px;*/
 }
 
 .item.item-info.item-outline h2 {
@@ -789,6 +802,7 @@ div.prog {
     padding: 3px 6px;
     vertical-align: middle;
 }
+
 label.checkbox input[type=checkbox].samll-checkbox {
     position: relative;
     top: 0;
@@ -835,6 +849,9 @@ label.checkbox input:after, .checkbox-icon:after {
     opacity: 0;
 }
 
+.list.data>.item {
+}
+
 .order-state-bid {
     color: #f0b840;
 }
@@ -873,4 +890,24 @@ label.checkbox input:after, .checkbox-icon:after {
 
 .order-state-disabled-bg {
     background-color: #aaaaaa;
+}
+
+.prog-order-state-bid div, .prog-order-state-bid i {
+    color: #f0b840;
+}
+
+.prog-order-state-purchase div, .prog-order-state-purchase i {
+    color: #8a6de9;
+}
+
+.prog-order-state-delivering div, .prog-order-state-delivering i {
+    color: #4a87ee;
+}
+
+.prog-order-state-completed div, .prog-order-state-completed i {
+    color: #66cc33;
+}
+
+.prog-order-state-disabled div, .prog-order-state-disabled i {
+    color: #aaaaaa;
 }
