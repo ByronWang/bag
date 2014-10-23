@@ -589,7 +589,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			PayTypeID: 2,//购买保证金
 			PayMethodID:2,//Bank
 			Description:"订单支付",//Bank
-			OrderNo:$scope.currentUser.ID,
+			OrderNo:$scope.item.ID,
 			ActionID:1
 	};
 	$scope.done = function(payment){
@@ -597,7 +597,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 }).controller(
 		'OrderCustomerDetailCtrl',
-		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state,
+		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Popup ,Statuses, Actions, OrderBiding, $state,
 				$ionicSlideBoxDelegate, $timeout, Orders, Category, Exts,Unipay) {
 			
 			var $stateParams = {
@@ -633,7 +633,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 			$scope.statusActiveSlide = 0;
 
-			var flowStepOut = function(status, action, params) {
+			var flowStepOut = function(status, action, params,succeed) {
 				var step = {};
 
 				step.Extends = angular.copy($scope.current.Extends);
@@ -647,10 +647,15 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				step.ActionID = action.ID;
 				step.ActionName = action.Name;
 				step.PaymentID = $scope.current.PaymentID;
-				var post = new OrderItemFlow(step);
-				post.$save(function() {
-					loadFlow();
-					$state.reload();
+				var flow = new OrderItemFlow(step);
+				flow.$save(function(resp) {
+					if(succeed){
+						succeed(resp);
+					}else{
+						loadFlow();
+						$state.reload();
+						
+					}
 				});
 			};
 
@@ -690,19 +695,20 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					}
 				};
 
-				flowStepOut(Statuses.purchasing, Actions.bitSucceed,params, function(){
-					Popup.show($scope, 'templates/modal-pay-for-order.html',function(payment){
-						loadFlow();
-						$state.reload();
-					});
+				flowStepOut(Statuses.purchasing, Actions.bitSucceed,params, function(resp){
+					$scope.current = resp;
+					$scope.gotoPay();
 				});
 				
 			};
 
-			$scope.pay = function() {				
-				Unipay.pay($scope.current.TradeNo).then(function(){
-					flowStepOut(Statuses.bid, Actions.payFinished);					
-				});				
+			$scope.gotoPay = function() {			
+				$scope.item= $scope.item;
+				$scope.flowCurrentStep= $scope.current;
+				Popup.show($scope, 'templates/modal-pay-for-order.html',function(payment){
+					loadFlow();
+					$state.reload();
+				});		
 			};
 			
 			$scope.cancelOrder = function() {

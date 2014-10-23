@@ -47,7 +47,7 @@
 	</div>
 </div>
 
-<div class="flow-block" x-ng-show="current.ActionID==Actions.payPrepare.ID">
+<div class="flow-block" x-ng-show="current.ActionID==Actions.bitSucceed.ID">
 	<div class="list action data">
 		<div class="item item-avatar item-product-user">
 			<img src="{{current.Bid.Purchaser.Image | URI}}">
@@ -85,10 +85,11 @@
 			<span>您已选定买手，请点击按钮支付定金</span>
 		</div>
         <div class="item">
-		    <button class="button button-energized button-block" x-ng-click="pay();">支付</button>
+		    <button class="button button-energized button-block" x-ng-click="gotoPay();">去付款</button>
         </div>
 	</div>
 </div>
+
 
 <div  x-ng-show="current.ActionID==Actions.payFinished.ID">
 	<div class="list action data">
