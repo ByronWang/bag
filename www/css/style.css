@@ -596,10 +596,12 @@ div.item-product-title div i {
 	left: 10px;
 }
 
-.item-product-user img+span {
+.item-product-user img + span {
 	font-weight: bold;
-	margin-top: 12px;
+	margin-top: 8px;
 	display: inline-block;
+    /*vertical-align: text-top;*/
+    line-height: 30px;
 }
 
 .item-product-user i.chatbox {
