@@ -155,7 +155,7 @@
                          x-ng-class="{true: 'prog-order-state-completed', false: 'prog-order-state-disabled'}[current.StatusID>=4]"
                          x-ng-click="statusSlide($event,3)">
                         <i class="icon"
-                           x-ng-class="{'ion-ios7-clock': current.StatusID==4, 'ion-ios7-checkmark': current.StatusID>4, 'ion-ios7-circle-filled': current.StatusID<4}"></i>
+                           x-ng-class="{'ion-ios7-checkmark': current.StatusID>=4, 'ion-ios7-circle-filled': current.StatusID<4}"></i>
                         <div class="name">
                             已完结
                         </div>
