@@ -993,24 +993,39 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			});
 		}
 	};
-}).controller('AccountBalanceCtrl', function($scope, Payments) {
-	$scope.payments =  Payments.query();
-	$scope.paymentsFromBank =  Payments.query({
-			FromUser : $scope.currentUser.ID,
-			FromAccountType:1
-	});
+}).controller('AccountBalanceCtrl', function($scope, Payments,Popup) {
+	$scope.payments =[];//  Payments.query();
+	
 	$scope.paymentsFromPersonal =  Payments.query({
 		FromUser : $scope.currentUser.ID,
-		FromAccountType:2
+		FromAccountType:1
 	});
-	$scope.recieveToBank =  Payments.query({
-			ToUser : $scope.currentUser.ID,
-			ToAccountType:1
+	$scope.paymentsFromBank =  Payments.query({
+			FromUser : $scope.currentUser.ID,
+			FromAccountType:2
 	});
 	$scope.recieveToPersonal =  Payments.query({
 		ToUser : $scope.currentUser.ID,
-		ToAccountType:2
+		ToAccountType:1
 	});
+	$scope.recieveToBank =  Payments.query({
+			ToUser : $scope.currentUser.ID,
+			ToAccountType:2
+	});	
+	
+	$scope.showDetail = function(payment) {
+		$scope.payment = payment;
+		Popup.show($scope, 'templates/modal-account-payment.html');
+	};
+	
+}).controller('PaymentCtrl', function($scope, $state,Payments) {
+	
+	var $stateParams = {
+		paymentId : $scope.$parent.payment.ID
+	};
+
+	$scope.payment = Payments.get($stateParams);
+	
 }).controller('AccountLegalCtrl', function($scope, $state) {
 
 }).controller('AccountAboutCtrl', function($scope, $state) {
