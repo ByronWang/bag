@@ -46,7 +46,7 @@
 				<i class="ion-ios7-information-outline"></i><span>请开始购买</span>
 			</div>
 		</div>
-        <div class="item">
+		<div class="item">
 			<button class="button button-positive button-block" x-ng-click="beginPurchasing()">开始购买</button>
 			<button class="button button-assertive button-block" x-ng-click="cancelPurchasing()">取消购买</button>
 		</div>
@@ -62,61 +62,66 @@
 	</div>
 </div>
 <div x-ng-show="current.ActionID==Actions.purchasing.ID">
-	<div class="list action data">
-		<div class="item message message-strong energized">
-			<i class="ion-ios7-information-outline"></i><span>您已经开始购买</span>
+	<form name="mainform" novalidate>
+		<div class="list action data">
+			<div class="item message message-strong energized">
+				<i class="ion-ios7-information-outline"></i><span>您已经开始购买</span>
+			</div>
+			<div class="item item-avatar item-product-user">
+				<img src="{{current.Bid.Purchaser.Image | URI}}">
+				<span>{{current.Bid.PurchaserNickName}}</span>
+				<!--<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>-->
+			</div>
+			<div class="item">
+				<span class="label"> 开始时间 </span><span class="item-value">{{current.Extends.PurchasingStartDatetime}}</span>
+			</div>
+			<div class="item">
+				<span class="label"> 开始地点 </span><span class="item-value">中国 上海</span>
+			</div>
+			<label class="item item-input"><span class="input-label">实际单价</span>
+				<input type="text" x-ng-model="current.Extends.ActualPrice">
+			</label>
+			<div class="item">
+				<span class="label"> 结束地点 </span><span class="item-value">--</span>
+			</div>
+			<div class="item message font-note">
+				<i class="ion-ios7-timer-outline"></i><span>购买时长：20天15小时</span>
+			</div>
 		</div>
-		<div class="item item-avatar item-product-user">
-			<img src="{{current.Bid.Purchaser.Image | URI}}">
-			<span>{{current.Bid.PurchaserNickName}}</span>
-			<!--<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>-->
+		<div class="item item-product-info">
+			<div class="message" style="font-weight: bold;">
+				<i class="ion-ios7-paper-outline"></i><span>购物小票</span>
+			</div>
+			<div class="row">
+				<div class="item item-avatar item-product col" style="border: 0;">
+					<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
+				</div>
+				<div class="item item-avatar item-product col" style="border: 0;">
+					<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
+				</div>
+			</div>
+			<div class="row">
+				<div class="item item-avatar item-product col" style="border: 0;">
+					<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
+				</div>
+				<div class="item item-avatar item-product col" style="border: 0;">
+					<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
+				</div>
+			</div>
+		</div>
+		<div class="item item-product-info">
+			<div class="message" style="font-weight: bold;">
+				<i class="ion-image"></i><span>商品照片</span>
+			</div>
+			<div class="item item-avatar item-product" style="border: 0;">
+				<img align="center" x-ng-src="{{item.Product.Image | URI}}">
+			</div>
+			<div class="item item-avatar item-product" style="border: 0;">
+				<img align="center" x-ng-src="{{item.Product.Image | URI}}">
+			</div>
 		</div>
 		<div class="item">
-			<span class="label"> 开始时间 </span><span class="item-value">{{current.Extends.PurchasingStartDatetime}}</span>
+			<button class="button button-positive button-block"  x-ng-disabled="mainform.$invalid" x-ng-click="finishPurchasing()">完成购买</button>
 		</div>
-		<div class="item">
-			<span class="label"> 开始地点 </span><span class="item-value">中国 上海</span>
-		</div>
-		<div class="item">
-			<span class="label"> 结束地点 </span><span class="item-value">--</span>
-		</div>
-		<div class="item message font-note">
-			<i class="ion-ios7-timer-outline"></i><span>购买时长：20天15小时</span>
-		</div>
-	</div>
-	<div class="item item-product-info">
-		<div class="message" style="font-weight: bold;">
-			<i class="ion-ios7-paper-outline"></i><span>购物小票</span>
-		</div>
-		<div class="row">
-			<div class="item item-avatar item-product col" style="border: 0;">
-				<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
-			</div>
-			<div class="item item-avatar item-product col" style="border: 0;">
-				<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
-			</div>
-		</div>
-		<div class="row">
-			<div class="item item-avatar item-product col" style="border: 0;">
-				<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
-			</div>
-			<div class="item item-avatar item-product col" style="border: 0;">
-				<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
-			</div>
-		</div>
-	</div>
-	<div class="item item-product-info">
-		<div class="message" style="font-weight: bold;">
-			<i class="ion-image"></i><span>商品照片</span>
-		</div>
-		<div class="item item-avatar item-product" style="border: 0;">
-			<img align="center" x-ng-src="{{item.Product.Image | URI}}">
-		</div>
-		<div class="item item-avatar item-product" style="border: 0;">
-			<img align="center" x-ng-src="{{item.Product.Image | URI}}">
-		</div>
-	</div>
-    <div class="item">
-	    <button class="button button-positive button-block" x-ng-click="finishPurchasing()">完成购买</button>
-    </div>
+	</form>
 </div>

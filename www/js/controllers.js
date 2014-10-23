@@ -1018,7 +1018,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		Popup.show($scope, 'templates/modal-account-payment.html');
 	};
 	
-}).controller('PaymentCtrl', function($scope, $state,Payments) {
+}).controller('PaymentInfoCtrl', function($scope, $state,Payments) {
 	
 	var $stateParams = {
 		paymentId : $scope.$parent.payment.ID
