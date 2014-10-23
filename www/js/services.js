@@ -1,4 +1,4 @@
-angular.module('starter.services', []).factory('Host', function() {
+	angular.module('starter.services', []).factory('Host', function() {
 	var host = window.location.host;
 	var pc = false;// For Test
 	if (host) {
