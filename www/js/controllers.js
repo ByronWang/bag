@@ -571,6 +571,30 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.loadMoreItems = function() {
 		$scope.$broadcast('scroll.infiniteScrollComplete');
 	};
+
+
+}).controller('PayForOrderCtrl', function($scope, Users,Popup) {
+	$scope.item= $scope.$parent.item;
+	$scope.flowCurrentStep= $scope.$parent.flowCurrentStep;
+	
+	$scope.productAmount =$scope.flowCurrentStep.Bid.SuggestedPrice * $scope.item.Quantity;
+	$scope.productCommission =  $scope.productAmount * $scope.flowCurrentStep.Bid.Commission;
+	
+	$scope.amount =  $scope.productAmount  + $scope.productCommission + $scope.flowCurrentStep.Bid.DeliveryCost;
+	
+	$scope.payment = {
+			FromUserID:$scope.currentUser.ID,
+			ToUserID:$scope.currentUser.ID,
+			Amount:$scope.amount,//金额
+			PayTypeID: 2,//购买保证金
+			PayMethodID:2,//Bank
+			Description:"订单支付",//Bank
+			OrderNo:$scope.currentUser.ID,
+			ActionID:1
+	};
+	$scope.done = function(payment){
+		$scope.$parent.done(payment);
+	};
 }).controller(
 		'OrderCustomerDetailCtrl',
 		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state,
@@ -666,7 +690,13 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					}
 				};
 
-				flowStepOut(Statuses.purchasing, Actions.bitSucceed, params);
+				flowStepOut(Statuses.purchasing, Actions.bitSucceed,params, function(){
+					Popup.show($scope, 'templates/modal-pay-for-order.html',function(payment){
+						loadFlow();
+						$state.reload();
+					});
+				});
+				
 			};
 
 			$scope.pay = function() {				
