@@ -571,9 +571,33 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.loadMoreItems = function() {
 		$scope.$broadcast('scroll.infiniteScrollComplete');
 	};
+
+
+}).controller('PayForOrderCtrl', function($scope, Users,Popup) {
+	$scope.item= $scope.$parent.item;
+	$scope.flowCurrentStep= $scope.$parent.flowCurrentStep;
+	
+	$scope.productAmount =$scope.flowCurrentStep.Bid.SuggestedPrice * $scope.item.Quantity;
+	$scope.productCommission =  $scope.productAmount * $scope.flowCurrentStep.Bid.Commission;
+	
+	$scope.amount =  $scope.productAmount  + $scope.productCommission + $scope.flowCurrentStep.Bid.DeliveryCost;
+	
+	$scope.payment = {
+			FromUserID:$scope.currentUser.ID,
+			ToUserID:$scope.currentUser.ID,
+			Amount:$scope.amount,//金额
+			PayTypeID: 2,//购买保证金
+			PayMethodID:2,//Bank
+			Description:"订单支付",//Bank
+			OrderNo:$scope.item.ID,
+			ActionID:1
+	};
+	$scope.done = function(payment){
+		$scope.$parent.done(payment);
+	};
 }).controller(
 		'OrderCustomerDetailCtrl',
-		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state,
+		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Popup ,Statuses, Actions, OrderBiding, $state,
 				$ionicSlideBoxDelegate, $timeout, Orders, Category, Exts,Unipay) {
 			
 			var $stateParams = {
@@ -609,7 +633,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 			$scope.statusActiveSlide = 0;
 
-			var flowStepOut = function(status, action, params) {
+			var flowStepOut = function(status, action, params,succeed) {
 				var step = {};
 
 				step.Extends = angular.copy($scope.current.Extends);
@@ -623,10 +647,15 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				step.ActionID = action.ID;
 				step.ActionName = action.Name;
 				step.PaymentID = $scope.current.PaymentID;
-				var post = new OrderItemFlow(step);
-				post.$save(function() {
-					loadFlow();
-					$state.reload();
+				var flow = new OrderItemFlow(step);
+				flow.$save(function(resp) {
+					if(succeed){
+						succeed(resp);
+					}else{
+						loadFlow();
+						$state.reload();
+						
+					}
 				});
 			};
 
@@ -666,13 +695,20 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					}
 				};
 
-				flowStepOut(Statuses.purchasing, Actions.bitSucceed, params);
+				flowStepOut(Statuses.purchasing, Actions.bitSucceed,params, function(resp){
+					$scope.current = resp;
+					$scope.gotoPay();
+				});
+				
 			};
 
-			$scope.pay = function() {				
-				Unipay.pay($scope.current.TradeNo).then(function(){
-					flowStepOut(Statuses.bid, Actions.payFinished);					
-				});				
+			$scope.gotoPay = function() {			
+				$scope.item= $scope.item;
+				$scope.flowCurrentStep= $scope.current;
+				Popup.show($scope, 'templates/modal-pay-for-order.html',function(payment){
+					loadFlow();
+					$state.reload();
+				});		
 			};
 			
 			$scope.cancelOrder = function() {
@@ -957,24 +993,39 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			});
 		}
 	};
-}).controller('AccountBalanceCtrl', function($scope, Payments) {
-	$scope.payments =  Payments.query();
-	$scope.paymentsFromBank =  Payments.query({
-			FromUser : $scope.currentUser.ID,
-			FromAccountType:1
-	});
+}).controller('AccountBalanceCtrl', function($scope, Payments,Popup) {
+	$scope.payments =[];//  Payments.query();
+	
 	$scope.paymentsFromPersonal =  Payments.query({
 		FromUser : $scope.currentUser.ID,
-		FromAccountType:2
+		FromAccountType:1
 	});
-	$scope.recieveToBank =  Payments.query({
-			ToUser : $scope.currentUser.ID,
-			ToAccountType:1
+	$scope.paymentsFromBank =  Payments.query({
+			FromUser : $scope.currentUser.ID,
+			FromAccountType:2
 	});
 	$scope.recieveToPersonal =  Payments.query({
 		ToUser : $scope.currentUser.ID,
-		ToAccountType:2
+		ToAccountType:1
 	});
+	$scope.recieveToBank =  Payments.query({
+			ToUser : $scope.currentUser.ID,
+			ToAccountType:2
+	});	
+	
+	$scope.showDetail = function(payment) {
+		$scope.payment = payment;
+		Popup.show($scope, 'templates/modal-account-payment.html');
+	};
+	
+}).controller('PaymentCtrl', function($scope, $state,Payments) {
+	
+	var $stateParams = {
+		paymentId : $scope.$parent.payment.ID
+	};
+
+	$scope.payment = Payments.get($stateParams);
+	
 }).controller('AccountLegalCtrl', function($scope, $state) {
 
 }).controller('AccountAboutCtrl', function($scope, $state) {
