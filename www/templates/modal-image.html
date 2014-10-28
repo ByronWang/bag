@@ -1,0 +1,13 @@
+<ion-modal-view>
+	<ion-header-bar class="bar-assertive">
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
+		</div>
+		<h1 class="title">大图</h1>
+	</ion-header-bar>
+	<ion-content class="has-header"  overflow-scrol="true">
+	
+	<img x-ng-src="imageUrl |  URI">
+[[{{imageUrl |  URI}}]]
+	</ion-content>
+</ion-modal-view>

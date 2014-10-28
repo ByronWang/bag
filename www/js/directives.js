@@ -21,4 +21,13 @@ angular.module('starter.directives', []).directive('ngExts', [ '$http', '$contro
 			});
 		}
 	};
+} ]).directive('bigImage', [ '$controller','Popup', function($controller,Popup) {
+	return {
+		link : function(scope, element, attr, ctrl) {
+			element.on("click",function(event){
+				scope.imageUrl = attr.ngSrc;
+				Popup.show(scope,"templates/modal-image.html");
+			});
+		}
+	};
 } ]);
