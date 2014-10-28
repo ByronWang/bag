@@ -718,6 +718,17 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.confirmDelivering = function() {
 				flowStepOut(Statuses.completed, Actions.delivered);
 			};
+			
+
+			$scope.showChat = function(item,customerID,purchaserID,iampurchaser) {
+				var scope = $scope.$new();	
+				scope.item = item;
+				scope.customerID = customerID;
+				scope.purchaserID = purchaserID;
+				scope.iampurchaser = iampurchaser;
+				Popup.show(scope, 'templates/modal-chat.html');    	
+			};
+			
 		}).controller(
 		'OrderPurchaserDetailCtrl',
 		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state,
@@ -905,6 +916,76 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
                 });
             };
 
+		}).controller('ChatCtrl', function($scope,$ionicScrollDelegate,Users,$timeout) {
+			$scope.item =$scope.$parent.item ;
+			$scope.customerID= $scope.$parent.customerID ;
+			$scope.purchaserID = $scope.$parent.purchaserID;
+			$scope.iampurchaser = $scope.$parent.iampurchaser;
+			
+			
+			if($scope.iampurchaser){
+				$scope.himID = $scope.customerID;
+				$scope.meID = $scope.purchaserID;
+			}else{
+				$scope.himID = $scope.purchaserID;	
+				$scope.meID = $scope.customerID;
+			}
+			
+			$scope.him = Users.get({userId : $scope.himID});
+			$scope.me = $scope.currentUser;
+			
+			
+			var chatsCtrl = $ionicScrollDelegate.$getByHandle('chats');
+			
+			$scope.chats = [];
+
+		
+		$timeout(
+                function() {
+
+        			$scope.chats.push({
+        					UserID:$scope.currentUser.ID,
+        					Message: "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"				
+        			});
+        			$scope.chats.push({
+        				UserID:3,
+        				Message: "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"				
+        			});
+        			$scope.chats.push({
+        				UserID:$scope.currentUser.ID,
+        				Message: "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"				
+        		});
+        		$scope.chats.push({
+        			UserID:3,
+        			Message: "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"				
+        		});
+        			$scope.chats.push({
+        				UserID:$scope.currentUser.ID,
+        				Message: "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"				
+        		});
+        		$scope.chats.push({
+        			UserID:3,
+        			Message: "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"				
+        		});
+            		chatsCtrl.scrollBottom();
+                },
+                100
+            );
+		
+		$scope.say = function(event){
+			var newchat = {
+					UserID:$scope.currentUser.ID,
+					CustomerID: $scope.customerID,
+					PurchaserID: $scope.purchaserID,
+					Message: $scope.message
+			};
+			
+			$scope.chats.push(newchat);
+			$scope.message = "";
+			$ionicScrollDelegate.scrollTop();
+			chatsCtrl.scrollBottom();
+			angular.element(event.target).parent().find("input")[0].focus();
+		};
 }).controller('AccountCtrl', function($scope, Popup, LoginUser) {
     $scope.showLogin = function() {
 //        Popup.show($scope, 'templates/modal-login.html');
@@ -915,7 +996,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
     $scope.becomePurchaser = function(){
 		Popup.show($scope, 'templates/modal-become-purchaser.html');    	
     };
-    
+
+	$scope.showChat = function() {
+		Popup.show($scope, 'templates/modal-chat.html');    	
+	};
+	
 	$scope.showUser = function() {
 		Popup.show($scope, 'templates/modal-account-userinfo.html');
 	};
