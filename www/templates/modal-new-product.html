@@ -83,9 +83,9 @@
                     </label>
                     <ng-include src="'templates/extends/edit-'+product.CategoryID+'.html'" x-ng-exts="product.Exts"></ng-include>	
 					<!-- 弹出大窗口单独填写该值 -->
-                    <a class="item item-input item-icon-right" x-ng-click="popupCountries();">
+                    <a class="item item-input item-icon-right" x-ng-click="editDescription();">
                         <span class="input-label">说明</span>
-                        <span>{{product.CountryName}}</span>
+                        <input type="text" x-ng-model="product.Description">
                         <i class="icon ion-ios7-arrow-forward item-note"></i>
                     </a>
                 </div>

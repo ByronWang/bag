@@ -355,7 +355,7 @@
 
 			scope.closeModal = function(result) {
 				if(onSucceed){
-					onSucceed(result);
+					onSucceed();
 				}
 				thisModal.hide();
 				thisModal.remove();

@@ -324,6 +324,13 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				};
 			};
 
+			$scope.editDescription = function() {
+				$scope.bigText = $scope.product.Description;
+				Popup.show($scope, 'templates/modal-text.html',function(text){
+					 $scope.product.Description = text;
+				});
+			};
+
 			$scope.step = 1;
 			$scope.submit = function() {
 //				$scope.product.Extends = Exts.encode($scope.product.Exts);
@@ -986,6 +993,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			chatsCtrl.scrollBottom();
 			angular.element(event.target).parent().find("input")[0].focus();
 		};
+}).controller('TextCtrl', function($scope) {
+	$scope.data = {};
+	$scope.data.bigText = $scope.$parent.bigText;
 }).controller('AccountCtrl', function($scope, Popup, LoginUser) {
     $scope.showLogin = function() {
 //        Popup.show($scope, 'templates/modal-login.html');
