@@ -1,121 +1,108 @@
 <ion-modal-view ng-controller="NewProductCtrl">
 
-    <ion-header-bar class="bar-assertive">
-        <div class="buttons">
-            <button class="button button-icon icon ion-ios7-arrow-back pull-right" x-ng-click="closeModal();"></button>
-        </div>
-        <h1 class="title">{{product.CategoryDesc}}</h1>
-    </ion-header-bar>
+	<ion-header-bar class="bar-assertive">
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-arrow-back pull-right" x-ng-click="closeModal();"></button>
+		</div>
+		<h1 class="title">{{product.CategoryDesc}}</h1>
+	</ion-header-bar>
 
-    <ion-content>
-        <form name="mainform" novalidate>
+	<ion-content>
+		<form name="mainform" novalidate>
 
-            <style>
-                div.image div {
-                    overflow: hidden;
-                    vertical-align: middle;
-                    width: 100px;
-                    height: 100px;
-                    display: inline-block;
-                }
+			<style>
+				div.image div {
+					overflow: hidden;
+					vertical-align: middle;
+					width: 100px;
+					height: 100px;
+					display: inline-block;
+				}
 
-                div.image img {
-                    border: 0;
-                    margin-top:-50%;
-                    margin-left:-50%;
-                    height: 200px;
-                }
+				div.image img {
+					border: 0;
+					margin-top: -50%;
+					margin-left: -50%;
+					height: 200px;
+				}
 
-                div.image a {
-                    padding: 0 15px;
-                    background: #54BCDE none;
-                    text-align: center;
-                    vertical-align: middle;
-                    width: 100px;
-                    height: 100px;
-                    position: relative;
-                    z-index: 2;
-                    display: inline-block;
-                    margin: 0 10px;
-                }
+				div.image a {
+					padding: 0 15px;
+					background: #54BCDE none;
+					text-align: center;
+					vertical-align: middle;
+					width: 100px;
+					height: 100px;
+					position: relative;
+					z-index: 2;
+					display: inline-block;
+					margin: 0 10px;
+				}
 
-                div.image a i {
-                    border: 0;
-                    font-size: 70px;
-                    color: #FFF;
-                }
+				div.image a i {
+					border: 0;
+					font-size: 70px;
+					color: #FFF;
+				}
 
-                div.image a h2 {
-                    color: #FFF;
-                    margin: 0 0 0px 0;
-                    font-size: 16px;
-                }
-            </style>
+				div.image a h2 {
+					color: #FFF;
+					margin: 0 0 0px 0;
+					font-size: 16px;
+				}
+			</style>
 
-            <div class="list" x-ng-show="categoryInEdit">
-                <a class="item item-icon-right" x-ng-repeat="c in categories" x-ng-click="selectCat(c)">
-                    {{c.Name}}
-                    <i class="icon ion-ios7-arrow-forward item-note"></i>
-                </a>
-            </div>
+			<div class="list" x-ng-show="categoryInEdit">
+				<a class="item item-icon-right" x-ng-repeat="c in categories" x-ng-click="selectCat(c)"> {{c.Name}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
+			</div>
 
-            <div x-ng-show="!categoryInEdit">
-                <div style="padding: 10px 0; text-align: center;">
-                    <div class="image">
-                        <div>
-                            <img x-ng-src="{{product.Image | URI:'product'}}" x-ng-click="">
-                        </div>
-                        <a x-ng-click="showCameraMenu()">
-                            <i class="icon ion-ios7-camera"></i>
-                            <h2>更新图片</h2>
-                        </a>
-                    </div>
-                </div>
+			<div x-ng-show="!categoryInEdit">
+				<div style="padding: 10px 0; text-align: center;">
+					<div class="image">
+						<div>
+							<img x-ng-src="{{product.Image | URI:'product'}}" x-ng-click="">
+						</div>
+						<a x-ng-click="showCameraMenu()"> <i class="icon ion-ios7-camera"></i> <h2>更新图片</h2> </a>
+					</div>
+				</div>
 
-                <div class="list list-inset" style="margin-top: 0">
-                    <label class="item item-input">
-                        <span class="input-label">名称</span>
-                        <input type="text" placeholder="1-30字" x-ng-model="product.Name" required>
-                    </label>
-                    <label class="item item-input">
-                        <span class="input-label">品牌</span>
-                        <input type="text" x-ng-model="product.Brand" required>
-                    </label>
-                    <ng-include src="'templates/extends/edit-'+product.CategoryID+'.html'" x-ng-exts="product.Exts"></ng-include>	
+				<div class="list list-inset" style="margin-top: 0">
+					<label class="item item-input">
+						<span class="input-label">名称</span>
+						<input type="text" placeholder="1-30字" x-ng-model="product.Name" required>
+					</label>
+					<label class="item item-input">
+						<span class="input-label">品牌</span>
+						<input type="text" x-ng-model="product.Brand" required>
+					</label>
+					<ng-include src="'templates/extends/edit-'+product.CategoryID+'.html'" x-ng-exts="product.Exts"></ng-include>
 					<!-- 弹出大窗口单独填写该值 -->
-                    <a class="item item-input item-icon-right" x-ng-click="editDescription();">
-                        <span class="input-label">说明</span>
-                        <input type="text" x-ng-model="product.Description">
-                        <i class="icon ion-ios7-arrow-forward item-note"></i>
-                    </a>
-                </div>
+					<a class="item item-input item-icon-right" x-ng-click="editDescription();"> <span class="input-label">说明</span>
+					<input type="text" x-ng-model="product.Description">
+					<i class="icon ion-ios7-arrow-forward item-note"></i> </a>
+				</div>
 
-                <div class="list list-inset">
-                    <a class="item item-input item-icon-right" x-ng-click="popupCountries();">
-                        <span class="input-label">代购国家</span>
-                        <span>{{product.CountryName}}</span>
-                        <i class="icon ion-ios7-arrow-forward item-note"></i>
-                    </a>
-                    <label class="item item-input">
-                        <span class="input-label">预想价格</span>
-                        <input type="number" x-ng-model="product.ExpectedPrice" required>
-                    </label>
-                    <label class="item item-input">
-                        <span class="input-label">代购件数</span>
-                        <input type="number" x-ng-model="item.Quantity" required>
-                    </label>
-                </div>
+				<div class="list list-inset">
+					<a class="item item-input item-icon-right" x-ng-click="popupCountries();"> <span class="input-label">代购国家</span> <span>{{product.CountryName}}</span> <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
+					<label class="item item-input">
+						<span class="input-label">预想价格</span>
+						<input type="number" x-ng-model="product.ExpectedPrice" required>
+					</label>
+					<label class="item item-input">
+						<span class="input-label">代购件数</span>
+						<input type="number" x-ng-model="item.Quantity" required>
+					</label>
+				</div>
 
-                <div class="buttons text-center padding" x-ng-show="!categoryInEdit">
-                    <button class="button button-block button-positive" x-ng-disabled="mainform.$invalid"
-                            x-ng-click="submit();">添加到购物车
-                    </button>
-                </div>
+				<div class="buttons text-center padding" x-ng-show="!categoryInEdit">
+					<button class="button button-block button-positive" x-ng-disabled="mainform.$invalid"
+					x-ng-click="submit();">添加到购物车 </button>
+				</div>
 
-                <br/>
-                <br/>
-                <br/>
-            </div>
-        </form>
-    </ion-content>
+				<br/>
+				<br/>
+				<br/>
+			</div>
+		</form>
+	</ion-content>
 </ion-modal-view>

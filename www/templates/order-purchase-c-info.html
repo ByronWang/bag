@@ -64,16 +64,16 @@
 		<div class="item message message-strong energized">
 			<i class="ion-ios7-information-outline"></i><span>买手已放弃购买</span>
 		</div>
-        <div class="item item-avatar item-product-user">
-            <img src="{{current.Bid.Purchaser.Image | URI}}">
-            <span>{{current.Bid.PurchaserNickName}}</span>
-            <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
-        </div>
+		<div class="item item-avatar item-product-user">
+			<img src="{{current.Bid.Purchaser.Image | URI}}">
+			<span>{{current.Bid.PurchaserNickName}}</span>
+			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
+		</div>
 		<div class="item item-input">
 			<span class="label">放弃时间</span><span class="item-value">{{current.Extends.CancelPurchasingDatetime}}</span>
 		</div>
 	</div>
 </div>
 <pane x-ng-show="current.ActionID==Actions.cancelOrder.ID">
-&nbsp;
+	&nbsp;
 </pane>

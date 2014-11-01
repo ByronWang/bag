@@ -1,67 +1,62 @@
 <ion-view title="主页">
 
-    <style>
-        div.box {
-            padding: 0;
-            text-align: center;
-        }
+	<style>
+		div.box {
+			padding: 0;
+			text-align: center;
+		}
 
-        div.box img {
-            border: 0;
-            display: block;
-        }
+		div.box img {
+			border: 0;
+			display: block;
+		}
 
-        .box img {
-            width: 100%;
-        }
-    </style>
-    <ion-header-bar class="bar-assertive">
-        <img src="img/logo4.png" height="32px">
-        <!-- <label class="item-input-wrapper">
-        <i class="icon ion-ios7-search placeholder-icon"></i>
-        <input type="search" placeholder="Search">
-        </label> -->
-        <h1 class="title">主页</h1>
-        <button class="button button-icon icon ion-search" x-ng-click="search()"></button>
-    </ion-header-bar>
+		.box img {
+			width: 100%;
+		}
+	</style>
+	<ion-header-bar class="bar-assertive">
+		<img src="img/logo4.png" height="32px">
+		<!-- <label class="item-input-wrapper">
+		<i class="icon ion-ios7-search placeholder-icon"></i>
+		<input type="search" placeholder="Search">
+		</label> -->
+		<h1 class="title">主页</h1>
+		<button class="button button-icon icon ion-search" x-ng-click="search()"></button>
+	</ion-header-bar>
 
-    <ion-content class="has-header">
-        <ion-slide-box delegate-handle="band" does-continue=true auto-play=true slide-interval=2000>
-            <ion-slide>
-                <a href="#/tab/product/1">
-                    <div id="s1" class="box">
-                        <img alt="1111" src="img/A001.jpg">
-                    </div>
-                </a>
-            </ion-slide>
-            <ion-slide>
-                <a href="#/tab/product/2">
-                    <div id="s2" class="box">
-                        <img alt="2222" src="img/A002.jpg">
-                    </div>
-                </a>
-            </ion-slide>
-        </ion-slide-box>
+	<ion-content class="has-header">
+		<ion-slide-box delegate-handle="band" does-continue=true auto-play=true slide-interval=2000>
+			<ion-slide>
+				<a href="#/tab/product/1">
+				<div id="s1" class="box">
+					<img alt="1111" src="img/A001.jpg">
+				</div> </a>
+			</ion-slide>
+			<ion-slide>
+				<a href="#/tab/product/2">
+				<div id="s2" class="box">
+					<img alt="2222" src="img/A002.jpg">
+				</div> </a>
+			</ion-slide>
+		</ion-slide-box>
 
-        <table width="100%" class="category">
-            <tbody>
-            <tr x-ng-repeat="nc in category">
-                <td x-ng-repeat="c in nc" class="rect" style="height: {{rectHeight}}px;">
-                    <br/>
-                    <a x-ng-href="#/products-category/{{c.ID}}">
-                        <i class="icon iconfont {{c.Icon}}" style="color: {{c.Color}};"></i>
-                        <br/>
-                        <br/>
-                        <div class="name" style="font: bold">
-                            {{c.Name}}
-                        </div>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+		<table width="100%" class="category">
+			<tbody>
+				<tr x-ng-repeat="nc in category">
+					<td x-ng-repeat="c in nc" class="rect" style="height: {{rectHeight}}px;">
+					<br/>
+					<a x-ng-href="#/products-category/{{c.ID}}"> <i class="icon iconfont {{c.Icon}}" style="color: {{c.Color}};"></i>
+					<br/>
+					<br/>
+					<div class="name" style="font: bold">
+						{{c.Name}}
+					</div> </a></td>
+				</tr>
+			</tbody>
+		</table>
 
-        </div>
-    </ion-content>
+		</div>
+	</ion-content>
 
 </ion-view>

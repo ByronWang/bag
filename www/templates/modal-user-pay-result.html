@@ -1,20 +1,27 @@
-<ion-modal-view ng-controller="PaymentCtrl"> <ion-header-bar class="bar-assertive">
-<div class="buttons">
-	<button class="button button-icon icon ion-ios7-arrow-back pull-right" x-ng-click="cancel();"></button>
-</div>
-<h1 class="title">登录</h1>
-</ion-header-bar> <ion-content>
-	<form name="mainform" novalidate>
-		<div class="list">
-        <div>
-            <label>代购国家</label><span class="item-value">{{item.Product.CountryName}}</span>
-        </div>
-        <div>
-            <label>预想单价</label><span class="item-value strength"><b>{{item.Product.ExpectedPrice}}</b>&nbsp;元</span>
-        </div>
-			<div class="padding">
-				<button class="button button-block button-positive" x-ng-click="done()" x-ng-disabled="mainform.$invalid">确认</button>
-			</div>
+<ion-modal-view ng-controller="PaymentCtrl">
+	<ion-header-bar class="bar-assertive">
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-arrow-back pull-right" x-ng-click="cancel();"></button>
 		</div>
-	</form>
-</ion-content> </ion-modal-view>
+		<h1 class="title">登录</h1>
+	</ion-header-bar>
+	<ion-content>
+		<form name="mainform" novalidate>
+			<div class="list">
+				<div>
+					<label>
+						代购国家
+					</label><span class="item-value">{{item.Product.CountryName}}</span>
+				</div>
+				<div>
+					<label>
+						预想单价
+					</label><span class="item-value strength"><b>{{item.Product.ExpectedPrice}}</b>&nbsp;元</span>
+				</div>
+				<div class="padding">
+					<button class="button button-block button-positive" x-ng-click="done()" x-ng-disabled="mainform.$invalid">确认</button>
+				</div>
+			</div>
+		</form>
+	</ion-content>
+</ion-modal-view>

@@ -3,11 +3,11 @@
 		<div class="item message message-strong energized">
 			<i class="ion-ios7-information-outline"></i><span>您已确认收货</span>
 		</div>
-        <div class="item item-avatar item-product-user">
-            <img src="{{suitor.Purchaser.Image | URI}}">
-            <span >{{suitor.PurchaserNickName}}</span>
-            <a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
-        </div>
+		<div class="item item-avatar item-product-user">
+			<img src="{{suitor.Purchaser.Image | URI}}">
+			<span >{{suitor.PurchaserNickName}}</span>
+			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
+		</div>
 		<div class="item">
 			<span class="label">快递单号</span><span class="item-value">{{current.Extends.TrackingNo}}</span>
 		</div>
@@ -17,5 +17,5 @@
 	</div>
 </pane>
 <pane x-ng-show="current.ActionID==Actions.cancelPurchasing.ID || current.ActionID==Actions.cancelOrder.ID">
-&nbsp;
+	&nbsp;
 </pane>

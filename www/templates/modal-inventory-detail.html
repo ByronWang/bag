@@ -68,18 +68,14 @@
 					</div>
 				</div>
 				<div class="item" style="padding: 0;">
-                    <div class="item message message-strong energized" style="border-bottom: 0;">
-                        <i class="ion-ios7-information-outline"></i><span>请填写您的代购信息</span>
-                    </div>
+					<div class="item message message-strong energized" style="border-bottom: 0;">
+						<i class="ion-ios7-information-outline"></i><span>请填写您的代购信息</span>
+					</div>
 					<div  class="list list-inset" style="margin-top: 8px;">
 						<label class="item item-input item-input-note"><span class="input-label">代购佣金</span>
 							<input type="number" class="percent" x-ng-model="suitor.Commission">
 							<span class="item-note">%</span></label>
-						<a class="item item-input item-icon-right"  x-ng-click="showDeliveryMethods();">
-                            <span class="input-label">邮寄方式</span>
-                            <span class="item-note">{{suitor.DeliveryMethodName}}</span>
-                            <i class="icon ion-ios7-arrow-forward item-note"></i>
-                        </a>
+						<a class="item item-input item-icon-right"  x-ng-click="showDeliveryMethods();"> <span class="input-label">邮寄方式</span> <span class="item-note">{{suitor.DeliveryMethodName}}</span> <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 						<label class="item item-input item-input-note"><span class="input-label">建议价格</span>
 							<input type="number" x-ng-model="suitor.SuggestedPrice">
 							<span class="item-note"> 元</span></label>
@@ -87,13 +83,9 @@
 							<input type="number" x-ng-model="suitor.DeliveryCost">
 							<span class="item-note"> 元</span></label>
 						<!--<label class="item item-input input-comment item-input-note"><span class="input-label">备注</span>-->
-							<!--<span class="input-value"><textarea x-ng-model="suitor.Comment"></textarea></span>-->
+						<!--<span class="input-value"><textarea x-ng-model="suitor.Comment"></textarea></span>-->
 						<!--</label>-->
-                        <a class="item item-input item-icon-right" x-ng-click="showDeliveryMethods();">
-                            <span class="input-label">备注</span>
-                            <span class="item-note">{{suitor.DeliveryMethodName}}</span>
-                            <i class="icon ion-ios7-arrow-forward item-note"></i>
-                        </a>
+						<a class="item item-input item-icon-right" x-ng-click="showDeliveryMethods();"> <span class="input-label">备注</span> <span class="item-note">{{suitor.DeliveryMethodName}}</span> <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 					</div>
 				</div>
 			</div>
@@ -172,14 +164,15 @@
 
 				<div class="item">
 					<div  class="list data">
-                        <div class="item message message-strong energized">
-                            <i class="ion-ios7-information-outline"></i><span>您已经参与竞标</span>
-                        </div>
+						<div class="item message message-strong energized">
+							<i class="ion-ios7-information-outline"></i><span>您已经参与竞标</span>
+						</div>
 						<div class="item item-input item-input-note">
 							<span class="label">代购佣金</span><span class="item-value">{{suitor.Commission}} 元</span>
 						</div>
 						<div class="item item-input item-input-note">
-							<span class="label">邮寄方式</span><span class="item-value">{{suitor.DeliveryMethodName}}</span></div>
+							<span class="label">邮寄方式</span><span class="item-value">{{suitor.DeliveryMethodName}}</span>
+						</div>
 						<div class="item item-input item-input-note">
 							<span class="label">建议价格</span><span class="item-value">{{suitor.SuggestedPrice}} 元</span>
 						</div>

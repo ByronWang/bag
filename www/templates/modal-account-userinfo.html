@@ -7,17 +7,23 @@
 	</ion-header-bar>
 	<ion-content class="has-header">
 		<div class="item item-thumbnail-left" >
-				<img  x-ng-src="{{user.Image | URI}}">
+			<img  x-ng-src="{{user.Image | URI}}">
 			<h2>{{user.Name}}</h2>
-			<p>{{user.NickName}}</p>
+			<p>
+				{{user.NickName}}
+			</p>
 		</div>
 
 		<div class="list">
 			<div class="item item-divider">
 				基本信息
 			</div>
-			<label class="item"> 出生日期 <span class="item-note"> {{user.birthday}}</span> </label>
-			<label class="item"> 地址 <span class="item-note">{{user.address}}</span> </label>
+			<label class="item">
+				出生日期 <span class="item-note"> {{user.birthday}}</span>
+			</label>
+			<label class="item">
+				地址 <span class="item-note">{{user.address}}</span>
+			</label>
 		</div>
 		<div class="padding">
 			<button class="button  button-full button-assertive" x-ng-click="logoff();"> 退出登录 </button>

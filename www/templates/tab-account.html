@@ -72,21 +72,18 @@
 	</style>
 
 	<ion-content class="has-header">
-        <div class="account" style="background-color: red; text-align: center;" x-ng-if="!currentUser.isLogin">
-            <div style="margin: auto auto;">
-                <button class="button button-outline button-assertive" style="border-radius: 4px; font-weight: bold;"
-                        x-ng-click="showLogin();">登陆&nbsp;/&nbsp;注册
-                </button>
-            </div>
-        </div>
-        <div class="account" x-ng-if="currentUser.isLogin">
-            <a class="item avatar" x-ng-click="showUser();">
-                <img x-ng-src="{{currentUser.Image | URI}}">
-            </a>
-            <p x-ng-click="showUser();">
-                <a style="font-size: 120%">{{currentUser.NickName}} <span x-ng-show="currentUser.BePurchaser">(买手)</span></a>
-            </p>
-        </div>
+		<div class="account" style="background-color: red; text-align: center;" x-ng-if="!currentUser.isLogin">
+			<div style="margin: auto auto;">
+				<button class="button button-outline button-assertive" style="border-radius: 4px; font-weight: bold;"
+				x-ng-click="showLogin();">登陆&nbsp;/&nbsp;注册 </button>
+			</div>
+		</div>
+		<div class="account" x-ng-if="currentUser.isLogin">
+			<a class="item avatar" x-ng-click="showUser();"> <img x-ng-src="{{currentUser.Image | URI}}"> </a>
+			<p x-ng-click="showUser();">
+				<a style="font-size: 120%">{{currentUser.NickName}} <span x-ng-show="currentUser.BePurchaser">(买手)</span></a>
+			</p>
+		</div>
 
 		<div class="list">
 

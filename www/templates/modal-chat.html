@@ -1,77 +1,77 @@
 <ion-modal-view ng-controller="ChatCtrl">
-<style>
-.chat{
-	position: relative;
-	float: left;
-	clear: both;
-	padding-left: 40px;
-	padding-right: 5px;	
-}
-.chat.me{
-	float: right;
-	padding-left: 1px;
-	padding-right: 40px;
-}
-.chat > img{
-	position: absolute;
-	height: 32px;
-	width: 32px;
-	left:2px;
-}
+	<style>
+		.chat {
+			position: relative;
+			float: left;
+			clear: both;
+			padding-left: 40px;
+			padding-right: 5px;
+		}
+		.chat.me {
+			float: right;
+			padding-left: 1px;
+			padding-right: 40px;
+		}
+		.chat > img {
+			position: absolute;
+			height: 32px;
+			width: 32px;
+			left: 2px;
+		}
 
-.chat.me  > img{
-	left: auto;
-	right:2px;
-}
+		.chat.me > img {
+			left: auto;
+			right: 2px;
+		}
 
-.chats{
-}
+		.chats {
+		}
 
-.chats > .chat{
-	min-height: 40px;
-	padding-top: 4px;
-	padding-bottom: 4px;
-	overflow: visible;
-}
-.chats > .chat > P{
-	background-color: white;
-	padding: 6px;
-	border: 1px solid #DDDDDD;
-	box-shadow:1px 1px 1px #555555;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-}
-.chat-content{
-	background-color: #e3e3e3;
-	padding: 11px;
-}
+		.chats > .chat {
+			min-height: 40px;
+			padding-top: 4px;
+			padding-bottom: 4px;
+			overflow: visible;
+		}
+		.chats > .chat > P {
+			background-color: white;
+			padding: 6px;
+			border: 1px solid #DDDDDD;
+			box-shadow: 1px 1px 1px #555555;
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			border-radius: 4px;
+		}
+		.chat-content {
+			background-color: #e3e3e3;
+			padding: 11px;
+		}
 
-</style>
+	</style>
 	<ion-header-bar class="bar-assertive">
 		<div class="buttons">
 			<button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="closeModal();"></button>
 		</div>
 		<h1 class="title">私信</h1>
 	</ion-header-bar>
-		<div class="bar bar-subheader bar-stable">
-			<a>{{item.ID}} dsfsafsadfsd {{item.Product.Name}}</a>
-		</div>
+	<div class="bar bar-subheader bar-stable">
+		<a>{{item.ID}} dsfsafsadfsd {{item.Product.Name}}</a>
+	</div>
 	<ion-content class="has-subheader has-footer chat-content"  overflow-scrol="true" delegate-handle="chats">
 
-			<div class="chats">
-				<a class="chat" x-ng-repeat="chat in chats" x-ng-class="{'me':chat.UserID==currentUser.ID}"> 
-					<img src="{{me.Image | URI : avatar}}" x-ng-if="chat.UserID==currentUser.ID"><img src="{{him.Image | URI : avatar}}"   x-ng-if="chat.UserID!=currentUser.ID">
-					<p>{{chat.Message}}</p>
-				</a>
-			</div>
+		<div class="chats">
+			<a class="chat" x-ng-repeat="chat in chats" x-ng-class="{'me':chat.UserID==currentUser.ID}"> <img src="{{me.Image | URI : avatar}}" x-ng-if="chat.UserID==currentUser.ID"><img src="{{him.Image | URI : avatar}}"   x-ng-if="chat.UserID!=currentUser.ID">
+			<p>
+				{{chat.Message}}
+			</p> </a>
+		</div>
 	</ion-content>
-		<div class="bar bar-footer bar-dark item-input-inset">
-				  <label class="item-input-wrapper">
-    <i class="icon ion-ios7-search placeholder-icon"></i>
-    <input type="text" placeholder="请输入"  x-ng-model="message">
-  </label>
-  <button class="button button-clear" x-ng-click="say($event);">Say</button>
-  
-</div>	
+	<div class="bar bar-footer bar-dark item-input-inset">
+		<label class="item-input-wrapper">
+			<i class="icon ion-ios7-search placeholder-icon"></i>
+			<input type="text" placeholder="请输入"  x-ng-model="message">
+		</label>
+		<button class="button button-clear" x-ng-click="say($event);">Say</button>
+
+	</div>
 </ion-modal-view>

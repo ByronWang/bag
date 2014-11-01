@@ -7,17 +7,22 @@
 	</ion-header-bar>
 	<ion-content>
 		<div class="list">
-			<label class="item item-input"> <span class="input-label">名称</span>
+			<label class="item item-input">
+				<span class="input-label">名称</span>
 				<input type="text" x-ng-model="user.username">
 			</label>
-			<label class="item item-input  item-select"> <span class="input-label">国家</span>
+			<label class="item item-input  item-select">
+				<span class="input-label">国家</span>
 				<select>
 					<option>美国</option>
 					<option selected>韩国</option>
 					<option>日本</option>
-				</select> </label>
+				</select>
+			</label>
 			<div class="item item-input item-range-input">
-				<label> <span class="input-label">价格区间</span> </label>
+				<label>
+					<span class="input-label">价格区间</span>
+				</label>
 				<input type="number"  x-ng-model="user.priceFrom">
 				<span class="seperator text-center">~</span>
 				<input type="number" x-ng-model="user.priceTo">
