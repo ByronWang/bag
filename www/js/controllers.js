@@ -288,12 +288,15 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		var cnt = 0;
 		angular.forEach($scope.cart.Countrys, function(c) {
 			if (c.selected) {
+				var checkall = true;
 				angular.forEach(c.Items, function(i) {
+					checkall = checkall && i.checked;
 					if (i.checked) {
 						sum += (i.Quantity * i.Product.ExpectedPrice);
 						cnt += 1;
 					}
 				});
+				c.checked = checkall;
 				$scope.CountryName = c.Name;
 			}
 		});
@@ -301,6 +304,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.allCnt = cnt;
 	};
 
+	sumAll();
 	$scope.refineCart = function() {
 		angular.forEach($scope.cart.Countrys, function(c) {
 			var newitems = [];
@@ -435,6 +439,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 }).controller('NewOrderCtrl', function($scope, Camera, $q, Popup, Orders, Address, Exts, Statuses, Actions) {
 	$scope.Items = [];
 	$scope.country = {};
+	$scope.order.Address = $scope.currentUser.Address;
 
 	$scope.popupProvinces = function() {
 		Popup.show($scope, 'templates/modal-provinces.html');
@@ -1096,7 +1101,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$parent.closeModal();
 		});
 	};
-}).controller('AccountUserEditCtrl', function($scope, $ionicActionSheet, Camera, $timeout, LoginUser, Users) {
+}).controller('AccountUserEditCtrl', function($scope, $ionicActionSheet, Popup,Camera, LoginUser, Users) {
 	var $stateParams = {
 		userId : LoginUser.ID
 	};
@@ -1104,6 +1109,16 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	// $scope.user.Image = "img/avatar-default.jpg";
 
+	$scope.popupProvinces = function() {
+		Popup.show($scope, 'templates/modal-provinces.html');
+		$scope.ret = function(item) {
+			if (!$scope.user.Address) {
+				$scope.user.Address = {};
+			}
+			angular.extend($scope.user.Address, item);
+		};
+	};
+	
 	$scope.getPhoto = function(sourceType) {
 		$scope.user.ImagePromise = Camera.getPicture({
 			sourceType : sourceType,
@@ -1138,7 +1153,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.submit = function() {
 		if ($scope.user.NewPwd == $scope.user.NewPwdConfirm) {
-			$scope.user.$save(function() {
+			$scope.user.$update(function() {
 				LoginUser.reload();
 				$scope.$parent.closeModal();
 			});

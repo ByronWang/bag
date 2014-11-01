@@ -63,6 +63,10 @@ angular.module('starter.services', []).factory('Host', function() {
 	var url = Host.host + '/d/User/:userId';
 	return $resource(url, {
 		userId : '@ID'
+	}, {
+		update : {
+			method : 'PUT'
+		}
 	});
 }).factory('Statuses', function() {
 	return {
@@ -236,7 +240,8 @@ angular.module('starter.services', []).factory('Host', function() {
 		isLogin : false,
 		BePurchaser : false,
 		Name : "未登录",
-		Image : "img/avatar-default.jpg"
+		Image : "img/avatar-default.jpg",
+		Address : {}
 	};
 
 	return {
@@ -288,7 +293,8 @@ angular.module('starter.services', []).factory('Host', function() {
 					_this.NickName = user.NickName;
 					_this.Image = user.Image;
 					_this.BePurchaser = user.BePurchaser;
-
+					_this.Address = user.Address;
+					
 					if (!_this.Image) {
 						_this.Image = "img/avatar-default.jpg";
 					}
@@ -309,15 +315,18 @@ angular.module('starter.services', []).factory('Host', function() {
 				_this.NickName = user.NickName;
 				_this.Image = user.Image;
 				_this.BePurchaser = user.BePurchaser;
+				_this.Address = user.Address;
 			});
 		},
 		logoff : function(funcSucceed) {
-			this.ID = undefined;
-			this.isLogin = defaultUser.isLogin;
-			this.Name = defaultUser.Name;
-			this.NickName = defaultUser.NickName;
-			this.Image = defaultUser.Image;
-			this.BePurchaser = defaultUser.BePurchaser;
+			var _this = this;
+			_this.ID = undefined;
+			_this.isLogin = defaultUser.isLogin;
+			_this.Name = defaultUser.Name;
+			_this.NickName = defaultUser.NickName;
+			_this.Image = defaultUser.Image;
+			_this.BePurchaser = defaultUser.BePurchaser;
+			_this.Address = defaultUser.Address;
 			funcSucceed();
 		}
 	};

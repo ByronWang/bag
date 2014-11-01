@@ -32,7 +32,7 @@
 				<input type="password" x-ng-model="user.NewPwdConfirm">
 			</label>
 			<div class="item item-divider">
-				修改基本信息
+				基本信息
 			</div>
 			<label class="item item-input">
 				<span class="input-label">昵称</span>
@@ -42,9 +42,25 @@
 				<span class="input-label">出生日期</span>
 				<input type="date" x-ng-model="user.Birthday">
 			</label>
+			<div class="item item-divider">
+				默认地址信息
+			</div>
+			<a class="item item-input item-icon-right" x-ng-click="popupProvinces();"> <span class="input-label">所在地区</span> <span class="item-note">{{user.Address.Province}}-{{user.Address.City}}-{{user.Address.Area}}</span> <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 			<label class="item item-input">
-				<span class="input-label">地址</span>
-				<input type="text" x-ng-model="user.Address">
+				<span class="input-label">详细地址</span>
+				<input type="text" x-ng-model="user.Address.Address">
+			</label>
+			<label class="item item-input">
+				<span class="input-label">邮编</span>
+				<input type="text" x-ng-model="user.Address.Zip">
+			</label>
+			<label class="item item-input">
+				<span class="input-label">收件人</span>
+				<input type="text" x-ng-model="user.Address.Contact">
+			</label>
+			<label class="item item-input">
+				<span class="input-label">联系电话</span>
+				<input type="text" x-ng-model="user.Address.Phone">
 			</label>
 		</div>
 		<div class="padding">
