@@ -1,4 +1,4 @@
-	angular.module('starter.services', []).factory('Host', function() {
+angular.module('starter.services', []).factory('Host', function() {
 	var host = window.location.host;
 	var pc = false;// For Test
 	if (host) {
@@ -8,11 +8,11 @@
 	} else {
 		// host = "192.168.12.100";
 		host = "192.168.0.101";
-//        host = "10.0.0.57";
+		// host = "10.0.0.57";
 		host = "http://" + host + ":8686";
-		pc =false;
+		pc = false;
 	}
-//    host = "http://www.gouwudai.net.cn:8686";
+	// host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
 		pc : pc,
@@ -61,7 +61,9 @@
 	return $resource(url);
 }).factory('Users', function($resource, Host) {
 	var url = Host.host + '/d/User/:userId';
-	return $resource(url, {userId : '@ID'});
+	return $resource(url, {
+		userId : '@ID'
+	});
 }).factory('Statuses', function() {
 	return {
 		bid : {
@@ -83,7 +85,7 @@
 	};
 }).factory('Actions', function() {
 	return {
-		payConfirmed: {
+		payConfirmed : {
 			"ID" : 11,
 			"Name" : "支付已确认"
 		},
@@ -227,7 +229,7 @@
 			return o;
 		}
 	};
-}).factory('LoginUser', function($ionicModal, $resource, $http, Host, Users,Cart) {
+}).factory('LoginUser', function($ionicModal, $resource, $http, Host, Users, Cart) {
 	var loginUsers = $resource(Host.host + '/d/User/:userId');
 
 	var defaultUser = {
@@ -278,7 +280,7 @@
 				var users = loginUsers.query({
 					Name : username
 				}, function() {
-					var user = users[0];					
+					var user = users[0];
 					_this.ID = user.ID;
 					_this.isLogin = true;
 					_this.isPurchase = user.isPurchase;
@@ -286,7 +288,7 @@
 					_this.NickName = user.NickName;
 					_this.Image = user.Image;
 					_this.BePurchaser = user.BePurchaser;
-					
+
 					if (!_this.Image) {
 						_this.Image = "img/avatar-default.jpg";
 					}
@@ -319,16 +321,16 @@
 			funcSucceed();
 		}
 	};
-}).factory('Unipay', function($q,Host) {
+}).factory('Unipay', function($q, Host) {
 	return {
 		pay : function(tradeNo) {
 			var q = $q.defer();
 
-			if(Host.pc){
+			if (Host.pc) {
 				q.resolve("succeed");
-				return q.promise;				
+				return q.promise;
 			}
-//			q.resolve("succeed");
+			// q.resolve("succeed");
 			cn.xj.bag.plugin.Unionpay.payForTest(tradeNo, function(result) {
 				// Do any magic you need
 				q.resolve(result);
@@ -338,11 +340,11 @@
 
 			return q.promise;
 		},
-		
+
 	};
 }).factory('Popup', function($ionicModal) {
 	return {
-		show : function($scope, templateUrl, onSucceed,onCancel) {
+		show : function($scope, templateUrl, onSucceed, onCancel) {
 			var scope = $scope.$new();
 			var thisModal = {};
 			$ionicModal.fromTemplateUrl(templateUrl, {
@@ -354,7 +356,7 @@
 			});
 
 			scope.closeModal = function(result) {
-				if(onSucceed){
+				if (onSucceed) {
 					onSucceed();
 				}
 				thisModal.hide();
@@ -362,14 +364,14 @@
 			};
 
 			scope.done = function(result) {
-				if(onSucceed){
+				if (onSucceed) {
 					onSucceed(result);
 				}
 				thisModal.hide();
 				thisModal.remove();
 			};
 			scope.cancel = function(result) {
-				if(onCancel){
+				if (onCancel) {
 					onCancel(result);
 				}
 				thisModal.hide();
@@ -377,110 +379,106 @@
 			};
 		}
 	};
-}).factory(
-		'Category',
-		function($http) {
-			// Might use a resource here that returns a JSON array
+}).factory('Category', function($http) {
+	// Might use a resource here that returns a JSON array
 
-			// Some fake testing data
-			var categories = [];
-			var categoriesLevel1 = [];
-			var categoriesGrouped = [];
+	// Some fake testing data
+	var categories = [];
+	var categoriesLevel1 = [];
+	var categoriesGrouped = [];
 
-			function desc(id, name) {
-				angular.forEach(categories, function(c) {
-					if (c.ParentID == id) {
-						c.Desc = name + ">" + c.Name;
-						desc(c.ID, c.Name);
-					}
-				});
+	function desc(id, name) {
+		angular.forEach(categories, function(c) {
+			if (c.ParentID == id) {
+				c.Desc = name + ">" + c.Name;
+				desc(c.ID, c.Name);
+			}
+		});
+	}
+
+	$http.get('js/Categories.json').then(function(resp) {
+		var cats = resp.data;
+
+		var colors = [ "#6cc143", "#f5c132", "#fd8e35", "#ff565b", "#fe8864", "#42bde8", "#7b7ad7", "#f8cc58", "#fd8e35", "#f5c132", "#da70d6" ];
+
+		angular.forEach(cats, function(c) {
+			categories.push(c);
+			if (c.Level == 1) {
+				categoriesLevel1.push(c);
+			}
+		});
+
+		var index = 0;
+
+		var nscat = [];
+		categoriesGrouped.push(nscat);
+		angular.forEach(categoriesLevel1, function(c) {
+			c.Color = colors[index];
+
+			if (index < colors.length - 1) {
+				index = index + 1;
+			} else {
+				index = 0;
 			}
 
-			$http.get('js/Categories.json').then(
-					function(resp) {
-						var cats = resp.data;
+			if (nscat.length >= 3) {
+				nscat = [];
+				categoriesGrouped.push(nscat);
+			}
+			nscat.push(c);
 
-						var colors = [ "#6cc143", "#f5c132", "#fd8e35", "#ff565b", "#fe8864", "#42bde8", "#7b7ad7",
-								"#f8cc58", "#fd8e35", "#f5c132", "#da70d6" ];
+			desc(c.ID, c.Name);
+		});
 
-						angular.forEach(cats, function(c) {
-							categories.push(c);
-							if (c.Level == 1) {
-								categoriesLevel1.push(c);
-							}
-						});
+	}, function(err) {
+		console.error('ERR', err);
+		// err.status will contain the status code
+	});
 
-						var index = 0;
-
-						var nscat = [];
-						categoriesGrouped.push(nscat);
-						angular.forEach(categoriesLevel1, function(c) {
-							c.Color = colors[index];
-
-							if (index < colors.length - 1) {
-								index = index + 1;
-							} else {
-								index = 0;
-							}
-
-							if (nscat.length >= 3) {
-								nscat = [];
-								categoriesGrouped.push(nscat);
-							}
-							nscat.push(c);
-
-							desc(c.ID, c.Name);
-						});
-
-					}, function(err) {
-						console.error('ERR', err);
-						// err.status will contain the status code
-					});
-
-			return {
-				all : function() {
-					return categories;
-				},
-				level1Grouped : function() {
-					return categoriesGrouped;
-				},
-				level1 : function() {
-					return categoriesLevel1;
-				},
-				get : function(id) {
-					var cat;
-					angular.forEach(categories, function(c) {
-						if (c.ID == id) {
-							cat = c;
-						}
-					});
-					return cat;
-				},
-				children : function(id) {
-					var cren = [];
-					angular.forEach(categories, function(c) {
-						if (c.ParentID == id) {
-							cren.push(c);
-						}
-					});
-
-					// Simple index lookup
-					return cren;
+	return {
+		all : function() {
+			return categories;
+		},
+		level1Grouped : function() {
+			return categoriesGrouped;
+		},
+		level1 : function() {
+			return categoriesLevel1;
+		},
+		get : function(id) {
+			var cat;
+			angular.forEach(categories, function(c) {
+				if (c.ID == id) {
+					cat = c;
 				}
-			};
-		}).factory('Cart', function($localstorage) {
+			});
+			return cat;
+		},
+		children : function(id) {
+			var cren = [];
+			angular.forEach(categories, function(c) {
+				if (c.ParentID == id) {
+					cren.push(c);
+				}
+			});
+
+			// Simple index lookup
+			return cren;
+		}
+	};
+}).factory('Cart', function($localstorage) {
 
 	var _user = {};
 
 	return {
 		Countrys : [],
-		load : function(user){
+		load : function(user) {
 			_user = user;
 			var localCart = $localstorage.getObject("Cart" + _user.ID);
 			if (localCart.Countrys) {
 				this.Countrys = localCart.Countrys;
-			}else{
-				this.Countrys  = [];
+			} else {
+				this.Countrys = [];
 			}
 		},
 
@@ -531,9 +529,9 @@
 			}
 			this.save();
 		},
-		save: function(){
+		save : function() {
 			var _this = this;
-			$localstorage.setObject("Cart"+ _user.ID, {
+			$localstorage.setObject("Cart" + _user.ID, {
 				Countrys : _this.Countrys
 			});
 		}

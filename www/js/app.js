@@ -5,9 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starter.filter', 'starter.services', 'starter.directives']).run(function($ionicPlatform) {
+angular.module('starter', [ 'ionic', 'ngResource', 'starter.controllers', 'starter.filter', 'starter.services', 'starter.directives' ]).run(function($ionicPlatform) {
 	$ionicPlatform.ready(function() {
-		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+		// Hide the accessory bar by default (remove this to show the
+		// accessory bar above the keyboard
 		// for form inputs)
 		if (window.cordova && window.cordova.plugins.Keyboard) {
 			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -18,35 +19,37 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
 		}
 	});
 })
-/* global loading dialog  */.config(function($httpProvider) {
+/* global loading dialog */
+.config(function($httpProvider) {
 	$httpProvider.interceptors.push(function($rootScope) {
 		return {
 			request : function(config) {
-//				$rootScope.$broadcast('loading:show');
+				// $rootScope.$broadcast('loading:show');
 				return config;
 			},
 			response : function(response) {
-//				$rootScope.$broadcast('loading:hide');
+				// $rootScope.$broadcast('loading:hide');
 				return response;
 			},
-            responseError : function(response) {
-//                alert("adf");
-                return response;
-            }
+			responseError : function(response) {
+				// alert("adf");
+				return response;
+			}
 		};
 	})
 }).run(function($rootScope, $ionicLoading) {
-			$rootScope.$on('loading:show', function() {
-				$ionicLoading.show({
-					template : 'Loading...'
-				},500);
-			});
+	$rootScope.$on('loading:show', function() {
+		$ionicLoading.show({
+			template : 'Loading...'
+		}, 500);
+	});
 
-			$rootScope.$on('loading:hide', function() {
-				$ionicLoading.hide();
-			});
+	$rootScope.$on('loading:hide', function() {
+		$ionicLoading.hide();
+	});
 })
-/* Photo */.config(function($compileProvider) {
+/* Photo */
+.config(function($compileProvider) {
 	$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 }).run(function($ionicPlatform) {
 	$ionicPlatform.ready(function() {
@@ -134,4 +137,4 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
 	// if none of the above states are matched, use this as the fallback
 	$urlRouterProvider.otherwise('/dash');
 
-}); 
+});
