@@ -1,12 +1,12 @@
 Date.prototype.Format = function(fmt) { // author: meizz
 	var o = {
-	    "M+" : this.getMonth() + 1, // 月份
-	    "d+" : this.getDate(), // 日
-	    "h+" : this.getHours(), // 小时
-	    "m+" : this.getMinutes(), // 分
-	    "s+" : this.getSeconds(), // 秒
-	    "q+" : Math.floor((this.getMonth() + 3) / 3), // 季度
-	    "S" : this.getMilliseconds()
+		"M+" : this.getMonth() + 1, // 月份
+		"d+" : this.getDate(), // 日
+		"h+" : this.getHours(), // 小时
+		"m+" : this.getMinutes(), // 分
+		"s+" : this.getSeconds(), // 秒
+		"q+" : Math.floor((this.getMonth() + 3) / 3), // 季度
+		"S" : this.getMilliseconds()
 	// 毫秒
 	};
 	if (/(y+)/.test(fmt))
@@ -72,14 +72,14 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 }).controller('PayForPurchaserCtrl', function($scope, Users, Popup) {
 	$scope.user = $scope.$parent.user;
 	$scope.payment = {
-	    FromUserID : $scope.user.ID,
-	    ToUserID : $scope.user.ID,
-	    Amount : 200,// 金额
-	    PayTypeID : 1,// 买手保证金
-	    PayMethodID : 2,// Bank
-	    Description : "买手支付保证金",// Bank
-	    OrderNo : $scope.user.ID,
-	    ActionID : 1
+		FromUserID : $scope.user.ID,
+		ToUserID : $scope.user.ID,
+		Amount : 200,// 金额
+		PayTypeID : 1,// 买手保证金
+		PayMethodID : 2,// Bank
+		Description : "买手支付保证金",// Bank
+		OrderNo : $scope.user.ID,
+		ActionID : 1
 	};
 	$scope.done = function() {
 		$scope.$parent.done($scope.user);
@@ -356,12 +356,12 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.getPhoto = function(sourceType) {
 		$scope.product.ImagePromise = Camera.getPicture({
-		    sourceType : sourceType,
-		    correctOrientation : true,
-		    quality : 50,
-		    targetWidth : 320,
-		    targetHeight : 320,
-		    saveToPhotoAlbum : false
+			sourceType : sourceType,
+			correctOrientation : true,
+			quality : 50,
+			targetWidth : 320,
+			targetHeight : 320,
+			saveToPhotoAlbum : false
 		});
 
 		$scope.product.ImagePromise.then(function(imageURI) {
@@ -410,26 +410,26 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.showCameraMenu = function() {
 		$ionicActionSheet.show({
-		    buttons : [ {
-			    text : '拍照'
-		    }, {
-			    text : '从相册选择'
-		    } ],
-		    cancelText : '取消',
-		    cancel : function() {
-			    // add cancel code..
-		    },
-		    buttonClicked : function(index) {
-			    switch (index) {
-				    case 0:
-					    $scope.getPhotoFromCamera();
-					    break;
-				    case 1:
-					    $scope.getPhotoFromLibrary();
-					    break;
-			    }
-			    return true;
-		    }
+			buttons : [ {
+				text : '拍照'
+			}, {
+				text : '从相册选择'
+			} ],
+			cancelText : '取消',
+			cancel : function() {
+				// add cancel code..
+			},
+			buttonClicked : function(index) {
+				switch (index) {
+					case 0:
+						$scope.getPhotoFromCamera();
+						break;
+					case 1:
+						$scope.getPhotoFromLibrary();
+						break;
+				}
+				return true;
+			}
 		});
 	};
 }).controller('NewOrderCtrl', function($scope, Camera, $q, Popup, Orders, Address, Exts, Statuses, Actions) {
@@ -519,8 +519,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		Popup.show($scope, 'templates/modal-filter.html');
 		$scope.changeCountry = function(country) {
 			$scope.inventorys = Inventorys.query({
-			    Status : 1,
-			    Country : country.ID
+				Status : 1,
+				Country : country.ID
 			}, function() {
 				$scope.countryName = country.Name;
 			});
@@ -547,11 +547,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.product = $scope.item.Product;
 		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
 		$scope.suitor = {
-		    PurchaserID : $scope.currentUser.ID, // TODO
-		    PurchaserName : $scope.currentUser.Name,
-		    PurchaserNickName : $scope.currentUser.NickName,
-		    PurchaserImage : $scope.currentUser.Image,
-		    OrderItemID : $scope.item.ID
+			PurchaserID : $scope.currentUser.ID, // TODO
+			PurchaserName : $scope.currentUser.Name,
+			PurchaserNickName : $scope.currentUser.NickName,
+			PurchaserImage : $scope.currentUser.Image,
+			OrderItemID : $scope.item.ID
 		};
 		$scope.loadBid();
 	});
@@ -571,8 +571,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.loadBid = function() {
 		$scope.bids = OrderBiding.query({
-		    OrderItem : $scope.suitor.OrderItemID,
-		    Purchaser : $scope.suitor.PurchaserID
+			OrderItem : $scope.suitor.OrderItemID,
+			Purchaser : $scope.suitor.PurchaserID
 		}, function() {
 			if ($scope.bids.length > 0) {
 				$scope.step = 3;
@@ -655,339 +655,339 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.amount = $scope.productAmount + $scope.productCommission + $scope.flowCurrentStep.Bid.DeliveryCost;
 
 	$scope.payment = {
-	    FromUserID : $scope.currentUser.ID,
-	    ToUserID : $scope.currentUser.ID,
-	    Amount : $scope.amount,// 金额
-	    PayTypeID : 2,// 购买保证金
-	    PayMethodID : 2,// Bank
-	    Description : "订单支付",// Bank
-	    OrderNo : $scope.item.ID,
-	    ActionID : 1
+		FromUserID : $scope.currentUser.ID,
+		ToUserID : $scope.currentUser.ID,
+		Amount : $scope.amount,// 金额
+		PayTypeID : 2,// 购买保证金
+		PayMethodID : 2,// Bank
+		Description : "订单支付",// Bank
+		OrderNo : $scope.item.ID,
+		ActionID : 1
 	};
 	$scope.done = function(payment) {
 		$scope.$parent.done(payment);
 	};
 }).controller('OrderCustomerDetailCtrl',
-        function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Popup, Statuses, Actions, OrderBiding, $state, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, Unipay) {
+		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Popup, Statuses, Actions, OrderBiding, $state, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, Unipay) {
 
-	        var $stateParams = {
-		        itemId : $scope.$parent.item.ID
-	        };
+			var $stateParams = {
+				itemId : $scope.$parent.item.ID
+			};
 
-	        $scope.item = OrderItems.get($stateParams, function() {
-		        loadFlow();
-		        $scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
-		        $scope.item.Product.Extends = undefined;
-		        $scope.product = $scope.item.Product;
-		        $scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+			$scope.item = OrderItems.get($stateParams, function() {
+				loadFlow();
+				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+				$scope.item.Product.Extends = undefined;
+				$scope.product = $scope.item.Product;
+				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
 
-	        });
+			});
 
-	        $scope.Actions = Actions;
+			$scope.Actions = Actions;
 
-	        var loadFlow = function() {
-		        $scope.flows = OrderItemFlowByItem.query($stateParams, function() {
-			        if ($scope.flows.length > 0) {
-				        $scope.current = $scope.flows[$scope.flows.length - 1];
-				        $scope.statusActiveSlide = $scope.current.StatusID - 1;
-			        } else {
-				        $scope.current = {
-				            StatusID : 1,
-				            ActionID : 1
-				        };
-				        $scope.statusActiveSlide = $scope.current.StatusID - 1;
-				        $scope.loadBid();
-			        }
-		        });
-	        };
+			var loadFlow = function() {
+				$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
+					if ($scope.flows.length > 0) {
+						$scope.current = $scope.flows[$scope.flows.length - 1];
+						$scope.statusActiveSlide = $scope.current.StatusID - 1;
+					} else {
+						$scope.current = {
+							StatusID : 1,
+							ActionID : 1
+						};
+						$scope.statusActiveSlide = $scope.current.StatusID - 1;
+						$scope.loadBid();
+					}
+				});
+			};
 
-	        $scope.statusActiveSlide = 0;
+			$scope.statusActiveSlide = 0;
 
-	        var flowStepOut = function(status, action, params, succeed) {
-		        var step = {};
+			var flowStepOut = function(status, action, params, succeed) {
+				var step = {};
 
-		        step.Extends = angular.copy($scope.current.Extends);
-		        step.Bid = angular.copy($scope.current.Bid);
-		        if (params) {
-			        step = angular.copy(params, step);
-		        }
-		        step.OrderItemID = $scope.item.ID;
-		        step.StatusID = status.ID;
-		        step.StatusName = status.Name;
-		        step.ActionID = action.ID;
-		        step.ActionName = action.Name;
-		        step.PaymentID = $scope.current.PaymentID;
-		        var flow = new OrderItemFlow(step);
-		        flow.$save(function(resp) {
-			        if (succeed) {
-				        succeed(resp);
-			        } else {
-				        loadFlow();
-				        $state.reload();
+				step.Extends = angular.copy($scope.current.Extends);
+				step.Bid = angular.copy($scope.current.Bid);
+				if (params) {
+					step = angular.copy(params, step);
+				}
+				step.OrderItemID = $scope.item.ID;
+				step.StatusID = status.ID;
+				step.StatusName = status.Name;
+				step.ActionID = action.ID;
+				step.ActionName = action.Name;
+				step.PaymentID = $scope.current.PaymentID;
+				var flow = new OrderItemFlow(step);
+				flow.$save(function(resp) {
+					if (succeed) {
+						succeed(resp);
+					} else {
+						loadFlow();
+						$state.reload();
 
-			        }
-		        });
-	        };
+					}
+				});
+			};
 
-	        $scope.loadBid = function() {
-		        $scope.bids = OrderBiding.query({
-			        OrderItem : $stateParams.itemId
-		        }, function() {
-		        });
-	        };
+			$scope.loadBid = function() {
+				$scope.bids = OrderBiding.query({
+					OrderItem : $stateParams.itemId
+				}, function() {
+				});
+			};
 
-	        $scope.statusSlide = function(e, to) {
-		        $ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
-		        var ele = angular.element(e);
-		        angular.forEach(ele.parent().parent().find("div"), function(i) {
-			        var ie = angular.element(i);
-			        if (ie.hasClass("active"))
-				        ie.removeClass("active");
-		        });
-		        ele.addClass("active");
-	        };
+			$scope.statusSlide = function(e, to) {
+				$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
+				var ele = angular.element(e);
+				angular.forEach(ele.parent().parent().find("div"), function(i) {
+					var ie = angular.element(i);
+					if (ie.hasClass("active"))
+						ie.removeClass("active");
+				});
+				ele.addClass("active");
+			};
 
-	        $scope.bitSucceed = function(suitor) {
+			$scope.bitSucceed = function(suitor) {
 
-		        var params = {
-			        Bid : {
-			            "ID" : suitor.ID,
-			            "OrderItemID" : suitor.OrderItemID,
-			            "PurchaserID" : suitor.PurchaserID,
-			            "PurchaserName" : suitor.PurchaserName,
-			            "PurchaserNickName" : suitor.PurchaserNickName,
-			            "PurchaserImage" : suitor.PurchaserImage,
-			            "Commission" : suitor.Commission,
-			            "SuggestedPrice" : suitor.SuggestedPrice,
-			            "DeliveryCost" : suitor.DeliveryCost,
-			            "DeliveryMethodID" : suitor.DeliveryMethodID,
-			            "DeliveryMethodName" : suitor.DeliveryMethodName
-			        }
-		        };
+				var params = {
+					Bid : {
+						"ID" : suitor.ID,
+						"OrderItemID" : suitor.OrderItemID,
+						"PurchaserID" : suitor.PurchaserID,
+						"PurchaserName" : suitor.PurchaserName,
+						"PurchaserNickName" : suitor.PurchaserNickName,
+						"PurchaserImage" : suitor.PurchaserImage,
+						"Commission" : suitor.Commission,
+						"SuggestedPrice" : suitor.SuggestedPrice,
+						"DeliveryCost" : suitor.DeliveryCost,
+						"DeliveryMethodID" : suitor.DeliveryMethodID,
+						"DeliveryMethodName" : suitor.DeliveryMethodName
+					}
+				};
 
-		        flowStepOut(Statuses.purchasing, Actions.bitSucceed, params, function(resp) {
-			        $scope.current = resp;
-			        $scope.gotoPay();
-		        });
+				flowStepOut(Statuses.purchasing, Actions.bitSucceed, params, function(resp) {
+					$scope.current = resp;
+					$scope.gotoPay();
+				});
 
-	        };
+			};
 
-	        $scope.gotoPay = function() {
-		        $scope.item = $scope.item;
-		        $scope.flowCurrentStep = $scope.current;
-		        Popup.show($scope, 'templates/modal-pay-for-order.html', function(payment) {
-			        loadFlow();
-			        $state.reload();
-		        });
-	        };
+			$scope.gotoPay = function() {
+				$scope.item = $scope.item;
+				$scope.flowCurrentStep = $scope.current;
+				Popup.show($scope, 'templates/modal-pay-for-order.html', function(payment) {
+					loadFlow();
+					$state.reload();
+				});
+			};
 
-	        $scope.cancelOrder = function() {
-		        flowStepOut(Statuses.completed, Actions.cancelOrder);
-	        };
+			$scope.cancelOrder = function() {
+				flowStepOut(Statuses.completed, Actions.cancelOrder);
+			};
 
-	        $scope.confirmDelivering = function() {
-		        flowStepOut(Statuses.completed, Actions.delivered);
-	        };
+			$scope.confirmDelivering = function() {
+				flowStepOut(Statuses.completed, Actions.delivered);
+			};
 
-	        $scope.showChat = function(item, customerID, purchaserID, iampurchaser) {
-		        var scope = $scope.$new();
-		        scope.item = item;
-		        scope.customerID = customerID;
-		        scope.purchaserID = purchaserID;
-		        scope.iampurchaser = iampurchaser;
-		        Popup.show(scope, 'templates/modal-chat.html');
-	        };
+			$scope.showChat = function(item, customerID, purchaserID, iampurchaser) {
+				var scope = $scope.$new();
+				scope.item = item;
+				scope.customerID = customerID;
+				scope.purchaserID = purchaserID;
+				scope.iampurchaser = iampurchaser;
+				Popup.show(scope, 'templates/modal-chat.html');
+			};
 
-        }).controller(
-        'OrderPurchaserDetailCtrl',
-        function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts,
-                $ionicActionSheet, Camera) {
+		}).controller(
+		'OrderPurchaserDetailCtrl',
+		function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts,
+				$ionicActionSheet, Camera) {
 
-	        var $stateParams = {
-		        itemId : $scope.$parent.item.ID
-	        };
+			var $stateParams = {
+				itemId : $scope.$parent.item.ID
+			};
 
-	        $scope.item = OrderItems.get($stateParams, function() {
-		        loadFlow();
-		        $scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
-		        $scope.item.Product.Extends = undefined;
-		        $scope.product = $scope.item.Product;
-		        $scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
-	        });
+			$scope.item = OrderItems.get($stateParams, function() {
+				loadFlow();
+				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+				$scope.item.Product.Extends = undefined;
+				$scope.product = $scope.item.Product;
+				$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+			});
 
-	        $scope.Actions = Actions;
+			$scope.Actions = Actions;
 
-	        var loadFlow = function() {
-		        $scope.flows = OrderItemFlowByItem.query($stateParams, function() {
-			        if ($scope.flows.length > 0) {
-				        $scope.current = $scope.flows[$scope.flows.length - 1];
-				        $scope.statusActiveSlide = $scope.current.StatusID - 1;
-			        } else {
-				        $scope.current = {
-					        StatusID : 1
-				        };
-				        $scope.statusActiveSlide = $scope.current.StatusID - 1;
-				        $scope.loadBid();
-			        }
-		        });
-	        };
+			var loadFlow = function() {
+				$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
+					if ($scope.flows.length > 0) {
+						$scope.current = $scope.flows[$scope.flows.length - 1];
+						$scope.statusActiveSlide = $scope.current.StatusID - 1;
+					} else {
+						$scope.current = {
+							StatusID : 1
+						};
+						$scope.statusActiveSlide = $scope.current.StatusID - 1;
+						$scope.loadBid();
+					}
+				});
+			};
 
-	        $scope.statusActiveSlide = 0;
+			$scope.statusActiveSlide = 0;
 
-	        var flowStepOut = function(status, action, params) {
-		        var step = {};
+			var flowStepOut = function(status, action, params) {
+				var step = {};
 
-		        step.Extends = angular.copy($scope.current.Extends);
-		        step.Bid = angular.copy($scope.current.Bid);
-		        if (params) {
-			        step = angular.copy(params, step);
-		        }
-		        step.OrderItemID = $scope.item.ID;
-		        step.StatusID = status.ID;
-		        step.StatusName = status.Name;
-		        step.ActionID = action.ID;
-		        step.ActionName = action.Name;
-		        step.PaymentID = $scope.current.PaymentID;
-		        var post = new OrderItemFlow(step);
-		        post.$save(function() {
-			        loadFlow();
-			        $state.reload();
-		        });
-	        };
+				step.Extends = angular.copy($scope.current.Extends);
+				step.Bid = angular.copy($scope.current.Bid);
+				if (params) {
+					step = angular.copy(params, step);
+				}
+				step.OrderItemID = $scope.item.ID;
+				step.StatusID = status.ID;
+				step.StatusName = status.Name;
+				step.ActionID = action.ID;
+				step.ActionName = action.Name;
+				step.PaymentID = $scope.current.PaymentID;
+				var post = new OrderItemFlow(step);
+				post.$save(function() {
+					loadFlow();
+					$state.reload();
+				});
+			};
 
-	        $scope.loadBid = function() {
-		        $scope.bids = OrderBiding.query({
-			        OrderItem : $stateParams.itemId
-		        }, function() {
-		        });
-	        };
+			$scope.loadBid = function() {
+				$scope.bids = OrderBiding.query({
+					OrderItem : $stateParams.itemId
+				}, function() {
+				});
+			};
 
-	        $scope.statusSlide = function(e, to) {
-		        $ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
-		        var ele = angular.element(e);
-		        angular.forEach(ele.parent().parent().find("div"), function(i) {
-			        var ie = angular.element(i);
-			        if (ie.hasClass("active"))
-				        ie.removeClass("active");
-		        });
-		        ele.addClass("active");
-	        };
+			$scope.statusSlide = function(e, to) {
+				$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
+				var ele = angular.element(e);
+				angular.forEach(ele.parent().parent().find("div"), function(i) {
+					var ie = angular.element(i);
+					if (ie.hasClass("active"))
+						ie.removeClass("active");
+				});
+				ele.addClass("active");
+			};
 
-	        $scope.beginPurchasing = function() {
-		        flowStepOut(Statuses.purchasing, Actions.purchasing);
-	        };
+			$scope.beginPurchasing = function() {
+				flowStepOut(Statuses.purchasing, Actions.purchasing);
+			};
 
-	        $scope.cancelPurchasing = function() {
-		        flowStepOut(Statuses.completed, Actions.cancelPurchasing);
-	        };
+			$scope.cancelPurchasing = function() {
+				flowStepOut(Statuses.completed, Actions.cancelPurchasing);
+			};
 
-	        $scope.finishPurchasing = function() {
-		        var promiseArray = [];
-		        if ($scope.current.Extends.ProductActualImageSucceed) {
-			        var p = Camera.upload($scope.current.Extends.ProductActualImage);
-			        p = p.then(function(result) {
-				        $scope.current.Extends.ProductActualImage = result.response;
-			        });
-			        promiseArray.push(p);
-		        }
-		        ;
-		        if ($scope.current.Extends.InvoiceImageSucceed) {
-			        var p = Camera.upload($scope.current.Extends.InvoiceImage);
-			        p = p.then(function(result) {
-				        $scope.current.Extends.InvoiceImage = result.response;
-			        });
-			        promiseArray.push(p);
-		        }
-		        ;
-		        if (promiseArray.length > 0) {
-			        $q.all(promiseArray).then(function(results) {
-				        flowStepOut(Statuses.delivering, Actions.purchased);
-			        });
-		        } else {
-			        flowStepOut(Statuses.delivering, Actions.purchased);
-		        }
-	        };
+			$scope.finishPurchasing = function() {
+				var promiseArray = [];
+				if ($scope.current.Extends.ProductActualImageSucceed) {
+					var p = Camera.upload($scope.current.Extends.ProductActualImage);
+					p = p.then(function(result) {
+						$scope.current.Extends.ProductActualImage = result.response;
+					});
+					promiseArray.push(p);
+				}
+				;
+				if ($scope.current.Extends.InvoiceImageSucceed) {
+					var p = Camera.upload($scope.current.Extends.InvoiceImage);
+					p = p.then(function(result) {
+						$scope.current.Extends.InvoiceImage = result.response;
+					});
+					promiseArray.push(p);
+				}
+				;
+				if (promiseArray.length > 0) {
+					$q.all(promiseArray).then(function(results) {
+						flowStepOut(Statuses.delivering, Actions.purchased);
+					});
+				} else {
+					flowStepOut(Statuses.delivering, Actions.purchased);
+				}
+			};
 
-	        $scope.startDelivering = function() {
-		        flowStepOut(Statuses.delivering, Actions.delivering);
-	        };
+			$scope.startDelivering = function() {
+				flowStepOut(Statuses.delivering, Actions.delivering);
+			};
 
-	        $scope.getPhoto = function(sourceType) {
-		        return Camera.getPicture({
-		            sourceType : sourceType,
-		            correctOrientation : true,
-		            quality : 50,
-		            targetWidth : 320,
-		            targetHeight : 320,
-		            saveToPhotoAlbum : false
-		        });
-	        };
+			$scope.getPhoto = function(sourceType) {
+				return Camera.getPicture({
+					sourceType : sourceType,
+					correctOrientation : true,
+					quality : 50,
+					targetWidth : 320,
+					targetHeight : 320,
+					saveToPhotoAlbum : false
+				});
+			};
 
-	        $scope.showProductCameraMenu = function() {
-		        var imagePromise = {};
+			$scope.showProductCameraMenu = function() {
+				var imagePromise = {};
 
-		        $ionicActionSheet.show({
-		            buttons : [ {
-			            text : '拍照'
-		            }, {
-			            text : '从相册选择'
-		            } ],
-		            cancelText : '取消',
-		            cancel : function() {
-			            // add cancel code..
-		            },
-		            buttonClicked : function(index) {
-			            switch (index) {
-				            case 0:
-					            imagePromise = $scope.getPhoto(Camera.PictureSourceType.CAMERA);
-					            break;
-				            case 1:
-					            imagePromise = $scope.getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);
-					            break;
-			            }
+				$ionicActionSheet.show({
+					buttons : [ {
+						text : '拍照'
+					}, {
+						text : '从相册选择'
+					} ],
+					cancelText : '取消',
+					cancel : function() {
+						// add cancel code..
+					},
+					buttonClicked : function(index) {
+						switch (index) {
+							case 0:
+								imagePromise = $scope.getPhoto(Camera.PictureSourceType.CAMERA);
+								break;
+							case 1:
+								imagePromise = $scope.getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);
+								break;
+						}
 
-			            imagePromise.then(function(imageURI) {
-				            $scope.current.Extends.ProductActualImage = imageURI;
-				            $scope.current.Extends.ProductActualImageSucceed = true;
-			            });
-			            return true;
-		            }
-		        });
-	        };
+						imagePromise.then(function(imageURI) {
+							$scope.current.Extends.ProductActualImage = imageURI;
+							$scope.current.Extends.ProductActualImageSucceed = true;
+						});
+						return true;
+					}
+				});
+			};
 
-	        $scope.showInvoiceCameraMenu = function() {
-		        var imagePromise = {};
+			$scope.showInvoiceCameraMenu = function() {
+				var imagePromise = {};
 
-		        $ionicActionSheet.show({
-		            buttons : [ {
-			            text : '拍照'
-		            }, {
-			            text : '从相册选择'
-		            } ],
-		            cancelText : '取消',
-		            cancel : function() {
-			            // add cancel code..
-		            },
-		            buttonClicked : function(index) {
-			            switch (index) {
-				            case 0:
-					            imagePromise = $scope.getPhoto(Camera.PictureSourceType.CAMERA);
-					            break;
-				            case 1:
-					            imagePromise = $scope.getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);
-					            break;
-			            }
+				$ionicActionSheet.show({
+					buttons : [ {
+						text : '拍照'
+					}, {
+						text : '从相册选择'
+					} ],
+					cancelText : '取消',
+					cancel : function() {
+						// add cancel code..
+					},
+					buttonClicked : function(index) {
+						switch (index) {
+							case 0:
+								imagePromise = $scope.getPhoto(Camera.PictureSourceType.CAMERA);
+								break;
+							case 1:
+								imagePromise = $scope.getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);
+								break;
+						}
 
-			            imagePromise.then(function(imageURI) {
-				            $scope.current.Extends.InvoiceImage = imageURI;
-				            $scope.current.Extends.InvoiceImageSucceed = true;
-			            });
-			            return true;
-		            }
-		        });
-	        };
+						imagePromise.then(function(imageURI) {
+							$scope.current.Extends.InvoiceImage = imageURI;
+							$scope.current.Extends.InvoiceImageSucceed = true;
+						});
+						return true;
+					}
+				});
+			};
 
-        }).controller('ChatCtrl', function($scope, $ionicScrollDelegate, Users, $timeout) {
+		}).controller('ChatCtrl', function($scope, $ionicScrollDelegate, Users, $timeout) {
 	$scope.item = $scope.$parent.item;
 	$scope.customerID = $scope.$parent.customerID;
 	$scope.purchaserID = $scope.$parent.purchaserID;
@@ -1013,38 +1013,38 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$timeout(function() {
 
 		$scope.chats.push({
-		    UserID : $scope.currentUser.ID,
-		    Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+			UserID : $scope.currentUser.ID,
+			Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
 		});
 		$scope.chats.push({
-		    UserID : 3,
-		    Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+			UserID : 3,
+			Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
 		});
 		$scope.chats.push({
-		    UserID : $scope.currentUser.ID,
-		    Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+			UserID : $scope.currentUser.ID,
+			Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
 		});
 		$scope.chats.push({
-		    UserID : 3,
-		    Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+			UserID : 3,
+			Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
 		});
 		$scope.chats.push({
-		    UserID : $scope.currentUser.ID,
-		    Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+			UserID : $scope.currentUser.ID,
+			Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
 		});
 		$scope.chats.push({
-		    UserID : 3,
-		    Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+			UserID : 3,
+			Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
 		});
 		chatsCtrl.scrollBottom();
 	}, 100);
 
 	$scope.say = function(event) {
 		var newchat = {
-		    UserID : $scope.currentUser.ID,
-		    CustomerID : $scope.customerID,
-		    PurchaserID : $scope.purchaserID,
-		    Message : $scope.message
+			UserID : $scope.currentUser.ID,
+			CustomerID : $scope.customerID,
+			PurchaserID : $scope.purchaserID,
+			Message : $scope.message
 		};
 
 		$scope.chats.push(newchat);
@@ -1110,12 +1110,12 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.getPhoto = function(sourceType) {
 		$scope.user.ImagePromise = Camera.getPicture({
-		    sourceType : sourceType,
-		    correctOrientation : true,
-		    quality : 50,
-		    targetWidth : 320,
-		    targetHeight : 320,
-		    saveToPhotoAlbum : false
+			sourceType : sourceType,
+			correctOrientation : true,
+			quality : 50,
+			targetWidth : 320,
+			targetHeight : 320,
+			saveToPhotoAlbum : false
 		});
 
 		$scope.user.ImagePromise.then(function(imageURI) {
@@ -1152,20 +1152,20 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.payments = [];// Payments.query();
 
 	$scope.paymentsFromPersonal = Payments.query({
-	    FromUser : $scope.currentUser.ID,
-	    FromAccountType : 1
+		FromUser : $scope.currentUser.ID,
+		FromAccountType : 1
 	});
 	$scope.paymentsFromBank = Payments.query({
-	    FromUser : $scope.currentUser.ID,
-	    FromAccountType : 2
+		FromUser : $scope.currentUser.ID,
+		FromAccountType : 2
 	});
 	$scope.recieveToPersonal = Payments.query({
-	    ToUser : $scope.currentUser.ID,
-	    ToAccountType : 1
+		ToUser : $scope.currentUser.ID,
+		ToAccountType : 1
 	});
 	$scope.recieveToBank = Payments.query({
-	    ToUser : $scope.currentUser.ID,
-	    ToAccountType : 2
+		ToUser : $scope.currentUser.ID,
+		ToAccountType : 2
 	});
 
 	$scope.showDetail = function(payment) {
@@ -1236,171 +1236,171 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.$parent.closeModal();
 	};
 }).controller(
-        'UnionpayCtrl',
-        function($scope, $http, Popup) {
-	        // for unionpay test by jih ++++++++++++++++++++++++++
-	        $scope.pay = function() {
+		'UnionpayCtrl',
+		function($scope, $http, Popup) {
+			// for unionpay test by jih ++++++++++++++++++++++++++
+			$scope.pay = function() {
 
-		        $http.jsonp("http://www.gouwudai.net.cn:8080/bag-unionpay-server/trade?callback=JSON_CALLBACK").success(function(data, status) {
-			        cn.xj.bag.plugin.Unionpay.payForTest(data.tn, function(msg) {
-				        // 支付控件返回字符串:success、fail、cancel
-				        // 分别代表支付成功，支付失败，支付取消
-				        alert(msg);
-			        });
-		        }).error(function(data, status) {
-			        alert("error " + data + " " + status);
-		        });
-	        }
+				$http.jsonp("http://www.gouwudai.net.cn:8080/bag-unionpay-server/trade?callback=JSON_CALLBACK").success(function(data, status) {
+					cn.xj.bag.plugin.Unionpay.payForTest(data.tn, function(msg) {
+						// 支付控件返回字符串:success、fail、cancel
+						// 分别代表支付成功，支付失败，支付取消
+						alert(msg);
+					});
+				}).error(function(data, status) {
+					alert("error " + data + " " + status);
+				});
+			}
 
-	        $scope.toast = function() {
-		        // https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin
+			$scope.toast = function() {
+				// https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin
 
-		        // cordova plugin add
-		        // https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
-		        // cordova prepare
+				// cordova plugin add
+				// https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
+				// cordova prepare
 
-		        window.plugins.toast.showShortCenter("这是一个警告！！！\n这是第二个警告！！！\n这是第三个警告！！！")
-	        }
+				window.plugins.toast.showShortCenter("这是一个警告！！！\n这是第二个警告！！！\n这是第三个警告！！！")
+			}
 
-	        $scope.popupPay = function() {
-		        Popup.show($scope, 'templates/modal-order-pay.html');
-		        alert(window.document.getElementsByTagName("body")[0].clientWidth);
-		        alert(window.devicePixelRatio);
-		        alert(screen.width);
-	        }
+			$scope.popupPay = function() {
+				Popup.show($scope, 'templates/modal-order-pay.html');
+				alert(window.document.getElementsByTagName("body")[0].clientWidth);
+				alert(window.devicePixelRatio);
+				alert(screen.width);
+			}
 
-	        $scope.local = function() {
+			$scope.local = function() {
 
-		        navigator.geolocation.getCurrentPosition(function(position) {
-			        // alert('Latitude: ' +
-			        // position.coords.latitude + '\n' +
-			        // 'Longitude: ' +
-			        // position.coords.longitude + '\n'
-			        // +
-			        // 'Altitude: ' +
-			        // position.coords.altitude + '\n' +
-			        // 'Accuracy: ' +
-			        // position.coords.accuracy + '\n' +
-			        // 'Altitude Accuracy: ' +
-			        // position.coords.altitudeAccuracy
-			        // + '\n' +
-			        // 'Heading: ' +
-			        // position.coords.heading + '\n' +
-			        // 'Speed: ' + position.coords.speed
-			        // + '\n' +
-			        // 'Timestamp: ' +
-			        // position.timestamp + '\n');
+				navigator.geolocation.getCurrentPosition(function(position) {
+					// alert('Latitude: ' +
+					// position.coords.latitude + '\n' +
+					// 'Longitude: ' +
+					// position.coords.longitude + '\n'
+					// +
+					// 'Altitude: ' +
+					// position.coords.altitude + '\n' +
+					// 'Accuracy: ' +
+					// position.coords.accuracy + '\n' +
+					// 'Altitude Accuracy: ' +
+					// position.coords.altitudeAccuracy
+					// + '\n' +
+					// 'Heading: ' +
+					// position.coords.heading + '\n' +
+					// 'Speed: ' + position.coords.speed
+					// + '\n' +
+					// 'Timestamp: ' +
+					// position.timestamp + '\n');
 
-			        var latitude = position.coords.latitude;
-			        var longitude = position.coords.longitude;
+					var latitude = position.coords.latitude;
+					var longitude = position.coords.longitude;
 
-			        alert(latitude + ', ' + longitude);
+					alert(latitude + ', ' + longitude);
 
-			        var url = 'http://111.221.29.14/REST/v1/Locations/' + latitude + ',' + longitude
-			                + '?includeEntityTypes=Address&o=json&key=AlVuxcZtD7dY3Hb8ZFcOx_JSm0Vnqq1m82cx77HLguQ-7Em9e0Hul0pNfFLuPCwg&c=zh-Hans' + "&jsonp=JSON_CALLBACK";
+					var url = 'http://111.221.29.14/REST/v1/Locations/' + latitude + ',' + longitude
+							+ '?includeEntityTypes=Address&o=json&key=AlVuxcZtD7dY3Hb8ZFcOx_JSm0Vnqq1m82cx77HLguQ-7Em9e0Hul0pNfFLuPCwg&c=zh-Hans' + "&jsonp=JSON_CALLBACK";
 
-			        $http.jsonp(url).success(
-			                function(obj) {
+					$http.jsonp(url).success(
+							function(obj) {
 
-				                var resources = obj.resourceSets[0].resources;
-				                var a = resources[resources.length - 1];
-				                // see
-				                // http://msdn.microsoft.com/zh-cn/library/ff701725.aspx
-				                alert('北　纬：' + latitude + '\n' + '东　经：' + longitude + '\n' + '国　家：' + a.address.countryRegion + '\n' + '行政区：' + a.address.adminDistrict + '\n' + '行政区：'
-				                        + a.address.adminDistrict2 + '\n' + '位　置：' + a.address.locality + '\n' + '地址线：' + a.address.addressLine + '\n' + '地　址：' + a.address.formattedAddress);
-			                }).error(function(data, status) {
-				        alert("error " + data + " " + status);
-			        });
+								var resources = obj.resourceSets[0].resources;
+								var a = resources[resources.length - 1];
+								// see
+								// http://msdn.microsoft.com/zh-cn/library/ff701725.aspx
+								alert('北　纬：' + latitude + '\n' + '东　经：' + longitude + '\n' + '国　家：' + a.address.countryRegion + '\n' + '行政区：' + a.address.adminDistrict + '\n' + '行政区：'
+										+ a.address.adminDistrict2 + '\n' + '位　置：' + a.address.locality + '\n' + '地址线：' + a.address.addressLine + '\n' + '地　址：' + a.address.formattedAddress);
+							}).error(function(data, status) {
+						alert("error " + data + " " + status);
+					});
 
-		        }, function(error) {
-			        alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
-		        }, {
-		            maximumAge : 3000,
-		            timeout : 5000,
-		            enableHighAccuracy : true
-		        });
+				}, function(error) {
+					alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+				}, {
+					maximumAge : 3000,
+					timeout : 5000,
+					enableHighAccuracy : true
+				});
 
-		        // var example = {
-		        // "authenticationResultCode": "ValidCredentials",
-		        // "brandLogoUri":
-		        // "http:\/\/dev.virtualearth.net\/Branding\/logo_powered_by.png",
-		        // "copyright": "Copyright © 2014 Microsoft and its
-		        // suppliers. All rights reserved. This API cannot be
-		        // accessed and the content and any results may not be
-		        // used, reproduced or transmitted in any manner without
-		        // express written permission from Microsoft
-		        // Corporation.",
-		        // "resourceSets": [
-		        // {
-		        // "estimatedTotal": 2,
-		        // "resources": [
-		        // {
-		        // "__type":
-		        // "Location:http:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1",
-		        // "bbox":
-		        // [31.267987282429324,121.47002949976184,31.275712717570677,121.48208050023817],
-		        // "name": "MajorRoad, 中国大陆",
-		        // "point": {
-		        // "type": "Point",
-		        // "coordinates": [31.27185, 121.476055]
-		        // },
-		        // "address": {
-		        // "addressLine": "MajorRoad",
-		        // "countryRegion": "中国大陆",
-		        // "formattedAddress": "MajorRoad, 中国大陆"
-		        // },
-		        // "confidence": "Medium",
-		        // "entityType": "Address",
-		        // "geocodePoints": [
-		        // {
-		        // "type": "Point",
-		        // "coordinates": [31.27185, 121.476055],
-		        // "calculationMethod": "Interpolation",
-		        // "usageTypes": ["Display", "Route"]
-		        // }
-		        // ],
-		        // "matchCodes": ["Good"]
-		        // },
-		        // {
-		        // "__type":
-		        // "Location:http:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1",
-		        // "bbox": [31.267987282429324, 121.47002949976184,
-		        // 31.275712717570677, 121.48208050023817],
-		        // "name": "上海市虹口区中山北一路121号",
-		        // "point": {
-		        // "type": "Point",
-		        // "coordinates": [31.27185, 121.476055]
-		        // },
-		        // "address": {
-		        // "addressLine": "中山北一路121号",
-		        // "adminDistrict": "上海市",
-		        // "countryRegion": "中华人民共和国",
-		        // "formattedAddress": "上海市虹口区中山北一路121号",
-		        // "locality": "虹口区"
-		        // },
-		        // "confidence": "Medium",
-		        // "entityType": "Address",
-		        // "geocodePoints": [
-		        // {
-		        // "type": "Point",
-		        // "coordinates": [31.27185, 121.476055],
-		        // "calculationMethod": "InterpolationOffset",
-		        // "usageTypes": ["Display"]
-		        // }
-		        // ], "matchCodes": ["Good"]
-		        // }
-		        // ]
-		        // }
-		        // ],
-		        // "statusCode": 200,
-		        // "statusDescription": "OK",
-		        // "traceId":
-		        // "3f3d51e69784433fa5b19041a6ec93d0|HK20271643|02.00.106.800|HK2SCH010280521,
-		        // HK2SCH010290230, BJ1SCH010032715"
-		        // };
+				// var example = {
+				// "authenticationResultCode": "ValidCredentials",
+				// "brandLogoUri":
+				// "http:\/\/dev.virtualearth.net\/Branding\/logo_powered_by.png",
+				// "copyright": "Copyright © 2014 Microsoft and its
+				// suppliers. All rights reserved. This API cannot be
+				// accessed and the content and any results may not be
+				// used, reproduced or transmitted in any manner without
+				// express written permission from Microsoft
+				// Corporation.",
+				// "resourceSets": [
+				// {
+				// "estimatedTotal": 2,
+				// "resources": [
+				// {
+				// "__type":
+				// "Location:http:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1",
+				// "bbox":
+				// [31.267987282429324,121.47002949976184,31.275712717570677,121.48208050023817],
+				// "name": "MajorRoad, 中国大陆",
+				// "point": {
+				// "type": "Point",
+				// "coordinates": [31.27185, 121.476055]
+				// },
+				// "address": {
+				// "addressLine": "MajorRoad",
+				// "countryRegion": "中国大陆",
+				// "formattedAddress": "MajorRoad, 中国大陆"
+				// },
+				// "confidence": "Medium",
+				// "entityType": "Address",
+				// "geocodePoints": [
+				// {
+				// "type": "Point",
+				// "coordinates": [31.27185, 121.476055],
+				// "calculationMethod": "Interpolation",
+				// "usageTypes": ["Display", "Route"]
+				// }
+				// ],
+				// "matchCodes": ["Good"]
+				// },
+				// {
+				// "__type":
+				// "Location:http:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1",
+				// "bbox": [31.267987282429324, 121.47002949976184,
+				// 31.275712717570677, 121.48208050023817],
+				// "name": "上海市虹口区中山北一路121号",
+				// "point": {
+				// "type": "Point",
+				// "coordinates": [31.27185, 121.476055]
+				// },
+				// "address": {
+				// "addressLine": "中山北一路121号",
+				// "adminDistrict": "上海市",
+				// "countryRegion": "中华人民共和国",
+				// "formattedAddress": "上海市虹口区中山北一路121号",
+				// "locality": "虹口区"
+				// },
+				// "confidence": "Medium",
+				// "entityType": "Address",
+				// "geocodePoints": [
+				// {
+				// "type": "Point",
+				// "coordinates": [31.27185, 121.476055],
+				// "calculationMethod": "InterpolationOffset",
+				// "usageTypes": ["Display"]
+				// }
+				// ], "matchCodes": ["Good"]
+				// }
+				// ]
+				// }
+				// ],
+				// "statusCode": 200,
+				// "statusDescription": "OK",
+				// "traceId":
+				// "3f3d51e69784433fa5b19041a6ec93d0|HK20271643|02.00.106.800|HK2SCH010280521,
+				// HK2SCH010290230, BJ1SCH010032715"
+				// };
 
-	        }
-        })
+			}
+		})
 // ---------------------------------------------------
 
 ;
