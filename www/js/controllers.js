@@ -222,9 +222,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.popupOrder(order);
 	};
 
-	$scope.checked = function(item) {
-		item.checked = !item.checked;
-	};
+//	$scope.checked = function(item) {
+//		item.checked = !item.checked;
+//	};
 
 	$scope.newProduct = function() {
 		Popup.show($scope, 'templates/modal-new-product.html');
@@ -235,6 +235,71 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		Popup.show($scope, 'templates/modal-new-order.html');
 	};
 
+	$scope.checkAll=function($event,country){
+		var checked = country.checked;
+		if(checked){
+			country.selected = true;
+			angular.forEach($scope.cart.Countrys, function(c) {
+				if(c!=country){
+					c.selected = false;
+					c.checked = false;
+					angular.forEach(c.Items, function(i) {
+						i.checked = false;
+					});
+				}
+			});
+		}
+		angular.forEach(country.Items, function(i) {
+			i.checked=checked;
+		});
+
+		sumAll();
+	};
+
+	$scope.check=function($event,country,item){			
+		if(item.checked &&  !country.selected){
+			angular.forEach($scope.cart.Countrys, function(c) {
+				if(c!=country){
+					c.selected = false;
+					c.checked = false;
+					angular.forEach(c.Items, function(i) {
+						i.checked = false;
+					});
+				}
+			});
+			country.selected = true;
+		};
+		
+		var checkall = true;
+		angular.forEach(country.Items, function(i) {
+			checkall = checkall &&i.checked;
+		});
+		country.checked = checkall;
+		sumAll();
+	};
+	
+	$scope.allSum = 0;
+	$scope.allCnt = 0;
+	$scope.CountryName = "";
+	
+	var sumAll = function(){
+		var sum = 0;
+		var cnt = 0;
+		angular.forEach($scope.cart.Countrys, function(c) {
+			if(c.selected){
+				angular.forEach(c.Items, function(i) {
+					if(i.checked){
+					sum += (i.Quantity * i.Product.ExpectedPrice);
+					cnt += 1;
+					}
+				});
+				$scope.CountryName = c.Name;
+			}
+		});
+		$scope.allSum = sum;
+		$scope.allCnt = cnt;	
+	};
+		
 	$scope.refineCart = function() {
 		angular.forEach($scope.cart.Countrys, function(c) {
 			var newitems = [];

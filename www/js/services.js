@@ -501,7 +501,7 @@
 
 			if (this.Countrys) {
 				angular.forEach(this.Countrys, function(o) {
-					if (o.name == item.Product.Country) {
+					if (o.Name == item.Product.CountryName) {
 						countryAlreadyExist = true;
 						countryAlready = o;
 					}
@@ -522,7 +522,8 @@
 				}
 			} else {
 				var country = {
-					name : item.Product.Country,
+					Name : item.Product.CountryName,
+					selected : false,
 					Items : []
 				};
 				country.Items.push(item);
