@@ -1,6 +1,5 @@
 <ion-view title="已发布订单">
 	<ion-content class="has-subheader">
-
 		<div class="padding-top" x-ng-show="orders.length==0">
 			<p>
 				暂时还没有订单哦！
@@ -8,20 +7,13 @@
 		</div>
 		<div class="list" style="margin-bottom: 0px;" x-ng-repeat="order in orders">
 			<div class="item item-divider item-product-title" style="background-color: #ffffff; padding-bottom: 4px;">
-				<!--订单号: {{order.ID}} {{order.Country}}-->
 				<h2 style="padding-bottom: 0px; margin-bottom: 0; vertical-align: middle;">{{order.CountryName}}</h2>
-
 				<div>
 					<i class="ion-ios7-clock-outline"></i>发布时间：{{order.Datetime}}
 				</div>
-
-				<a class="item-icon-right" onclick=""> <i class="icon ion-ios7-arrow-up item-note"></i> </a>
-
-				<!--<div class="right"><a class="item-icon-right"><i class="icon ion-ios7-arrow-up item-note"></i></a></div>-->
-
-				<!-- <h2 class="item-note assertive" style="position: absolute; top: 8px; right: 8px;">2365 元</h2> -->
+				<a class="trigger"  data-ng-click="hiddenDescription=!hiddenDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="hiddenDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="hiddenDescription"></i></a>
 			</div>
-			<a x-ng-repeat="item in order.Items" class="item item-thumbnail-left item-info item-outline" x-ng-click="showDetail(item);"> <img x-ng-src="{{item.Product.Image | URI }}"> <h2>{{item.Product.Name}}</h2>
+			<a x-ng-repeat="item in order.Items" class="item item-thumbnail-left item-info item-outline" x-ng-click="showDetail(item);" x-ng-hide="hiddenDescription"> <img x-ng-src="{{item.Product.Image | URI }}"> <h2>{{item.Product.Name}}</h2>
 			<div class="list data">
 				<div class="item">
 					<span class="label">单价</span><span class="item-value strength"><b>{{item.Product.ExpectedPrice}}</b>&nbsp;元</span>
@@ -34,13 +26,6 @@
 					x-ng-class="{'1': 'order-state-bid-bg', 2: 'order-state-purchase-bg', 3: 'order-state-delivering-bg', 4: 'order-state-completed-bg'}[item.StatusID]">{{item.StatusName}}</span>
 				</div>
 			</div> <i class="ion-record assertive notify"></i> </a>
-
-			<!--<div class="item item-divider" style="background-color: #ffffff; padding: 6px 8px;">-->
-			<!--<span class="assertive-bg order-state">发布中 2 单</span>-->
-			<!--<span class="positive-bg order-state">代购中 2 单</span>-->
-			<!--<span class="energized-bg order-state">收货中 2 单</span>-->
-			<!--<span class="balanced-bg order-state">完成 2 单</span>-->
-			<!--</div>-->
 		</div>
 		<ion-infinite-scroll on-infinite="loadMoreItems()" icon="ion-loading-c"></ion-infinite-scroll>
 	</ion-content>
