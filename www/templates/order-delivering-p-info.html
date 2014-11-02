@@ -12,6 +12,12 @@
 			<span class="label">预计</span>{{current.Extends.EstimateArriveDatetime}}<span class="item-note">天后到达</span>
 		</div>
 		<div class="item item-input">
+			<span class="label">邮寄方式</span><span class="item-value">{{item.DeliveryMethodName}}</span>
+		</div>
+		<div class="item item-input" x-ng-show="item.Bid.DeliveryMethodID==1">
+			<span class="label">快递公司</span><span class="item-value">{{current.Extends.CourierFirm}}</span>
+		</div>
+		<div class="item item-input" x-ng-show="item.Bid.DeliveryMethodID==1">
 			<span class="label">快递单号</span><span class="item-value">{{current.Extends.TrackingNo}}</span>
 		</div>
 		<div class="item item-input">
