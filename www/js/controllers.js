@@ -446,7 +446,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			}
 		});
 	};
-}).controller('NewOrderCtrl', function($scope, Camera, $q, Popup, Orders, Address, Exts, Statuses, Actions) {
+}).controller('NewOrderCtrl', function($scope, Camera, $q, Popup, Orders, $ionicPopup,Address, Exts, Statuses, Actions) {
 	$scope.Items = [];
 	$scope.country = {};
 	$scope.order.Address = $scope.currentUser.Address;
@@ -462,6 +462,17 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.submit = function() {
+		var confirmPopup = $ionicPopup.confirm({
+			title : '确认',
+			cancelText : '放弃',
+			okText : '确定',
+			template : '确定提交订单吗?'
+		});
+		confirmPopup.then(function(res) {
+			doSubmit();
+		});
+	};
+	var doSubmit = function(){
 		/*
 		 * angular.forEach($scope.cart.Countrys,function(c){ var newitems = [];
 		 * angular.forEach(c.Items,function(i){ if(!i.checked){
@@ -722,7 +733,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.done = function(payment) {
 		$scope.$parent.done(payment);
 	};
-}).controller('OrderCustomerDetailCtrl', function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Popup, Statuses, Actions, OrderBiding, $state, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, Unipay) {
+}).controller('OrderCustomerDetailCtrl', function($scope, OrderItems, OrderItemFlowByItem, $ionicPopup, OrderItemFlow, Popup, Statuses, Actions, OrderBiding, $state, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, Unipay) {
+
+	var $stateParams = {
+		itemId : $scope.$parent.item.ID
+	};
 
 	$scope.doRefresh = function() {
 		load(function() {
@@ -730,9 +745,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 	var load = function(funSucceed) {
-		var $stateParams = {
-			itemId : $scope.$parent.item.ID
-		};
 		$scope.Actions = Actions;
 
 		$scope.statusActiveSlide = 0;
@@ -811,26 +823,31 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.bitSucceed = function(suitor) {
+		var confirmPopup = $ionicPopup.confirm({
+			title : '确认',
+			template : '确认选中此买家吗?'
+		});
+		confirmPopup.then(function(res) {
+			var params = {
+				Bid : {
+					"ID" : suitor.ID,
+					"OrderItemID" : suitor.OrderItemID,
+					"PurchaserID" : suitor.PurchaserID,
+					"PurchaserName" : suitor.PurchaserName,
+					"PurchaserNickName" : suitor.PurchaserNickName,
+					"PurchaserImage" : suitor.PurchaserImage,
+					"Commission" : suitor.Commission,
+					"SuggestedPrice" : suitor.SuggestedPrice,
+					"DeliveryCost" : suitor.DeliveryCost,
+					"DeliveryMethodID" : suitor.DeliveryMethodID,
+					"DeliveryMethodName" : suitor.DeliveryMethodName
+				}
+			};
 
-		var params = {
-			Bid : {
-				"ID" : suitor.ID,
-				"OrderItemID" : suitor.OrderItemID,
-				"PurchaserID" : suitor.PurchaserID,
-				"PurchaserName" : suitor.PurchaserName,
-				"PurchaserNickName" : suitor.PurchaserNickName,
-				"PurchaserImage" : suitor.PurchaserImage,
-				"Commission" : suitor.Commission,
-				"SuggestedPrice" : suitor.SuggestedPrice,
-				"DeliveryCost" : suitor.DeliveryCost,
-				"DeliveryMethodID" : suitor.DeliveryMethodID,
-				"DeliveryMethodName" : suitor.DeliveryMethodName
-			}
-		};
-
-		flowStepOut(Statuses.purchasing, Actions.bitSucceed, params, function(resp) {
-			$scope.current = resp;
-			$scope.gotoPay();
+			flowStepOut(Statuses.purchasing, Actions.bitSucceed, params, function(resp) {
+				$scope.current = resp;
+				$scope.gotoPay();
+			});
 		});
 
 	};
@@ -845,11 +862,27 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.cancelOrder = function() {
-		flowStepOut(Statuses.completed, Actions.cancelOrder);
+		var confirmPopup = $ionicPopup.confirm({
+			title : '确认',
+			cancelText : '放弃',
+			okText : '确定',
+			template : '确认取消订单吗?'
+		});
+		confirmPopup.then(function(res) {
+			flowStepOut(Statuses.completed, Actions.cancelOrder);
+		});
 	};
 
 	$scope.confirmDelivering = function() {
-		flowStepOut(Statuses.completed, Actions.delivered);
+		var confirmPopup = $ionicPopup.confirm({
+			title : '确认',
+			cancelText : '放弃',
+			okText : '确定',
+			template : '确定要确认收货吗？一旦确认收货，将支付保证金给买手。'
+		});
+		confirmPopup.then(function(res) {
+			flowStepOut(Statuses.completed, Actions.delivered);
+		});
 	};
 
 	$scope.showChat = function(item, customerID, purchaserID, iampurchaser) {
@@ -861,7 +894,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		Popup.show(scope, 'templates/modal-chat.html');
 	};
 
-}).controller('OrderPurchaserDetailCtrl', function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
+}).controller('OrderPurchaserDetailCtrl', function($scope, OrderItems, $ionicPopup, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
+
+	var $stateParams = {
+		itemId : $scope.$parent.item.ID
+	};
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
@@ -944,7 +981,15 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.cancelPurchasing = function() {
-		flowStepOut(Statuses.completed, Actions.cancelPurchasing);
+		var confirmPopup = $ionicPopup.confirm({
+			title : '确认',
+			cancelText : '放弃',
+			okText : '确定',
+			template : '确定要放弃购买吗?'
+		});
+		confirmPopup.then(function(res) {
+			flowStepOut(Statuses.completed, Actions.cancelPurchasing);
+		});
 	};
 
 	$scope.finishPurchasing = function() {
