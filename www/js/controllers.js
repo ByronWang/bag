@@ -9,11 +9,9 @@ Date.prototype.Format = function(fmt) { // author: meizz
 		"S" : this.getMilliseconds()
 	// 毫秒
 	};
-	if (/(y+)/.test(fmt))
-		fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
 	for ( var k in o)
-		if (new RegExp("(" + k + ")").test(fmt))
-			fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+		if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
 	return fmt;
 };
 
@@ -173,8 +171,19 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		Popup.show($scope, 'templates/modal-search.html');
 	};
 }).controller('ProductsCategoryCtrl', function($scope, $state, $stateParams, Popup, Category, Products) {
-	$scope.products = Products.query($stateParams);
-	$scope.category = Category.get($stateParams.CategoryLevel1);
+	$scope.doRefresh = function() {
+		load(function() {
+			$scope.$broadcast('scroll.refreshComplete');
+		});
+	};
+	var load = function(funSucceed) {
+		$scope.category = Category.get($stateParams.CategoryLevel1);
+		$scope.products = Products.query($stateParams, function() {
+			if (funSucceed) funSucceed();
+		});
+	};
+	load();
+
 	$scope.showDetail = function(product) {
 		$scope.product = product;
 		Popup.show($scope, 'templates/modal-product-detail.html');
@@ -184,6 +193,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 }).controller('ProductDetailCtrl', function($scope, $stateParams, Products, Exts, LoginUser, Category) {
+
 	$scope.product = Products.get({
 		productId : $scope.$parent.product.ID
 	}, function() {
@@ -515,10 +525,20 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	};
 }).controller('InventorysCtrl', function($scope, Popup, Inventorys) {
-	$scope.countryName = "全部国家";
-	$scope.inventorys = Inventorys.query({
-		Status : 1
-	});
+	$scope.doRefresh = function() {
+		load(function() {
+			$scope.$broadcast('scroll.refreshComplete');
+		});
+	};
+	var load = function(funSucceed) {
+		$scope.countryName = "全部国家";
+		$scope.inventorys = Inventorys.query({
+			Status : 1
+		}, function() {
+			if (funSucceed) funSucceed();
+		});
+	};
+	load();
 
 	$scope.filter = function() {
 		Popup.show($scope, 'templates/modal-filter.html');
@@ -543,24 +563,33 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.Inventorys = Inventorys.query();
 	};
 }).controller('InventoryDetailCtrl', function($scope, $state, Category, Exts, OrderBiding, $timeout, $state, Popup, DeliveryMethod, Inventorys) {
-	$scope.triger1 = false;
-	$scope.item = Inventorys.get({
-		itemId : $scope.$parent.item.ID
-	}, function() {
-		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
-		$scope.item.Product.Extends = undefined;
-		$scope.product = $scope.item.Product;
-		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
-		$scope.suitor = {
-			PurchaserID : $scope.currentUser.ID, // TODO
-			PurchaserName : $scope.currentUser.Name,
-			PurchaserNickName : $scope.currentUser.NickName,
-			PurchaserImage : $scope.currentUser.Image,
-			OrderItemID : $scope.item.ID
-		};
-		$scope.loadBid();
-	});
-	$scope.step = 1;
+	$scope.doRefresh = function() {
+		load(function() {
+			$scope.$broadcast('scroll.refreshComplete');
+		});
+	};
+	var load = function(funSucceed) {
+		$scope.triger1 = false;
+		$scope.item = Inventorys.get({
+			itemId : $scope.$parent.item.ID
+		}, function() {
+			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+			$scope.item.Product.Extends = undefined;
+			$scope.product = $scope.item.Product;
+			$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+			$scope.suitor = {
+				PurchaserID : $scope.currentUser.ID, // TODO
+				PurchaserName : $scope.currentUser.Name,
+				PurchaserNickName : $scope.currentUser.NickName,
+				PurchaserImage : $scope.currentUser.Image,
+				OrderItemID : $scope.item.ID
+			};
+			$scope.loadBid();
+			if (funSucceed) funSucceed();
+		});
+		$scope.step = 1;
+	};
+	load();
 
 	$scope.showDeliveryMethods = function() {
 		$scope.datalist = DeliveryMethod.query();
@@ -604,9 +633,19 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		orderId : $scope.$parent.order.ID
 	});
 }).controller('OrdersCustomerCtrl', function($scope, Orders, Popup) {
-	$scope.orders = Orders.query({
-		Customer : $scope.currentUser.ID
-	});
+	$scope.doRefresh = function() {
+		load(function() {
+			$scope.$broadcast('scroll.refreshComplete');
+		});
+	};
+	var load = function(funSucceed) {
+		$scope.orders = Orders.query({
+			Customer : $scope.currentUser.ID
+		}, function() {
+			if (funSucceed) funSucceed();
+		});
+	};
+	load();
 
 	$scope.showDetail = function(item) {
 		$scope.item = item;
@@ -618,27 +657,38 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.$broadcast('scroll.infiniteScrollComplete');
 	};
 }).controller('OrdersPurchaserCtrl', function($scope, OrderBiding, Popup) {
-	$scope.items = OrderBiding.query({
-		Purchaser : $scope.currentUser.ID
-	}, function() {
-		var itemsFail = [];
-		var itemsBiding = [];
-		var itemsSucceed = [];
-
-		angular.forEach($scope.items, function(item) {
-			if (item.StatusID == 2) {
-				itemsSucceed.push(item);
-			} else if (item.StatusID == 3) {
-				itemsFail.push(item);
-			} else if (item.StatusID == 1) {
-				itemsBiding.push(item);
-			}
+	$scope.doRefresh = function() {
+		load(function() {
+			$scope.$broadcast('scroll.refreshComplete');
 		});
+	};
+	var load = function(funSucceed) {
 
-		$scope.itemsFail = itemsFail;
-		$scope.itemsBiding = itemsBiding;
-		$scope.itemsSucceed = itemsSucceed;
-	});
+		$scope.items = OrderBiding.query({
+			Purchaser : $scope.currentUser.ID
+		}, function() {
+			var itemsFail = [];
+			var itemsBiding = [];
+			var itemsSucceed = [];
+
+			angular.forEach($scope.items, function(item) {
+				if (item.StatusID == 2) {
+					itemsSucceed.push(item);
+				} else if (item.StatusID == 3) {
+					itemsFail.push(item);
+				} else if (item.StatusID == 1) {
+					itemsBiding.push(item);
+				}
+			});
+
+			$scope.itemsFail = itemsFail;
+			$scope.itemsBiding = itemsBiding;
+			$scope.itemsSucceed = itemsSucceed;
+
+			if (funSucceed) funSucceed();
+		});
+	};
+	load();
 
 	$scope.showDetail = function(item) {
 		$scope.item = item;
@@ -674,20 +724,30 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 }).controller('OrderCustomerDetailCtrl', function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Popup, Statuses, Actions, OrderBiding, $state, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, Unipay) {
 
-	var $stateParams = {
-		itemId : $scope.$parent.item.ID
+	$scope.doRefresh = function() {
+		load(function() {
+			$scope.$broadcast('scroll.refreshComplete');
+		});
 	};
+	var load = function(funSucceed) {
+		var $stateParams = {
+			itemId : $scope.$parent.item.ID
+		};
+		$scope.Actions = Actions;
 
-	$scope.item = OrderItems.get($stateParams, function() {
-		loadFlow();
-		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
-		$scope.item.Product.Extends = undefined;
-		$scope.product = $scope.item.Product;
-		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+		$scope.statusActiveSlide = 0;
 
-	});
+		$scope.item = OrderItems.get($stateParams, function() {
+			if (funSucceed) funSucceed();
+			loadFlow();
+			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+			$scope.item.Product.Extends = undefined;
+			$scope.product = $scope.item.Product;
+			$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+		});
 
-	$scope.Actions = Actions;
+	};
+	load();
 
 	var loadFlow = function() {
 		$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
@@ -745,8 +805,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		var ele = angular.element(e);
 		angular.forEach(ele.parent().parent().find("div"), function(i) {
 			var ie = angular.element(i);
-			if (ie.hasClass("active"))
-				ie.removeClass("active");
+			if (ie.hasClass("active")) ie.removeClass("active");
 		});
 		ele.addClass("active");
 	};
@@ -803,20 +862,29 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 }).controller('OrderPurchaserDetailCtrl', function($scope, OrderItems, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
-
-	var $stateParams = {
-		itemId : $scope.$parent.item.ID
+	$scope.doRefresh = function() {
+		load(function() {
+			$scope.$broadcast('scroll.refreshComplete');
+		});
 	};
+	var load = function(funSucceed) {
+		var $stateParams = {
+			itemId : $scope.$parent.item.ID
+		};
+		$scope.Actions = Actions;
+		$scope.statusActiveSlide = 0;
 
-	$scope.item = OrderItems.get($stateParams, function() {
-		loadFlow();
-		$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
-		$scope.item.Product.Extends = undefined;
-		$scope.product = $scope.item.Product;
-		$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
-	});
+		$scope.item = OrderItems.get($stateParams, function() {
+			if (funSucceed) funSucceed();
+			loadFlow();
+			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+			$scope.item.Product.Extends = undefined;
+			$scope.product = $scope.item.Product;
+			$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+		});
 
-	$scope.Actions = Actions;
+	};
+	load();
 
 	var loadFlow = function() {
 		$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
@@ -832,8 +900,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			}
 		});
 	};
-
-	$scope.statusActiveSlide = 0;
 
 	var flowStepOut = function(status, action, params) {
 		var step = {};
@@ -868,8 +934,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		var ele = angular.element(e);
 		angular.forEach(ele.parent().parent().find("div"), function(i) {
 			var ie = angular.element(i);
-			if (ie.hasClass("active"))
-				ie.removeClass("active");
+			if (ie.hasClass("active")) ie.removeClass("active");
 		});
 		ele.addClass("active");
 	};
@@ -989,56 +1054,66 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 }).controller('ChatCtrl', function($scope, $ionicScrollDelegate, Users, $timeout) {
-	$scope.item = $scope.$parent.item;
-	$scope.customerID = $scope.$parent.customerID;
-	$scope.purchaserID = $scope.$parent.purchaserID;
-	$scope.iampurchaser = $scope.$parent.iampurchaser;
-
-	if ($scope.iampurchaser) {
-		$scope.himID = $scope.customerID;
-		$scope.meID = $scope.purchaserID;
-	} else {
-		$scope.himID = $scope.purchaserID;
-		$scope.meID = $scope.customerID;
-	}
-
-	$scope.him = Users.get({
-		userId : $scope.himID
-	});
-	$scope.me = $scope.currentUser;
-
-	var chatsCtrl = $ionicScrollDelegate.$getByHandle('chats');
-
-	$scope.chats = [];
-
-	$timeout(function() {
-
-		$scope.chats.push({
-			UserID : $scope.currentUser.ID,
-			Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+	$scope.doRefresh = function() {
+		load(function() {
+			$scope.$broadcast('scroll.refreshComplete');
 		});
-		$scope.chats.push({
-			UserID : 3,
-			Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+	};
+	var load = function(funSucceed) {
+
+		$scope.item = $scope.$parent.item;
+		$scope.customerID = $scope.$parent.customerID;
+		$scope.purchaserID = $scope.$parent.purchaserID;
+		$scope.iampurchaser = $scope.$parent.iampurchaser;
+
+		if ($scope.iampurchaser) {
+			$scope.himID = $scope.customerID;
+			$scope.meID = $scope.purchaserID;
+		} else {
+			$scope.himID = $scope.purchaserID;
+			$scope.meID = $scope.customerID;
+		}
+
+		$scope.him = Users.get({
+			userId : $scope.himID
 		});
-		$scope.chats.push({
-			UserID : $scope.currentUser.ID,
-			Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
-		});
-		$scope.chats.push({
-			UserID : 3,
-			Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
-		});
-		$scope.chats.push({
-			UserID : $scope.currentUser.ID,
-			Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
-		});
-		$scope.chats.push({
-			UserID : 3,
-			Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
-		});
-		chatsCtrl.scrollBottom();
-	}, 100);
+		$scope.me = $scope.currentUser;
+
+		var chatsCtrl = $ionicScrollDelegate.$getByHandle('chats');
+
+		$scope.chats = [];
+
+		$timeout(function() {
+
+			$scope.chats.push({
+				UserID : $scope.currentUser.ID,
+				Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+			});
+			$scope.chats.push({
+				UserID : 3,
+				Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+			});
+			$scope.chats.push({
+				UserID : $scope.currentUser.ID,
+				Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+			});
+			$scope.chats.push({
+				UserID : 3,
+				Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+			});
+			$scope.chats.push({
+				UserID : $scope.currentUser.ID,
+				Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+			});
+			$scope.chats.push({
+				UserID : 3,
+				Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
+			});
+			chatsCtrl.scrollBottom();
+			if (funSucceed) funSucceed();
+		}, 100);
+	};
+	load();
 
 	$scope.say = function(event) {
 		var newchat = {
@@ -1101,7 +1176,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$parent.closeModal();
 		});
 	};
-}).controller('AccountUserEditCtrl', function($scope, $ionicActionSheet, Popup,Camera, LoginUser, Users) {
+}).controller('AccountUserEditCtrl', function($scope, $ionicActionSheet, Popup, Camera, LoginUser, Users) {
 	var $stateParams = {
 		userId : LoginUser.ID
 	};
@@ -1118,7 +1193,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			angular.extend($scope.user.Address, item);
 		};
 	};
-	
+
 	$scope.getPhoto = function(sourceType) {
 		$scope.user.ImagePromise = Camera.getPicture({
 			sourceType : sourceType,

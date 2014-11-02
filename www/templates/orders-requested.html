@@ -1,5 +1,6 @@
 <ion-view title="我的代购订单">
 	<ion-content class="has-subheader">
+		<ion-refresher on-refresh="doRefresh()"  pulling-text="下拉刷新..."  refreshing-text="更新中"  refreshing-icon="ion-loading-c"></ion-refresher>
 		<div x-ng-show="!currentUser.BePurchaser">
 			<p>
 				你还不是买手！
