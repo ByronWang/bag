@@ -23,25 +23,25 @@
 				<!--<div class="right"><i class="ion-ios7-clock-outline"></i>发布时间：{{item.Datetime}}</div>-->
 			</div>
 			<div class="item">
-				商品价格<span style="float: right">{{flowCurrentStep.Bid.SuggestedPrice}} 元</span>
+				商品价格<span style="float: right">{{item.Bid.SuggestedPrice}} 元</span>
 			</div>
 			<div class="item">
 				商品件数<span style="float: right">{{item.Quantity}} 元</span>
 			</div>
 			<div class="item">
-				商品总价<span style="float: right">{{productAmount}} 元</span>
+				商品总价<span style="float: right">{{item.Bid.ProductAmount}} 元</span>
 			</div>
 			<div class="item">
-				佣金比例<span style="float: right">{{flowCurrentStep.Bid.Commission}}元</span>
+				佣金比例<span style="float: right">{{item.Bid.Commission | percent}}</span>
 			</div>
 			<div class="item">
-				佣金<span style="float: right">{{productCommission}}元</span>
+				佣金<span style="float: right">{{item.Bid.ProductCommissionAmount}}元</span>
 			</div>
 			<div class="item">
-				运费<span style="float: right">{{flowCurrentStep.Bid.DeliveryCost}} 元</span>
+				运费<span style="float: right">{{item.Bid.DeliveryCost}} 元</span>
 			</div>
 			<div class="item item item-divider" style="background-color: #ffffff;">
-				总计<span class="assertive" style="float: right">{{payment.Amount}} 元</span>
+				总计<span class="assertive" style="float: right">{{item.Bid.Amount}} 元</span>
 			</div>
 		</div>
 

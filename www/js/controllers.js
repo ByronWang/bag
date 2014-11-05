@@ -446,7 +446,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			}
 		});
 	};
-}).controller('NewOrderCtrl', function($scope, Camera, $q, Popup, Orders, $ionicPopup,Address, Exts, Statuses, Actions) {
+}).controller('NewOrderCtrl', function($scope, Camera, $q, Popup, Orders, $ionicPopup, Address, Exts, Statuses, Actions) {
 	$scope.Items = [];
 	$scope.country = {};
 	$scope.order.Address = $scope.currentUser.Address;
@@ -472,13 +472,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			doSubmit();
 		});
 	};
-	var doSubmit = function(){
-		/*
-		 * angular.forEach($scope.cart.Countrys,function(c){ var newitems = [];
-		 * angular.forEach(c.Items,function(i){ if(!i.checked){
-		 * newitems.push(i); } }); c.Items = newitems; });
-		 */
-
+	var doSubmit = function() {
 		$scope.order.CustomerID = $scope.currentUser.ID;
 		$scope.order.CustomerName = $scope.currentUser.Name;
 		$scope.order.CustomerNickName = $scope.currentUser.NickName;
@@ -535,6 +529,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		}
 
 	};
+
 }).controller('InventorysCtrl', function($scope, Popup, Inventorys) {
 	$scope.doRefresh = function() {
 		load(function() {
@@ -614,6 +609,13 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	};
 
+	$scope.editDescription = function() {
+		$scope.bigText = $scope.suitor.Comment;
+		Popup.show($scope, 'templates/modal-text.html', function(text) {
+			$scope.suitor.Comment = text;
+		});
+	};
+
 	$scope.loadBid = function() {
 		$scope.bids = OrderBiding.query({
 			OrderItem : $scope.suitor.OrderItemID,
@@ -628,8 +630,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.submit = function() {
-		var post = new OrderBiding($scope.suitor);
-		post.$save(function() {
+		var bid = new OrderBiding($scope.suitor);
+		bid.$save(function() {
 			$scope.loadBid();
 		});
 	};
@@ -713,17 +715,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 }).controller('PayForOrderCtrl', function($scope, Users, Popup) {
 	$scope.item = $scope.$parent.item;
-	$scope.flowCurrentStep = $scope.$parent.flowCurrentStep;
-
-	$scope.productAmount = $scope.flowCurrentStep.Bid.SuggestedPrice * $scope.item.Quantity;
-	$scope.productCommission = $scope.productAmount * $scope.flowCurrentStep.Bid.Commission;
-
-	$scope.amount = $scope.productAmount + $scope.productCommission + $scope.flowCurrentStep.Bid.DeliveryCost;
 
 	$scope.payment = {
 		FromUserID : $scope.currentUser.ID,
 		ToUserID : $scope.currentUser.ID,
-		Amount : $scope.amount,// 金额
+		Amount : $scope.item.Bid.Amount,// 金额
 		PayTypeID : 2,// 购买保证金
 		PayMethodID : 2,// Bank
 		Description : "订单支付",// Bank
@@ -763,6 +759,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	var loadFlow = function() {
 		$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
+			angular.forEach($scope.flows,function(f){
+				$scope.statuses[f.StatusID].Class = "done";
+			});
+			
 			if ($scope.flows.length > 0) {
 				$scope.current = $scope.flows[$scope.flows.length - 1];
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
@@ -778,6 +778,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.statusActiveSlide = 0;
+	
+	$scope.statuses = [{},{Status:1,Class:"hide"},{Status:2,Class:"hide"},{Status:3,Class:"hide"},{Status:4,Class:"hide"}];
 
 	var flowStepOut = function(status, action, params, succeed) {
 		var step = {};
@@ -813,6 +815,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.statusSlide = function(e, to) {
+		if($scope.statuses[to+1].Class == "hide"){
+			return;
+		}
+		
+		
 		$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
 		var ele = angular.element(e);
 		angular.forEach(ele.parent().parent().find("div"), function(i) {

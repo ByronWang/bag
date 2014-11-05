@@ -17,7 +17,7 @@
 		</div>
 		<div class="item message assertive message-strong">
 			<i class="ion-card"></i>
-			<span>定金：3244 元</span>
+			<span>定金：{{suitor.Amount}} 元</span>
 		</div>
 
 		<div class="item">
@@ -50,34 +50,34 @@
 <div class="flow-block" x-ng-show="current.ActionID==Actions.bitSucceed.ID">
 	<div class="list action data">
 		<div class="item item-avatar item-product-user">
-			<img src="{{current.Bid.Purchaser.Image | URI}}">
-			<span>{{current.Bid.PurchaserNickName}}</span>
-			<a class="item-note" x-ng-click="showChat(item,item.Customer,current.Bid.Purchaser,false);"><i class="chatbox ion-chatbox-working"></i></a>
+			<img src="{{item.Bid.Purchaser.Image | URI}}">
+			<span>{{item.Bid.PurchaserNickName}}</span>
+			<a class="item-note" x-ng-click="showChat(item,item.Customer,item.Bid.Purchaser,false);"><i class="chatbox ion-chatbox-working"></i></a>
 		</div>
 		<div class="item message assertive message-strong">
 			<i class="ion-card"></i>
-			<span>定金：3244 元</span>
+			<span>定金：{{item.Bid.Amount}} 元</span>
 		</div>
 		<div class="item">
-			<span class="label"> 代购佣金 </span><span class="item-value">{{current.Bid.Commission | percent}}</span>
+			<span class="label"> 代购佣金 </span><span class="item-value">{{item.Bid.Commission | percent}}</span>
 		</div>
 		<div class="item">
-			<span class="label"> 邮寄方式 </span><span class="item-value">{{current.Bid.DeliveryMethodName}}</span>
+			<span class="label"> 邮寄方式 </span><span class="item-value">{{item.Bid.DeliveryMethodName}}</span>
 		</div>
 		<div class="item">
-			<span class="label"> 代购期限 </span><span class="item-value">{{current.Bid.Deadline}}</span>
+			<span class="label"> 代购期限 </span><span class="item-value">{{item.Bid.Deadline}}</span>
 		</div>
 		<div class="item">
 			<span class="label"> 建议价格 </span>
-			<span class="item-value strength"><b>{{current.Bid.SuggestedPrice}}</b> 元</span><span class="comment" x-bg-price-hint="current.Bid.SuggestedPrice" x-price-from="item.Product.ExpectedPrice"></span>
+			<span class="item-value strength"><b>{{item.Bid.SuggestedPrice}}</b> 元</span><span class="comment" x-bg-price-hint="item.BidSuggestedPrice" x-price-from="item.Product.ExpectedPrice"></span>
 		</div>
 		<div class="item">
-			<span class="label"> 运费 </span><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
+			<span class="label"> 运费 </span><span class="item-value">{{item.Bid.DeliveryCost}} 元</span>
 		</div>
-		<div class="item comment item-icon-right" x-ng-show="current.Bid.Description">
+		<div class="item comment item-icon-right" x-ng-show="item.BidDescription">
 			<span class="label"> 备注 </span>
 			<a class="trigger"  data-ng-click="showDescription=!showDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
-			<span class="item-value" data-ng-hide="showDescription">{{current.Bid.Comment}}</span>
+			<span class="item-value" data-ng-hide="showDescription">{{item.BidComment}}</span>
 		</div>
 		<!--【{{current.TradeNo}}】-->
 		<div class="item message energized">
@@ -93,34 +93,34 @@
 <div  x-ng-show="current.ActionID==Actions.payFinished.ID">
 	<div class="list action data">
 		<div class="item item-avatar item-product-user">
-			<img src="{{current.Bid.Purchaser.Image | URI}}">
-			<span >{{current.Bid.PurchaserNickName}}</span>
-			<a class="item-note" x-ng-click="showChat(item,item.Customer,current.Bid.Purchaser,false);"><i class="chatbox ion-chatbox-working"></i></a>
+			<img src="{{item.BidPurchaser.Image | URI}}">
+			<span >{{item.Bid.PurchaserNickName}}</span>
+			<a class="item-note" x-ng-click="showChat(item,item.Customer,item.Bid.Purchaser,false);"><i class="chatbox ion-chatbox-working"></i></a>
 		</div>
 
 		<div class="item message assertive message-strong">
-			<i class="ion-card"></i><span>定金：3244 元</span>
+			<i class="ion-card"></i><span>定金：{{item.Bid.Amount}} 元</span>
 		</div>
 		<div class="item">
-			<span class="label"> 代购佣金 </span><span class="item-value">{{current.Bid.Commission | percent}}</span>
+			<span class="label"> 代购佣金 </span><span class="item-value">{{item.Bid.Commission | percent}}</span>
 		</div>
 		<div class="item">
-			<span class="label"> 邮寄方式 </span><span class="item-value">{{current.Bid.DeliveryMethodName}}</span>
+			<span class="label"> 邮寄方式 </span><span class="item-value">{{item.Bid.DeliveryMethodName}}</span>
 		</div>
 		<div class="item">
-			<span class="label"> 代购期限 </span><span class="item-value">{{current.Bid.Deadline}}</span>
+			<span class="label"> 代购期限 </span><span class="item-value">{{item.Bid.Deadline}}</span>
 		</div>
 		<div class="item">
 			<span class="label"> 建议价格 </span>
-			<span class="item-value strength"><b>{{current.Bid.SuggestedPrice}}</b> 元</span><span class="comment" x-bg-price-hint="current.Bid.SuggestedPrice" x-price-from="item.Product.ExpectedPrice"></span>
+			<span class="item-value strength"><b>{{item.Bid.SuggestedPrice}}</b> 元</span><span class="comment" x-bg-price-hint="item.Bid.SuggestedPrice" x-price-from="item.Product.ExpectedPrice"></span>
 		</div>
 		<div class="item">
-			<span class="label"> 运费 </span><span class="item-value">{{current.Bid.DeliveryCost}} 元</span>
+			<span class="label"> 运费 </span><span class="item-value">{{item.Bid.DeliveryCost}} 元</span>
 		</div>
-		<div class="item comment item-icon-right" x-ng-show="current.Bid.Description">
+		<div class="item comment item-icon-right" x-ng-show="item.Bid.Description">
 			<span class="label"> 备注 </span>
 			<a class="trigger"  data-ng-click="showDescription=!showDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
-			<span class="item-value" data-ng-hide="showDescription">{{current.Bid.Comment}}</span>
+			<span class="item-value" data-ng-hide="showDescription">{{item.Bid.Comment}}</span>
 		</div>
 		<div class="message energized" style="padding-top: 6px;">
 			<i class="ion-ios7-information-outline"></i>
