@@ -969,6 +969,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			if ($scope.flows.length > 0) {
 				$scope.current = $scope.flows[$scope.flows.length - 1];
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
+				if(!$scope.current.Extends.ProductActualImage){
+					$scope.current.Extends.ProductActualImage = [];
+				}
 			} else {
 				$scope.current = {
 					StatusID : 1
@@ -1032,7 +1035,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			flowStepOut(Statuses.completed, Actions.cancelPurchasing);
 		});
 	};
-
+	
+	
 	$scope.finishPurchasing = function() {
 		var promiseArray = [];
 		if ($scope.current.Extends.ProductActualImageSucceed) {
@@ -1099,8 +1103,21 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				}
 
 				imagePromise.then(function(imageURI) {
-					$scope.current.Extends.ProductActualImage = imageURI;
-					$scope.current.Extends.ProductActualImageSucceed = true;
+					if(!$scope.current.Extends.ProductActualImageList){
+						$scope.current.Extends.ProductActualImageList = [];
+					}
+					
+					var img = {
+							uri: imageURI,
+							loading:true
+					};			
+					var p = Camera.upload(imageURI);
+					p = p.then(function(result) {
+						img.imageURI = result.response;
+						img.loading = false;
+					});
+					img.promise = p;					
+					$scope.current.Extends.ProductActualImageList.push(p);
 				});
 				return true;
 			}
@@ -1131,8 +1148,21 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				}
 
 				imagePromise.then(function(imageURI) {
-					$scope.current.Extends.InvoiceImage = imageURI;
-					$scope.current.Extends.InvoiceImageSucceed = true;
+					if(!$scope.current.Extends.InvoiceImageList){
+						$scope.current.Extends.InvoiceImageList = [];
+					}
+					
+					var img = {
+							uri: imageURI,
+							loading:true
+					};
+					var p = Camera.upload(imageURI);
+					p = p.then(function(result) {
+						img.imageURI = result.response;
+						img.loading = false;
+					});
+					img.promise = p;					
+					$scope.current.Extends.InvoiceImageList.push(p);
 				});
 				return true;
 			}
