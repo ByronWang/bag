@@ -191,10 +191,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			page : $scope.page,
 			pagesize : $scope.pagesize
 		});
-		var productsList = undefined;
-		productsList = Products.query(params, function() {
-			$scope.data.products = $scope.data.products.concat(productsList);
-			if (productsList.length < $scope.pagesize) {
+		var realList = undefined;
+		realList = Products.query(params, function() {
+			$scope.data.products = $scope.data.products.concat(realList);
+			if (realList.length < $scope.pagesize) {
 				$scope.hasmore = false;
 			}
 			if (funSucceed) funSucceed();
@@ -219,10 +219,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			pagesize : $scope.pagesize
 		});
 
-		var productsList = undefined;
-		productsList = Products.query(params, function() {
-			if (productsList.length > 0) {
-				$scope.data.products = $scope.data.products.concat(productsList);
+		var realList = undefined;
+		realList = Products.query(params, function() {
+			if (realList.length > 0) {
+				$scope.data.products = $scope.data.products.concat(realList);
 			} else {
 				$scope.hasmore = false;
 			}
@@ -600,14 +600,32 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
+
 	var load = function(funSucceed) {
 		$scope.countryName = "全部国家";
-		$scope.inventorys = Inventorys.query({
-			Status : 1
-		}, function() {
+		
+		$scope.data = {
+			inventorys : []
+		};
+		$scope.hasmore = true;
+		$scope.page = 1;
+		$scope.pagesize = 10;
+
+		var params = {
+			Status : 1,
+			page : $scope.page,
+			pagesize : $scope.pagesize
+		};
+		var realList = undefined;
+		realList = Inventorys.query(params, function() {
+			$scope.data.inventorys = $scope.data.inventorys.concat(realList);
+			if (realList.length < $scope.pagesize) {
+				$scope.hasmore = false;
+			}
 			if (funSucceed) funSucceed();
 		});
 	};
+
 	load();
 
 	$scope.filter = function() {
@@ -631,6 +649,29 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.countryID = c.ID;
 		$scope.countryName = c.Name;
 		$scope.Inventorys = Inventorys.query();
+	};
+
+	// Load more after 1 second delay
+	$scope.loadMoreItems = function() {
+		$scope.page = $scope.page + 1;
+
+		var params =  {
+			page : $scope.page,
+			pagesize : $scope.pagesize
+		};
+
+		var realList = undefined;
+		realList = Inventorys.query(params, function() {
+			if (realList.length > 0) {
+				$scope.data.inventorys = $scope.data.inventorys.concat(realList);
+			} else {
+				$scope.hasmore = false;
+			}
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		});
+	};
+	$scope.moreDataCanBeLoaded = function() {
+		return $scope.hasmore;
 	};
 }).controller('InventoryDetailCtrl', function($scope, $state, Category, Exts, OrderBiding, $timeout, $state, Popup, DeliveryMethod, Inventorys) {
 	$scope.doRefresh = function() {

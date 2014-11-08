@@ -13,7 +13,7 @@
 			</p>
 		</div>
 		<pane x-ng-show="currentUser.BePurchaser">
-			<div x-ng-show="inventorys.length==0">
+			<div x-ng-show="data.inventorys.length==0">
 				<p>
 					{{countryName}}暂时还没有商品哦！
 				</p>
@@ -24,7 +24,7 @@
 			{inventory.country} &nbsp;	    	{inventory.date}
 			</div> -->
 
-			<a x-ng-repeat="item in inventorys" class="item item-thumbnail-left item-info item-outline" x-ng-click="showDetail(item);"> <img x-ng-src="{{item.Product.Image | URI}}"> <!--<div class="list info">--> <!--<span class="item"><h3>{{item.Product.Name}}</h3></span>--> <!--<span class="item">价格 <span class="item-note"> {{item.Product.ExpectedPrice}}/元</span> </span>--> <!--<span class="item">到货周期 <span class="item-note">{{item.lastMonth}}个月</span> </span>--> <!--<span class="item">已有{{item.suitors.length}}位买手参与此次购买</span>--> <!--</div>--> <h2>{{item.Product.Name}}</h2>
+			<a x-ng-repeat="item in data.inventorys" class="item item-thumbnail-left item-info item-outline" x-ng-click="showDetail(item);"> <img x-ng-src="{{item.Product.Image | URI}}"> <!--<div class="list info">--> <!--<span class="item"><h3>{{item.Product.Name}}</h3></span>--> <!--<span class="item">价格 <span class="item-note"> {{item.Product.ExpectedPrice}}/元</span> </span>--> <!--<span class="item">到货周期 <span class="item-note">{{item.lastMonth}}个月</span> </span>--> <!--<span class="item">已有{{item.suitors.length}}位买手参与此次购买</span>--> <!--</div>--> <h2>{{item.Product.Name}}</h2>
 			<div class="list data">
 				<div class="item">
 					<span class="label">单价</span><span class="item-value strength"><b>{{item.Product.ExpectedPrice}}</b>&nbsp;元</span>
@@ -37,6 +37,7 @@
 					<span class="label" x-ng-hide="item.SuitorCount">还没有买手参与此次购买</span>
 				</div>
 			</div> </a>
+		<ion-infinite-scroll on-infinite="loadMoreItems()" distance="1%" ng-if="moreDataCanBeLoaded()" icon="ion-loading-c"></ion-infinite-scroll>		
 		</pane>
 	</ion-content>
 </ion-view>

@@ -11,7 +11,7 @@
 
 	<ion-content class="has-header">
 		<ion-refresher on-refresh="doRefresh()"  pulling-text="下拉刷新..."  refreshing-text="更新中"  refreshing-icon="ion-loading-c"></ion-refresher>
-		<div ng-show="products.length==0">
+		<div x-ng-show="data.products.length==0">
 			<p>
 				{{category.Name}}分类下暂时还没有商品哦！
 			</p>
