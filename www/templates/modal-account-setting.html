@@ -8,12 +8,9 @@
 
 	<ion-content class="has-header">
 		<div class="list">
-			<div class="item item-product-image item-options-right" >
+			<div class="item item-product-image" >
 				<img  x-ng-src="{{user.Image | URI}}" class="img-product">
-				<div class="options">
-					<button class="button button-clear" x-ng-click="getPhotoFromCamera()"><i class="icon ion-camera"></i></button>
-					<button class="button button-clear" x-ng-click="getPhotoFromLibrary()"><i class="icon ion-ios7-albums"></i></button>
-				</div>
+				<a x-ng-click="showCameraMenu()"> <i class="icon ion-ios7-camera"></i><h2>更新图片</h2> </a>
 			</div>
 
 			<div class="item item-divider">

@@ -336,7 +336,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.categoryInEdit = true;
 
-	$scope.product.CategoryDesc ="请选择分类！";
+	$scope.product.CategoryDesc = "请选择分类！";
 
 	$scope.anchers = [];
 	$scope.desc = function() {
@@ -465,7 +465,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			} else {
 				$scope.anchers.pop();
 				$scope.categories = Category.level1();
-				$scope.product.CategoryDesc ="请选择分类！";
+				$scope.product.CategoryDesc = "请选择分类！";
 			}
 		}
 	};
@@ -935,7 +935,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		Popup.show(scope, 'templates/modal-chat.html');
 	};
 
-}).controller('OrderPurchaserDetailCtrl', function($scope,$q,OrderItems, $ionicPopup, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
+}).controller('OrderPurchaserDetailCtrl', function($scope, $q, OrderItems, $ionicPopup, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
 
 	var $stateParams = {
 		itemId : $scope.$parent.item.ID
@@ -1033,18 +1033,17 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			flowStepOut(Statuses.completed, Actions.cancelPurchasing);
 		});
 	};
-	
-	
+
 	$scope.finishPurchasing = function() {
 		var promiseArray = [];
-		if($scope.current.Extends.ProductActualImageList){
-			angular.forEach($scope.current.Extends.ProductActualImageList,function(im){
+		if ($scope.current.Extends.ProductActualImageList) {
+			angular.forEach($scope.current.Extends.ProductActualImageList, function(im) {
 				promiseArray.push(im.uploadPromise);
 			});
 		}
 
-		if($scope.current.Extends.InvoiceImageList){
-			angular.forEach($scope.current.Extends.InvoiceImageList,function(im){
+		if ($scope.current.Extends.InvoiceImageList) {
+			angular.forEach($scope.current.Extends.InvoiceImageList, function(im) {
 				promiseArray.push(im.uploadPromise);
 			});
 		}
@@ -1052,17 +1051,17 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		if (promiseArray.length > 0) {
 			$q.all(promiseArray).then(function(results) {
 				var imagesProduct = [];
-				if($scope.current.Extends.ProductActualImageList){
-					angular.forEach($scope.current.Extends.ProductActualImageList,function(im){
+				if ($scope.current.Extends.ProductActualImageList) {
+					angular.forEach($scope.current.Extends.ProductActualImageList, function(im) {
 						imagesProduct.push(im.uri);
 					});
 				}
 				var imagesInvoice = [];
-				if($scope.current.Extends.InvoiceImageList){
-					angular.forEach($scope.current.Extends.InvoiceImageList,function(im){
+				if ($scope.current.Extends.InvoiceImageList) {
+					angular.forEach($scope.current.Extends.InvoiceImageList, function(im) {
 						imagesInvoice.push(im.uri);
 					});
-				}				
+				}
 				$scope.current.Extends.ProductActualImage = imagesProduct;
 				$scope.current.Extends.InvoiceImage = imagesInvoice;
 				flowStepOut(Statuses.delivering, Actions.purchased);
@@ -1087,8 +1086,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
-	
-	
 	$scope.showProductCameraMenu = function() {
 		var imagePromise = {};
 
@@ -1112,21 +1109,21 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 						break;
 				}
 
-				imagePromise.then(function(imageURI) {										
-					if(!$scope.current.Extends.ProductActualImageList){
+				imagePromise.then(function(imageURI) {
+					if (!$scope.current.Extends.ProductActualImageList) {
 						$scope.current.Extends.ProductActualImageList = [];
 					}
 					var img = {
-							uri: imageURI,
-							loading:true
-					};			
+						uri : imageURI,
+						loading : true
+					};
 					$scope.current.Extends.ProductActualImageList.push(img);
 					var p = Camera.upload(imageURI);
 					p = p.then(function(result) {
 						img.uri = result.response;
 						img.loading = false;
 					});
-					img.uploadPromise = p;			
+					img.uploadPromise = p;
 				});
 				return true;
 			}
@@ -1157,14 +1154,14 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				}
 
 				imagePromise.then(function(imageURI) {
-					
-					if(!$scope.current.Extends.InvoiceImageList){
+
+					if (!$scope.current.Extends.InvoiceImageList) {
 						$scope.current.Extends.InvoiceImageList = [];
 					}
 					var img = {
-							uri: imageURI,
-							loading:true
-					};			
+						uri : imageURI,
+						loading : true
+					};
 					$scope.current.Extends.InvoiceImageList.push(img);
 					var p = Camera.upload(imageURI);
 					p = p.then(function(result) {
@@ -1301,7 +1298,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$parent.closeModal();
 		});
 	};
-}).controller('AccountUserEditCtrl', function($scope, $ionicActionSheet, Popup, Camera, LoginUser, Users) {
+}).controller('AccountUserEditCtrl', function($scope,$q, $ionicActionSheet, Popup, Camera, LoginUser, Users) {
 	var $stateParams = {
 		userId : LoginUser.ID
 	};
@@ -1331,12 +1328,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		$scope.user.ImagePromise.then(function(imageURI) {
 			$scope.user.Image = imageURI;
-			var uploadPromise = Camera.upload(imageURI);
-			uploadPromise.then(function(result) {
+			$scope.uploadPromise = Camera.upload(imageURI);
+			$scope.uploadPromise.then(function(result) {
 				var serverUrl = result.response;
-				$scope.$apply(function() {
-					$scope.user.Image = serverUrl;
-				});
+				$scope.user.Image = serverUrl;
 			});
 		}, function(err) {
 			console.err(err);
@@ -1351,7 +1346,49 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);
 	};
 
+	$scope.showCameraMenu = function() {
+		$ionicActionSheet.show({
+			buttons : [ {
+				text : '拍照'
+			}, {
+				text : '从相册选择'
+			} ],
+			cancelText : '取消',
+			cancel : function() {
+				// add cancel code..
+			},
+			buttonClicked : function(index) {
+				switch (index) {
+					case 0:
+						$scope.getPhotoFromCamera();
+						break;
+					case 1:
+						$scope.getPhotoFromLibrary();
+						break;
+				}
+				return true;
+			}
+		});
+	};
+
+	$scope.getPhotoFromCamera = function() {
+		$scope.getPhoto(Camera.PictureSourceType.CAMERA);
+	};
+
+	$scope.getPhotoFromLibrary = function() {
+		$scope.getPhoto(Camera.PictureSourceType.PHOTOLIBRARY);
+	};
+
 	$scope.submit = function() {
+		if(!$scope.user.NewPwd && $scope.user.NewPwd != $scope.user.NewPwdConfirm){
+			
+		}else{
+			$q.all([$scope.uploadPromise]).then(function(results) {
+				doSubmit();				
+			});
+		}
+	};
+	var doSubmit = function() {
 		if ($scope.user.NewPwd == $scope.user.NewPwdConfirm) {
 			$scope.user.$update(function() {
 				LoginUser.reload();
