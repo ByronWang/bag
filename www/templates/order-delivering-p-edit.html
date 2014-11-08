@@ -4,9 +4,24 @@
 			<i class="ion-ios7-information-outline"></i><span>您已完成购买，请发货</span>
 		</div>
 		<div class="list list-inset">
+			<div class="item item-input">	<span class="input-label">所在地区</span>
+				<span class="item-value">{{item.Address.Province}}-{{item.Address.City}}-{{item.Address.Area}}</span>
+			</div>
+			<div class="item item-input">	<span class="input-label">详细地址</span>
+				<span class="item-value">{{item.Address.Address}}</span>
+			</div>
+			<div class="item item-input">	<span class="input-label">邮编</span>
+				<span class="item-value">{{item.Address.Zip}}</span>
+			</div>
+			<div class="item item-input">	<span class="input-label">收件人</span>
+				<span class="item-value">{{item.Address.Contact}}</span>
+			</div>
+			<div class="item item-input">	<span class="input-label">联系电话</span>
+				<span class="item-value">{{item.Address.Phone}}</span>
+			</div>				
 			<label class="item item-input item-input-note">
 				<span class="input-label">预计</span>
-				<input type="date" x-ng-model="current.Extends.EstimateArriveDatetime">
+				<input type="date" x-ng-model="current.Extends.EstimateArriveDate">
 				<span class="item-note">到达</span>
 			</label>
 			<div class="item item-input">	<span class="input-label">邮寄方式</span>
@@ -35,7 +50,7 @@
 			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
 		</div>
 		<div class="item">
-			<span class="label">预计</span><span class="item-value">{{current.Extends.EstimateArriveDatetime}}到达</span>
+			<span class="label">预计</span><span class="item-value">{{current.Extends.EstimateArriveDate}}到达</span>
 		</div>
 		<div class="item item-input">
 			<span class="label">邮寄方式</span><span class="item-value">{{item.Bid.DeliveryMethodName}}</span>
