@@ -194,6 +194,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		var productsList = undefined;
 		productsList = Products.query(params, function() {
 			$scope.data.products = $scope.data.products.concat(productsList);
+			if (productsList.length < $scope.pagesize) {
+				$scope.hasmore = false;
+			}
 			if (funSucceed) funSucceed();
 		});
 	};
@@ -726,6 +729,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			pagesize : $scope.pagesize
 		}, function() {
 			$scope.data.orders = $scope.data.orders.concat(ordersList);
+			if (ordersList.length < $scope.pagesize) {
+				$scope.hasmore = false;
+			}
 			if (funSucceed) funSucceed();
 		});
 	};
@@ -930,6 +936,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.bitSucceed = function(suitor) {
 		var confirmPopup = $ionicPopup.confirm({
 			title : '确认',
+			cancelText : '放弃',
+			okText : '确定',
 			template : '确认选中此买家吗?'
 		});
 		confirmPopup.then(function(res) {
