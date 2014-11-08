@@ -336,17 +336,28 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.categoryInEdit = true;
 
-	$scope.product.CategoryDesc = "";
+	$scope.product.CategoryDesc ="请选择分类！";
+
+	$scope.anchers = [];
+	$scope.desc = function() {
+		if ($scope.anchers.length > 0) {
+			var desc = "";
+			angular.forEach($scope.anchers, function(cat) {
+				desc = desc + ">" + cat.Name;
+			});
+			return desc.substring(1);
+		} else {
+			return "请选择分类！";
+		}
+	};
 
 	$scope.selectCat = function(cat) {
+		$scope.anchers.push(cat);
 		var cs = Category.children(cat.ID);
 		if (cs.length > 0) {
 			$scope.categories = cs;
-			if ($scope.product.CategoryDesc != "") {
-				$scope.product.CategoryDesc = $scope.product.CategoryDesc + " > " + cat.Name;
-			} else {
-				$scope.product.CategoryDesc = cat.Name;
-			}
+			$scope.product.CategoryDesc = $scope.desc();
+
 			if (!$scope.product.CategoryLevel1ID) {
 				$scope.product.CategoryLevel1ID = cat.ID;
 				$scope.product.CategoryLevel1Name = cat.Name;
@@ -357,12 +368,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				$scope.product.CategoryID = cat.ID;
 				$scope.product.CategoryName = cat.Name;
 			}
-
-			if ($scope.product.CategoryDesc != "") {
-				$scope.product.CategoryDesc = $scope.product.CategoryDesc + " > " + cat.Name;
-			} else {
-				$scope.product.CategoryDesc = cat.Name;
-			}
+			$scope.product.CategoryDesc = $scope.desc();
 		}
 	};
 
@@ -445,6 +451,23 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				return true;
 			}
 		});
+	};
+	$scope.back = function() {
+		if (!$scope.categoryInEdit) {
+			$scope.$parent.closeModal();
+		} else {
+			if ($scope.anchers.length == 0) {
+				$scope.$parent.closeModal();
+			} else if ($scope.anchers.length > 1) {
+				$scope.anchers.pop();
+				var cat = $scope.anchers.pop();
+				$scope.selectCat(cat);
+			} else {
+				$scope.anchers.pop();
+				$scope.categories = Category.level1();
+				$scope.product.CategoryDesc ="请选择分类！";
+			}
+		}
 	};
 }).controller('NewOrderCtrl', function($scope, Camera, $q, Popup, Orders, $ionicPopup, Address, Exts, Statuses, Actions) {
 	$scope.Items = [];
@@ -759,10 +782,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	var loadFlow = function() {
 		$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
-			angular.forEach($scope.flows,function(f){
+			angular.forEach($scope.flows, function(f) {
 				$scope.statuses[f.StatusID].Class = "done";
 			});
-			
+
 			if ($scope.flows.length > 0) {
 				$scope.current = $scope.flows[$scope.flows.length - 1];
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
@@ -778,8 +801,20 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.statusActiveSlide = 0;
-	
-	$scope.statuses = [{},{Status:1,Class:"hide"},{Status:2,Class:"hide"},{Status:3,Class:"hide"},{Status:4,Class:"hide"}];
+
+	$scope.statuses = [ {}, {
+		Status : 1,
+		Class : "hide"
+	}, {
+		Status : 2,
+		Class : "hide"
+	}, {
+		Status : 3,
+		Class : "hide"
+	}, {
+		Status : 4,
+		Class : "hide"
+	} ];
 
 	var flowStepOut = function(status, action, params, succeed) {
 		var step = {};
@@ -815,11 +850,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.statusSlide = function(e, to) {
-		if($scope.statuses[to+1].Class == "hide"){
+		if ($scope.statuses[to + 1].Class == "hide") {
 			return;
 		}
-		
-		
+
 		$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
 		var ele = angular.element(e);
 		angular.forEach(ele.parent().parent().find("div"), function(i) {
