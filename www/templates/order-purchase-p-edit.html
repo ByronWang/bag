@@ -93,8 +93,8 @@
 			<div class="message" style="font-weight: bold;">
 				<i class="ion-ios7-paper-outline"></i><span>购物小票</span>
 			</div>
-			<div class="item item-avatar item-product" style="border: 0;" x-ng-repeat="img in  current.Extends.ProductActualImage">
-				<img align="center" x-ng-src="{{img | URI}}">
+			<div class="item item-avatar item-product" style="border: 0;" x-ng-repeat="img in  current.Extends.InvoiceImageList">
+				<img align="center" x-ng-src="{{img.uri | URI}}">
 			</div>
 			<div class="item item-avatar item-product col" style="border: 0;">
 					<a x-ng-click="showInvoiceCameraMenu();"> <i class="icon ion-ios7-camera"></i> <h2>更新图片</h2> </a>
@@ -105,8 +105,8 @@
 			<div class="message" style="font-weight: bold;">
 				<i class="ion-image"></i><span>商品照片</span>
 			</div>
-			<div class="item item-avatar item-product" style="border: 0;" x-ng-repeat="img in  current.Extends.InvoiceImage">
-				<img align="center" x-ng-src="{{img | URI}}">
+			<div class="item item-avatar item-product" style="border: 0;" x-ng-repeat="im in  current.Extends.ProductActualImageList">
+				<img align="center" x-ng-src="{{im.uri | URI}}">
 			</div>
 			<div class="item item-avatar item-product" style="border: 0;">
 					<a x-ng-click="showProductCameraMenu();"> <i class="icon ion-ios7-camera"></i> <h2>更新图片</h2> </a>

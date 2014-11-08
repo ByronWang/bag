@@ -31,30 +31,18 @@
 		<i class="ion-ios7-paper-outline"></i><span>购物小票</span>
 	</div>
 	<div class="item row">
-		<div class="item item-avatar item-product col" style="border: 0;">
-			<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
-		</div>
-		<div class="item item-avatar item-product col" style="border: 0;">
-			<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
-		</div>
-	</div>
-	<div class="row">
-		<div class="item item-avatar item-product col" style="border: 0;">
-			<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
-		</div>
-		<div class="item item-avatar item-product col" style="border: 0;">
-			<img style="width: 95%; height: 170px; max-width: 65536px; max-height: 65536px;" align="center" x-ng-src="{{item.Product.Image | URI}}">
+		<div class="item item-avatar item-product col" style="border: 0;" x-ng-repeat="im in  current.Extends.InvoiceImage">
+			<img align="center" x-ng-src="{{im | URI}}">
 		</div>
 	</div>
 	<div class="item item-product-info">
 		<div class="message" style="font-weight: bold;">
 			<i class="ion-image"></i><span>商品照片</span>
 		</div>
-		<div class="item item-avatar item-product" style="border: 0;">
-			<img align="center" x-ng-src="{{item.Product.Image | URI}}">
-		</div>
-		<div class="item item-avatar item-product" style="border: 0;">
-			<img align="center" x-ng-src="{{item.Product.Image | URI}}">
+	</div>
+	<div class="item row">
+		<div class="item item-avatar item-product col" style="border: 0;" x-ng-repeat="im in  current.Extends.ProductActualImage">
+			<img align="center" x-ng-src="{{im | URI}}">
 		</div>
 	</div>
 </pane>

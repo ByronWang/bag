@@ -787,7 +787,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			});
 
 			if ($scope.flows.length > 0) {
-				$scope.current = $scope.flows[$scope.flows.length - 1];
+				$scope.current = $scope.flows[0];
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 			} else {
 				$scope.current = {
@@ -935,7 +935,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		Popup.show(scope, 'templates/modal-chat.html');
 	};
 
-}).controller('OrderPurchaserDetailCtrl', function($scope, OrderItems, $ionicPopup, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
+}).controller('OrderPurchaserDetailCtrl', function($scope,$q,OrderItems, $ionicPopup, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
 
 	var $stateParams = {
 		itemId : $scope.$parent.item.ID
@@ -967,11 +967,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	var loadFlow = function() {
 		$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
 			if ($scope.flows.length > 0) {
-				$scope.current = $scope.flows[$scope.flows.length - 1];
+				$scope.current = $scope.flows[0];
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
-				if(!$scope.current.Extends.ProductActualImage){
-					$scope.current.Extends.ProductActualImage = [];
-				}
+
 			} else {
 				$scope.current = {
 					StatusID : 1
@@ -1039,24 +1037,34 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	
 	$scope.finishPurchasing = function() {
 		var promiseArray = [];
-		if ($scope.current.Extends.ProductActualImageSucceed) {
-			var p = Camera.upload($scope.current.Extends.ProductActualImage);
-			p = p.then(function(result) {
-				$scope.current.Extends.ProductActualImage = result.response;
+		if($scope.current.Extends.ProductActualImageList){
+			angular.forEach($scope.current.Extends.ProductActualImageList,function(im){
+				promiseArray.push(im.uploadPromise);
 			});
-			promiseArray.push(p);
 		}
-		;
-		if ($scope.current.Extends.InvoiceImageSucceed) {
-			var p = Camera.upload($scope.current.Extends.InvoiceImage);
-			p = p.then(function(result) {
-				$scope.current.Extends.InvoiceImage = result.response;
+
+		if($scope.current.Extends.InvoiceImageList){
+			angular.forEach($scope.current.Extends.InvoiceImageList,function(im){
+				promiseArray.push(im.uploadPromise);
 			});
-			promiseArray.push(p);
 		}
-		;
+
 		if (promiseArray.length > 0) {
 			$q.all(promiseArray).then(function(results) {
+				var imagesProduct = [];
+				if($scope.current.Extends.ProductActualImageList){
+					angular.forEach($scope.current.Extends.ProductActualImageList,function(im){
+						imagesProduct.push(im.uri);
+					});
+				}
+				var imagesInvoice = [];
+				if($scope.current.Extends.InvoiceImageList){
+					angular.forEach($scope.current.Extends.InvoiceImageList,function(im){
+						imagesInvoice.push(im.uri);
+					});
+				}				
+				$scope.current.Extends.ProductActualImage = imagesProduct;
+				$scope.current.Extends.InvoiceImage = imagesInvoice;
 				flowStepOut(Statuses.delivering, Actions.purchased);
 			});
 		} else {
@@ -1079,6 +1087,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
+	
+	
 	$scope.showProductCameraMenu = function() {
 		var imagePromise = {};
 
@@ -1102,22 +1112,21 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 						break;
 				}
 
-				imagePromise.then(function(imageURI) {
+				imagePromise.then(function(imageURI) {										
 					if(!$scope.current.Extends.ProductActualImageList){
 						$scope.current.Extends.ProductActualImageList = [];
 					}
-					
 					var img = {
 							uri: imageURI,
 							loading:true
 					};			
+					$scope.current.Extends.ProductActualImageList.push(img);
 					var p = Camera.upload(imageURI);
 					p = p.then(function(result) {
-						img.imageURI = result.response;
+						img.uri = result.response;
 						img.loading = false;
 					});
-					img.promise = p;					
-					$scope.current.Extends.ProductActualImageList.push(p);
+					img.uploadPromise = p;			
 				});
 				return true;
 			}
@@ -1148,21 +1157,21 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				}
 
 				imagePromise.then(function(imageURI) {
+					
 					if(!$scope.current.Extends.InvoiceImageList){
 						$scope.current.Extends.InvoiceImageList = [];
 					}
-					
 					var img = {
 							uri: imageURI,
 							loading:true
-					};
+					};			
+					$scope.current.Extends.InvoiceImageList.push(img);
 					var p = Camera.upload(imageURI);
 					p = p.then(function(result) {
-						img.imageURI = result.response;
+						img.uri = result.response;
 						img.loading = false;
 					});
-					img.promise = p;					
-					$scope.current.Extends.InvoiceImageList.push(p);
+					img.uploadPromise = p;
 				});
 				return true;
 			}

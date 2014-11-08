@@ -135,7 +135,7 @@ angular.module('starter.services', []).factory('Host', function() {
 		}
 	};
 }).factory('OrderItemFlowByItem', function($resource, Host) {
-	return $resource(Host.host + '/d/OrderItem/:itemId/OrderItemFlow/:flowId');
+	return $resource(Host.host + '/d/OrderItemFlow/?OrderItem=:itemId');
 }).factory('OrderItemFlow', function($resource, Host) {
 	return $resource(Host.host + '/d/OrderItemFlow/:flowId');
 }).factory('Payments', function($resource, Host) {
@@ -152,6 +152,10 @@ angular.module('starter.services', []).factory('Host', function() {
 		getPicture : function(options) {
 			var q = $q.defer();
 
+			if (Host.pc) {
+				q.resolve("img/productActual-default.jpg");
+				return q.promise;
+			}
 			navigator.camera.getPicture(function(result) {
 				// Do any magic you need
 				q.resolve(result);
@@ -175,19 +179,24 @@ angular.module('starter.services', []).factory('Host', function() {
 		},
 		upload : function(imageURI) {
 			var q = $q.defer();
-
-			var options = new FileUploadOptions();
-			options.fileKey = "file";
-			options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
-			options.mimeType = "multipart/form-data";
-			options.chunkedMode = false;
-			ft = new FileTransfer();
-			var uploadUrl = encodeURI(Host.host + "/f/uploads/");
-			ft.upload(imageURI, uploadUrl, function(result) {
-				q.resolve(result);
-			}, function(err) {
-				q.reject(err);
-			}, options);
+			if (Host.pc) {
+				q.resolve({	response:"img/productActual-default.jpg"});
+				return q.promise;
+			}
+			{
+				var options = new FileUploadOptions();
+				options.fileKey = "file";
+				options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+				options.mimeType = "multipart/form-data";
+				options.chunkedMode = false;
+				ft = new FileTransfer();
+				var uploadUrl = encodeURI(Host.host + "/f/uploads/");
+				ft.upload(imageURI, uploadUrl, function(result) {
+					q.resolve(result);
+				}, function(err) {
+					q.reject(err);
+				}, options);
+			}
 
 			return q.promise;
 		}
@@ -294,7 +303,7 @@ angular.module('starter.services', []).factory('Host', function() {
 					_this.Image = user.Image;
 					_this.BePurchaser = user.BePurchaser;
 					_this.Address = user.Address;
-					
+
 					if (!_this.Image) {
 						_this.Image = "img/avatar-default.jpg";
 					}
