@@ -1207,30 +1207,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		$timeout(function() {
 
-			$scope.chats.push({
-				UserID : $scope.currentUser.ID,
-				Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
-			});
-			$scope.chats.push({
-				UserID : 3,
-				Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
-			});
-			$scope.chats.push({
-				UserID : $scope.currentUser.ID,
-				Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
-			});
-			$scope.chats.push({
-				UserID : 3,
-				Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
-			});
-			$scope.chats.push({
-				UserID : $scope.currentUser.ID,
-				Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
-			});
-			$scope.chats.push({
-				UserID : 3,
-				Message : "以把这些方法和属性应用到HTML页面上的任何元素上去。Web 行为是非常伟大的因为它们允许程序员把自定义的功能“连接”到现有的元素和控件，而不是必须让用户下载二进制文件（例如"
-			});
 			chatsCtrl.scrollBottom();
 			if (funSucceed) funSucceed();
 		}, 100);
@@ -1239,10 +1215,12 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.say = function(event) {
 		var newchat = {
+			OrderItem : $scope.item.ID,
 			UserID : $scope.currentUser.ID,
 			CustomerID : $scope.customerID,
 			PurchaserID : $scope.purchaserID,
-			Message : $scope.message
+			Message : $scope.message,
+			loading : true
 		};
 
 		$scope.chats.push(newchat);
