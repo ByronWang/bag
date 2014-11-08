@@ -176,9 +176,24 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
+
 	var load = function(funSucceed) {
 		$scope.category = Category.get($stateParams.CategoryLevel1);
-		$scope.products = Products.query($stateParams, function() {
+
+		$scope.data = {
+			products : []
+		};
+		$scope.hasmore = true;
+		$scope.page = 1;
+		$scope.pagesize = 10;
+
+		var params = angular.extend($stateParams, {
+			page : $scope.page,
+			pagesize : $scope.pagesize
+		});
+		var productsList = undefined;
+		productsList = Products.query(params, function() {
+			$scope.data.products = $scope.data.products.concat(productsList);
 			if (funSucceed) funSucceed();
 		});
 	};
@@ -190,6 +205,29 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 	$scope.back = function() {
 		$state.go("dash");
+	};
+
+	// Load more after 1 second delay
+	$scope.loadMoreItems = function() {
+		$scope.page = $scope.page + 1;
+
+		var params = angular.extend($stateParams, {
+			page : $scope.page,
+			pagesize : $scope.pagesize
+		});
+
+		var productsList = undefined;
+		productsList = Products.query(params, function() {
+			if (productsList.length > 0) {
+				$scope.data.products = $scope.data.products.concat(productsList);
+			} else {
+				$scope.hasmore = false;
+			}
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		});
+	};
+	$scope.moreDataCanBeLoaded = function() {
+		return $scope.hasmore;
 	};
 
 }).controller('ProductDetailCtrl', function($scope, $stateParams, Products, Exts, LoginUser, Category) {
@@ -668,16 +706,26 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.realOrder = Orders.get({
 		orderId : $scope.$parent.order.ID
 	});
-}).controller('OrdersCustomerCtrl', function($scope, Orders, Popup) {
+}).controller('OrdersCustomerCtrl', function($scope, Orders, Popup, $timeout) {
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
 	var load = function(funSucceed) {
-		$scope.orders = Orders.query({
-			Customer : $scope.currentUser.ID
+		$scope.data = {
+			orders : []
+		};
+		$scope.hasmore = true;
+		$scope.page = 1;
+		$scope.pagesize = 3;
+		var ordersList = undefined;
+		ordersList = Orders.query({
+			Customer : $scope.currentUser.ID,
+			page : $scope.page,
+			pagesize : $scope.pagesize
 		}, function() {
+			$scope.data.orders = $scope.data.orders.concat(ordersList);
 			if (funSucceed) funSucceed();
 		});
 	};
@@ -690,7 +738,23 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	// Load more after 1 second delay
 	$scope.loadMoreItems = function() {
-		$scope.$broadcast('scroll.infiniteScrollComplete');
+		$scope.page = $scope.page + 1;
+		var ordersList = undefined;
+		ordersList = Orders.query({
+			Customer : $scope.currentUser.ID,
+			page : $scope.page,
+			pagesize : $scope.pagesize
+		}, function() {
+			if (ordersList.length > 0) {
+				$scope.data.orders = $scope.data.orders.concat(ordersList);
+			} else {
+				$scope.hasmore = false;
+			}
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		});
+	};
+	$scope.moreDataCanBeLoaded = function() {
+		return $scope.hasmore;
 	};
 }).controller('OrdersPurchaserCtrl', function($scope, OrderBiding, Popup) {
 	$scope.doRefresh = function() {
@@ -1276,7 +1340,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$parent.closeModal();
 		});
 	};
-}).controller('AccountUserEditCtrl', function($scope,$q, $ionicActionSheet, Popup, Camera, LoginUser, Users) {
+}).controller('AccountUserEditCtrl', function($scope, $q, $ionicActionSheet, Popup, Camera, LoginUser, Users) {
 	var $stateParams = {
 		userId : LoginUser.ID
 	};
@@ -1358,11 +1422,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.submit = function() {
-		if(!$scope.user.NewPwd && $scope.user.NewPwd != $scope.user.NewPwdConfirm){
-			
-		}else{
-			$q.all([$scope.uploadPromise]).then(function(results) {
-				doSubmit();				
+		if (!$scope.user.NewPwd && $scope.user.NewPwd != $scope.user.NewPwdConfirm) {
+
+		} else {
+			$q.all([ $scope.uploadPromise ]).then(function(results) {
+				doSubmit();
 			});
 		}
 	};

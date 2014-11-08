@@ -6,7 +6,7 @@
 				暂时还没有订单哦！
 			</p>
 		</div>
-		<div class="list" style="margin-bottom: 0px;" x-ng-repeat="order in orders">
+		<div class="list" style="margin-bottom: 0px;" x-ng-repeat="order in data.orders">
 			<div class="item item-divider item-product-title" style="background-color: #ffffff; padding-bottom: 4px;">
 				<h2 style="padding-bottom: 0px; margin-bottom: 0; vertical-align: middle;">{{order.CountryName}}</h2>
 				<div>
@@ -28,6 +28,6 @@
 				</div>
 			</div> <i class="ion-record assertive notify"></i> </a>
 		</div>
-		<ion-infinite-scroll on-infinite="loadMoreItems()" icon="ion-loading-c"></ion-infinite-scroll>
+		<ion-infinite-scroll on-infinite="loadMoreItems()" distance="1%" ng-if="moreDataCanBeLoaded()" icon="ion-loading-c"></ion-infinite-scroll>
 	</ion-content>
 </ion-view>

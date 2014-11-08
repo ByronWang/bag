@@ -18,7 +18,7 @@
 		</div>
 
 		<div class="list">
-			<a x-ng-repeat="product in products"  class="item item-thumbnail-left item-info"  x-ng-click="showDetail(product);"> <img x-ng-src="{{product.Image | URI}}">
+			<a x-ng-repeat="product in data.products"  class="item item-thumbnail-left item-info"  x-ng-click="showDetail(product);"> <img x-ng-src="{{product.Image | URI}}">
 			<div class="list info">
 				<span class="item"><h3>{{product.Name}}</h3></span>
 				<span class="item">代购国家<span class="item-note"> {{product.CountryName}}</span> </span>
@@ -29,6 +29,7 @@
 				如果>=7 按周
 				-->
 			</div> </a>
-		</div>
+		</div>		
+		<ion-infinite-scroll on-infinite="loadMoreItems()" distance="1%" ng-if="moreDataCanBeLoaded()" icon="ion-loading-c"></ion-infinite-scroll>		
 	</ion-content>
 </ion-view>
