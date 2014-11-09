@@ -168,7 +168,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.rectHeight = document.body.clientWidth / 3;
 	$scope.category = Category.level1Grouped();
 	$scope.search = function() {
-		Popup.show($scope, 'templates/modal-search.html');
+		Popup.show($scope, 'templates/modal-search.html',function(){
+			
+		});
 	};
 }).controller('ProductsCategoryCtrl', function($scope, $state, $stateParams, Popup, Category, Products) {
 	$scope.doRefresh = function() {
@@ -1544,10 +1546,32 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.cancel = function() {
 		$scope.$parent.closeModal();
 	};
-}).controller('SearchCtrl', function($scope, $state) {
+}).controller('SearchCtrl', function($scope, $state,Countries,Popup) {
+	$scope.req = {};
+	$scope.popupCountries = function() {
+		$scope.datalist = Countries.query();
+		Popup.show($scope, 'templates/modal-select.html');
+
+		$scope.ret = function(item) {
+			$scope.req.Country = item.ID;
+			$scope.req.CountryName = item.Name;
+		};
+	};
+	
 	$scope.ok = function() {
 		$scope.$parent.closeModal();
-		$state.go('products');
+		var params = {};
+		if(angular.isDefined($scope.req.Name)){
+			params.Name = "@" + $scope.req.Name;
+		}
+		if(angular.isDefined($scope.req.Country)){
+			params.Country = $scope.req.Country;
+		}
+
+		if(angular.isDefined($scope.req.priceFrom)  || angular.isDefined($scope.req.priceTo)  ){
+			params.ExpectedPrice= ($scope.req.priceFrom||"") + "~" + ($scope.req.priceTo||"");
+		}
+		$state.go('products-search',params);
 	};
 
 	$scope.cancel = function() {

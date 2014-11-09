@@ -1,0 +1,35 @@
+<ion-view>
+	<div class="bar bar-header bar-assertive item-input-inset">
+		<div class="buttons">
+			<button class="button button-icon icon ion-ios7-arrow-back pull-right"    x-ng-click="back();"></button>
+		</div>
+		<h1 class="title">产品</h1>
+		<div class="buttons">
+			<a class="button button-icon icon ion-ios7-cart" href="#/cart"> <span  class="badge badge-positive">{{cart.size()}}</span> </a>
+		</div>
+	</div>
+
+	<ion-content class="has-header">
+		<ion-refresher on-refresh="doRefresh()"  pulling-text="下拉刷新..."  refreshing-text="更新中"  refreshing-icon="ion-loading-c"></ion-refresher>
+		<div x-ng-show="data.products.length==0">
+			<p>
+				所选条件暂时还没有商品哦！
+			</p>
+		</div>
+
+		<div class="list">
+			<a x-ng-repeat="product in data.products"  class="item item-thumbnail-left item-info"  x-ng-click="showDetail(product);"> <img x-ng-src="{{product.Image | URI}}">
+			<div class="list info">
+				<span class="item"><h3>{{product.Name}}</h3></span>
+				<span class="item">代购国家<span class="item-note"> {{product.CountryName}}</span> </span>
+				<span class="item">价格 <span class="item-note"> {{product.ExpectedPrice}}元</span> </span><!-- 实际成交价格 -->
+				<span class="item">到货周期 <span class="item-note">{{item.lastMonth}}个月</span> </span>
+				<!-- 确认收货日期-开始购买日期
+				如果<7天 按天
+				如果>=7 按周
+				-->
+			</div> </a>
+		</div>		
+		<ion-infinite-scroll on-infinite="loadMoreItems()" distance="1%" ng-if="moreDataCanBeLoaded()" icon="ion-loading-c"></ion-infinite-scroll>		
+	</ion-content>
+</ion-view>

@@ -92,6 +92,14 @@ angular.module('starter', [ 'ionic', 'ngResource', 'starter.controllers', 'start
 				controller : 'ProductsCategoryCtrl'
 			}
 		}
+	}).state('products-search', {
+		url : '/products-category/:ExpectedPrice/:Name/:Country',
+		views : {
+			'tab-dash' : {
+				templateUrl : 'templates/productsBySearch.html',
+				controller : 'ProductsCategoryCtrl'
+			}
+		}
 	}).state('inventorys', {
 		url : '/inventorys',
 		views : {

@@ -9,23 +9,16 @@
 		<div class="list">
 			<label class="item item-input">
 				<span class="input-label">名称</span>
-				<input type="text" x-ng-model="user.username">
+				<input type="text" x-ng-model="req.Name">
 			</label>
-			<label class="item item-input  item-select">
-				<span class="input-label">国家</span>
-				<select>
-					<option>美国</option>
-					<option selected>韩国</option>
-					<option>日本</option>
-				</select>
-			</label>
+			<a class="item item-input item-icon-right" x-ng-click="popupCountries();"> <span class="input-label">代购国家</span> <span>{{req.CountryName}}</span> <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 			<div class="item item-input item-range-input">
 				<label>
 					<span class="input-label">价格区间</span>
 				</label>
-				<input type="number"  x-ng-model="user.priceFrom">
+				<input type="number"  x-ng-model="req.priceFrom">
 				<span class="seperator text-center">~</span>
-				<input type="number" x-ng-model="user.priceTo">
+				<input type="number" x-ng-model="req.priceTo">
 			</div>
 		</div>
 		<div class="button-bar">
