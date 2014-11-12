@@ -851,11 +851,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 }).controller('PayForOrderCtrl', function($scope, Users, Popup) {
 	$scope.item = $scope.$parent.item;
-
+	$scope.bid = $scope.flowCurrentStep.Bid;
 	$scope.payment = {
 		FromUserID : $scope.currentUser.ID,
 		ToUserID : $scope.currentUser.ID,
-		Amount : $scope.item.Bid.Amount,// 金额
+		Amount : $scope.bid.Amount,// 金额
 		PayTypeID : 2,// 购买保证金
 		PayMethodID : 2,// Bank
 		Description : "订单支付",// Bank
@@ -992,6 +992,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					"PurchaserName" : suitor.PurchaserName,
 					"PurchaserNickName" : suitor.PurchaserNickName,
 					"PurchaserImage" : suitor.PurchaserImage,
+					"ProductAmount" : suitor.ProductAmount,
+					"ProductCommissionAmount" : suitor.ProductCommissionAmount,
+					"Amount" : suitor.Amount,
 					"Commission" : suitor.Commission,
 					"SuggestedPrice" : suitor.SuggestedPrice,
 					"DeliveryCost" : suitor.DeliveryCost,
