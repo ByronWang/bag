@@ -109,7 +109,12 @@
 					<label class="checkbox" style="position: absolute; top: 40px; left: 5px;">
 						<input type="checkbox" class="samll-checkbox" x-ng-model="item.checked"  x-ng-change="check($event,country,item);" />
 					</label>
-
+				    <ion-option-button class="button-info"
+				                       ng-click="editProduct(item);">
+						<div style="position: absolute; top: 30px;">
+							编辑
+						</div>
+				    </ion-option-button>
 					<ion-option-button class="button-info button-assertive" ng-click="country.Items.splice($index, 1)">
 						<div style="position: absolute; top: 30px;">
 							删除

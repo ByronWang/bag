@@ -72,13 +72,17 @@
 						<i class="ion-ios7-information-outline"></i><span>请填写您的代购信息</span>
 					</div>
 					<div  class="list list-inset" style="margin-top: 8px;">
-						<label class="item item-input item-input-note"><span class="input-label">代购佣金</span>
-							<input type="number" class="percent" x-ng-model="suitor.Commission">
-							<span class="item-note">%</span></label>
-						<a class="item item-input item-icon-right"  x-ng-click="showDeliveryMethods();"> <span class="input-label">邮寄方式</span> <span class="item-note">{{suitor.DeliveryMethodName}}</span> <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 						<label class="item item-input item-input-note"><span class="input-label">建议价格</span>
 							<input type="number" x-ng-model="suitor.SuggestedPrice">
 							<span class="item-note"> 元</span></label>
+						<label class="item item-input"><span class="input-label">代购期限</span>
+							<input type="date" x-ng-model="suitor.Deadline"></label>
+						<label class="item item-input item-input-note"><span class="input-label">代购佣金</span>
+							<input type="number" class="percent" x-ng-model="suitor.Commission">
+							<span class="item-note">%</span></label>
+						<a class="item item-input item-icon-right"  x-ng-click="showDeliveryMethods();">
+							<span class="input-label">邮寄方式</span> <span class="item-note">{{suitor.DeliveryMethodName}}</span>
+							<i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 						<label class="item item-input item-input-note"><span class="input-label">运费</span>
 							<input type="number" x-ng-model="suitor.DeliveryCost">
 							<span class="item-note"> 元</span></label>
@@ -169,19 +173,22 @@
 							<i class="ion-ios7-information-outline"></i><span>您已经参与竞标</span>
 						</div>
 						<div class="item item-input item-input-note">
+							<span class="label">建议价格</span><span class="item-value">{{suitor.SuggestedPrice}} 元</span>
+						</div>
+						<div class="item item-input item-input-note">
+							<span class="label">代购期限</span><span class="item-value">{{suitor.Deadline}} </span>
+						</div>
+						<div class="item item-input item-input-note">
 							<span class="label">代购佣金</span><span class="item-value">{{suitor.Commission | percent}}</span>
 						</div>
 						<div class="item item-input item-input-note">
 							<span class="label">邮寄方式</span><span class="item-value">{{suitor.DeliveryMethodName}}</span>
 						</div>
 						<div class="item item-input item-input-note">
-							<span class="label">建议价格</span><span class="item-value">{{suitor.SuggestedPrice}} 元</span>
-						</div>
-						<div class="item item-input item-input-note">
 							<span class="label">运费</span><span class="item-value">{{suitor.DeliveryCost}} 元</span>
 						</div>
 						<div class="item item-input item-input-note">
-							<span class="label">合计</span><span class="item-value">{{suitor.Amount}} 元</span>
+							<span class="label">合计金额</span><span class="item-value">{{suitor.Amount}} 元</span>
 						</div>
 						<div class="item item-input item-input-note">
 							<span class="label">备注</span><span class="item-value">{{suitor.Comment}}</span>

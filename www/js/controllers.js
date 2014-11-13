@@ -168,8 +168,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.rectHeight = document.body.clientWidth / 3;
 	$scope.category = Category.level1Grouped();
 	$scope.search = function() {
-		Popup.show($scope, 'templates/modal-search.html',function(){
-			
+		Popup.show($scope, 'templates/modal-search.html', function() {
+
 		});
 	};
 }).controller('ProductsCategoryCtrl', function($scope, $state, $stateParams, Popup, Category, Products) {
@@ -249,6 +249,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		LoginUser.needLogin($scope.$new(), function() {
 			var item = {};
 			item.Product = $scope.product;
+			if (!item.Product.CopyFromID) {
+				item.Product.CopyFromID = $scope.product.ID;
+			}
 			item.Quantity = 1;
 			$scope.cart.add(item);
 			$scope.closeModal();
@@ -256,7 +259,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		return false;
 	};
-}).controller('CartCtrl', function($scope, Popup, Exts) {
+}).controller('CartCtrl', function($scope, Popup, Exts,$ionicListDelegate) {
 
 	$scope.next = function() {
 		var items = [];
@@ -280,7 +283,17 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	// };
 
 	$scope.newProduct = function() {
-		Popup.show($scope, 'templates/modal-new-product.html');
+		var scope = $scope.$new();
+		Popup.show(scope, 'templates/modal-new-product.html');
+	};
+	
+	$scope.editProduct = function(item) {
+		var scope = $scope.$new();
+		scope.item = item;
+		scope.product = item.Product;
+		Popup.show(scope, 'templates/modal-new-product.html',function(){
+			$ionicListDelegate.closeOptionButtons();
+		});
 	};
 
 	$scope.popupOrder = function(order) {
@@ -371,13 +384,19 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.cart.save();
 	};
 }).controller('NewProductCtrl', function($scope, $ionicActionSheet, Popup, $timeout, Products, Camera, Orders, Countries, Category, Exts) {
-	$scope.product = {};
+	if ($scope.$parent.product) {
+		$scope.product = $scope.$parent.product;
+		$scope.item = $scope.$parent.item;
+		$scope.categoryInEdit = false;
+	} else {
+		$scope.product = {};
+		$scope.isNew = true;
+		$scope.categoryInEdit = true;
+		$scope.item = {
+				Quantity : 1
+		};
+	}
 	$scope.categories = Category.level1();
-	$scope.item = {
-		Quantity : 1
-	};
-
-	$scope.categoryInEdit = true;
 
 	$scope.product.CategoryDesc = "请选择分类！";
 
@@ -464,10 +483,12 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		// $scope.product.Extends =
 		// Exts.encode($scope.product.Exts);
 		// $scope.product.Exts = undefined;
+		if ($scope.isNew) {
+			$scope.item.Product = $scope.product;
+			$scope.cart.add($scope.item);
+		} else {
 
-		$scope.item.Product = $scope.product;
-
-		$scope.cart.add($scope.item);
+		}
 		$scope.$parent.closeModal();
 	};
 
@@ -605,7 +626,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	var load = function(funSucceed) {
 		$scope.countryName = "全部国家";
-		
+
 		$scope.data = {
 			inventorys : []
 		};
@@ -657,7 +678,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.loadMoreItems = function() {
 		$scope.page = $scope.page + 1;
 
-		var params =  {
+		var params = {
 			page : $scope.page,
 			pagesize : $scope.pagesize
 		};
@@ -851,11 +872,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 }).controller('PayForOrderCtrl', function($scope, Users, Popup) {
 	$scope.item = $scope.$parent.item;
-
+	$scope.bid = $scope.flowCurrentStep.Bid;
 	$scope.payment = {
 		FromUserID : $scope.currentUser.ID,
 		ToUserID : $scope.currentUser.ID,
-		Amount : $scope.item.Bid.Amount,// 金额
+		Amount : $scope.bid.Amount,// 金额
 		PayTypeID : 2,// 购买保证金
 		PayMethodID : 2,// Bank
 		Description : "订单支付",// Bank
@@ -992,6 +1013,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					"PurchaserName" : suitor.PurchaserName,
 					"PurchaserNickName" : suitor.PurchaserNickName,
 					"PurchaserImage" : suitor.PurchaserImage,
+					"ProductAmount" : suitor.ProductAmount,
+					"ProductCommissionAmount" : suitor.ProductCommissionAmount,
+					"Amount" : suitor.Amount,
 					"Commission" : suitor.Commission,
 					"SuggestedPrice" : suitor.SuggestedPrice,
 					"DeliveryCost" : suitor.DeliveryCost,
@@ -1546,7 +1570,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.cancel = function() {
 		$scope.$parent.closeModal();
 	};
-}).controller('SearchCtrl', function($scope, $state,Countries,Popup) {
+}).controller('SearchCtrl', function($scope, $state, Countries, Popup) {
 	$scope.req = {};
 	$scope.popupCountries = function() {
 		$scope.datalist = Countries.query();
@@ -1557,21 +1581,21 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.req.CountryName = item.Name;
 		};
 	};
-	
+
 	$scope.ok = function() {
 		$scope.$parent.closeModal();
 		var params = {};
-		if(angular.isDefined($scope.req.Name)){
+		if (angular.isDefined($scope.req.Name)) {
 			params.Name = "@" + $scope.req.Name;
 		}
-		if(angular.isDefined($scope.req.Country)){
+		if (angular.isDefined($scope.req.Country)) {
 			params.Country = $scope.req.Country;
 		}
 
-		if(angular.isDefined($scope.req.priceFrom)  || angular.isDefined($scope.req.priceTo)  ){
-			params.ExpectedPrice= ($scope.req.priceFrom||"") + "~" + ($scope.req.priceTo||"");
+		if (angular.isDefined($scope.req.priceFrom) || angular.isDefined($scope.req.priceTo)) {
+			params.ExpectedPrice = ($scope.req.priceFrom || "") + "~" + ($scope.req.priceTo || "");
 		}
-		$state.go('products-search',params);
+		$state.go('products-search', params);
 	};
 
 	$scope.cancel = function() {
