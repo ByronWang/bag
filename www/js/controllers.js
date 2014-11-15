@@ -29,7 +29,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		}
 	};
 }).controller('TabsCtrl', function($scope, $ionicTabsDelegate, $state, LoginUser, Popup) {
-	var navs = [ '', 'cart', 'inventorys', 'orders.customer', 'account' ];
+	var navs = [ 'dash', 'cart', 'inventorys', 'orders.customer', 'account' ];
 	$scope.makeSureLogin = function(index) {
 		LoginUser.needLogin($scope.$new(), function() {
 			$ionicTabsDelegate.$getByHandle('rootTabs').select(index);
