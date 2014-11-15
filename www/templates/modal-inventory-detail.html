@@ -83,7 +83,7 @@
 						<a class="item item-input item-icon-right"  x-ng-click="showDeliveryMethods();">
 							<span class="input-label">邮寄方式</span> <span class="item-note">{{suitor.DeliveryMethodName}}</span>
 							<i class="icon ion-ios7-arrow-forward item-note"></i> </a>
-						<label class="item item-input item-input-note"><span class="input-label">运费</span>
+						<label class="item item-input item-input-note" x-ng-show="suitor.DeliveryMethodID==1"><span class="input-label">运费</span>
 							<input type="number" x-ng-model="suitor.DeliveryCost">
 							<span class="item-note"> 元</span></label>
 						<!--<label class="item item-input input-comment item-input-note"><span class="input-label">备注</span>-->

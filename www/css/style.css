@@ -890,9 +890,50 @@ label.checkbox input:after, .checkbox-icon:after {
     background-color: #66cc33;
 }
 
+.order-state-cancelOrder-bg {
+	color: black;
+    background-color: #FF0000;
+}
+
+.order-state-cancelPurchase-bg{
+	color: green;
+    background-color: #FF0000;
+}
+
 .order-state-disabled-bg {
     background-color: #aaaaaa;
 }
+
+
+
+
+
+
+
+
+.prog.doing {
+    color: blue;
+}
+
+.prog.done {
+    color: green;
+}
+
+.prog.disable{
+    color: #aaaaaa;
+}
+
+.prog.cancel{
+    color: red;
+}
+
+
+
+
+
+
+
+
 
 .prog-order-state-bid div, .prog-order-state-bid i {
     color: #f0b840;

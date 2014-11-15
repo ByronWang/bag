@@ -86,6 +86,14 @@ angular.module('starter.services', []).factory('Host', function() {
 			ID : 4,
 			Name : "已完结"
 		},
+		cancelOrder : {
+			ID : 5,
+			Name : "放弃订单"
+		},
+		cancelPurchase : {
+			ID : 6,
+			Name : "放弃购买"
+		},
 	};
 }).factory('Actions', function() {
 	return {

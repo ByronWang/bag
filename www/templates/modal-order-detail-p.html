@@ -108,11 +108,16 @@
 					</div>
 				</div>
 			</div>
+			
+			
+			<br>
+			statuses : {{statuses}}
+			current.ActionID:  {{current.ActionID}}
+			<br>
 			<div class="item">
 
 				<div class="row">
-					<div class="prog col"
-					x-ng-class="{true: 'prog-order-state-bid', false: 'prog-order-state-disabled'}[current.StatusID>=1]"
+					<div class="prog col {{statuses[1].class}}"
 					x-ng-click="statusSlide($event,0)">
 						<i class="icon"
 						x-ng-class="{'ion-ios7-clock': current.StatusID==1, 'ion-ios7-checkmark': current.StatusID>1}"></i>
@@ -124,8 +129,8 @@
 						</div>
 					</div>
 
-					<div class="prog col"
-					x-ng-class="{true: 'prog-order-state-purchase', false: 'prog-order-state-disabled'}[current.StatusID>=2]"
+					<div class="prog col {{statuses[2].class}}"
+					x-ng-class="{{statuses[2].class}}"
 					x-ng-click="statusSlide($event,1)">
 						<i class="icon"
 						x-ng-class="{'ion-ios7-clock': current.StatusID==2, 'ion-ios7-checkmark': current.StatusID>2, 'ion-ios7-circle-filled': current.StatusID<2}"></i>
@@ -137,8 +142,7 @@
 						</div>
 					</div>
 
-					<div class="prog col"
-					x-ng-class="{true: 'prog-order-state-delivering', false: 'prog-order-state-disabled'}[current.StatusID>=3]"
+					<div class="prog col {{statuses[3].class}}"
 					x-ng-click="statusSlide($event,2)">
 						<i class="icon"
 						x-ng-class="{'ion-ios7-clock': current.StatusID==3, 'ion-ios7-checkmark': current.StatusID>3, 'ion-ios7-circle-filled': current.StatusID<3}"></i>
@@ -151,8 +155,7 @@
 					</div>
 
 					<!--#aaaaaa 66cc33-->
-					<div class="prog col"
-					x-ng-class="{true: 'prog-order-state-completed', false: 'prog-order-state-disabled'}[current.StatusID>=4]"
+					<div class="prog col {{statuses[4].class}}"
 					x-ng-click="statusSlide($event,3)">
 						<i class="icon"
 						x-ng-class="{'ion-ios7-checkmark': current.StatusID>=4, 'ion-ios7-circle-filled': current.StatusID<4}"></i>
@@ -166,17 +169,21 @@
 				</div>
 				<ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide">
 					<ion-slide>
+					&nbsp;
 						<ng-include src="'templates/order-bid-p-info.html'" ng-if="current.StatusID!=1"></ng-include>
 					</ion-slide>
 					<ion-slide>
+					&nbsp;
 						<ng-include src="'templates/order-purchase-p-edit.html'" ng-if="current.StatusID==2"></ng-include>
 						<ng-include src="'templates/order-purchase-p-info.html'" ng-if="current.StatusID!=2"></ng-include>
 					</ion-slide>
 					<ion-slide>
+					&nbsp;
 						<ng-include src="'templates/order-delivering-p-edit.html'" ng-if="current.StatusID==3"></ng-include>
 						<ng-include src="'templates/order-delivering-p-info.html'" ng-if="current.StatusID!=3"></ng-include>
 					</ion-slide>
 					<ion-slide>
+					&nbsp;
 						<ng-include src="'templates/order-completed-p-info.html'"></ng-include>
 					</ion-slide>
 				</ion-slide-box>

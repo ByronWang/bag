@@ -635,7 +635,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.pagesize = 10;
 
 		var params = {
-			Status : 1,
+			Action : 1,
 			page : $scope.page,
 			pagesize : $scope.pagesize
 		};
@@ -872,11 +872,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 }).controller('PayForOrderCtrl', function($scope, Users, Popup) {
 	$scope.item = $scope.$parent.item;
-	$scope.bid = $scope.flowCurrentStep.Bid;
+	$scope.bid = $scope.item.Bid;
 	$scope.payment = {
 		FromUserID : $scope.currentUser.ID,
 		ToUserID : $scope.currentUser.ID,
-		Amount : $scope.bid.Amount,// 金额
+		Amount : $scope.item.Bid.Amount,// 金额
 		PayTypeID : 2,// 购买保证金
 		PayMethodID : 2,// Bank
 		Description : "订单支付",// Bank
@@ -899,6 +899,21 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 	var load = function(funSucceed) {
 		$scope.Actions = Actions;
+		$scope.Statuses = Statuses;
+
+		$scope.statuses = [ {}, {
+			ActionID : 1,
+			class : "doing"
+		}, {
+			ActionID : 1,
+			class : "disable"
+		}, {
+			ActionID : 1,
+			class : "disable"
+		}, {
+			ActionID : 1,
+			class : "disable"
+		} ];
 
 		$scope.statusActiveSlide = 0;
 
@@ -916,13 +931,35 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	var loadFlow = function() {
 		$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
-			angular.forEach($scope.flows, function(f) {
-				$scope.statuses[f.StatusID].Class = "done";
-			});
-
 			if ($scope.flows.length > 0) {
 				$scope.current = $scope.flows[0];
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
+				var maxStatusID = $scope.flows[0].StatusID;
+				if(!maxStatusID){
+					maxStatusID = 1;
+				}
+				
+				angular.forEach($scope.flows.reverse(), function(f) {
+					var statusID = f.StatusID;
+					if(!statusID){
+						statusID = 1;
+					}
+					if(statusID<maxStatusID){
+						$scope.statuses[statusID].ActionID =f.ActionID;
+						$scope.statuses[statusID].class = "done";					
+					}else if(maxStatusID==4){
+						$scope.statuses[statusID].ActionID =f.ActionID;
+						$scope.statuses[statusID].class = "done";						
+					}else{
+						$scope.statuses[statusID].ActionID =f.ActionID;
+						$scope.statuses[statusID].class = "doing";						
+					}
+				});
+				
+				if($scope.item.StatusID == 5 || $scope.item.StatusID == 6){
+					$scope.statuses[maxStatusID].class = "cancel";					
+				}
+			
 			} else {
 				$scope.current = {
 					StatusID : 1,
@@ -934,21 +971,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
-	$scope.statusActiveSlide = 0;
 
-	$scope.statuses = [ {}, {
-		Status : 1,
-		Class : "hide"
-	}, {
-		Status : 2,
-		Class : "hide"
-	}, {
-		Status : 3,
-		Class : "hide"
-	}, {
-		Status : 4,
-		Class : "hide"
-	} ];
 
 	var flowStepOut = function(status, action, params, succeed) {
 		var step = {};
@@ -969,7 +992,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			if (succeed) {
 				succeed(resp);
 			} else {
-				loadFlow();
+				load();
 				$state.reload();
 
 			}
@@ -984,7 +1007,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.statusSlide = function(e, to) {
-		if ($scope.statuses[to + 1].Class == "hide") {
+		if ($scope.statuses[to + 1].class == "disable") {
 			return;
 		}
 
@@ -1025,7 +1048,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			};
 
 			flowStepOut(Statuses.purchasing, Actions.bitSucceed, params, function(resp) {
-				$scope.current = resp;
+				load();
 				$scope.gotoPay();
 			});
 		});
@@ -1034,9 +1057,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.gotoPay = function() {
 		$scope.item = $scope.item;
-		$scope.flowCurrentStep = $scope.current;
 		Popup.show($scope, 'templates/modal-pay-for-order.html', function(payment) {
-			loadFlow();
+			load();
 			$state.reload();
 		});
 	};
@@ -1049,7 +1071,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			template : '确认取消订单吗?'
 		});
 		confirmPopup.then(function(res) {
-			flowStepOut(Statuses.completed, Actions.cancelOrder);
+			flowStepOut($scope.current.StatusID, Actions.cancelOrder);
 		});
 	};
 
@@ -1079,16 +1101,30 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	var $stateParams = {
 		itemId : $scope.$parent.item.ID
 	};
+
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
 	var load = function(funSucceed) {
-		var $stateParams = {
-			itemId : $scope.$parent.item.ID
-		};
 		$scope.Actions = Actions;
+		$scope.Statuses = Statuses;
+
+		$scope.statuses = [ {}, {
+			ActionID : 1,
+			class : "doing"
+		}, {
+			ActionID : 1,
+			class : "disable"
+		}, {
+			ActionID : 1,
+			class : "disable"
+		}, {
+			ActionID : 1,
+			class : "disable"
+		} ];
+
 		$scope.statusActiveSlide = 0;
 
 		$scope.item = OrderItems.get($stateParams, function() {
@@ -1108,10 +1144,36 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			if ($scope.flows.length > 0) {
 				$scope.current = $scope.flows[0];
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
-
+				var maxStatusID = $scope.flows[0].StatusID;
+				if(!maxStatusID){
+					maxStatusID = 1;
+				}
+				
+				angular.forEach($scope.flows.reverse(), function(f) {
+					var statusID = f.StatusID;
+					if(!statusID){
+						statusID = 1;
+					}
+					if(statusID<maxStatusID){
+						$scope.statuses[statusID].ActionID =f.ActionID;
+						$scope.statuses[statusID].class = "done";					
+					}else if(maxStatusID==4){
+						$scope.statuses[statusID].ActionID =f.ActionID;
+						$scope.statuses[statusID].class = "done";						
+					}else{
+						$scope.statuses[statusID].ActionID =f.ActionID;
+						$scope.statuses[statusID].class = "doing";						
+					}
+				});
+				
+				if($scope.item.StatusID == 5 || $scope.item.StatusID == 6){
+					$scope.statuses[maxStatusID].class = "cancel";					
+				}
+			
 			} else {
 				$scope.current = {
-					StatusID : 1
+					StatusID : 1,
+					ActionID : 1
 				};
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 				$scope.loadBid();
@@ -1119,7 +1181,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
-	var flowStepOut = function(status, action, params) {
+
+
+	var flowStepOut = function(status, action, params, succeed) {
 		var step = {};
 
 		step.Extends = angular.copy($scope.current.Extends);
@@ -1133,19 +1197,18 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		step.ActionID = action.ID;
 		step.ActionName = action.Name;
 		step.PaymentID = $scope.current.PaymentID;
-		var post = new OrderItemFlow(step);
-		post.$save(function() {
-			loadFlow();
-			$state.reload();
+		var flow = new OrderItemFlow(step);
+		flow.$save(function(resp) {
+			if (succeed) {
+				succeed(resp);
+			} else {
+				load();
+				$state.reload();
+
+			}
 		});
 	};
 
-	$scope.loadBid = function() {
-		$scope.bids = OrderBiding.query({
-			OrderItem : $stateParams.itemId
-		}, function() {
-		});
-	};
 
 	$scope.statusSlide = function(e, to) {
 		$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
@@ -1169,7 +1232,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			template : '确定要放弃购买吗?'
 		});
 		confirmPopup.then(function(res) {
-			flowStepOut(Statuses.completed, Actions.cancelPurchasing);
+			flowStepOut($scope.current.StatusID, Actions.cancelPurchasing);
 		});
 	};
 

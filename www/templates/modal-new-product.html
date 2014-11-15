@@ -99,7 +99,7 @@
 					<button class="button button-block button-positive" x-ng-disabled="mainform.$invalid"
 					x-ng-click="submit();">添加到购物车 </button>
 				</div>
-				<div class="buttons text-center padding" x-ng-hide="categoryInEdit || !isNew">
+				<div class="buttons text-center padding" x-ng-show="!categoryInEdit  && !isNew">
 					<button class="button button-block button-positive" x-ng-disabled="mainform.$invalid"
 					x-ng-click="submit();">保存到购物车 </button>
 				</div>
