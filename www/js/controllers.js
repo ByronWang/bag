@@ -980,7 +980,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					}else if(statusID==4){
 						$scope.statuses[statusID].ActionID =f.ActionID;
 						$scope.statuses[statusID].class = "done";					
-					}else if(statusID<4){
+					}else if(statusID==maxStatusID){
 						$scope.statuses[statusID].ActionID =f.ActionID;
 						$scope.statuses[statusID].class = "doing";						
 					}
@@ -1191,7 +1191,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					}else if(statusID==4){
 						$scope.statuses[statusID].ActionID =f.ActionID;
 						$scope.statuses[statusID].class = "done";					
-					}else if(statusID<4){
+					}else if(statusID==maxStatusID){
 						$scope.statuses[statusID].ActionID =f.ActionID;
 						$scope.statuses[statusID].class = "doing";						
 					}
