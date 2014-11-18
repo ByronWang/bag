@@ -56,6 +56,9 @@ angular.module('starter.services', []).factory('Host', function() {
 }).factory('Orders', function($resource, Host) {
 	var url = Host.host + '/d/Order/:orderId';
 	return $resource(url);
+}).factory('PurchaserOrdes', function($resource, Host) {
+	var url = Host.host + '/d/PurchaserOrder/:orderId';
+	return $resource(url);
 }).factory('OrderItems', function($resource, Host) {
 	var url = Host.host + '/d/OrderItem/:itemId';
 	return $resource(url);

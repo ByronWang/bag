@@ -826,35 +826,40 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.moreDataCanBeLoaded = function() {
 		return $scope.hasmore;
 	};
-}).controller('OrdersPurchaserCtrl', function($scope, OrderBiding, Popup) {
+}).controller('OrdersPurchaserCtrl', function($scope, PurchaserOrdes,OrderBiding, Popup) {
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
 	var load = function(funSucceed) {
-
-		$scope.items = OrderBiding.query({
-			Purchaser : $scope.currentUser.ID
+		$scope.data = {
+			orders : []
+		};
+		$scope.hasmore = true;
+		$scope.page = 1;
+		$scope.pagesize = 3;
+		var ordersList = undefined;
+		ordersList = PurchaserOrdes.query({
+			Purchaser : $scope.currentUser.ID,
+			page : $scope.page,
+			pagesize : $scope.pagesize
 		}, function() {
-			var itemsFail = [];
-			var itemsBiding = [];
-			var itemsSucceed = [];
-
-			angular.forEach($scope.items, function(item) {
-				if (item.StatusID == 2) {
-					itemsSucceed.push(item);
-				} else if (item.StatusID == 3) {
-					itemsFail.push(item);
-				} else if (item.StatusID == 1) {
-					itemsBiding.push(item);
+			var id = $scope.currentUser.ID;
+			angular.forEach(ordersList,function(o){
+				var items = o.Items;
+				for(var i=items.length-1;i>=0;i--){
+					var item = items[i];
+					if(item.PurchaserID != id){
+						items.splice(i,1);
+					}
 				}
 			});
-
-			$scope.itemsFail = itemsFail;
-			$scope.itemsBiding = itemsBiding;
-			$scope.itemsSucceed = itemsSucceed;
-
+			
+			$scope.data.orders = $scope.data.orders.concat(ordersList);
+			if (ordersList.length < $scope.pagesize) {
+				$scope.hasmore = false;
+			}
 			if (funSucceed) funSucceed();
 		});
 	};
@@ -862,14 +867,39 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.showDetail = function(item) {
 		$scope.item = item;
-		Popup.show($scope, 'templates/modal-order-detail-p.html');
+		Popup.show($scope, 'templates/modal-order-detail-c.html');
 	};
 
 	// Load more after 1 second delay
 	$scope.loadMoreItems = function() {
-		$scope.$broadcast('scroll.infiniteScrollComplete');
+		$scope.page = $scope.page + 1;
+		var ordersList = undefined;
+		ordersList = PurchaserOrdes.query({
+			Purchaser : $scope.currentUser.ID,
+			page : $scope.page,
+			pagesize : $scope.pagesize
+		}, function() {
+			var id = $scope.currentUser.ID;
+			angular.forEach(ordersList,function(o){
+				var items = o.Items;
+				for(var i=items.length-1;i>=0;i--){
+					var item = items[i];
+					if(item.PurchaserID != id){
+						items.splice(i,1);
+					}
+				}
+			});
+			if (ordersList.length > 0) {
+				$scope.data.orders = $scope.data.orders.concat(ordersList);
+			} else {
+				$scope.hasmore = false;
+			}
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		});
 	};
-
+	$scope.moreDataCanBeLoaded = function() {
+		return $scope.hasmore;
+	};
 }).controller('PayForOrderCtrl', function($scope, Users, Popup) {
 	$scope.item = $scope.$parent.item;
 	$scope.bid = $scope.item.Bid;
@@ -947,17 +977,18 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					if(statusID<maxStatusID){
 						$scope.statuses[statusID].ActionID =f.ActionID;
 						$scope.statuses[statusID].class = "done";					
-					}else if(maxStatusID==4){
+					}else if(statusID==4){
 						$scope.statuses[statusID].ActionID =f.ActionID;
-						$scope.statuses[statusID].class = "done";						
-					}else{
+						$scope.statuses[statusID].class = "done";					
+					}else if(statusID<4){
 						$scope.statuses[statusID].ActionID =f.ActionID;
 						$scope.statuses[statusID].class = "doing";						
 					}
 				});
 				
 				if($scope.item.StatusID == 5 || $scope.item.StatusID == 6){
-					$scope.statuses[maxStatusID].class = "cancel";					
+					$scope.statuses[maxStatusID].class = "cancel";
+					
 				}
 			
 			} else {
@@ -1157,17 +1188,18 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					if(statusID<maxStatusID){
 						$scope.statuses[statusID].ActionID =f.ActionID;
 						$scope.statuses[statusID].class = "done";					
-					}else if(maxStatusID==4){
+					}else if(statusID==4){
 						$scope.statuses[statusID].ActionID =f.ActionID;
-						$scope.statuses[statusID].class = "done";						
-					}else{
+						$scope.statuses[statusID].class = "done";					
+					}else if(statusID<4){
 						$scope.statuses[statusID].ActionID =f.ActionID;
 						$scope.statuses[statusID].class = "doing";						
 					}
 				});
 				
 				if($scope.item.StatusID == 5 || $scope.item.StatusID == 6){
-					$scope.statuses[maxStatusID].class = "cancel";					
+					$scope.statuses[maxStatusID].class = "cancel";
+					
 				}
 			
 			} else {
@@ -1209,6 +1241,14 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
+
+	$scope.loadBid = function() {
+		$scope.bids = OrderBiding.query({
+			OrderItem : $stateParams.itemId,
+			Purchaser: $scope.currentUser.ID
+		}, function() {
+		});
+	};
 
 	$scope.statusSlide = function(e, to) {
 		$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
