@@ -17,6 +17,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Toast\"><param name=\"android-package\" value=\"nl.xservices.plugins.Toast\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
                             "count": 1
                         },
@@ -86,6 +90,9 @@
             "PACKAGE_NAME": "cn.xj.bag.client"
         },
         "com.ionic.keyboard": {
+            "PACKAGE_NAME": "cn.xj.bag.client"
+        },
+        "nl.x-services.plugins.toast": {
             "PACKAGE_NAME": "cn.xj.bag.client"
         },
         "org.apache.cordova.camera": {
