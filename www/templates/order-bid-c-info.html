@@ -1,8 +1,9 @@
 <div x-ng-show="statuses[1].ActionID==Actions.bitSucceed.ID">
 	<div class="list action data">
 		<div class="item item-avatar item-product-user">
-			<img src="{{current.Bid.Purchaser.Image | URI}}">
-			<span>{{current.Bid.PurchaserNickName}}</span>
+			<img src="{{item.Bid.Purchaser.Image | URI}}">
+			<span>{{item.Bid.PurchaserNickName}}</span>
+			<a class="item-note" x-ng-click="showChat(item,item.Customer,item.Purchaser,false);"><i class="chatbox ion-chatbox-working"></i></a>
 		</div>
 		<div class="item message assertive message-strong">
 			<i class="ion-card"></i>

@@ -867,7 +867,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.showDetail = function(item) {
 		$scope.item = item;
-		Popup.show($scope, 'templates/modal-order-detail-c.html');
+		Popup.show($scope, 'templates/modal-order-detail-p.html');
 	};
 
 	// Load more after 1 second delay

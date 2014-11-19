@@ -110,7 +110,6 @@
 			</div>
 
 			<div class="item">
-
 				<div class="row">
 					<div class="prog col {{statuses[1].class}}"
 					x-ng-click="statusSlide($event,0)">
@@ -165,7 +164,7 @@
 				<ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide">
 					<ion-slide>
 					&nbsp;
-						<ng-include src="'templates/order-bid-p-edit.html'" ng-if="current.StatusID=1"></ng-include>
+						<ng-include src="'templates/order-bid-p-edit.html'" ng-if="current.StatusID==1"></ng-include>
 						<ng-include src="'templates/order-bid-p-info.html'" ng-if="current.StatusID!=1"></ng-include>
 					</ion-slide>
 					<ion-slide>

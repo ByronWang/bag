@@ -4,9 +4,9 @@
 			<i class="ion-ios7-information-outline"></i><span>购买已经完成</span>
 		</div>
 		<div class="item item-avatar item-product-user">
-			<img src="{{current.Bid.Purchaser.Image | URI}}">
-			<span>{{current.Bid.PurchaserNickName}}</span>
-			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
+			<img src="{{item.Bid.Purchaser.Image | URI}}">
+			<span>{{item.Bid.PurchaserNickName}}</span>
+			<a class="item-note" x-ng-click="showChat(item,item.Customer,item.Purchaser,false);"><i class="chatbox ion-chatbox-working"></i></a>
 		</div>
 		<div class="item">
 			<span class="label"> 开始时间 </span><span class="item-value">{{current.Extends.PurchasingStartDatetime}}</span>
