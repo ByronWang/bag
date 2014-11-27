@@ -1078,8 +1078,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				};
 
 				flowStepOut(Statuses.purchasing, Actions.bitSucceed, params, function(resp) {
-					load();
-					$scope.gotoPay();
+					load(function(){
+						$scope.gotoPay();						
+					});
+					
 				});
 			}
 		});
@@ -1661,15 +1663,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.ok = function(country) {
 		$scope.$parent.changeCountry(country);
-		$scope.$parent.closeModal();
-	};
-
-	$scope.cancel = function() {
-		$scope.$parent.closeModal();
-	};
-}).controller('SelectCtrl', function($scope, $state) {
-	$scope.ok = function(item) {
-		$scope.$parent.ret(item);
 		$scope.$parent.closeModal();
 	};
 
