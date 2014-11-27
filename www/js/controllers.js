@@ -730,13 +730,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.showDeliveryMethods = function() {
 		$scope.datalist = DeliveryMethod.query();
 
-		Popup.show($scope, 'templates/modal-select.html');
-
-		$scope.ret = function(item) {
+		Popup.show($scope, 'templates/modal-select.html',function(item) {
 			$scope.suitor.DeliveryMethodID = item.ID;
 			$scope.suitor.DeliveryMethodName = item.Name;
-		};
-
+		});
 	};
 
 	$scope.editDescription = function() {
@@ -760,6 +757,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.submit = function() {
+		if(!$scope.suitor.DeliveryCost){
+			$scope.suitor.DeliveryCost = 0;
+		}
 		var bid = new OrderBiding($scope.suitor);
 		bid.$save(function() {
 			$scope.loadBid();

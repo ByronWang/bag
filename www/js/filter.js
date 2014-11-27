@@ -28,4 +28,20 @@ angular.module('starter.filter', []).filter('URI', function(Host) {
 	return function(value) {
 		return value + '%';
 	};
+}).filter('currency', function() {
+	return function(value) {
+		if(value && value!=""){
+			return value + "";
+		}else{
+			return "0";
+		}
+	};
+}).filter('amount', function() {
+	return function(value) {
+		if(value && value!=""){
+			return value + "";
+		}else{
+			return "0";
+		}
+	};
 });
