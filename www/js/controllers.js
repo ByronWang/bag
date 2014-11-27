@@ -463,12 +463,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.popupCountries = function() {
 		$scope.datalist = Countries.query();
-		Popup.show($scope, 'templates/modal-select.html');
-
-		$scope.ret = function(item) {
+		Popup.show($scope, 'templates/modal-select.html',function(item) {
 			$scope.product.CountryID = item.ID;
 			$scope.product.CountryName = item.Name;
-		};
+		});
 	};
 
 	$scope.editDescription = function() {
@@ -1682,12 +1680,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.req = {};
 	$scope.popupCountries = function() {
 		$scope.datalist = Countries.query();
-		Popup.show($scope, 'templates/modal-select.html');
-
-		$scope.ret = function(item) {
+		Popup.show($scope, 'templates/modal-select.html',function(item) {
 			$scope.req.Country = item.ID;
 			$scope.req.CountryName = item.Name;
-		};
+		});
 	};
 
 	$scope.ok = function() {
