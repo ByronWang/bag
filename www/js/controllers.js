@@ -259,7 +259,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		return false;
 	};
-}).controller('CartCtrl', function($scope, Popup, Exts,$ionicListDelegate) {
+}).controller('CartCtrl', function($scope, Popup, Exts, $ionicListDelegate) {
 
 	$scope.next = function() {
 		var items = [];
@@ -286,12 +286,12 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		var scope = $scope.$new();
 		Popup.show(scope, 'templates/modal-new-product.html');
 	};
-	
+
 	$scope.editProduct = function(item) {
 		var scope = $scope.$new();
 		scope.item = item;
 		scope.product = item.Product;
-		Popup.show(scope, 'templates/modal-new-product.html',function(){
+		Popup.show(scope, 'templates/modal-new-product.html', function() {
 			$ionicListDelegate.closeOptionButtons();
 		});
 	};
@@ -393,7 +393,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.isNew = true;
 		$scope.categoryInEdit = true;
 		$scope.item = {
-				Quantity : 1
+			Quantity : 1
 		};
 	}
 	$scope.categories = Category.level1();
@@ -556,7 +556,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			template : '确定提交订单吗?'
 		});
 		confirmPopup.then(function(res) {
-			doSubmit();
+			if (res) {
+				doSubmit();
+			}
 		});
 	};
 	var doSubmit = function() {
@@ -826,7 +828,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.moreDataCanBeLoaded = function() {
 		return $scope.hasmore;
 	};
-}).controller('OrdersPurchaserCtrl', function($scope, PurchaserOrdes,OrderBiding, Popup) {
+}).controller('OrdersPurchaserCtrl', function($scope, PurchaserOrdes, OrderBiding, Popup) {
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
@@ -846,16 +848,16 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			pagesize : $scope.pagesize
 		}, function() {
 			var id = $scope.currentUser.ID;
-			angular.forEach(ordersList,function(o){
+			angular.forEach(ordersList, function(o) {
 				var items = o.Items;
-				for(var i=items.length-1;i>=0;i--){
+				for ( var i = items.length - 1; i >= 0; i--) {
 					var item = items[i];
-					if(item.PurchaserID != id){
-						items.splice(i,1);
+					if (item.PurchaserID != id) {
+						items.splice(i, 1);
 					}
 				}
 			});
-			
+
 			$scope.data.orders = $scope.data.orders.concat(ordersList);
 			if (ordersList.length < $scope.pagesize) {
 				$scope.hasmore = false;
@@ -880,12 +882,12 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			pagesize : $scope.pagesize
 		}, function() {
 			var id = $scope.currentUser.ID;
-			angular.forEach(ordersList,function(o){
+			angular.forEach(ordersList, function(o) {
 				var items = o.Items;
-				for(var i=items.length-1;i>=0;i--){
+				for ( var i = items.length - 1; i >= 0; i--) {
 					var item = items[i];
-					if(item.PurchaserID != id){
-						items.splice(i,1);
+					if (item.PurchaserID != id) {
+						items.splice(i, 1);
 					}
 				}
 			});
@@ -965,32 +967,32 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				$scope.current = $scope.flows[0];
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 				var maxStatusID = $scope.flows[0].StatusID;
-				if(!maxStatusID){
+				if (!maxStatusID) {
 					maxStatusID = 1;
 				}
-				
+
 				angular.forEach($scope.flows.reverse(), function(f) {
 					var statusID = f.StatusID;
-					if(!statusID){
+					if (!statusID) {
 						statusID = 1;
 					}
-					if(statusID<maxStatusID){
-						$scope.statuses[statusID].ActionID =f.ActionID;
-						$scope.statuses[statusID].class = "done";					
-					}else if(statusID==4){
-						$scope.statuses[statusID].ActionID =f.ActionID;
-						$scope.statuses[statusID].class = "done";					
-					}else if(statusID==maxStatusID){
-						$scope.statuses[statusID].ActionID =f.ActionID;
-						$scope.statuses[statusID].class = "doing";						
+					if (statusID < maxStatusID) {
+						$scope.statuses[statusID].ActionID = f.ActionID;
+						$scope.statuses[statusID].class = "done";
+					} else if (statusID == 4) {
+						$scope.statuses[statusID].ActionID = f.ActionID;
+						$scope.statuses[statusID].class = "done";
+					} else if (statusID == maxStatusID) {
+						$scope.statuses[statusID].ActionID = f.ActionID;
+						$scope.statuses[statusID].class = "doing";
 					}
 				});
-				
-				if($scope.item.StatusID == 5 || $scope.item.StatusID == 6){
+
+				if ($scope.item.StatusID == 5 || $scope.item.StatusID == 6) {
 					$scope.statuses[maxStatusID].class = "cancel";
-					
+
 				}
-			
+
 			} else {
 				$scope.current = {
 					StatusID : 1,
@@ -1001,8 +1003,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			}
 		});
 	};
-
-
 
 	var flowStepOut = function(status, action, params, succeed) {
 		var step = {};
@@ -1059,29 +1059,31 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			template : '确认选中此买家吗?'
 		});
 		confirmPopup.then(function(res) {
-			var params = {
-				Bid : {
-					"ID" : suitor.ID,
-					"OrderItemID" : suitor.OrderItemID,
-					"PurchaserID" : suitor.PurchaserID,
-					"PurchaserName" : suitor.PurchaserName,
-					"PurchaserNickName" : suitor.PurchaserNickName,
-					"PurchaserImage" : suitor.PurchaserImage,
-					"ProductAmount" : suitor.ProductAmount,
-					"ProductCommissionAmount" : suitor.ProductCommissionAmount,
-					"Amount" : suitor.Amount,
-					"Commission" : suitor.Commission,
-					"SuggestedPrice" : suitor.SuggestedPrice,
-					"DeliveryCost" : suitor.DeliveryCost,
-					"DeliveryMethodID" : suitor.DeliveryMethodID,
-					"DeliveryMethodName" : suitor.DeliveryMethodName
-				}
-			};
+			if (res) {
+				var params = {
+					Bid : {
+						"ID" : suitor.ID,
+						"OrderItemID" : suitor.OrderItemID,
+						"PurchaserID" : suitor.PurchaserID,
+						"PurchaserName" : suitor.PurchaserName,
+						"PurchaserNickName" : suitor.PurchaserNickName,
+						"PurchaserImage" : suitor.PurchaserImage,
+						"ProductAmount" : suitor.ProductAmount,
+						"ProductCommissionAmount" : suitor.ProductCommissionAmount,
+						"Amount" : suitor.Amount,
+						"Commission" : suitor.Commission,
+						"SuggestedPrice" : suitor.SuggestedPrice,
+						"DeliveryCost" : suitor.DeliveryCost,
+						"DeliveryMethodID" : suitor.DeliveryMethodID,
+						"DeliveryMethodName" : suitor.DeliveryMethodName
+					}
+				};
 
-			flowStepOut(Statuses.purchasing, Actions.bitSucceed, params, function(resp) {
-				load();
-				$scope.gotoPay();
-			});
+				flowStepOut(Statuses.purchasing, Actions.bitSucceed, params, function(resp) {
+					load();
+					$scope.gotoPay();
+				});
+			}
 		});
 
 	};
@@ -1102,7 +1104,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			template : '确认取消订单吗?'
 		});
 		confirmPopup.then(function(res) {
-			flowStepOut($scope.current.StatusID, Actions.cancelOrder);
+			if (res) {
+				flowStepOut($scope.current.StatusID, Actions.cancelOrder);
+			}
 		});
 	};
 
@@ -1114,7 +1118,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			template : '确定要确认收货吗？一旦确认收货，将支付保证金给买手。'
 		});
 		confirmPopup.then(function(res) {
-			flowStepOut(Statuses.completed, Actions.delivered);
+			if (res) {
+				flowStepOut(Statuses.completed, Actions.delivered);
+			}
 		});
 	};
 
@@ -1176,32 +1182,32 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				$scope.current = $scope.flows[0];
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 				var maxStatusID = $scope.flows[0].StatusID;
-				if(!maxStatusID){
+				if (!maxStatusID) {
 					maxStatusID = 1;
 				}
-				
+
 				angular.forEach($scope.flows.reverse(), function(f) {
 					var statusID = f.StatusID;
-					if(!statusID){
+					if (!statusID) {
 						statusID = 1;
 					}
-					if(statusID<maxStatusID){
-						$scope.statuses[statusID].ActionID =f.ActionID;
-						$scope.statuses[statusID].class = "done";					
-					}else if(statusID==4){
-						$scope.statuses[statusID].ActionID =f.ActionID;
-						$scope.statuses[statusID].class = "done";					
-					}else if(statusID==maxStatusID){
-						$scope.statuses[statusID].ActionID =f.ActionID;
-						$scope.statuses[statusID].class = "doing";						
+					if (statusID < maxStatusID) {
+						$scope.statuses[statusID].ActionID = f.ActionID;
+						$scope.statuses[statusID].class = "done";
+					} else if (statusID == 4) {
+						$scope.statuses[statusID].ActionID = f.ActionID;
+						$scope.statuses[statusID].class = "done";
+					} else if (statusID == maxStatusID) {
+						$scope.statuses[statusID].ActionID = f.ActionID;
+						$scope.statuses[statusID].class = "doing";
 					}
 				});
-				
-				if($scope.item.StatusID == 5 || $scope.item.StatusID == 6){
+
+				if ($scope.item.StatusID == 5 || $scope.item.StatusID == 6) {
 					$scope.statuses[maxStatusID].class = "cancel";
-					
+
 				}
-			
+
 			} else {
 				$scope.current = {
 					StatusID : 1,
@@ -1212,8 +1218,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			}
 		});
 	};
-
-
 
 	var flowStepOut = function(status, action, params, succeed) {
 		var step = {};
@@ -1241,11 +1245,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
-
 	$scope.loadBid = function() {
 		$scope.bids = OrderBiding.query({
 			OrderItem : $stateParams.itemId,
-			Purchaser: $scope.currentUser.ID
+			Purchaser : $scope.currentUser.ID
 		}, function() {
 		});
 	};
@@ -1272,7 +1275,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			template : '确定要放弃购买吗?'
 		});
 		confirmPopup.then(function(res) {
-			flowStepOut($scope.current.StatusID, Actions.cancelPurchasing);
+			if (res) {
+				flowStepOut($scope.current.StatusID, Actions.cancelPurchasing);
+			}
 		});
 	};
 
@@ -1743,7 +1748,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.toast = function() {
 		// https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin
 
-		// cordova plugin add https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
+		// cordova plugin add
+		// https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
 		// cordova prepare
 
 		window.plugins.toast.showShortCenter("这是一个警告！！！\n这是第二个警告！！！\n这是第三个警告！！！")
