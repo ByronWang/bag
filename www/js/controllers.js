@@ -38,7 +38,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 }).controller('LoginCtrl', function($scope, Users, Popup) {
-	$scope.users = Users.query();
 	$scope.user = {};
 	$scope.user.host = $scope.$parent.host;
 

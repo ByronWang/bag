@@ -6,8 +6,8 @@ angular.module('starter.services', []).factory('Host', function() {
 		host = "http://" + host + ":8686";
 		pc = true;
 	} else {
-		// host = "192.168.12.100";
-		host = "192.168.0.101";
+//		host = "192.168.0.101";
+		 host = "192.168.12.101";
 		// host = "10.0.0.57";
 		host = "http://" + host + ":8686";
 		pc = false;
