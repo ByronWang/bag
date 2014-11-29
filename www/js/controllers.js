@@ -1040,7 +1040,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			return;
 		}
 
-		$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
+		$scope.statusActiveSlide=to;
+		
 		var ele = angular.element(e);
 		angular.forEach(ele.parent().parent().find("div"), function(i) {
 			var ie = angular.element(i);
@@ -1254,7 +1255,12 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.statusSlide = function(e, to) {
-		$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
+		if ($scope.statuses[to + 1].class == "disable") {
+			return;
+		}
+
+		$scope.statusActiveSlide=to;
+		
 		var ele = angular.element(e);
 		angular.forEach(ele.parent().parent().find("div"), function(i) {
 			var ie = angular.element(i);

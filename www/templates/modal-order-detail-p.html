@@ -161,27 +161,28 @@
 						</div>
 					</div>
 				</div>
-				<ion-slide-box delegate-handle="orderStatus" show-pager="false" active-slide="statusActiveSlide">
-					<ion-slide>
+
+				<div>
+					<div x-ng-show="statusActiveSlide==0">
 					&nbsp;
 						<ng-include src="'templates/order-bid-p-edit.html'" ng-if="current.StatusID==1"></ng-include>
 						<ng-include src="'templates/order-bid-p-info.html'" ng-if="current.StatusID!=1"></ng-include>
-					</ion-slide>
-					<ion-slide>
+					</div>
+					<div x-ng-show="statusActiveSlide==1">
 					&nbsp;
 						<ng-include src="'templates/order-purchase-p-edit.html'" ng-if="current.StatusID==2"></ng-include>
 						<ng-include src="'templates/order-purchase-p-info.html'" ng-if="current.StatusID!=2"></ng-include>
-					</ion-slide>
-					<ion-slide>
+					</div>
+					<div x-ng-show="statusActiveSlide==2">
 					&nbsp;
 						<ng-include src="'templates/order-delivering-p-edit.html'" ng-if="current.StatusID==3"></ng-include>
 						<ng-include src="'templates/order-delivering-p-info.html'" ng-if="current.StatusID!=3"></ng-include>
-					</ion-slide>
-					<ion-slide>
+					</div>
+					<div x-ng-show="statusActiveSlide==3">
 					&nbsp;
 						<ng-include src="'templates/order-completed-p-info.html'"></ng-include>
-					</ion-slide>
-				</ion-slide-box>
+					</div>
+					</div>
 			</div>
 		</div>
 	</ion-content>
