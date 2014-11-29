@@ -7,9 +7,9 @@
 		</div>
 		<div class="item item-avatar item-product-user">
 			<img src="{{item.Bid.Purchaser.Image | URI}}">
-			<span >{{item.Bid.PurchaserNickName}}</span>
-			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
-		</div>		
+			<span>{{item.Bid.PurchaserNickName}}</span>
+			<a class="item-note" x-ng-click="showChat(item,item.Customer,item.Purchaser,false);"><i class="chatbox ion-chatbox-working"></i></a>
+		</div>
 		<div class="item">
 			<button class="button button-assertive button-block" x-ng-click="cancelOrder();">取消订单</button>
 		</div>

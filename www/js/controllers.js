@@ -179,7 +179,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.category = Category.get($stateParams.CategoryLevel1);
 
 		$scope.data = {
@@ -199,7 +199,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			if (realList.length < $scope.pagesize) {
 				$scope.hasmore = false;
 			}
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 		});
 	};
 	load();
@@ -463,7 +463,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.popupCountries = function() {
 		$scope.datalist = Countries.query();
-		Popup.show($scope, 'templates/modal-select.html',function(item) {
+		Popup.show($scope, 'templates/modal-select.html', function(item) {
 			$scope.product.CountryID = item.ID;
 			$scope.product.CountryName = item.Name;
 		});
@@ -624,7 +624,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.countryName = "全部国家";
 
 		$scope.data = {
@@ -645,7 +645,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			if (realList.length < $scope.pagesize) {
 				$scope.hasmore = false;
 			}
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 		});
 	};
 
@@ -702,7 +702,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.triger1 = false;
 		$scope.item = Inventorys.get({
 			itemId : $scope.$parent.item.ID
@@ -719,7 +719,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				OrderItemID : $scope.item.ID
 			};
 			$scope.loadBid();
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 		});
 		$scope.step = 1;
 	};
@@ -728,7 +728,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.showDeliveryMethods = function() {
 		$scope.datalist = DeliveryMethod.query();
 
-		Popup.show($scope, 'templates/modal-select.html',function(item) {
+		Popup.show($scope, 'templates/modal-select.html', function(item) {
 			$scope.suitor.DeliveryMethodID = item.ID;
 			$scope.suitor.DeliveryMethodName = item.Name;
 		});
@@ -755,7 +755,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.submit = function() {
-		if(!$scope.suitor.DeliveryCost){
+		if (!$scope.suitor.DeliveryCost) {
 			$scope.suitor.DeliveryCost = 0;
 		}
 		var bid = new OrderBiding($scope.suitor);
@@ -779,7 +779,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.data = {
 			orders : []
 		};
@@ -796,7 +796,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			if (ordersList.length < $scope.pagesize) {
 				$scope.hasmore = false;
 			}
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 		});
 	};
 	load();
@@ -832,7 +832,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.data = {
 			orders : []
 		};
@@ -860,7 +860,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			if (ordersList.length < $scope.pagesize) {
 				$scope.hasmore = false;
 			}
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 		});
 	};
 	load();
@@ -927,7 +927,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.Actions = Actions;
 		$scope.Statuses = Statuses;
 
@@ -948,7 +948,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.statusActiveSlide = 0;
 
 		$scope.item = OrderItems.get($stateParams, function() {
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 			loadFlow();
 			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 			$scope.item.Product.Extends = undefined;
@@ -1040,8 +1040,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			return;
 		}
 
-		$scope.statusActiveSlide=to;
-		
+		$scope.statusActiveSlide = to;
+
 		var ele = angular.element(e);
 		angular.forEach(ele.parent().parent().find("div"), function(i) {
 			var ie = angular.element(i);
@@ -1079,10 +1079,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				};
 
 				flowStepOut(Statuses.purchasing, Actions.bitSucceed, params, function(resp) {
-					load(function(){
-						$scope.gotoPay();						
+					load(function() {
+						$scope.gotoPay();
 					});
-					
+
 				});
 			}
 		});
@@ -1134,7 +1134,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		Popup.show(scope, 'templates/modal-chat.html');
 	};
 
-}).controller('OrderPurchaserDetailCtrl', function($scope, $q, OrderItems, $ionicPopup, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
+}).controller('OrderPurchaserDetailCtrl', function($scope, $q, Popup, OrderItems, $ionicPopup, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
 
 	var $stateParams = {
 		itemId : $scope.$parent.item.ID
@@ -1145,7 +1145,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.Actions = Actions;
 		$scope.Statuses = Statuses;
 
@@ -1166,7 +1166,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.statusActiveSlide = 0;
 
 		$scope.item = OrderItems.get($stateParams, function() {
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 			loadFlow();
 			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 			$scope.item.Product.Extends = undefined;
@@ -1259,8 +1259,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			return;
 		}
 
-		$scope.statusActiveSlide=to;
-		
+		$scope.statusActiveSlide = to;
+
 		var ele = angular.element(e);
 		angular.forEach(ele.parent().parent().find("div"), function(i) {
 			var ie = angular.element(i);
@@ -1428,13 +1428,24 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
-}).controller('ChatCtrl', function($scope, $ionicScrollDelegate, Users, $timeout) {
+	$scope.showChat = function(item, customerID, purchaserID, iampurchaser) {
+		var scope = $scope.$new();
+		scope.item = item;
+		scope.customerID = customerID;
+		scope.purchaserID = purchaserID;
+		scope.iampurchaser = iampurchaser;
+		Popup.show(scope, 'templates/modal-chat.html');
+	};
+
+}).controller('ChatCtrl', function($scope, $ionicScrollDelegate, Users, ChatMessages, $timeout) {
+	var chatsScrollDelegate = $ionicScrollDelegate.$getByHandle('chats');
+
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 
 		$scope.item = $scope.$parent.item;
 		$scope.customerID = $scope.$parent.customerID;
@@ -1454,33 +1465,41 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 		$scope.me = $scope.currentUser;
 
-		var chatsCtrl = $ionicScrollDelegate.$getByHandle('chats');
-
-		$scope.chats = [];
-
-		$timeout(function() {
-
-			chatsCtrl.scrollBottom();
-			if (funSucceed) funSucceed();
-		}, 100);
+		var chats = ChatMessages.query({
+			OrderItem : $scope.item.ID,
+			Customer:$scope.customerID,
+			Purchaser:$scope.purchaserID
+		}, function() {
+			chatsScrollDelegate.scrollBottom();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
+			$scope.chats = chats.reverse();
+		});
 	};
 	load();
 
 	$scope.say = function(event) {
 		var newchat = {
-			OrderItem : $scope.item.ID,
+			OrderItemID : $scope.item.ID,
 			UserID : $scope.currentUser.ID,
 			CustomerID : $scope.customerID,
 			PurchaserID : $scope.purchaserID,
 			Message : $scope.message,
 			loading : true
 		};
+/*
+ 	Datetime;
+	Customer User;
+	Purchaser User;
+	User; 
+ */
+		var msg = new ChatMessages(newchat);
+		msg.$save(function() {
+			$scope.chats.push(newchat);
+			$scope.message = "";
+			chatsScrollDelegate.scrollBottom();
+			angular.element(event.target).parent().find("input")[0].focus();
+		});
 
-		$scope.chats.push(newchat);
-		$scope.message = "";
-		$ionicScrollDelegate.scrollTop();
-		chatsCtrl.scrollBottom();
-		angular.element(event.target).parent().find("input")[0].focus();
 	};
 }).controller('TextCtrl', function($scope) {
 	$scope.data = {};
@@ -1679,7 +1698,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.req = {};
 	$scope.popupCountries = function() {
 		$scope.datalist = Countries.query();
-		Popup.show($scope, 'templates/modal-select.html',function(item) {
+		Popup.show($scope, 'templates/modal-select.html', function(item) {
 			$scope.req.Country = item.ID;
 			$scope.req.CountryName = item.Name;
 		});
