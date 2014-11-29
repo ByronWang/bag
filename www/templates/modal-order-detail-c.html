@@ -109,7 +109,42 @@
 				</div>
 			</div>
 
-			<div class="item">
+            <!-- 买手信息 -->
+            <div class="list action data" x-ng-show="current.StatusID>1">
+                <div class="item item-avatar item-product-user">
+                    <img src="{{item.Bid.Purchaser.Image | URI}}">
+                    <span>{{item.Bid.PurchaserNickName}}</span>
+                    <a class="item-note" x-ng-click="showChat(item,item.Customer,item.Purchaser,false);"><i class="chatbox ion-chatbox-working"></i></a>
+                </div>
+                <div class="item message assertive message-strong">
+                    <i class="ion-card"></i>
+                    <span>定金：{{item.Bid.Amount}} 元</span>
+                </div>
+                <div class="item">
+                    <span class="label"> 代购佣金 </span><span class="item-value">{{item.Bid.Commission | percent}}</span>
+                </div>
+                <div class="item">
+                    <span class="label"> 邮寄方式 </span><span class="item-value">{{item.Bid.DeliveryMethodName}}</span>
+                </div>
+                <div class="item">
+                    <span class="label"> 代购期限 </span><span class="item-value">{{item.Bid.Deadline}}</span>
+                </div>
+                <div class="item">
+                    <span class="label"> 建议价格 </span>
+                    <span class="item-value strength"><b>{{item.Bid.SuggestedPrice}}</b> 元</span><span class="comment" x-bg-price-hint="item.Bid.SuggestedPrice" x-price-from="item.Product.ExpectedPrice"></span>
+                </div>
+                <div class="item">
+                    <span class="label"> 运费 </span><span class="item-value">{{item.Bid.DeliveryCost}} 元</span>
+                </div>
+                <div class="item comment item-icon-right" x-ng-show="current.Bid.Comment">
+                    <span class="label"> 备注 </span>
+                    <a class="trigger"  data-ng-click="showDescription=!showDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
+                    <span class="item-value" data-ng-hide="showDescription">{{item.Bid.Comment}}</span>
+                </div>
+            </div>
+
+
+            <div class="item">
 				<div class="row">
 					<div class="prog col {{statuses[1].class}}"
 					x-ng-click="statusSlide($event,0)">

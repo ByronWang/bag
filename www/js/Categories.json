@@ -207,7 +207,7 @@
 {"ID":206,"Name":"烟酒","Level":1,"ParentID":0,"Icon":"icon-jiu"},
 {"ID":207,"Name":"烟","Level":2,"ParentID":206},
 {"ID":208,"Name":"酒","Level":2,"ParentID":206},
-{"ID":209,"Name":"其他物品","Level":1,"ParentID":0,"Icon":"icon-gengduo"},
+{"ID":209,"Name":"其它物品","Level":1,"ParentID":0,"Icon":"icon-gengduo"},
 {"ID":210,"Name":"艺术品、收藏品","Level":2,"ParentID":209},
 {"ID":211,"Name":"邮票","Level":2,"ParentID":209},
 {"ID":212,"Name":"其它","Level":2,"ParentID":209}
