@@ -12,7 +12,7 @@ angular.module('starter.services', []).factory('Host', function() {
 		host = "http://" + host + ":8686";
 		pc = false;
 	}
-//	 host = "http://www.gouwudai.net.cn:8686";
+	 host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
 		pc : pc,
@@ -200,7 +200,7 @@ angular.module('starter.services', []).factory('Host', function() {
 				options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
 				options.mimeType = "multipart/form-data";
 				options.chunkedMode = false;
-				ft = new FileTransfer();
+				var ft = new FileTransfer();
 				var uploadUrl = encodeURI(Host.host + "/f/uploads/");
 				ft.upload(imageURI, uploadUrl, function(result) {
 					q.resolve(result);

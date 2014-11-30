@@ -390,6 +390,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.categoryInEdit = false;
 	} else {
 		$scope.product = {};
+		$scope.product.Image = "img/mcfly.jpg";
 		$scope.isNew = true;
 		$scope.categoryInEdit = true;
 		$scope.item = {
@@ -434,7 +435,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		}
 	};
 
-	$scope.product.Image = "img/mcfly.jpg";
 
 	$scope.getPhoto = function(sourceType) {
 		$scope.product.ImagePromise = Camera.getPicture({
@@ -569,30 +569,33 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		var promiseArray = [];
 		angular.forEach($scope.order.Items, function(newitem) {
-			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
-			newitem.Product.Exts = undefined;
+			var ni = newitem;
+			ni.Product.Extends = Exts.encode(ni.Product.Exts);
+			ni.Product.Exts = undefined;
 
-			newitem.StatusID = Statuses.bid.ID;
-			newitem.StatusName = Statuses.bid.Name;
+			ni.StatusID = Statuses.bid.ID;
+			ni.StatusName = Statuses.bid.Name;
 
-			newitem.ActionID = Actions.sendout.ID;
-			newitem.ActionName = Actions.sendout.Name;
+			ni.ActionID = Actions.sendout.ID;
+			ni.ActionName = Actions.sendout.Name;
 
-			newitem.CustomerID = $scope.currentUser.ID;
-			newitem.CustomerName = $scope.currentUser.Name;
-			newitem.CustomerNickName = $scope.currentUser.NickName;
-			newitem.CustomerImage = $scope.currentUser.Image;
+			ni.CustomerID = $scope.currentUser.ID;
+			ni.CustomerName = $scope.currentUser.Name;
+			ni.CustomerNickName = $scope.currentUser.NickName;
+			ni.CustomerImage = $scope.currentUser.Image;
 
-			newitem.CountryID = newitem.Product.CountryID;
-			newitem.CountryName = newitem.Product.CountryName;
+			ni.CountryID = ni.Product.CountryID;
+			ni.CountryName = ni.Product.CountryName;
 
-			newitem.Datetime = $scope.order.Datetime;
+			ni.Datetime = $scope.order.Datetime;
 
-			newitem.Address = $scope.order.Address;
-			if (newitem.Product.ImagePromise) {
-				var p = Camera.upload(newitem.Product.Image);
+			ni.Address = $scope.order.Address;
+			if (ni.Product.ImagePromise) {
+				
+				var _product = ni.Product;
+				var p = Camera.upload(_product.Image);
 				p = p.then(function(result) {
-					newitem.Product.Image = result.response;
+					_product.Image = result.response;
 				});
 				promiseArray.push(p);
 			}
