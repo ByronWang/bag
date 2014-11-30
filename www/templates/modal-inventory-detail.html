@@ -67,7 +67,15 @@
 						</div>
 					</div>
 				</div>
-				<div class="item" style="padding: 0;">
+				
+				<div class="item" style="padding: 0;" x-ng-show="item.CustomerID==currentUser.ID">
+					<div class="item message message-strong energized" style="border-bottom: 0;">
+						<i class="ion-ios7-information-outline"></i><span>这是你的订单！</span>
+					</div>
+					</div>
+					
+					
+				<div class="item" style="padding: 0;" x-ng-hide="item.CustomerID==currentUser.ID">
 					<div class="item message message-strong energized" style="border-bottom: 0;">
 						<i class="ion-ios7-information-outline"></i><span>请填写您的代购信息</span>
 					</div>
@@ -95,7 +103,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="padding">
+			<div class="padding"  x-ng-hide="item.CustomerID==currentUser.ID">>
 				<button class="button button-block  button-positive" x-ng-click="submit()">确认</button>
 			</div>
 		</pane>
@@ -166,7 +174,7 @@
 					</div>
 				</div>
 
-				<div class="item">
+				<div class="item"  x-ng-hide="item.CustomerID==currentUser.ID">>
 					<div  class="list data">
 						<div class="item message message-strong energized">
 							<i class="ion-ios7-information-outline"></i><span>您已经参与竞标</span>

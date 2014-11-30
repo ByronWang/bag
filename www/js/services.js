@@ -289,6 +289,7 @@ angular.module('starter.services', []).factory('Host', function() {
 					if (funcSucceed) {
 						funcSucceed(user);
 					}
+					$scope.modal.hide();
 				};
 			} else {
 				if (funcSucceed) {

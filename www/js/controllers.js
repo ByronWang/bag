@@ -47,7 +47,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.$parent.setHost($scope.user.host);
 		$scope.currentUser.login($scope.user.Name, $scope.user.Password, function(user) {
 			if (user) {
-				$scope.$parent.closeModal(user);
+				$scope.$parent.ret(user);
 			}
 		});
 	};
@@ -550,7 +550,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.submit = function() {
 		var confirmPopup = $ionicPopup.confirm({
 			title : '确认',
-			cancelText : '放弃',
+			cancelText : '取消',
 			okText : '确定',
 			template : '确定提交订单吗?'
 		});
@@ -1063,7 +1063,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.bitSucceed = function(suitor) {
 		var confirmPopup = $ionicPopup.confirm({
 			title : '确认',
-			cancelText : '放弃',
+			cancelText : '取消',
 			okText : '确定',
 			template : '确认选中此买家吗?'
 		});
@@ -1108,23 +1108,37 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.cancelOrder = function() {
-		var confirmPopup = $ionicPopup.confirm({
-			title : '确认',
-			cancelText : '放弃',
-			okText : '确定',
-			template : '确认取消订单吗?'
-		});
-		confirmPopup.then(function(res) {
-			if (res) {
-				flowStepOut($scope.current.StatusID, Actions.cancelOrder);
-			}
-		});
+		if($scope.current.StatusID>1){
+			var confirmPopup = $ionicPopup.confirm({
+				title : '确认',
+				cancelText : '取消',
+				okText : '确定',
+				template : '当前取消订单将扣除一定比例的佣金给买手，仍然确认取消订单吗?'
+			});
+			confirmPopup.then(function(res) {
+				if (res) {
+					flowStepOut($scope.current.StatusID, Actions.cancelOrder);
+				}
+			});
+		}else{
+			var confirmPopup = $ionicPopup.confirm({
+				title : '确认',
+				cancelText : '取消',
+				okText : '确定',
+				template : '确认取消订单吗?'
+			});
+			confirmPopup.then(function(res) {
+				if (res) {
+					flowStepOut($scope.current.StatusID, Actions.cancelOrder);
+				}
+			});
+		}
 	};
 
 	$scope.confirmDelivering = function() {
 		var confirmPopup = $ionicPopup.confirm({
 			title : '确认',
-			cancelText : '放弃',
+			cancelText : '取消',
 			okText : '确定',
 			template : '确定要确认收货吗？一旦确认收货，将支付保证金给买手。'
 		});
@@ -1286,7 +1300,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.cancelPurchasing = function() {
 		var confirmPopup = $ionicPopup.confirm({
 			title : '确认',
-			cancelText : '放弃',
+			cancelText : '取消',
 			okText : '确定',
 			template : '确定要放弃购买吗?'
 		});
