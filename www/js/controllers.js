@@ -40,7 +40,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 }).controller('LoginCtrl', function($scope, Users, Popup) {
 	$scope.user = {};
 	$scope.user.host = $scope.$parent.host;
-
+	$scope.users = Users.query();
 	// for test
 	$scope.user.Name = "wangshilian";
 	$scope.login = function() {
@@ -385,6 +385,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 }).controller('NewProductCtrl', function($scope, $ionicActionSheet, Popup, $timeout, Products, Camera, Orders, Countries, Category, Exts) {
 	if ($scope.$parent.product) {
 		$scope.product = $scope.$parent.product;
+		$scope.product.ExpectedPrice = $scope.product.Price;
 		$scope.item = $scope.$parent.item;
 		$scope.categoryInEdit = false;
 	} else {
@@ -480,6 +481,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		// $scope.product.Extends =
 		// Exts.encode($scope.product.Exts);
 		// $scope.product.Exts = undefined;
+		$scope.product.Price = $scope.product.ExpectedPrice;
 		if ($scope.isNew) {
 			$scope.item.Product = $scope.product;
 			$scope.cart.add($scope.item);
@@ -616,7 +618,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	};
 
-}).controller('InventorysCtrl', function($scope, Popup, Inventorys) {
+}).controller('InventorysCtrl', function($scope, Popup, Inventorys,Countries) {
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
@@ -635,9 +637,15 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		var params = {
 			Action : 1,
+			Status : 1,
 			page : $scope.page,
 			pagesize : $scope.pagesize
 		};
+		
+		if($scope.countryID){
+			params.	Country = $scope.countryID;
+		}
+		
 		var realList = undefined;
 		realList = Inventorys.query(params, function() {
 			$scope.data.inventorys = $scope.data.inventorys.concat(realList);
@@ -650,16 +658,14 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	load();
 
+
 	$scope.filter = function() {
-		Popup.show($scope, 'templates/modal-filter.html');
-		$scope.changeCountry = function(country) {
-			$scope.inventorys = Inventorys.query({
-				Status : 1,
-				Country : country.ID
-			}, function() {
-				$scope.countryName = country.Name;
-			});
-		};
+		$scope.countries = Countries.query();
+		Popup.show($scope, 'templates/modal-filter.html', function(country) {
+			$scope.countryID = country.ID;
+			$scope.countryName = country.Name;
+			load();
+		});
 	};
 
 	$scope.showDetail = function(item) {
@@ -694,6 +700,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 	$scope.moreDataCanBeLoaded = function() {
 		return $scope.hasmore;
+	};
+	
+
+	$scope.becomePurchaser = function() {
+		Popup.show($scope, 'templates/modal-become-purchaser.html');
 	};
 }).controller('InventoryDetailCtrl', function($scope, $state, Category, Exts, OrderBiding, $timeout, $state, Popup, DeliveryMethod, Inventorys) {
 	$scope.doRefresh = function() {
@@ -1682,17 +1693,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 }).controller('AccountAboutCtrl', function($scope, $state) {
 
-}).controller('FilterCtrl', function($scope, $state, Countries) {
-	$scope.countries = Countries.query();
-
-	$scope.ok = function(country) {
-		$scope.$parent.changeCountry(country);
-		$scope.$parent.closeModal();
-	};
-
-	$scope.cancel = function() {
-		$scope.$parent.closeModal();
-	};
 }).controller('SearchCtrl', function($scope, $state, Countries, Popup) {
 	$scope.req = {};
 	$scope.popupCountries = function() {

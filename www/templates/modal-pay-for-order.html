@@ -40,9 +40,6 @@
 			<div class="item">
 				运费<span style="float: right">{{bid.DeliveryCost | currency}} 元</span>
 			</div>
-			<div class="item item item-divider" style="background-color: #ffffff;">
-				总计<span class="assertive" style="float: right">{{bid.Amount}} 元</span>
-			</div>
 		</div>
 
 		<pane data-ng-controller="PaymentCtrl">
@@ -77,7 +74,7 @@
 						<span class="label">订单号</span><span class="item-value">{{payment.TradeNo}}</span>
 					</div>
 					<div class="item">
-						<span class="label">金额</span><span class="item-value">{{payment.Amount}}</span>
+						<span class="label">金额</span><span class="item-value">{{payment.Amount}}元</span>
 					</div>
 					<div class="item">
 						<span class="label">用途</span><span class="item-value">{{payment.Description}}</span>
