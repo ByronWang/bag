@@ -1112,26 +1112,37 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.cancelOrder = function() {
 		if($scope.current.StatusID>1){
-			var confirmPopup = $ionicPopup.confirm({
+			var confirmPopup = $ionicPopup.prompt({
 				title : '确认',
 				cancelText : '取消',
 				okText : '确定',
+				  inputPlaceholder:"请输入放弃原因",
 				template : '当前取消订单将扣除一定比例的佣金给买手，仍然确认取消订单吗?'
 			});
-			confirmPopup.then(function(res) {
-				if (res) {
-					flowStepOut($scope.current.StatusID, Actions.cancelOrder);
+			
+			confirmPopup.then(function(reason) {
+				if (reason) {
+					if(!$scope.current.Extends){
+						$scope.current.Extends = {};
+					}
+					$scope.current.Extends.CancelOrderComment = reason;
+					flowStepOut($scope.current.StatusID, Actions.cancelOrder,params);
 				}
 			});
 		}else{
-			var confirmPopup = $ionicPopup.confirm({
+			var confirmPopup = $ionicPopup.prompt({
 				title : '确认',
 				cancelText : '取消',
 				okText : '确定',
+				  inputPlaceholder:"请输入放弃原因",
 				template : '确认取消订单吗?'
 			});
-			confirmPopup.then(function(res) {
-				if (res) {
+			confirmPopup.then(function(reason) {				
+				if (reason) {
+					if(!$scope.current.Extends){
+						$scope.current.Extends = {};
+					}
+					$scope.current.Extends.CancelOrderComment = reason;
 					flowStepOut($scope.current.StatusID, Actions.cancelOrder);
 				}
 			});
@@ -1301,17 +1312,22 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.cancelPurchasing = function() {
-		var confirmPopup = $ionicPopup.confirm({
+		var confirmPopup = $ionicPopup.prompt({
 			title : '确认',
 			cancelText : '取消',
 			okText : '确定',
+			  inputPlaceholder:"请输入放弃原因",
 			template : '确定要放弃购买吗?'
 		});
-		confirmPopup.then(function(res) {
-			if (res) {
+		confirmPopup.then(function(reason) {				
+			if (reason) {
+				if(!$scope.current.Extends){
+					$scope.current.Extends = {};
+				}
+				$scope.current.Extends.CancelPurchasingComment = reason;
 				flowStepOut($scope.current.StatusID, Actions.cancelPurchasing);
 			}
-		});
+		});		
 	};
 
 	$scope.finishPurchasing = function() {
