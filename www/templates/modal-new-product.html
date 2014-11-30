@@ -85,9 +85,10 @@
 				<div class="list list-inset">
 					<a class="item item-input item-icon-right" x-ng-click="popupCountries();" x-ng-show="isNew"> <span class="input-label">代购国家</span> <span>{{product.CountryName}}</span> <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 					<a class="item item-input item-icon-right" x-ng-hide="isNew"> <span class="input-label">代购国家</span> <span>{{product.CountryName}}</span> </a>
-					<label class="item item-input">
+					<label class="item item-input item-input-note">
 						<span class="input-label">预想价格</span>
 						<input type="number" x-ng-model="product.ExpectedPrice" required>
+							<span class="item-note"> 元</span>
 					</label>
 					<label class="item item-input">
 						<span class="input-label">代购件数</span>

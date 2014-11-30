@@ -6,7 +6,6 @@
 		<div class="item item-avatar item-product-user">
 			<img src="{{item.Bid.Purchaser.Image | URI}}">
 			<span>{{item.Bid.PurchaserNickName}}</span>
-			<a class="item-note" x-ng-click="showChat(item,item.Customer,item.Purchaser,false);"><i class="chatbox ion-chatbox-working"></i></a>
 		</div>
 		<div class="item">
 			<span class="label"> 开始时间 </span><span class="item-value">{{current.Extends.PurchasingStartDatetime}}</span>
@@ -21,10 +20,10 @@
 			<span class="label"> 结束时间 </span><span class="item-value">{{current.Extends.PurchasingEndDatetime}}</span>
 		</div>
 		<div class="item">
-			<span class="label"> 结束地点 </span><span class="item-value">美国 纽约</span>
+			<span class="label"> 结束地点 </span><span class="item-value">--</span>
 		</div>
-		<div class="item message font-note">
-			<i class="ion-ios7-timer-outline"></i><span>购买时长：20天15小时</span>
+		<div class="message font-note">
+			<i class="ion-ios7-timer-outline"></i><span>购买时长：{{current.Extends.PurchasingDuration}}</span>
 		</div>
 	</div>
 	<div class="item message" style="font-weight: bold;">

@@ -7,9 +7,9 @@
 		</div>
 		<div class="item item-avatar item-product-user">
 			<img src="{{item.Bid.Purchaser.Image | URI}}">
-			<span >{{item.Bid.PurchaserNickName}}</span>
-			<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
-		</div>		
+			<span>{{item.Bid.PurchaserNickName}}</span>
+			<a class="item-note" x-ng-click="showChat(item,item.Customer,item.Purchaser,false);"><i class="chatbox ion-chatbox-working"></i></a>
+		</div>
 		<div class="item">
 			<button class="button button-assertive button-block" x-ng-click="cancelOrder();">取消订单</button>
 		</div>
@@ -26,7 +26,7 @@
 			<a class="item-note" x-ng-click="showChat(item,item.Customer,item.Purchaser,false);"><i class="chatbox ion-chatbox-working"></i></a>
 		</div>
 		<div class="item">
-			<span class="label">预计</span><span class="item-value">{{current.Extends.EstimateArriveDatetime}}天后到达</span>
+			<span class="label">预计</span><span class="item-value">{{current.Extends.EstimateArriveDate}}到达</span>
 		</div>
 		<div class="item item-input">
 			<span class="label">邮寄方式</span><span class="item-value">{{item.Bid.DeliveryMethodName}}</span>

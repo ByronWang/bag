@@ -38,17 +38,16 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 }).controller('LoginCtrl', function($scope, Users, Popup) {
-	$scope.users = Users.query();
 	$scope.user = {};
 	$scope.user.host = $scope.$parent.host;
-
+	$scope.users = Users.query();
 	// for test
 	$scope.user.Name = "wangshilian";
 	$scope.login = function() {
 		$scope.$parent.setHost($scope.user.host);
 		$scope.currentUser.login($scope.user.Name, $scope.user.Password, function(user) {
 			if (user) {
-				$scope.$parent.closeModal(user);
+				$scope.$parent.ret(user);
 			}
 		});
 	};
@@ -179,7 +178,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.category = Category.get($stateParams.CategoryLevel1);
 
 		$scope.data = {
@@ -199,7 +198,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			if (realList.length < $scope.pagesize) {
 				$scope.hasmore = false;
 			}
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 		});
 	};
 	load();
@@ -386,10 +385,12 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 }).controller('NewProductCtrl', function($scope, $ionicActionSheet, Popup, $timeout, Products, Camera, Orders, Countries, Category, Exts) {
 	if ($scope.$parent.product) {
 		$scope.product = $scope.$parent.product;
+		$scope.product.ExpectedPrice = $scope.product.Price;
 		$scope.item = $scope.$parent.item;
 		$scope.categoryInEdit = false;
 	} else {
 		$scope.product = {};
+		$scope.product.Image = "img/mcfly.jpg";
 		$scope.isNew = true;
 		$scope.categoryInEdit = true;
 		$scope.item = {
@@ -434,7 +435,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		}
 	};
 
-	$scope.product.Image = "img/mcfly.jpg";
 
 	$scope.getPhoto = function(sourceType) {
 		$scope.product.ImagePromise = Camera.getPicture({
@@ -463,7 +463,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.popupCountries = function() {
 		$scope.datalist = Countries.query();
-		Popup.show($scope, 'templates/modal-select.html',function(item) {
+		Popup.show($scope, 'templates/modal-select.html', function(item) {
 			$scope.product.CountryID = item.ID;
 			$scope.product.CountryName = item.Name;
 		});
@@ -481,6 +481,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		// $scope.product.Extends =
 		// Exts.encode($scope.product.Exts);
 		// $scope.product.Exts = undefined;
+		$scope.product.Price = $scope.product.ExpectedPrice;
 		if ($scope.isNew) {
 			$scope.item.Product = $scope.product;
 			$scope.cart.add($scope.item);
@@ -549,7 +550,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.submit = function() {
 		var confirmPopup = $ionicPopup.confirm({
 			title : '确认',
-			cancelText : '放弃',
+			cancelText : '取消',
 			okText : '确定',
 			template : '确定提交订单吗?'
 		});
@@ -568,30 +569,33 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		var promiseArray = [];
 		angular.forEach($scope.order.Items, function(newitem) {
-			newitem.Product.Extends = Exts.encode(newitem.Product.Exts);
-			newitem.Product.Exts = undefined;
+			var ni = newitem;
+			ni.Product.Extends = Exts.encode(ni.Product.Exts);
+			ni.Product.Exts = undefined;
 
-			newitem.StatusID = Statuses.bid.ID;
-			newitem.StatusName = Statuses.bid.Name;
+			ni.StatusID = Statuses.bid.ID;
+			ni.StatusName = Statuses.bid.Name;
 
-			newitem.ActionID = Actions.sendout.ID;
-			newitem.ActionName = Actions.sendout.Name;
+			ni.ActionID = Actions.sendout.ID;
+			ni.ActionName = Actions.sendout.Name;
 
-			newitem.CustomerID = $scope.currentUser.ID;
-			newitem.CustomerName = $scope.currentUser.Name;
-			newitem.CustomerNickName = $scope.currentUser.NickName;
-			newitem.CustomerImage = $scope.currentUser.Image;
+			ni.CustomerID = $scope.currentUser.ID;
+			ni.CustomerName = $scope.currentUser.Name;
+			ni.CustomerNickName = $scope.currentUser.NickName;
+			ni.CustomerImage = $scope.currentUser.Image;
 
-			newitem.CountryID = newitem.Product.CountryID;
-			newitem.CountryName = newitem.Product.CountryName;
+			ni.CountryID = ni.Product.CountryID;
+			ni.CountryName = ni.Product.CountryName;
 
-			newitem.Datetime = $scope.order.Datetime;
+			ni.Datetime = $scope.order.Datetime;
 
-			newitem.Address = $scope.order.Address;
-			if (newitem.Product.ImagePromise) {
-				var p = Camera.upload(newitem.Product.Image);
+			ni.Address = $scope.order.Address;
+			if (ni.Product.ImagePromise) {
+				
+				var _product = ni.Product;
+				var p = Camera.upload(_product.Image);
 				p = p.then(function(result) {
-					newitem.Product.Image = result.response;
+					_product.Image = result.response;
 				});
 				promiseArray.push(p);
 			}
@@ -617,14 +621,14 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	};
 
-}).controller('InventorysCtrl', function($scope, Popup, Inventorys) {
+}).controller('InventorysCtrl', function($scope, Popup, Inventorys,Countries) {
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
 
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.countryName = "全部国家";
 
 		$scope.data = {
@@ -636,31 +640,35 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		var params = {
 			Action : 1,
+			Status : 1,
 			page : $scope.page,
 			pagesize : $scope.pagesize
 		};
+		
+		if($scope.countryID){
+			params.	Country = $scope.countryID;
+		}
+		
 		var realList = undefined;
 		realList = Inventorys.query(params, function() {
 			$scope.data.inventorys = $scope.data.inventorys.concat(realList);
 			if (realList.length < $scope.pagesize) {
 				$scope.hasmore = false;
 			}
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 		});
 	};
 
 	load();
 
+
 	$scope.filter = function() {
-		Popup.show($scope, 'templates/modal-filter.html');
-		$scope.changeCountry = function(country) {
-			$scope.inventorys = Inventorys.query({
-				Status : 1,
-				Country : country.ID
-			}, function() {
-				$scope.countryName = country.Name;
-			});
-		};
+		$scope.countries = Countries.query();
+		Popup.show($scope, 'templates/modal-filter.html', function(country) {
+			$scope.countryID = country.ID;
+			$scope.countryName = country.Name;
+			load();
+		});
 	};
 
 	$scope.showDetail = function(item) {
@@ -696,13 +704,18 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.moreDataCanBeLoaded = function() {
 		return $scope.hasmore;
 	};
+	
+
+	$scope.becomePurchaser = function() {
+		Popup.show($scope, 'templates/modal-become-purchaser.html');
+	};
 }).controller('InventoryDetailCtrl', function($scope, $state, Category, Exts, OrderBiding, $timeout, $state, Popup, DeliveryMethod, Inventorys) {
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.triger1 = false;
 		$scope.item = Inventorys.get({
 			itemId : $scope.$parent.item.ID
@@ -719,7 +732,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				OrderItemID : $scope.item.ID
 			};
 			$scope.loadBid();
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 		});
 		$scope.step = 1;
 	};
@@ -728,7 +741,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.showDeliveryMethods = function() {
 		$scope.datalist = DeliveryMethod.query();
 
-		Popup.show($scope, 'templates/modal-select.html',function(item) {
+		Popup.show($scope, 'templates/modal-select.html', function(item) {
 			$scope.suitor.DeliveryMethodID = item.ID;
 			$scope.suitor.DeliveryMethodName = item.Name;
 		});
@@ -755,7 +768,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.submit = function() {
-		if(!$scope.suitor.DeliveryCost){
+		if (!$scope.suitor.DeliveryCost) {
 			$scope.suitor.DeliveryCost = 0;
 		}
 		var bid = new OrderBiding($scope.suitor);
@@ -779,7 +792,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.data = {
 			orders : []
 		};
@@ -796,7 +809,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			if (ordersList.length < $scope.pagesize) {
 				$scope.hasmore = false;
 			}
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 		});
 	};
 	load();
@@ -832,7 +845,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.data = {
 			orders : []
 		};
@@ -860,7 +873,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			if (ordersList.length < $scope.pagesize) {
 				$scope.hasmore = false;
 			}
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 		});
 	};
 	load();
@@ -927,7 +940,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.Actions = Actions;
 		$scope.Statuses = Statuses;
 
@@ -948,7 +961,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.statusActiveSlide = 0;
 
 		$scope.item = OrderItems.get($stateParams, function() {
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 			loadFlow();
 			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 			$scope.item.Product.Extends = undefined;
@@ -1040,7 +1053,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			return;
 		}
 
-		$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
+		$scope.statusActiveSlide = to;
+
 		var ele = angular.element(e);
 		angular.forEach(ele.parent().parent().find("div"), function(i) {
 			var ie = angular.element(i);
@@ -1052,7 +1066,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.bitSucceed = function(suitor) {
 		var confirmPopup = $ionicPopup.confirm({
 			title : '确认',
-			cancelText : '放弃',
+			cancelText : '取消',
 			okText : '确定',
 			template : '确认选中此买家吗?'
 		});
@@ -1078,10 +1092,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				};
 
 				flowStepOut(Statuses.purchasing, Actions.bitSucceed, params, function(resp) {
-					load(function(){
-						$scope.gotoPay();						
+					load(function() {
+						$scope.gotoPay();
 					});
-					
+
 				});
 			}
 		});
@@ -1097,23 +1111,48 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.cancelOrder = function() {
-		var confirmPopup = $ionicPopup.confirm({
-			title : '确认',
-			cancelText : '放弃',
-			okText : '确定',
-			template : '确认取消订单吗?'
-		});
-		confirmPopup.then(function(res) {
-			if (res) {
-				flowStepOut($scope.current.StatusID, Actions.cancelOrder);
-			}
-		});
+		if($scope.current.StatusID>1){
+			var confirmPopup = $ionicPopup.prompt({
+				title : '确认',
+				cancelText : '取消',
+				okText : '确定',
+				  inputPlaceholder:"请输入放弃原因",
+				template : '当前取消订单将扣除一定比例的佣金给买手，仍然确认取消订单吗?'
+			});
+			
+			confirmPopup.then(function(reason) {
+				if (reason) {
+					if(!$scope.current.Extends){
+						$scope.current.Extends = {};
+					}
+					$scope.current.Extends.CancelOrderComment = reason;
+					flowStepOut($scope.current.StatusID, Actions.cancelOrder,params);
+				}
+			});
+		}else{
+			var confirmPopup = $ionicPopup.prompt({
+				title : '确认',
+				cancelText : '取消',
+				okText : '确定',
+				  inputPlaceholder:"请输入放弃原因",
+				template : '确认取消订单吗?'
+			});
+			confirmPopup.then(function(reason) {				
+				if (reason) {
+					if(!$scope.current.Extends){
+						$scope.current.Extends = {};
+					}
+					$scope.current.Extends.CancelOrderComment = reason;
+					flowStepOut($scope.current.StatusID, Actions.cancelOrder);
+				}
+			});
+		}
 	};
 
 	$scope.confirmDelivering = function() {
 		var confirmPopup = $ionicPopup.confirm({
 			title : '确认',
-			cancelText : '放弃',
+			cancelText : '取消',
 			okText : '确定',
 			template : '确定要确认收货吗？一旦确认收货，将支付保证金给买手。'
 		});
@@ -1133,7 +1172,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		Popup.show(scope, 'templates/modal-chat.html');
 	};
 
-}).controller('OrderPurchaserDetailCtrl', function($scope, $q, OrderItems, $ionicPopup, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
+}).controller('OrderPurchaserDetailCtrl', function($scope, $q, Popup, OrderItems, $ionicPopup, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
 
 	var $stateParams = {
 		itemId : $scope.$parent.item.ID
@@ -1144,7 +1183,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 		$scope.Actions = Actions;
 		$scope.Statuses = Statuses;
 
@@ -1165,7 +1204,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.statusActiveSlide = 0;
 
 		$scope.item = OrderItems.get($stateParams, function() {
-			if (funSucceed) funSucceed();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 			loadFlow();
 			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 			$scope.item.Product.Extends = undefined;
@@ -1254,7 +1293,12 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.statusSlide = function(e, to) {
-		$ionicSlideBoxDelegate.$getByHandle("orderStatus").slide(to);
+		if ($scope.statuses[to + 1].class == "disable") {
+			return;
+		}
+
+		$scope.statusActiveSlide = to;
+
 		var ele = angular.element(e);
 		angular.forEach(ele.parent().parent().find("div"), function(i) {
 			var ie = angular.element(i);
@@ -1268,17 +1312,22 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.cancelPurchasing = function() {
-		var confirmPopup = $ionicPopup.confirm({
+		var confirmPopup = $ionicPopup.prompt({
 			title : '确认',
-			cancelText : '放弃',
+			cancelText : '取消',
 			okText : '确定',
+			  inputPlaceholder:"请输入放弃原因",
 			template : '确定要放弃购买吗?'
 		});
-		confirmPopup.then(function(res) {
-			if (res) {
+		confirmPopup.then(function(reason) {				
+			if (reason) {
+				if(!$scope.current.Extends){
+					$scope.current.Extends = {};
+				}
+				$scope.current.Extends.CancelPurchasingComment = reason;
 				flowStepOut($scope.current.StatusID, Actions.cancelPurchasing);
 			}
-		});
+		});		
 	};
 
 	$scope.finishPurchasing = function() {
@@ -1422,13 +1471,24 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
-}).controller('ChatCtrl', function($scope, $ionicScrollDelegate, Users, $timeout) {
+	$scope.showChat = function(item, customerID, purchaserID, iampurchaser) {
+		var scope = $scope.$new();
+		scope.item = item;
+		scope.customerID = customerID;
+		scope.purchaserID = purchaserID;
+		scope.iampurchaser = iampurchaser;
+		Popup.show(scope, 'templates/modal-chat.html');
+	};
+
+}).controller('ChatCtrl', function($scope, $ionicScrollDelegate, Users, ChatMessages, $timeout) {
+	var chatsScrollDelegate = $ionicScrollDelegate.$getByHandle('chats');
+
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
-	var load = function(funSucceed) {
+	var load = function(funcPageLoadSucceed) {
 
 		$scope.item = $scope.$parent.item;
 		$scope.customerID = $scope.$parent.customerID;
@@ -1448,33 +1508,41 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 		$scope.me = $scope.currentUser;
 
-		var chatsCtrl = $ionicScrollDelegate.$getByHandle('chats');
-
-		$scope.chats = [];
-
-		$timeout(function() {
-
-			chatsCtrl.scrollBottom();
-			if (funSucceed) funSucceed();
-		}, 100);
+		var chats = ChatMessages.query({
+			OrderItem : $scope.item.ID,
+			Customer:$scope.customerID,
+			Purchaser:$scope.purchaserID
+		}, function() {
+			chatsScrollDelegate.scrollBottom();
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
+			$scope.chats = chats.reverse();
+		});
 	};
 	load();
 
 	$scope.say = function(event) {
 		var newchat = {
-			OrderItem : $scope.item.ID,
+			OrderItemID : $scope.item.ID,
 			UserID : $scope.currentUser.ID,
 			CustomerID : $scope.customerID,
 			PurchaserID : $scope.purchaserID,
 			Message : $scope.message,
 			loading : true
 		};
+/*
+ 	Datetime;
+	Customer User;
+	Purchaser User;
+	User; 
+ */
+		var msg = new ChatMessages(newchat);
+		msg.$save(function() {
+			$scope.chats.push(newchat);
+			$scope.message = "";
+			chatsScrollDelegate.scrollBottom();
+			angular.element(event.target).parent().find("input")[0].focus();
+		});
 
-		$scope.chats.push(newchat);
-		$scope.message = "";
-		$ionicScrollDelegate.scrollTop();
-		chatsCtrl.scrollBottom();
-		angular.element(event.target).parent().find("input")[0].focus();
 	};
 }).controller('TextCtrl', function($scope) {
 	$scope.data = {};
@@ -1662,22 +1730,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 }).controller('AccountAboutCtrl', function($scope, $state) {
 
-}).controller('FilterCtrl', function($scope, $state, Countries) {
-	$scope.countries = Countries.query();
-
-	$scope.ok = function(country) {
-		$scope.$parent.changeCountry(country);
-		$scope.$parent.closeModal();
-	};
-
-	$scope.cancel = function() {
-		$scope.$parent.closeModal();
-	};
 }).controller('SearchCtrl', function($scope, $state, Countries, Popup) {
 	$scope.req = {};
 	$scope.popupCountries = function() {
 		$scope.datalist = Countries.query();
-		Popup.show($scope, 'templates/modal-select.html',function(item) {
+		Popup.show($scope, 'templates/modal-select.html', function(item) {
 			$scope.req.Country = item.ID;
 			$scope.req.CountryName = item.Name;
 		});
