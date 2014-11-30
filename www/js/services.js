@@ -9,10 +9,11 @@ angular.module('starter.services', []).factory('Host', function() {
 //		host = "192.168.0.101";
 		 host = "192.168.12.101";
 		// host = "10.0.0.57";
+		 host = "172.20.10.2"
 		host = "http://" + host + ":8686";
 		pc = false;
 	}
-	 host = "http://www.gouwudai.net.cn:8686";
+//	 host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
 		pc : pc,
@@ -212,6 +213,54 @@ angular.module('starter.services', []).factory('Host', function() {
 			return q.promise;
 		}
 	};
+}]).factory('Geolocation', [ '$q', 'Host', function($q, Host) {
+
+	return {
+		getGeolocation : function(options) {
+			var q = $q.defer();
+
+			/*
+			if (!navigator.geolocation) {
+				var position = {};
+				position.coords = {
+						latitude: 100,
+						longitude: 100
+				};				
+				q.resolve(position);
+				return q.promise;
+			}
+			*/
+			navigator.geolocation.getCurrentPosition(function(result) {
+				// Do any magic you need
+				q.resolve(result);
+			}, function(err) {
+				q.reject(err);
+			}, options);
+
+			return q.promise;
+		},
+		getCountryRegion : function(position) {
+			var q = $q.defer();
+
+			if (Host.pc) {		
+				q.resolve(position);
+				return q.promise;
+			}
+			
+			var url = 'http://111.221.29.14/REST/v1/Locations/' + position.coords.latitude + ',' + position.coords.longitude + '?includeEntityTypes=Address&o=json&key=AlVuxcZtD7dY3Hb8ZFcOx_JSm0Vnqq1m82cx77HLguQ-7Em9e0Hul0pNfFLuPCwg&c=zh-Hans' + "&jsonp=JSON_CALLBACK";
+
+			$http.jsonp(url).success(function(result) {				
+				var resources = result.resourceSets[0].resources;
+				var region = resources[resources.length - 1];
+				q.resolve(region);
+			}, function(err) {
+				q.reject(err);
+			}, options);
+
+			return q.promise;
+		}
+	};
+	
 } ]).factory('Address', function($http) {
 	var provinces = [];
 	// Might use a resource here that returns a JSON array
