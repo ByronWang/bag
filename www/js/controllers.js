@@ -382,7 +382,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 		$scope.cart.save();
 	};
-}).controller('NewProductCtrl', function($scope, $ionicActionSheet, Popup, $timeout, Products, Camera, Orders, Countries, Category, Exts) {
+}).controller('NewProductCtrl', function($scope, $ionicActionSheet, $ionicScrollDelegate, Popup, $timeout, Products, Camera, Orders, Countries, Category, Exts) {
+	var productScrollDelegate = $ionicScrollDelegate.$getByHandle('product');
+
 	if ($scope.$parent.product) {
 		$scope.product = $scope.$parent.product;
 		$scope.product.ExpectedPrice = $scope.product.Price;
@@ -418,6 +420,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.anchers.push(cat);
 		var cs = Category.children(cat.ID);
 		if (cs.length > 0) {
+			productScrollDelegate.scrollTop();
 			$scope.categories = cs;
 			$scope.product.CategoryDesc = $scope.desc();
 
@@ -426,6 +429,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				$scope.product.CategoryLevel1Name = cat.Name;
 			}
 		} else {
+			productScrollDelegate.scrollTop();
 			$scope.categoryInEdit = false;
 			if (!$scope.product.CategoryID) {
 				$scope.product.CategoryID = cat.ID;
@@ -434,7 +438,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.product.CategoryDesc = $scope.desc();
 		}
 	};
-
 
 	$scope.getPhoto = function(sourceType) {
 		$scope.product.ImagePromise = Camera.getPicture({
@@ -591,7 +594,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 			ni.Address = $scope.order.Address;
 			if (ni.Product.ImagePromise) {
-				
+
 				var _product = ni.Product;
 				var p = Camera.upload(_product.Image);
 				p = p.then(function(result) {
@@ -621,7 +624,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	};
 
-}).controller('InventorysCtrl', function($scope, Popup, Inventorys,Countries) {
+}).controller('InventorysCtrl', function($scope, Popup, Inventorys, Countries) {
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
@@ -644,11 +647,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			page : $scope.page,
 			pagesize : $scope.pagesize
 		};
-		
-		if($scope.countryID){
-			params.	Country = $scope.countryID;
+
+		if ($scope.countryID) {
+			params.Country = $scope.countryID;
 		}
-		
+
 		var realList = undefined;
 		realList = Inventorys.query(params, function() {
 			$scope.data.inventorys = $scope.data.inventorys.concat(realList);
@@ -660,7 +663,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	load();
-
 
 	$scope.filter = function() {
 		$scope.countries = Countries.query();
@@ -704,7 +706,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.moreDataCanBeLoaded = function() {
 		return $scope.hasmore;
 	};
-	
 
 	$scope.becomePurchaser = function() {
 		Popup.show($scope, 'templates/modal-become-purchaser.html');
@@ -1111,35 +1112,35 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.cancelOrder = function() {
-		if($scope.current.StatusID>1){
+		if ($scope.current.StatusID > 1) {
 			var confirmPopup = $ionicPopup.prompt({
 				title : '确认',
 				cancelText : '取消',
 				okText : '确定',
-				  inputPlaceholder:"请输入放弃原因",
+				inputPlaceholder : "请输入放弃原因",
 				template : '当前取消订单将扣除一定比例的佣金给买手，仍然确认取消订单吗?'
 			});
-			
+
 			confirmPopup.then(function(reason) {
 				if (reason) {
-					if(!$scope.current.Extends){
+					if (!$scope.current.Extends) {
 						$scope.current.Extends = {};
 					}
 					$scope.current.Extends.CancelOrderComment = reason;
-					flowStepOut($scope.current.StatusID, Actions.cancelOrder,params);
+					flowStepOut($scope.current.StatusID, Actions.cancelOrder, params);
 				}
 			});
-		}else{
+		} else {
 			var confirmPopup = $ionicPopup.prompt({
 				title : '确认',
 				cancelText : '取消',
 				okText : '确定',
-				  inputPlaceholder:"请输入放弃原因",
+				inputPlaceholder : "请输入放弃原因",
 				template : '确认取消订单吗?'
 			});
-			confirmPopup.then(function(reason) {				
+			confirmPopup.then(function(reason) {
 				if (reason) {
-					if(!$scope.current.Extends){
+					if (!$scope.current.Extends) {
 						$scope.current.Extends = {};
 					}
 					$scope.current.Extends.CancelOrderComment = reason;
@@ -1172,7 +1173,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		Popup.show(scope, 'templates/modal-chat.html');
 	};
 
-}).controller('OrderPurchaserDetailCtrl', function($scope, $q, Popup, OrderItems, $ionicPopup, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
+}).controller('OrderPurchaserDetailCtrl', function($scope, $q, Popup, OrderItems, $ionicPopup, Geolocation, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
 
 	var $stateParams = {
 		itemId : $scope.$parent.item.ID
@@ -1316,55 +1317,73 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			title : '确认',
 			cancelText : '取消',
 			okText : '确定',
-			  inputPlaceholder:"请输入放弃原因",
+			inputPlaceholder : "请输入放弃原因",
 			template : '确定要放弃购买吗?'
 		});
-		confirmPopup.then(function(reason) {				
+		confirmPopup.then(function(reason) {
 			if (reason) {
-				if(!$scope.current.Extends){
+				if (!$scope.current.Extends) {
 					$scope.current.Extends = {};
 				}
 				$scope.current.Extends.CancelPurchasingComment = reason;
 				flowStepOut($scope.current.StatusID, Actions.cancelPurchasing);
 			}
-		});		
+		});
 	};
 
 	$scope.finishPurchasing = function() {
-		var promiseArray = [];
-		if ($scope.current.Extends.ProductActualImageList) {
-			angular.forEach($scope.current.Extends.ProductActualImageList, function(im) {
-				promiseArray.push(im.uploadPromise);
-			});
-		}
-
-		if ($scope.current.Extends.InvoiceImageList) {
-			angular.forEach($scope.current.Extends.InvoiceImageList, function(im) {
-				promiseArray.push(im.uploadPromise);
-			});
-		}
-
-		if (promiseArray.length > 0) {
-			$q.all(promiseArray).then(function(results) {
-				var imagesProduct = [];
+		var confirmPopup = $ionicPopup.confirm({
+			title : '确认',
+			cancelText : '取消',
+			okText : '确定',
+			template : '你当前输入的实际价格为' +$scope.current.Extends.ActualPrice + '元，该值一旦输入不可修改，确定要完成购买吗?'
+		});
+		confirmPopup.then(function(res) {
+			if (res) {
+				var promiseArray = [];
 				if ($scope.current.Extends.ProductActualImageList) {
 					angular.forEach($scope.current.Extends.ProductActualImageList, function(im) {
-						imagesProduct.push(im.uri);
+						promiseArray.push(im.uploadPromise);
 					});
 				}
-				var imagesInvoice = [];
+
 				if ($scope.current.Extends.InvoiceImageList) {
 					angular.forEach($scope.current.Extends.InvoiceImageList, function(im) {
-						imagesInvoice.push(im.uri);
+						promiseArray.push(im.uploadPromise);
 					});
 				}
-				$scope.current.Extends.ProductActualImage = imagesProduct;
-				$scope.current.Extends.InvoiceImage = imagesInvoice;
-				flowStepOut(Statuses.delivering, Actions.purchased);
-			});
-		} else {
-			flowStepOut(Statuses.delivering, Actions.purchased);
-		}
+
+				var promiseGeolocation = Geolocation.getGeolocation();
+				promiseGeolocation.then(function(position) {
+					$scope.current.Extends.PurchasingEndLatitude = position.coords.latitude;
+					$scope.current.Extends.PurchasingEndLongitude = position.coords.longitude;
+				});
+
+				promiseArray.push(promiseGeolocation);
+
+				if (promiseArray.length > 0) {
+					$q.all(promiseArray).then(function(results) {
+						var imagesProduct = [];
+						if ($scope.current.Extends.ProductActualImageList) {
+							angular.forEach($scope.current.Extends.ProductActualImageList, function(im) {
+								imagesProduct.push(im.uri);
+							});
+						}
+						var imagesInvoice = [];
+						if ($scope.current.Extends.InvoiceImageList) {
+							angular.forEach($scope.current.Extends.InvoiceImageList, function(im) {
+								imagesInvoice.push(im.uri);
+							});
+						}
+						$scope.current.Extends.ProductActualImage = imagesProduct;
+						$scope.current.Extends.InvoiceImage = imagesInvoice;
+						flowStepOut(Statuses.delivering, Actions.purchased);
+					});
+				} else {
+					flowStepOut(Statuses.delivering, Actions.purchased);
+				}
+			}
+		});
 	};
 
 	$scope.startDelivering = function() {
@@ -1510,8 +1529,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		var chats = ChatMessages.query({
 			OrderItem : $scope.item.ID,
-			Customer:$scope.customerID,
-			Purchaser:$scope.purchaserID
+			Customer : $scope.customerID,
+			Purchaser : $scope.purchaserID
 		}, function() {
 			chatsScrollDelegate.scrollBottom();
 			if (funcPageLoadSucceed) funcPageLoadSucceed();
@@ -1529,12 +1548,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			Message : $scope.message,
 			loading : true
 		};
-/*
- 	Datetime;
-	Customer User;
-	Purchaser User;
-	User; 
- */
+		/*
+		 * Datetime; Customer User; Purchaser User; User;
+		 */
 		var msg = new ChatMessages(newchat);
 		msg.$save(function() {
 			$scope.chats.push(newchat);

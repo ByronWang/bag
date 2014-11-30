@@ -96,25 +96,19 @@
 					<a class="trigger"  data-ng-click="showDescription=!showDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
 				</div>
 				<ion-item ng-repeat="item in country.Items" class="item-checkbox-thumbnail-left item-info item-outline" x-ng-hide="showDescription">
-					<img x-ng-src="{{item.Product.Image | URI}}">
-					<h2>{{item.Product.Name}}</h2>
-					<div class="list data" style="pointer-events: none;">
-						<div class="item">
+					<img x-ng-src="{{item.Product.Image | URI}}" ng-click="editProduct(item);">
+					<h2 ng-click="editProduct(item);">{{item.Product.Name}}</h2>
+					<div class="list data" x-ng-click="editProduct(item);">
+						<div class="item" >
 							<span class="label">单价</span><span class="item-value strength"><b>{{item.Product.Price}}</b>&nbsp;元</span>
 						</div>
-						<div class="item">
+						<div class="item" >
 							<span class="label">件数</span><span class="item-value">{{item.Quantity}}</span>
 						</div>
 					</div>
 					<label class="checkbox" style="position: absolute; top: 40px; left: 5px;">
 						<input type="checkbox" class="samll-checkbox" x-ng-model="item.checked"  x-ng-change="check($event,country,item);" />
 					</label>
-				    <ion-option-button class="button-info"
-				                       ng-click="editProduct(item);">
-						<div style="position: absolute; top: 30px;">
-							编辑
-						</div>
-				    </ion-option-button>
 					<ion-option-button class="button-info button-assertive" ng-click="country.Items.splice($index, 1)">
 						<div style="position: absolute; top: 30px;">
 							删除
