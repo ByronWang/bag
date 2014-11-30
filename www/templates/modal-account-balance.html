@@ -7,88 +7,96 @@
 	</ion-header-bar>
 	<ion-content class="has-header padding">
 
-		<div class="list" x-ng-show="paymentsFromPersonal.length>0">
-			<div class="item item-divide">
-				个人账号支付
-			</div>
-			<a class="item item-icon-right" x-ng-repeat="payment in paymentsFromPersonal"  x-ng-click="showDetail(payment);"> {{payment.FromAccountTypeName}}
-			{{payment.FromAccountTypeID}}
-			{{payment.ToAccountTypeName}}
-			{{payment.ToAccountTypeID}}
-			{{payment.FromUserID}}
-			{{payment.ToUserID}}
-			{{payment.Description}}
-			{{payment.Amount}}
+        <div class="list">
+            <a class="item item-icon-right" x-ng-repeat="payment in payments">
+                {{payment.PayTypeName}}
+                {{payment.Datetime}}
+                {{payment.Amount}} 元
+            </a>
+        </div>
 
-			{{payment.PayTypeName}}
-			{{payment.PayMethodName}}
-			{{payment.Datetime}}
-			{{payment.OrderNo}}
-			{{payment.TradeNo}}
-			{{payment.DeadlineDatetime}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
-		</div>
+		<!--<div class="list" x-ng-show="paymentsFromPersonal.length>0">-->
+			<!--<div class="item item-divide">-->
+				<!--个人账号支付-->
+			<!--</div>-->
+			<!--<a class="item item-icon-right" x-ng-repeat="payment in paymentsFromPersonal"  x-ng-click="showDetail(payment);"> {{payment.FromAccountTypeName}}-->
+			<!--{{payment.FromAccountTypeID}}-->
+			<!--{{payment.ToAccountTypeName}}-->
+			<!--{{payment.ToAccountTypeID}}-->
+			<!--{{payment.FromUserID}}-->
+			<!--{{payment.ToUserID}}-->
+			<!--{{payment.Description}}-->
+			<!--{{payment.Amount}}-->
 
-		<div class="list" x-ng-show="paymentsFromBank.length>0">
-			<div class="item item-divide">
-				银行支付
-			</div>
-			<a class="item item-icon-right" x-ng-repeat="payment in paymentsFromBank" x-ng-click="showDetail(payment);"> {{payment.FromAccountTypeName}}
-			{{payment.FromAccountTypeID}}
-			{{payment.ToAccountTypeName}}
-			{{payment.ToAccountTypeID}}
-			{{payment.FromUserID}}
-			{{payment.ToUserID}}
-			{{payment.Description}}
-			{{payment.Amount}}
+			<!--{{payment.PayTypeName}}-->
+			<!--{{payment.PayMethodName}}-->
+			<!--{{payment.Datetime}}-->
+			<!--{{payment.OrderNo}}-->
+			<!--{{payment.TradeNo}}-->
+			<!--{{payment.DeadlineDatetime}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>-->
+		<!--</div>-->
 
-			{{payment.PayTypeName}}
-			{{payment.PayMethodName}}
-			{{payment.Datetime}}
-			{{payment.OrderNo}}
-			{{payment.TradeNo}}
-			{{payment.DeadlineDatetime}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
-		</div>
+		<!--<div class="list" x-ng-show="paymentsFromBank.length>0">-->
+			<!--<div class="item item-divide">-->
+				<!--银行支付-->
+			<!--</div>-->
+			<!--<a class="item item-icon-right" x-ng-repeat="payment in paymentsFromBank" x-ng-click="showDetail(payment);"> {{payment.FromAccountTypeName}}-->
+			<!--{{payment.FromAccountTypeID}}-->
+			<!--{{payment.ToAccountTypeName}}-->
+			<!--{{payment.ToAccountTypeID}}-->
+			<!--{{payment.FromUserID}}-->
+			<!--{{payment.ToUserID}}-->
+			<!--{{payment.Description}}-->
+			<!--{{payment.Amount}}-->
 
-		<div class="list" x-ng-show="recieveToPersonal.length>0">
-			<div class="item item-divide">
-				个人账号收入
-			</div>
-			<a class="item item-icon-right" x-ng-repeat="payment in recieveToPersonal" x-ng-click="showDetail(payment);"> {{payment.FromAccountTypeName}}
-			{{payment.FromAccountTypeID}}
-			{{payment.ToAccountTypeName}}
-			{{payment.ToAccountTypeID}}
-			{{payment.FromUserID}}
-			{{payment.ToUserID}}
-			{{payment.Description}}
-			{{payment.Amount}}
+			<!--{{payment.PayTypeName}}-->
+			<!--{{payment.PayMethodName}}-->
+			<!--{{payment.Datetime}}-->
+			<!--{{payment.OrderNo}}-->
+			<!--{{payment.TradeNo}}-->
+			<!--{{payment.DeadlineDatetime}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>-->
+		<!--</div>-->
 
-			{{payment.PayTypeName}}
-			{{payment.PayMethodName}}
-			{{payment.Datetime}}
-			{{payment.OrderNo}}
-			{{payment.TradeNo}}
-			{{payment.DeadlineDatetime}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
-		</div>
+		<!--<div class="list" x-ng-show="recieveToPersonal.length>0">-->
+			<!--<div class="item item-divide">-->
+				<!--个人账号收入-->
+			<!--</div>-->
+			<!--<a class="item item-icon-right" x-ng-repeat="payment in recieveToPersonal" x-ng-click="showDetail(payment);"> {{payment.FromAccountTypeName}}-->
+			<!--{{payment.FromAccountTypeID}}-->
+			<!--{{payment.ToAccountTypeName}}-->
+			<!--{{payment.ToAccountTypeID}}-->
+			<!--{{payment.FromUserID}}-->
+			<!--{{payment.ToUserID}}-->
+			<!--{{payment.Description}}-->
+			<!--{{payment.Amount}}-->
 
-		<div class="list" x-ng-show="recieveToBank.length>0">
-			<div class="item item-divide">
-				银行帐号收入
-			</div>
-			<a class="item item-icon-right" x-ng-repeat="payment in recieveToBank" x-ng-click="showDetail(payment);"> {{payment.FromAccountTypeName}}
-			{{payment.FromAccountTypeID}}
-			{{payment.ToAccountTypeName}}
-			{{payment.ToAccountTypeID}}
-			{{payment.FromUserID}}
-			{{payment.ToUserID}}
-			{{payment.Description}}
-			{{payment.Amount}}
+			<!--{{payment.PayTypeName}}-->
+			<!--{{payment.PayMethodName}}-->
+			<!--{{payment.Datetime}}-->
+			<!--{{payment.OrderNo}}-->
+			<!--{{payment.TradeNo}}-->
+			<!--{{payment.DeadlineDatetime}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>-->
+		<!--</div>-->
 
-			{{payment.PayTypeName}}
-			{{payment.PayMethodName}}
-			{{payment.Datetime}}
-			{{payment.OrderNo}}
-			{{payment.TradeNo}}
-			{{payment.DeadlineDatetime}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
-		</div>
+		<!--<div class="list" x-ng-show="recieveToBank.length>0">-->
+			<!--<div class="item item-divide">-->
+				<!--银行帐号收入-->
+			<!--</div>-->
+			<!--<a class="item item-icon-right" x-ng-repeat="payment in recieveToBank" x-ng-click="showDetail(payment);"> {{payment.FromAccountTypeName}}-->
+			<!--{{payment.FromAccountTypeID}}-->
+			<!--{{payment.ToAccountTypeName}}-->
+			<!--{{payment.ToAccountTypeID}}-->
+			<!--{{payment.FromUserID}}-->
+			<!--{{payment.ToUserID}}-->
+			<!--{{payment.Description}}-->
+			<!--{{payment.Amount}}-->
+
+			<!--{{payment.PayTypeName}}-->
+			<!--{{payment.PayMethodName}}-->
+			<!--{{payment.Datetime}}-->
+			<!--{{payment.OrderNo}}-->
+			<!--{{payment.TradeNo}}-->
+			<!--{{payment.DeadlineDatetime}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>-->
+		<!--</div>-->
 	</ion-content>
 </ion-modal-view>

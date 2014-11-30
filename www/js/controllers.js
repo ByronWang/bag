@@ -1624,6 +1624,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 }).controller('AccountBalanceCtrl', function($scope, Payments, Popup) {
 	$scope.payments = [];// Payments.query();
 
+    $scope.payments = Payments.query({
+        FromUser : $scope.currentUser.ID
+    });
+
 	$scope.paymentsFromPersonal = Payments.query({
 		FromUser : $scope.currentUser.ID,
 		FromAccountType : 1
