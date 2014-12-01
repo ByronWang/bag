@@ -53,8 +53,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 	$scope.showSignup = function() {
 		Popup.show($scope, 'templates/modal-signup.html', function(user) {
-			$scope.users = Users.query(function() {
-				$scope.user.Name = user.Name;
+			$scope.currentUser.login(user.Name, user.Password, function(user) {
+				if (user) {
+					$scope.$parent.ret(user);
+				}
 			});
 		});
 	};
@@ -147,7 +149,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		} else {
 			var User = new Users($scope.user);
 			User.$save(function() {
-				$scope.$parent.closeModal($scope.user);
+				$scope.$parent.done($scope.user);
 			});
 		}
 	};

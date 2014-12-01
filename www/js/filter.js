@@ -28,10 +28,11 @@ angular.module('starter.filter', []).filter('URI', function(Host) {
 	return function(value) {
 		return value + '%';
 	};
+	
 }).filter('currency', function() {
 	return function(value) {
 		if(value && value!=""){
-			return value + "";
+			return Math.floor(value*100)/100;
 		}else{
 			return "0";
 		}

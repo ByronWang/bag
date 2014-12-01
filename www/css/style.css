@@ -395,6 +395,9 @@ img.main {
 	padding-left: 0;
 }
 
+
+
+
 .item-range-input {
 	padding-right: 10px;
 }
@@ -442,6 +445,35 @@ img.main {
     position: absolute;
     height: 100%;
     font-size: 16px;
+}
+
+
+.item-input-aid input {
+	-webkit-box-flex: 40;
+	-webkit-flex: 40 0 40px;
+	-moz-box-flex: 40;
+	-moz-flex: 40 0 40px;
+	-ms-flex: 40 0 40px;
+	flex: 40 0 40px;
+	padding-right: 0px;
+}
+
+.item-input-aid .seperator {
+	-webkit-box-flex: 10;
+	-webkit-flex: 10 0 10px;
+	-moz-box-flex: 10;
+	-moz-flex: 10 0 10px;
+	-ms-flex: 10 0 10px;
+	flex: 10 0 10px;
+}
+	
+.item-input-aid .item-aid {
+	-webkit-box-flex: 40;
+	-webkit-flex: 40 0 40px;
+	-moz-box-flex: 40;
+	-moz-flex: 40 0 40px;
+	-ms-flex: 40 0 40px;
+	flex: 40 0 40px;
 }
 
 input.ng-invalid.ng-dirty {

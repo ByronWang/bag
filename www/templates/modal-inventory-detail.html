@@ -85,9 +85,11 @@
 							<span class="item-note"> 元</span></label>
 						<label class="item item-input"><span class="input-label">代购期限</span>
 							<input type="date" x-ng-model="suitor.Deadline"></label>
-						<label class="item item-input item-input-note"><span class="input-label">代购佣金</span>
-							<input type="number" class="percent" x-ng-model="suitor.Commission">
-							<span class="item-note">%</span></label>
+						<label class="item item-input item-input-aid"><span class="input-label">代购佣金</span>
+							<input type="number" x-ng-model="suitor.Commission"  maxlength="2">
+							<span class="seperator text-center">%</span>
+							<span class="item-aid">{{ ( ( suitor.SuggestedPrice * suitor.Commission *item.Quantity )/100) | currency   }}</span>
+						</label>
 						<a class="item item-input item-icon-right"  x-ng-click="showDeliveryMethods();">
 							<span class="input-label">邮寄方式</span> <span class="item-note">{{suitor.DeliveryMethodName}}</span>
 							<i class="icon ion-ios7-arrow-forward item-note"></i> </a>
@@ -197,13 +199,14 @@
 						<div class="item item-input item-input-note">
 							<span class="label">合计金额</span><span class="item-value">{{suitor.Amount}} 元</span>
 						</div>
-						<div class="item item-input item-input-note">
-							<span class="label">备注</span><span class="item-value">{{suitor.Comment}}</span>
+						<div class="item comment item-icon-right">
+							<span class="label"> 备注 </span>
+							<a class="trigger"  data-ng-click="showDescription=!showDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
+							<span class="item-value" data-ng-hide="showDescription">{{suitor.Comment}}</span>
 						</div>
 					</div>
 				</div>
 			</div>
 		</pane>
-
 	</ion-content>
 	</ion-view>
