@@ -442,7 +442,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.getPhoto = function(sourceType) {
-		$scope.product.ImagePromise = Camera.getPicture({
+		var imagePromise = Camera.getPicture({
 			sourceType : sourceType,
 			correctOrientation : true,
 			quality : 50,
@@ -450,9 +450,16 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			targetHeight : 320,
 			saveToPhotoAlbum : false
 		});
-
-		$scope.product.ImagePromise.then(function(imageURI) {
+		//$scope.product.ImagePromise
+		imagePromise.then(function(imageURI) {
 			$scope.product.Image = imageURI;
+			
+			var _product = $scope.product;
+			$scope.product.ImageUploadPromise = Camera.upload(imageURI);
+			$scope.product.ImageUploadPromise.then(function(result) {
+				_product.Image = result.response;
+			});
+			
 		}, function(err) {
 			console.err(err);
 		});
@@ -486,6 +493,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		// $scope.product.Extends =
 		// Exts.encode($scope.product.Exts);
 		// $scope.product.Exts = undefined;
+		
 		$scope.product.Price = $scope.product.ExpectedPrice;
 		if ($scope.isNew) {
 			$scope.item.Product = $scope.product;
@@ -595,14 +603,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			ni.Datetime = $scope.order.Datetime;
 
 			ni.Address = $scope.order.Address;
-			if (ni.Product.ImagePromise) {
-
-				var _product = ni.Product;
-				var p = Camera.upload(_product.Image);
-				p = p.then(function(result) {
-					_product.Image = result.response;
-				});
-				promiseArray.push(p);
+			if (ni.Product.ImageUploadPromise) {
+				promiseArray.push(ni.Product.ImageUploadPromise);
 			}
 		});
 		$scope.order.CountryID = $scope.order.Items[0].CountryID;
