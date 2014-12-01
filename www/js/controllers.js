@@ -1353,13 +1353,16 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					});
 				}
 
-				var promiseGeolocation = Geolocation.getGeolocation();
-				promiseGeolocation.then(function(position) {
-					$scope.current.Extends.PurchasingEndLatitude = position.coords.latitude;
-					$scope.current.Extends.PurchasingEndLongitude = position.coords.longitude;
+				var promiseRegion = Geolocation.getRegion();
+				promiseRegion.then(function(region) {
+					$scope.current.Extends.PurchasingEndLatitude = region.coords.latitude;
+					$scope.current.Extends.PurchasingEndLongitude = region.coords.longitude;
+					$scope.current.Extends.PurchasingEndCountryRegion = region.address.countryRegion;
+					$scope.current.Extends.PurchasingEndAdminDistrict = region.address.adminDistrict;
+					$scope.current.Extends.PurchasingEndAdminDistrict2 = region.address.adminDistrict2;
 				});
 
-				promiseArray.push(promiseGeolocation);
+				promiseArray.push(promiseRegion);
 
 				if (promiseArray.length > 0) {
 					$q.all(promiseArray).then(function(results) {
