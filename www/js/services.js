@@ -13,7 +13,7 @@ angular.module('starter.services', []).factory('Host', function() {
 		host = "http://" + host + ":8686";
 		pc = false;
 	}
-	 host = "http://www.gouwudai.net.cn:8686";
+//	 host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
 		pc : pc,
@@ -213,50 +213,85 @@ angular.module('starter.services', []).factory('Host', function() {
 			return q.promise;
 		}
 	};
-}]).factory('Geolocation', [ '$q', 'Host', function($q, Host) {
+}]).factory('Geolocation', [ '$q', 'Host', '$http',function($q, Host,$http) {
 
 	return {
 		getGeolocation : function(options) {
 			var q = $q.defer();
 
-			/*
-			if (!navigator.geolocation) {
+			if (Host.pc) {
 				var position = {};
 				position.coords = {
-						latitude: 100,
-						longitude: 100
+						latitude: 31.21,
+						longitude: 121.52
 				};				
 				q.resolve(position);
 				return q.promise;
 			}
-			*/
+		
 			navigator.geolocation.getCurrentPosition(function(result) {
-				// Do any magic you need
 				q.resolve(result);
 			}, function(err) {
+				$ionicLoading.hide();
 				q.reject(err);
-			}, options);
+			});
 
 			return q.promise;
 		},
-		getCountryRegion : function(position) {
+//		getCountryRegion : function(position) {
+//			var q = $q.defer();
+//
+//			if (Host.pc) {		
+//				q.resolve(position);
+//				return q.promise;
+//			}
+//			
+//			var url = 'http://111.221.29.14/REST/v1/Locations/' + position.coords.latitude + ',' + position.coords.longitude + '?includeEntityTypes=Address&o=json&key=AlVuxcZtD7dY3Hb8ZFcOx_JSm0Vnqq1m82cx77HLguQ-7Em9e0Hul0pNfFLuPCwg&c=zh-Hans' + "&jsonp=JSON_CALLBACK";
+//		    $ionicLoading.show({template: '获取位置信息...'});
+//		    
+//			$http.jsonp(url).success(function(result) {				
+//				$ionicLoading.hide();
+//				var resources = result.resourceSets[0].resources;
+//				var region = resources[resources.length - 1];
+//				q.resolve(region);
+//			}, function(err) {
+//				q.reject(err);
+//			}, options);
+//
+//			return q.promise;
+//		},
+		getRegion : function() {
 			var q = $q.defer();
 
+			/*
 			if (Host.pc) {		
-				q.resolve(position);
+				var region = {};
+				region.coords = {
+						latitude: 102.1,
+						longitude:11.10
+				};
+				region.address = {
+						countryRegion: "中国",
+						adminDistrict:"上海",
+						adminDistrict2:"浦东"
+				};				
+				q.resolve(region);
 				return q.promise;
 			}
+			*/
 			
-			var url = 'http://111.221.29.14/REST/v1/Locations/' + position.coords.latitude + ',' + position.coords.longitude + '?includeEntityTypes=Address&o=json&key=AlVuxcZtD7dY3Hb8ZFcOx_JSm0Vnqq1m82cx77HLguQ-7Em9e0Hul0pNfFLuPCwg&c=zh-Hans' + "&jsonp=JSON_CALLBACK";
-
-			$http.jsonp(url).success(function(result) {				
-				var resources = result.resourceSets[0].resources;
-				var region = resources[resources.length - 1];
-				q.resolve(region);
-			}, function(err) {
-				q.reject(err);
-			}, options);
-
+			var qLocation = this.getGeolocation();
+			qLocation.then(function(position){
+				var url = 'http://111.221.29.14/REST/v1/Locations/' + position.coords.latitude + ',' + position.coords.longitude + '?includeEntityTypes=Address&o=json&key=AlVuxcZtD7dY3Hb8ZFcOx_JSm0Vnqq1m82cx77HLguQ-7Em9e0Hul0pNfFLuPCwg&c=zh-Hans' + "&jsonp=JSON_CALLBACK";
+				$http.jsonp(url).success(function(result) {		
+					var resources = result.resourceSets[0].resources;
+					var region = resources[resources.length - 1];
+					region.coords = position.coords;
+					q.resolve(region);
+				}, function(err) {
+					q.reject(err);
+				});
+			});
 			return q.promise;
 		}
 	};

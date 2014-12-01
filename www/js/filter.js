@@ -44,4 +44,20 @@ angular.module('starter.filter', []).filter('URI', function(Host) {
 			return "0";
 		}
 	};
+}).filter('hours', function() {
+	return function(value) {
+		if(value && value!=""){
+			var days = Math.floor(value / 24);
+			var day_hours = value % 24;
+			if(days > 0){
+				return days + "天" +day_hours + "小时";
+			}else{
+				return day_hours + "小时";			
+			}
+		}else{
+			return "-";
+		}
+	};
 });
+
+

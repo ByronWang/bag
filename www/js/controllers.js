@@ -1207,8 +1207,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.item = OrderItems.get($stateParams, function() {
 			if (funcPageLoadSucceed) funcPageLoadSucceed();
 			loadFlow();
-			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
-			$scope.item.Product.Extends = undefined;
+			if($scope.item.Product.Extends){
+				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
+				$scope.item.Product.Extends = undefined;
+			}
 			$scope.product = $scope.item.Product;
 			$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
 		});
@@ -1256,6 +1258,20 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 				$scope.loadBid();
 			}
+			
+
+			$scope.promiseRegion = Geolocation.getRegion();
+			$scope.promiseRegion.then(function(region) {		
+				$scope.currentRegion = {};
+				
+				var location =region.address.countryRegion + "-" + region.address.adminDistrict;
+				if(region.address.adminDistrict2){
+					location = location +  "-" + region.address.adminDistrict2;
+				}				
+				$scope.currentRegion.Location = location;				
+				$scope.currentRegion.Latitude =  region.coords.latitude;
+				$scope.currentRegion.Longitude = region.coords.longitude;
+			});
 		});
 	};
 
@@ -1309,8 +1325,19 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.beginPurchasing = function() {
-		flowStepOut(Statuses.purchasing, Actions.purchasing);
+		var promiseArray = [];
+	
+		promiseArray.push($scope.promiseRegion);
+
+		$q.all(promiseArray).then(function(results) {
+			$scope.current.Extends.PurchasingStartLocation=	$scope.currentRegion.Location;
+			$scope.current.Extends.PurchasingStartLatitude=	$scope.currentRegion.Latitude;
+			$scope.current.Extends.PurchasingStartLongitude=	$scope.currentRegion.Longitude;
+
+			flowStepOut(Statuses.purchasing, Actions.purchasing);
+		});
 	};
+	
 
 	$scope.cancelPurchasing = function() {
 		var confirmPopup = $ionicPopup.prompt({
@@ -1331,6 +1358,50 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
+
+	var doFinishPurchasing = function(){
+		var promiseArray = [];
+		if ($scope.current.Extends.ProductActualImageList) {
+			angular.forEach($scope.current.Extends.ProductActualImageList, function(im) {
+				promiseArray.push(im.uploadPromise);
+			});
+		}
+
+		if ($scope.current.Extends.InvoiceImageList) {
+			angular.forEach($scope.current.Extends.InvoiceImageList, function(im) {
+				promiseArray.push(im.uploadPromise);
+			});
+		}
+
+		$scope.promiseRegion.then(function(region) {
+		});
+
+		promiseArray.push($scope.promiseRegion);
+
+		$q.all(promiseArray).then(function(results) {
+			var imagesProduct = [];
+			if ($scope.current.Extends.ProductActualImageList) {
+				angular.forEach($scope.current.Extends.ProductActualImageList, function(im) {
+					imagesProduct.push(im.uri);
+				});
+			}
+			var imagesInvoice = [];
+			if ($scope.current.Extends.InvoiceImageList) {
+				angular.forEach($scope.current.Extends.InvoiceImageList, function(im) {
+					imagesInvoice.push(im.uri);
+				});
+			}
+			$scope.current.Extends.ProductActualImage = imagesProduct;
+			$scope.current.Extends.InvoiceImage = imagesInvoice;
+
+			$scope.current.Extends.PurchasingEndLocation=	$scope.currentRegion.Location;
+			$scope.current.Extends.PurchasingEndLatitude=	$scope.currentRegion.Latitude;
+			$scope.current.Extends.PurchasingEndLongitude=	$scope.currentRegion.Longitude;
+			
+			flowStepOut(Statuses.delivering, Actions.purchased);
+		});
+	};
+	
 	$scope.finishPurchasing = function() {
 		var confirmPopup = $ionicPopup.confirm({
 			title : '确认',
@@ -1340,48 +1411,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 		confirmPopup.then(function(res) {
 			if (res) {
-				var promiseArray = [];
-				if ($scope.current.Extends.ProductActualImageList) {
-					angular.forEach($scope.current.Extends.ProductActualImageList, function(im) {
-						promiseArray.push(im.uploadPromise);
-					});
-				}
-
-				if ($scope.current.Extends.InvoiceImageList) {
-					angular.forEach($scope.current.Extends.InvoiceImageList, function(im) {
-						promiseArray.push(im.uploadPromise);
-					});
-				}
-
-				var promiseGeolocation = Geolocation.getGeolocation();
-				promiseGeolocation.then(function(position) {
-					$scope.current.Extends.PurchasingEndLatitude = position.coords.latitude;
-					$scope.current.Extends.PurchasingEndLongitude = position.coords.longitude;
-				});
-
-				promiseArray.push(promiseGeolocation);
-
-				if (promiseArray.length > 0) {
-					$q.all(promiseArray).then(function(results) {
-						var imagesProduct = [];
-						if ($scope.current.Extends.ProductActualImageList) {
-							angular.forEach($scope.current.Extends.ProductActualImageList, function(im) {
-								imagesProduct.push(im.uri);
-							});
-						}
-						var imagesInvoice = [];
-						if ($scope.current.Extends.InvoiceImageList) {
-							angular.forEach($scope.current.Extends.InvoiceImageList, function(im) {
-								imagesInvoice.push(im.uri);
-							});
-						}
-						$scope.current.Extends.ProductActualImage = imagesProduct;
-						$scope.current.Extends.InvoiceImage = imagesInvoice;
-						flowStepOut(Statuses.delivering, Actions.purchased);
-					});
-				} else {
-					flowStepOut(Statuses.delivering, Actions.purchased);
-				}
+				doFinishPurchasing();
 			}
 		});
 	};
