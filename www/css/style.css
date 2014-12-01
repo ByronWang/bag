@@ -146,6 +146,9 @@
 	white-space: normal;
 }
 
+.item>.item-value {
+	white-space: normal;
+}
 .item-options-right {
 	padding-right: 120px;
 }
