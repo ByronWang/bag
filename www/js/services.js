@@ -213,7 +213,7 @@ angular.module('starter.services', []).factory('Host', function() {
 			return q.promise;
 		}
 	};
-}]).factory('Geolocation', [ '$q', 'Host', '$ionicLoading',function($q, Host,$ionicLoading) {
+}]).factory('Geolocation', [ '$q', 'Host', '$http',function($q, Host,$http) {
 
 	return {
 		getGeolocation : function(options) {
@@ -222,22 +222,19 @@ angular.module('starter.services', []).factory('Host', function() {
 			if (Host.pc) {
 				var position = {};
 				position.coords = {
-						latitude: 100,
-						longitude: 100
+						latitude: 31.21,
+						longitude: 121.52
 				};				
 				q.resolve(position);
 				return q.promise;
 			}
-			
-		    $ionicLoading.show({template: '加载位置信息...'});
+		
 			navigator.geolocation.getCurrentPosition(function(result) {
-				$ionicLoading.hide();
-				
 				q.resolve(result);
 			}, function(err) {
 				$ionicLoading.hide();
 				q.reject(err);
-			}, options);
+			});
 
 			return q.promise;
 		},
@@ -266,6 +263,7 @@ angular.module('starter.services', []).factory('Host', function() {
 		getRegion : function() {
 			var q = $q.defer();
 
+			/*
 			if (Host.pc) {		
 				var region = {};
 				region.coords = {
@@ -280,21 +278,19 @@ angular.module('starter.services', []).factory('Host', function() {
 				q.resolve(region);
 				return q.promise;
 			}
-			
+			*/
 			
 			var qLocation = this.getGeolocation();
 			qLocation.then(function(position){
-			    $ionicLoading.show({template: '获取位置信息...'});
 				var url = 'http://111.221.29.14/REST/v1/Locations/' + position.coords.latitude + ',' + position.coords.longitude + '?includeEntityTypes=Address&o=json&key=AlVuxcZtD7dY3Hb8ZFcOx_JSm0Vnqq1m82cx77HLguQ-7Em9e0Hul0pNfFLuPCwg&c=zh-Hans' + "&jsonp=JSON_CALLBACK";
-				$http.jsonp(url).success(function(result) {				
-					$ionicLoading.hide();
+				$http.jsonp(url).success(function(result) {		
 					var resources = result.resourceSets[0].resources;
 					var region = resources[resources.length - 1];
 					region.coords = position.coords;
 					q.resolve(region);
 				}, function(err) {
 					q.reject(err);
-				}, options);
+				});
 			});
 			return q.promise;
 		}

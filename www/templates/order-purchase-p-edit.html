@@ -43,10 +43,14 @@
 	}
 </style>
 <div x-ng-show="current.ActionID==Actions.payConfirmed.ID">
+	<form name="mainform" novalidate>
 	<div class="list action data">
 		<div class="item item-product-info">
 			<div class="message message-strong energized">
 				<i class="ion-ios7-information-outline"></i><span>请开始购买</span>
+			</div>
+			<div class="item">
+				<span class="label">开始地点</span><span class="item-value">{{currentRegion.Location}}</span></span>
 			</div>
 		</div>
 		<div class="item">
@@ -54,6 +58,7 @@
 			<button class="button button-assertive button-block" x-ng-click="cancelPurchasing()">取消购买</button>
 		</div>
 	</div>
+	</form>
 </div>
 <div x-ng-show="current.ActionID==Actions.cancelPurchasing.ID">
 	<div class="list action data">
@@ -74,14 +79,14 @@
 				<span class="label"> 开始时间 </span><span class="item-value">{{current.Extends.PurchasingStartDatetime}}</span>
 			</div>
 			<div class="item">
-				<span class="label"> 开始地点 </span><span class="item-value">中国 上海</span>
+				<span class="label"> 开始地点 </span><span class="item-value">{{current.Extends.PurchasingStartLocation}}</span>
 			</div>
 			<label class="item item-input item-icon-right"  x-ng-class="{'bigger-price': current.Extends.ActualPrice>item.Bid.SuggestedPrice}"><span class="input-label">实际单价</span>
 				<input type="number" x-ng-model="current.Extends.ActualPrice" required>
 				<span class="item-note"> 元</span>
 			</label>
 			<div class="item">
-				<span class="label"> 结束地点 </span><span class="item-value">--</span>
+				<span class="label">结束地点</span><span class="item-value">{{currentRegion.Location}}</span></span>
 			</div>
 		</div>
 		<div class="item item-product-info">

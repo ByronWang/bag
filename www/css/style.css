@@ -143,6 +143,7 @@
 
 .list.data>.item>.item-value {
 	color: gray;
+	white-space: normal;
 }
 
 .item-options-right {
