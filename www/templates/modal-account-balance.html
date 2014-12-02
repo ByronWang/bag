@@ -5,7 +5,8 @@
 		</div>
 		<h1 class="title">账户明细</h1>
 	</ion-header-bar>
-	<ion-content class="has-header padding">				
+	<ion-content class="has-header padding">			
+		<ion-refresher on-refresh="doRefresh()"		pulling-text="下拉刷新..."		refreshing-text="更新中"		refreshing-icon="ion-loading-c"></ion-refresher>	
 		<div class="list">
 			<div class="item item-button-right">
 				账户：{{balance.Amount}}元
@@ -13,8 +14,8 @@
 			</div>
 		</div>
 
-		<div class="list" x-ng-show="payments.length>0">
-			<a class="item item-icon-left item-icon-right" x-ng-repeat="payment in payments"  x-ng-click="showDetail(payment);">
+		<div class="list" x-ng-show="data.payments.length>0">
+			<a class="item item-icon-left item-icon-right" x-ng-repeat="payment in data.payments"  x-ng-click="showDetail(payment);">
 			<pane x-ng-show="payment.PayTypeID==1"><!-- 买手保证金 -->
 			<i class="icon ion-ios7-people-outline color-icon"></i> {{payment.Description}} &nbsp; - {{payment.Amount}}<i class="icon ion-ios7-arrow-forward item-note"></i>
 			</pane> 
@@ -121,5 +122,6 @@
 			<!--{{payment.TradeNo}}-->
 			<!--{{payment.DeadlineDatetime}} <i class="icon ion-ios7-arrow-forward item-note"></i> </a>-->
 		<!--</div>-->
+		<ion-infinite-scroll on-infinite="loadMoreItems()" distance="1%" ng-if="moreDataCanBeLoaded()" icon="ion-loading-c"></ion-infinite-scroll>
 	</ion-content>
 </ion-modal-view>

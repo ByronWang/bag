@@ -818,7 +818,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		};
 		$scope.hasmore = true;
 		$scope.page = 1;
-		$scope.pagesize = 3;
+		$scope.pagesize = 10;
 		var ordersList = undefined;
 		ordersList = Orders.query({
 			Customer : $scope.currentUser.ID,
@@ -871,7 +871,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		};
 		$scope.hasmore = true;
 		$scope.page = 1;
-		$scope.pagesize = 3;
+		$scope.pagesize = 10;
 		var ordersList = undefined;
 		ordersList = PurchaserOrdes.query({
 			Purchaser : $scope.currentUser.ID,
@@ -1752,25 +1752,60 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		}
 	};
 }).controller('AccountBalanceCtrl', function($scope, Payments, Balances, Popup) {
+
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	};
 	var load = function(funcPageLoadSucceed) {
-
 		var $stateParams = {
 			userId : $scope.currentUser.ID
 		};
 		$scope.balance = Balances.get($stateParams);
+		
+		$scope.data = {
+			payments : []
+		}
+		$scope.hasmore = true;
+		$scope.page = 1;
+		$scope.pagesize = 20;
+		var paymentsList = undefined;
 
-		$scope.payments = Payments.query({
-			User : $scope.currentUser.ID
-		},function(){
-			funcPageLoadSucceed();
+		paymentsList = Payments.query({
+			User : $scope.currentUser.ID,
+			page : $scope.page,
+			pagesize : $scope.pagesize
+		}, function() {
+			$scope.data.payments = $scope.data.payments.concat(paymentsList);
+			if (paymentsList.length < $scope.pagesize) {
+				$scope.hasmore = false;
+			}
+			if (funcPageLoadSucceed) funcPageLoadSucceed();
 		});
+
 	};
 	load();
+
+	// Load more after 1 second delay
+	$scope.loadMoreItems = function() {
+		$scope.page = $scope.page + 1;
+		var paymentsList = undefined;
+		paymentsList = Payments.query({
+			User : $scope.currentUser.ID,
+			page : $scope.page,
+			pagesize : $scope.pagesize
+		}, function() {
+			$scope.data.payments = $scope.data.payments.concat(paymentsList);
+			if (paymentsList.length < $scope.pagesize) {
+				$scope.hasmore = false;
+			}
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		});
+	};
+	$scope.moreDataCanBeLoaded = function() {
+		return $scope.hasmore;
+	};
 
 	$scope.showDetail = function(payment) {
 		$scope.payment = payment;
