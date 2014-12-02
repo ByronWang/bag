@@ -1146,7 +1146,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 						$scope.current.Extends = {};
 					}
 					$scope.current.Extends.CancelOrderComment = reason;
-					flowStepOut($scope.current.StatusID, Actions.cancelOrder, params);
+					flowStepOut($scope.current.StatusID, Actions.cancelOrder);
 				}
 			});
 		} else {
