@@ -47,11 +47,14 @@ angular.module('starter.services', []).factory('Host', function() {
 			return list;
 		}
 	};
-}).factory('Countries', function($resource, Host) {
-	var list = $resource(Host.host + '/d/Country/:countryId').query();
+}).factory('Countries', function($http) {
+	var countries = [];
+	$http.get('js/Country.json').then(function(resp) {	
+		countries = resp.data;
+	});
 	return {
 		query : function(a, b, c) {
-			return list;
+			return countries;
 		}
 	};
 }).factory('Products', function($resource, Host) {
