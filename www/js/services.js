@@ -38,6 +38,8 @@ angular.module('starter.services', []).factory('Host', function() {
 	};
 } ]).factory('Inventorys', function($resource, Host) {
 	return $resource(Host.host + '/d/OrderItem/:itemId');
+} ).factory('Balances', function($resource, Host) {
+	return $resource(Host.host + '/d/Balance/:userId');
 }).factory('DeliveryMethod', function($resource, Host) {
 	var list = $resource(Host.host + '/d/DeliveryMethod/:itemId').query();
 	return {

@@ -5,11 +5,15 @@
 		</div>
 		<h1 class="title">账户明细</h1>
 	</ion-header-bar>
-	<ion-content class="has-header padding">
+	<ion-content class="has-header padding">				
+		<div class="list">
+				账户：{{balance.Amount}}元
+		</div>
 
 		<div class="list" x-ng-show="paymentsFromPersonal.length>0">
 			<div class="item item-divide">
 				个人账号支付
+				
 			</div>
 			<a class="item item-icon-right" x-ng-repeat="payment in paymentsFromPersonal"  x-ng-click="showDetail(payment);"> {{payment.FromAccountTypeName}}
 			{{payment.FromAccountTypeID}}
