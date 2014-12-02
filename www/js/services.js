@@ -13,7 +13,7 @@ angular.module('starter.services', []).factory('Host', function() {
 		host = "http://" + host + ":8686";
 		pc = false;
 	}
-//	 host = "http://www.gouwudai.net.cn:8686";
+	 host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
 		pc : pc,
