@@ -996,7 +996,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
 			if ($scope.flows.length > 0) {
 				$scope.current = $scope.flows[0];
-				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 				var maxStatusID = $scope.flows[0].StatusID;
 				if (!maxStatusID) {
 					maxStatusID = 1;
@@ -1015,14 +1014,15 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 						$scope.statuses[statusID].class = "done";
 					} else if (statusID == maxStatusID) {
 						$scope.statuses[statusID].ActionID = f.ActionID;
+						$scope.current.StatusID = statusID;
 						$scope.statuses[statusID].class = "doing";
 					}
 				});
 
 				if ($scope.item.StatusID == 5 || $scope.item.StatusID == 6) {
 					$scope.statuses[maxStatusID].class = "cancel";
-
 				}
+				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 
 			} else {
 				$scope.current = {
@@ -1241,7 +1241,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.flows = OrderItemFlowByItem.query($stateParams, function() {
 			if ($scope.flows.length > 0) {
 				$scope.current = $scope.flows[0];
-				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 				var maxStatusID = $scope.flows[0].StatusID;
 				if (!maxStatusID) {
 					maxStatusID = 1;
@@ -1260,13 +1259,14 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 						$scope.statuses[statusID].class = "done";
 					} else if (statusID == maxStatusID) {
 						$scope.statuses[statusID].ActionID = f.ActionID;
+						$scope.current.StatusID = statusID;
 						$scope.statuses[statusID].class = "doing";
 					}
 				});
 
+				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 				if ($scope.item.StatusID == 5 || $scope.item.StatusID == 6) {
 					$scope.statuses[maxStatusID].class = "cancel";
-
 				}
 
 			} else {

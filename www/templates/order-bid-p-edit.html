@@ -1,52 +1,34 @@
-
-	<div class="list action data suitor data" x-ng-repeat="suitor in bids">
-		<div class="item message message-strong energized" x-ng-hide="suitor.Status==2  || suitor.Status==3">
-			<i class="ion-ios7-information-outline"></i><span>正在等待买家选择买手</span>
+<div x-ng-show="statuses[1].ActionID==Actions.cancelPurchasing.ID">
+	<div class="list action data">
+		<div class="item message message-strong energized">
+			<i class="ion-ios7-information-outline"></i><span>该订单已被买手放弃购买</span>
 		</div>
-		<div class="item message message-strong energized" x-ng-hide="suitor.Status==2  || suitor.Status==3">
-			<i class="ion-ios7-information-outline"></i><span>竞标失败</span>
+		<div class="item item-input">
+			<span class="label">放弃时间</span><span class="item-value">{{current.Extends.CancelPurchasingDatetime}}</span>
 		</div>
-		<div class="item message assertive message-strong">
-			<i class="ion-card"></i>
-			<span>定金：{{suitor.Amount}} 元</span>
-		</div>
-
-		<div class="item">
-			<span class="label"> 代购佣金 </span><span class="item-value">{{suitor.Commission | percent}}</span>
-		</div>
-		<div class="item">
-			<span class="label"> 邮寄方式 </span><span class="item-value">{{suitor.DeliveryMethodName}}</span>
-		</div>
-		<div class="item">
-			<span class="label"> 邮寄时间 </span><span class="item-value">{{suitor.Deadline}}</span>
-		</div>
-		<div class="item">
-			<span class="label"> 建议价格 </span>
-			<span class="item-value strength"><b>{{suitor.SuggestedPrice}}</b> 元</span><span class="comment" x-bg-price-hint="suitor.SuggestedPrice" x-price-from="item.Product.ExpectedPrice"></span>
-		</div>
-		<div class="item">
-			<span class="label"> 运费 </span><span class="item-value">{{suitor.DeliveryCost}} 元</span>
-		</div>
-		<div class="item comment item-icon-right" x-ng-show="suitor.Comment">
-			<span class="label"> 备注 </span>
-			<a class="trigger"  data-ng-click="showDescription=!showDescription"><i class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
-			<span class="item-value" data-ng-hide="showDescription">{{suitor.Comment}}</span>
-		</div>
-		<div class="item">						
-			<button class="button button-assertive button-block" x-ng-click="cancelPurchasing()">取消购买</button>
+		<div class="item comment item-icon-right">
+			<span class="label">放弃原因</span>
+			<a class="trigger" data-ng-click="showDescription=!showDescription"><i
+			class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i
+			class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
+			<span class="item-value" data-ng-hide="showDescription">{{current.Extends.CancelPurchasingComment}}</span>
 		</div>
 	</div>
 </div>
-<div class="list action data" x-ng-show="item.suitor">
-	<div class="item message message-strong energized">
-		<i class="ion-ios7-information-outline"></i><span>正在等待买家选择买手</span>
+<pane x-ng-show="statuses[1].ActionID==Actions.cancelOrder.ID">
+	<div class="list action data">
+		<div class="item message message-strong energized">
+			<i class="ion-ios7-information-outline"></i><span>该订单已被买家放弃！</span>
+		</div>
+		<div class="item item-input">
+			<span class="label">放弃时间</span><span class="item-value">{{current.Extends.CancelOrderDatetime}}</span>
+		</div>
+		<div class="item comment item-icon-right">
+			<span class="label">放弃原因</span>
+			<a class="trigger" data-ng-click="showDescription=!showDescription"><i
+			class="icon ion-ios7-arrow-down  item-note" data-ng-show="showDescription"></i><i
+			class="icon  ion-ios7-arrow-up item-note" data-ng-hide="showDescription"></i></a>
+			<span class="item-value" data-ng-hide="showDescription">{{current.Extends.CancelOrderComment}}</span>
+		</div>
 	</div>
-	<div class="item">
-		<button class="button button-positive">取消代购</button>
-	</div>
-</div>
-<div class="list action data">
-	<div class="item message message-strong energized">
-		<i class="ion-ios7-information-outline"></i><span>竞标失败</span>
-	</div>
-</div>
+</pane>
