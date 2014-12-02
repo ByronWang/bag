@@ -1740,14 +1740,14 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		}
 	};
 }).controller('AccountBalanceCtrl', function($scope, Payments, Balances,Popup) {
-	$scope.payments = [];// Payments.query();
-
 	var $stateParams = {
 			userId : $scope.currentUser.ID
 	};
 	$scope.balance = Balances.get($stateParams);
-		
 	
+    $scope.payments = Payments.query({
+        FromUser : $scope.currentUser.ID
+    });
 
 	$scope.paymentsFromPersonal = Payments.query({
 		FromUser : $scope.currentUser.ID,
