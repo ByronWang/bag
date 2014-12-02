@@ -81,12 +81,15 @@
 			<div class="item">
 				<span class="label"> 开始地点 </span><span class="item-value">{{current.Extends.PurchasingStartLocation}}</span>
 			</div>
-			<label class="item item-input item-icon-right"  x-ng-class="{'bigger-price': current.Extends.ActualPrice>item.Bid.SuggestedPrice}"><span class="input-label">实际单价</span>
+			<div class="item">
+				<span class="label">结束地点</span><span class="item-value">{{currentRegion.Location}}</span></span>
+			</div>
+			<label class="item item-input item-icon-right"><span class="input-label">实际单价</span>
 				<input type="number" x-ng-model="current.Extends.ActualPrice" required>
 				<span class="item-note"> 元</span>
 			</label>
-			<div class="item">
-				<span class="label">结束地点</span><span class="item-value">{{currentRegion.Location}}</span></span>
+			<div class="item message assertive" x-ng-show="current.Extends.ActualPrice>item.Bid.SuggestedPrice">
+				<i class="ion-ios7-information-outline"></i><span>您填写的“实际单价”高于“建议单价”</span>
 			</div>
 		</div>
 		<div class="item item-product-info">

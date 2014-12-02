@@ -83,12 +83,12 @@
 						<label class="item item-input item-input-note"><span class="input-label">建议价格</span>
 							<input type="number" x-ng-model="suitor.SuggestedPrice">
 							<span class="item-note"> 元</span></label>
-						<label class="item item-input"><span class="input-label">代购期限</span>
+						<label class="item item-input"><span class="input-label">邮寄时间</span>
 							<input type="date" x-ng-model="suitor.Deadline"></label>
 						<label class="item item-input item-input-aid"><span class="input-label">代购佣金</span>
 							<input type="number" x-ng-model="suitor.Commission"  maxlength="2">
 							<span class="seperator text-center">%</span>
-							<span class="item-aid">{{ ( ( suitor.SuggestedPrice * suitor.Commission *item.Quantity )/100) | currency   }}</span>
+							<span class="item-aid">{{ ( ( suitor.SuggestedPrice * suitor.Commission *item.Quantity )/100) | currency   }} 元</span>
 						</label>
 						<a class="item item-input item-icon-right"  x-ng-click="showDeliveryMethods();">
 							<span class="input-label">邮寄方式</span> <span class="item-note">{{suitor.DeliveryMethodName}}</span>
@@ -185,7 +185,7 @@
 							<span class="label">建议价格</span><span class="item-value">{{suitor.SuggestedPrice}} 元</span>
 						</div>
 						<div class="item item-input item-input-note">
-							<span class="label">代购期限</span><span class="item-value">{{suitor.Deadline}} </span>
+							<span class="label">邮寄时间</span><span class="item-value">{{suitor.Deadline}} </span>
 						</div>
 						<div class="item item-input item-input-note">
 							<span class="label">代购佣金</span><span class="item-value">{{suitor.Commission | percent}}</span>

@@ -39,6 +39,9 @@
 					<span class="label">买家</span><span class="item-value">{{item.CustomerNickName}}</span>
 				</div>
 				<div class="item">
+					<span class="label">国家</span><span class="item-value">{{item.Product.CountryName}}</span>
+				</div>
+				<div class="item">
 					<span class="label" x-ng-show="item.SuitorCount">已有{{item.SuitorCount}}位买手参与此次购买</span>
 					<span class="label" x-ng-hide="item.SuitorCount">还没有买手参与此次购买</span>
 				</div>
