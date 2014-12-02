@@ -352,7 +352,8 @@ angular.module('starter.services', []).factory('Host', function() {
 		BePurchaser : false,
 		Name : "未登录",
 		Image : "img/avatar-default.jpg",
-		Address : {}
+		Address : {},
+		ReadedItems :{}
 	};
 
 	return {
@@ -414,6 +415,12 @@ angular.module('starter.services', []).factory('Host', function() {
 					funcSucceed(user);
 				});
 			});
+		},
+		read : function(itemID,lastUpdated){
+			ReadedItems[itemID] = lastUpdated;
+		},
+		hasReaded : function(itemID,lastUpdated){
+			return lastUpdated==ReadedItems[itemID] ;
 		},
 		reload : function() {
 			var _this = this;
