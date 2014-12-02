@@ -13,7 +13,7 @@ angular.module('starter.services', []).factory('Host', function() {
 		host = "http://" + host + ":8686";
 		pc = false;
 	}
-	 host = "http://www.gouwudai.net.cn:8686";
+//	 host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
 		pc : pc,
@@ -352,11 +352,11 @@ angular.module('starter.services', []).factory('Host', function() {
 		BePurchaser : false,
 		Name : "未登录",
 		Image : "img/avatar-default.jpg",
-		Address : {},
-		ReadedItems :{}
+		Address : {}
 	};
 
 	return {
+		readedItems :{},
 		isLogin : false,
 		BePurchaser : false,
 		needLogin : function($scope, funcSucceed) {
@@ -416,8 +416,20 @@ angular.module('starter.services', []).factory('Host', function() {
 				});
 			});
 		},
-		read : function(itemID,lastUpdated){
-			ReadedItems[itemID] = lastUpdated;
+		checkReadedForOrderList : function(orderList){
+			var _this = this;
+			angular.forEach(orderList, function(o) {
+				angular.forEach(o.Items,function(item){
+					item.Readed = (_this.readedItems[item.ID]  && _this.readedItems[item.ID] == item.LastUpdated);
+				});
+			});
+		},
+		checkReadedForItem : function(item){
+			var _this = this;
+			item.Readed = (_this.readedItems[item.ID]  && _this.readedItems[item.ID] == item.LastUpdated);
+		},
+		read : function(item){
+			this.readedItems[item.ID] =item.LastUpdated;
 		},
 		hasReaded : function(itemID,lastUpdated){
 			return lastUpdated==ReadedItems[itemID] ;

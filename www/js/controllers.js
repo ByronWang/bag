@@ -616,6 +616,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			ni.CountryName = ni.Product.CountryName;
 
 			ni.Datetime = $scope.order.Datetime;
+			ni.LastUpdated = ni.Datetime;
 
 			ni.Address = $scope.order.Address;
 			if (ni.Product.ImageUploadPromise) {
@@ -787,7 +788,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
-	$scope.submit = function() {
+	$scope.submit = function(event) {
 		if (!$scope.suitor.DeliveryCost) {
 			$scope.suitor.DeliveryCost = 0;
 		}
@@ -825,6 +826,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			page : $scope.page,
 			pagesize : $scope.pagesize
 		}, function() {
+			$scope.currentUser.checkReadedForOrderList(ordersList);
+			
 			$scope.data.orders = $scope.data.orders.concat(ordersList);
 			if (ordersList.length < $scope.pagesize) {
 				$scope.hasmore = false;
@@ -836,7 +839,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.showDetail = function(item) {
 		$scope.item = item;
-		Popup.show($scope, 'templates/modal-order-detail-c.html');
+		Popup.show($scope, 'templates/modal-order-detail-c.html',function(){
+			$scope.currentUser.checkReadedForItem($scope.item);
+		});
 	};
 
 	// Load more after 1 second delay
@@ -848,9 +853,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			page : $scope.page,
 			pagesize : $scope.pagesize
 		}, function() {
-			if (ordersList.length > 0) {
-				$scope.data.orders = $scope.data.orders.concat(ordersList);
-			} else {
+			$scope.currentUser.checkReadedForOrderList(ordersList);
+			$scope.data.orders = $scope.data.orders.concat(ordersList);
+			if (ordersList.length < $scope.pagesize) {
 				$scope.hasmore = false;
 			}
 			$scope.$broadcast('scroll.infiniteScrollComplete');
@@ -900,7 +905,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.showDetail = function(item) {
 		$scope.item = item;
-		Popup.show($scope, 'templates/modal-order-detail-p.html');
+		Popup.show($scope, 'templates/modal-order-detail-p.html',function(){
+			$scope.currentUser.checkReadedForItem($scope.item);
+		});
+		
 	};
 
 	// Load more after 1 second delay
@@ -981,6 +989,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.statusActiveSlide = 0;
 
 		$scope.item = OrderItems.get($stateParams, function() {
+			$scope.currentUser.read($scope.item);
+			
 			if (funcPageLoadSucceed) funcPageLoadSucceed();
 			loadFlow();
 			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
@@ -988,7 +998,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.product = $scope.item.Product;
 			$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
 		});
-
 	};
 	load();
 
@@ -1224,6 +1233,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.statusActiveSlide = 0;
 
 		$scope.item = OrderItems.get($stateParams, function() {
+			$scope.currentUser.read($scope.item);
 			if (funcPageLoadSucceed) funcPageLoadSucceed();
 			loadFlow();
 			if ($scope.item.Product.Extends) {

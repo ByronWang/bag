@@ -27,7 +27,7 @@
 					x-ng-class="{'1': 'order-state-bid-bg', 2: 'order-state-purchase-bg', 3: 'order-state-delivering-bg', 4: 'order-state-completed-bg', 5: 'order-state-cancelOrder-bg',6: 'order-state-cancelPurchase-bg'}[item.StatusID]">{{item.StatusName}}</span>
 					<span x-ng-show="item.ActionID==1">{{item.SuitorCount|amount}}个买手投标</span>
 				</div>
-			</div> <i class="ion-record assertive notify"></i> </a>
+			</div> <i class="ion-record assertive notify" x-ng-hide="item.Readed"></i> </a>
 		</div>
 		<ion-infinite-scroll on-infinite="loadMoreItems()" distance="1%" ng-if="moreDataCanBeLoaded()" icon="ion-loading-c"></ion-infinite-scroll>
 	</ion-content>
