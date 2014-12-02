@@ -83,6 +83,21 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.done = function() {
 		$scope.$parent.done($scope.user);
 	};
+}).controller('BalanceWithdrawCtrl', function($scope, Users, Popup) {
+	$scope.user = $scope.currentUser;
+	$scope.payment = {
+		FromUserID : $scope.user.ID,
+		ToUserID : $scope.user.ID,
+		Amount : $scope.$parent.Amount,// 金额
+		PayTypeID : 3,// 提现
+		PayMethodID : 1,// 个人账户
+		Description : "提现",// Bank
+		OrderNo : $scope.user.ID,
+		ActionID : 1
+	};
+	$scope.done = function() {
+		$scope.$parent.done($scope.user);
+	};
 }).controller('PaymentCtrl', function($scope, Users, Popup, PaymentFlow, Unipay) {
 	// getTradeNO PaymentRequest
 	$scope.payment = $scope.$parent.payment;
@@ -450,16 +465,16 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			targetHeight : 320,
 			saveToPhotoAlbum : false
 		});
-		//$scope.product.ImagePromise
+		// $scope.product.ImagePromise
 		imagePromise.then(function(imageURI) {
 			$scope.product.Image = imageURI;
-			
+
 			var _product = $scope.product;
 			$scope.product.ImageUploadPromise = Camera.upload(imageURI);
 			$scope.product.ImageUploadPromise.then(function(result) {
 				_product.Image = result.response;
 			});
-			
+
 		}, function(err) {
 			console.err(err);
 		});
@@ -493,7 +508,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		// $scope.product.Extends =
 		// Exts.encode($scope.product.Exts);
 		// $scope.product.Exts = undefined;
-		
+
 		$scope.product.Price = $scope.product.ExpectedPrice;
 		if ($scope.isNew) {
 			$scope.item.Product = $scope.product;
@@ -1211,7 +1226,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.item = OrderItems.get($stateParams, function() {
 			if (funcPageLoadSucceed) funcPageLoadSucceed();
 			loadFlow();
-			if($scope.item.Product.Extends){
+			if ($scope.item.Product.Extends) {
 				$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 				$scope.item.Product.Extends = undefined;
 			}
@@ -1262,18 +1277,17 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 				$scope.loadBid();
 			}
-			
 
 			$scope.promiseRegion = Geolocation.getRegion();
-			$scope.promiseRegion.then(function(region) {		
+			$scope.promiseRegion.then(function(region) {
 				$scope.currentRegion = {};
-				
-				var location =region.address.countryRegion + "-" + region.address.adminDistrict;
-				if(region.address.adminDistrict2){
-					location = location +  "-" + region.address.adminDistrict2;
-				}				
-				$scope.currentRegion.Location = location;				
-				$scope.currentRegion.Latitude =  region.coords.latitude;
+
+				var location = region.address.countryRegion + "-" + region.address.adminDistrict;
+				if (region.address.adminDistrict2) {
+					location = location + "-" + region.address.adminDistrict2;
+				}
+				$scope.currentRegion.Location = location;
+				$scope.currentRegion.Latitude = region.coords.latitude;
 				$scope.currentRegion.Longitude = region.coords.longitude;
 			});
 		});
@@ -1330,18 +1344,17 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.beginPurchasing = function() {
 		var promiseArray = [];
-	
+
 		promiseArray.push($scope.promiseRegion);
 
 		$q.all(promiseArray).then(function(results) {
-			$scope.current.Extends.PurchasingStartLocation=	$scope.currentRegion.Location;
-			$scope.current.Extends.PurchasingStartLatitude=	$scope.currentRegion.Latitude;
-			$scope.current.Extends.PurchasingStartLongitude=	$scope.currentRegion.Longitude;
+			$scope.current.Extends.PurchasingStartLocation = $scope.currentRegion.Location;
+			$scope.current.Extends.PurchasingStartLatitude = $scope.currentRegion.Latitude;
+			$scope.current.Extends.PurchasingStartLongitude = $scope.currentRegion.Longitude;
 
 			flowStepOut(Statuses.purchasing, Actions.purchasing);
 		});
 	};
-	
 
 	$scope.cancelPurchasing = function() {
 		var confirmPopup = $ionicPopup.prompt({
@@ -1362,8 +1375,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		});
 	};
 
-
-	var doFinishPurchasing = function(){
+	var doFinishPurchasing = function() {
 		var promiseArray = [];
 		if ($scope.current.Extends.ProductActualImageList) {
 			angular.forEach($scope.current.Extends.ProductActualImageList, function(im) {
@@ -1398,20 +1410,20 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.current.Extends.ProductActualImage = imagesProduct;
 			$scope.current.Extends.InvoiceImage = imagesInvoice;
 
-			$scope.current.Extends.PurchasingEndLocation=	$scope.currentRegion.Location;
-			$scope.current.Extends.PurchasingEndLatitude=	$scope.currentRegion.Latitude;
-			$scope.current.Extends.PurchasingEndLongitude=	$scope.currentRegion.Longitude;
-			
+			$scope.current.Extends.PurchasingEndLocation = $scope.currentRegion.Location;
+			$scope.current.Extends.PurchasingEndLatitude = $scope.currentRegion.Latitude;
+			$scope.current.Extends.PurchasingEndLongitude = $scope.currentRegion.Longitude;
+
 			flowStepOut(Statuses.delivering, Actions.purchased);
 		});
 	};
-	
+
 	$scope.finishPurchasing = function() {
 		var confirmPopup = $ionicPopup.confirm({
 			title : '确认',
 			cancelText : '取消',
 			okText : '确定',
-			template : '你当前输入的实际价格为' +$scope.current.Extends.ActualPrice + '元，该值一旦输入不可修改，确定要完成购买吗?'
+			template : '你当前输入的实际价格为' + $scope.current.Extends.ActualPrice + '元，该值一旦输入不可修改，确定要完成购买吗?'
 		});
 		confirmPopup.then(function(res) {
 			if (res) {
@@ -1739,36 +1751,38 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			});
 		}
 	};
-}).controller('AccountBalanceCtrl', function($scope, Payments, Balances,Popup) {
-	var $stateParams = {
-			userId : $scope.currentUser.ID
+}).controller('AccountBalanceCtrl', function($scope, Payments, Balances, Popup) {
+	$scope.doRefresh = function() {
+		load(function() {
+			$scope.$broadcast('scroll.refreshComplete');
+		});
 	};
-	$scope.balance = Balances.get($stateParams);
-	
-    $scope.payments = Payments.query({
-        FromUser : $scope.currentUser.ID
-    });
+	var load = function(funcPageLoadSucceed) {
 
-	$scope.paymentsFromPersonal = Payments.query({
-		FromUser : $scope.currentUser.ID,
-		FromAccountType : 1
-	});
-	$scope.paymentsFromBank = Payments.query({
-		FromUser : $scope.currentUser.ID,
-		FromAccountType : 2
-	});
-	$scope.recieveToPersonal = Payments.query({
-		ToUser : $scope.currentUser.ID,
-		ToAccountType : 1
-	});
-	$scope.recieveToBank = Payments.query({
-		ToUser : $scope.currentUser.ID,
-		ToAccountType : 2
-	});
+		var $stateParams = {
+			userId : $scope.currentUser.ID
+		};
+		$scope.balance = Balances.get($stateParams);
+
+		$scope.payments = Payments.query({
+			User : $scope.currentUser.ID
+		},function(){
+			funcPageLoadSucceed();
+		});
+	};
+	load();
 
 	$scope.showDetail = function(payment) {
 		$scope.payment = payment;
 		Popup.show($scope, 'templates/modal-account-payment.html');
+	};
+
+	$scope.withdraw = function() {
+		var scope = $scope.$new();
+		scope.Amount = $scope.balance.Amount;
+		Popup.show(scope, 'templates/modal-balance-withdraw.html', function(payment) {
+			load();
+		});
 	};
 
 }).controller('PaymentInfoCtrl', function($scope, $state, Payments) {

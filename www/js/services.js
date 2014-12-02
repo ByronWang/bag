@@ -155,6 +155,8 @@ angular.module('starter.services', []).factory('Host', function() {
 	return $resource(Host.host + '/d/OrderItemFlow/?OrderItem=:itemId');
 }).factory('OrderItemFlow', function($resource, Host) {
 	return $resource(Host.host + '/d/OrderItemFlow/:flowId');
+}).factory('ChatMessages', function($resource, Host) {
+	return $resource(Host.host + '/d/ChatMessage/:id');
 }).factory('Payments', function($resource, Host) {
 	return $resource(Host.host + '/d/Payment/:paymentId');
 }).factory('PaymentFlow', function($resource, Host) {

@@ -7,22 +7,34 @@
 	</ion-header-bar>
 	<ion-content class="has-header padding">				
 		<div class="list">
+			<div class="item item-button-right">
 				账户：{{balance.Amount}}元
+				<button class="button" x-ng-click="withdraw($event);"  x-ng-disabled="balance.Amount<=0">提现</button>
+			</div>
 		</div>
 
-		<div class="list" x-ng-show="paymentsFromPersonal.length>0">
-			<div class="item item-divide">
-				个人账号支付
-				
-			</div>
-			<a class="item item-icon-right" x-ng-repeat="payment in paymentsFromPersonal"  x-ng-click="showDetail(payment);"> {{payment.FromAccountTypeName}}
-			{{payment.FromAccountTypeID}}
-			{{payment.ToAccountTypeName}}
-			{{payment.ToAccountTypeID}}
-			{{payment.FromUserID}}
-			{{payment.ToUserID}}
-			{{payment.Description}}
-			{{payment.Amount}}
+		<div class="list" x-ng-show="payments.length>0">
+			<a class="item item-icon-left item-icon-right" x-ng-repeat="payment in payments"  x-ng-click="showDetail(payment);">
+			<pane x-ng-show="payment.PayTypeID==1"><!-- 买手保证金 -->
+			<i class="icon ion-ios7-people-outline color-icon"></i> {{payment.Description}} &nbsp; - {{payment.Amount}}<i class="icon ion-ios7-arrow-forward item-note"></i>
+			</pane> 
+						<pane x-ng-show="payment.PayTypeID==2"><!-- 购买保证金 -->
+			<i class="icon ion-ios7-people-outline color-icon"></i> {{payment.Description}} &nbsp; - {{payment.Amount}}  &nbsp;+ {{payment.OrderNo}} <i class="icon ion-ios7-arrow-forward item-note"></i>
+			</pane> 
+						<pane x-ng-show="payment.PayTypeID==3"><!-- 提现 -->
+			<i class="icon ion-ios7-people-outline color-icon"></i> {{payment.Description}}&nbsp; - {{payment.Amount}}<i class="icon ion-ios7-arrow-forward item-note"></i>
+			</pane> 
+						<pane x-ng-show="payment.PayTypeID==4"><!-- 退款-->
+			<i class="icon ion-ios7-people-outline color-icon"></i> {{payment.Description}}&nbsp; + {{payment.Amount}}  &nbsp; {{payment.OrderNo}}  <i class="icon ion-ios7-arrow-forward item-note"></i>
+			</pane> 
+			<pane x-ng-show="payment.PayTypeID==5"><!-- 支付购买款项 -->
+			<i class="icon ion-ios7-people-outline color-icon"></i> {{payment.Description}} &nbsp;+ {{payment.Amount}}  &nbsp; {{payment.OrderNo}} <i class="icon ion-ios7-arrow-forward item-note"></i>
+			</pane> 
+
+	<span x-ng-show="payment.TransStatus==1">开始支付</span>
+	<span x-ng-show="payment.TransStatus==2">支付完成</span>
+	<span x-ng-show="payment.TransStatus==3">到账</span>
+			<i class="icon ion-ios7-arrow-forward item-note"></i> 
 			</a>
 			</div>
 
