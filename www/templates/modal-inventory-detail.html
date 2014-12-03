@@ -12,7 +12,7 @@
 			<div class="list top">
 				<div class="item">
 					<div class="item-avatar item-product">
-						<img align="center" x-ng-src="{{item.Product.Image | URI:'product' }}" x-big-image>
+						<img align="center" x-ng-src="{{item.Product.Image | URI:'product' }}" x-big-image="item.Product.Name">
 					</div>
 				</div>
 				<div class="item">
@@ -81,12 +81,12 @@
 					</div>
 					<div  class="list list-inset" style="margin-top: 8px;">
 						<label class="item item-input item-input-note"><span class="input-label">建议价格</span>
-							<input type="number" x-ng-model="suitor.SuggestedPrice">
+							<input type="number" x-ng-model="suitor.SuggestedPrice" required>
 							<span class="item-note"> 元</span></label>
 						<label class="item item-input"><span class="input-label">邮寄时间</span>
-							<input type="date" x-ng-model="suitor.Deadline"></label>
+							<input type="date" x-ng-model="suitor.Deadline" required></label>
 						<label class="item item-input item-input-aid"><span class="input-label">代购佣金</span>
-							<input type="number" x-ng-model="suitor.Commission"  maxlength="2">
+							<input type="number" x-ng-model="suitor.Commission"  maxlength="2" required>
 							<span class="seperator text-center">%</span>
 							<span class="item-aid">{{ ( ( suitor.SuggestedPrice * suitor.Commission *item.Quantity )/100) | currency   }} 元</span>
 						</label>

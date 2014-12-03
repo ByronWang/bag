@@ -13,12 +13,28 @@ angular.module('starter.services', []).factory('Host', function() {
 		host = "http://" + host + ":8686";
 		pc = false;
 	}
+	
+	var server = {
+			live: "none"
+	};
+	
+	$http.get('js/ProvinceAndCityJson.json').then(function(resp) {
+		server = resp.data;
+	}, function(err) {
+		server.live = "error";	
+	});
 //	 host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
 		pc : pc,
 		setHost : function(newhost) {
 			host = newhost;
+		},
+		getServer : function(){
+			return server;
+		},		
+		isServerLive: function(){
+			return server.live;
 		}
 	};
 }).factory('$localstorage', [ '$window', function($window) {

@@ -29,6 +29,7 @@ angular.module('starter.directives', []).directive('ngExts', [ '$http', '$contro
 		link : function(scope, element, attr, ctrl) {
 			element.on("click", function(event) {
 				scope.imageUrl = attr.ngSrc;
+				scope.title = scope.$eval(attr.bigImage);
 				Popup.show(scope, "templates/modal-image.html");
 			});
 		}
