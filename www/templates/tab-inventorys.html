@@ -30,20 +30,20 @@
 			<a x-ng-repeat="item in data.inventorys" class="item item-thumbnail-left item-info item-outline" x-ng-click="showDetail(item);"> <img x-ng-src="{{item.Product.Image | URI}}"> <!--<div class="list info">--> <!--<span class="item"><h3>{{item.Product.Name}}</h3></span>--> <!--<span class="item">价格 <span class="item-note"> {{item.Product.ExpectedPrice}}/元</span> </span>--> <!--<span class="item">到货周期 <span class="item-note">{{item.lastMonth}}个月</span> </span>--> <!--<span class="item">已有{{item.suitors.length}}位买手参与此次购买</span>--> <!--</div>--> <h2>{{item.Product.Name}}</h2>
 			<div class="list data">
 				<div class="item">
-					<span class="label">单价</span><span class="item-value strength"><b>{{item.Product.Price}}</b>&nbsp;元</span>
+					<span class="label">国家/地区</span><span class="item-value">{{item.Product.CountryName}}</span>
 				</div>
 				<div class="item">
-					<span class="label">件数</span><span class="item-value">{{item.Quantity}}</span>
+					<span class="label">预想单价</span><span class="item-value strength"><b>{{item.Product.Price}}</b>&nbsp;元</span>
+				</div>
+				<div class="item">
+					<span class="label">数量</span><span class="item-value">{{item.Quantity}}</span>
 				</div>
 				<div class="item">
 					<span class="label">买家</span><span class="item-value">{{item.CustomerNickName}}</span>
 				</div>
 				<div class="item">
-					<span class="label">国家</span><span class="item-value">{{item.Product.CountryName}}</span>
-				</div>
-				<div class="item">
-					<span class="label" x-ng-show="item.SuitorCount">已有{{item.SuitorCount}}位买手参与此次购买</span>
-					<span class="label" x-ng-hide="item.SuitorCount">还没有买手参与此次购买</span>
+					<span class="label" x-ng-show="item.SuitorCount">已有{{item.SuitorCount}}位买手参与竞标</span>
+					<span class="label" x-ng-hide="item.SuitorCount">还没有买手参与竞标</span>
 				</div>
 			</div> </a>
 		<ion-infinite-scroll on-infinite="loadMoreItems()" distance="1%" ng-if="moreDataCanBeLoaded()" icon="ion-loading-c"></ion-infinite-scroll>		

@@ -1,4 +1,4 @@
-angular.module('starter.services', []).factory('Host', function($http) {
+angular.module('starter.services', []).factory('Host', function() {
 	var host = window.location.host;
 	var pc = false;// For Test
 	if (host) {
@@ -33,6 +33,7 @@ angular.module('starter.services', []).factory('Host', function($http) {
 		server.Msg = "当前无法正确连接到服务器，请确认网络连接!"
 	});
 //	 host = "http://www.gouwudai.net.cn:8686";
+	 host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
 		pc : pc,
