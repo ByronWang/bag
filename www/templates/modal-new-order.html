@@ -29,19 +29,19 @@
 				<a class="item item-input item-icon-right" x-ng-click="popupProvinces();"> <span class="input-label">所在地区</span> <span class="item-note">{{order.Address.Province}}-{{order.Address.City}}-{{order.Address.Area}}</span> <i class="icon ion-ios7-arrow-forward item-note"></i> </a>
 				<label class="item item-input">
 					<span class="input-label">详细地址</span>
-					<input type="text" x-ng-model="order.Address.Address">
+					<input type="text" x-ng-model="order.Address.Address" required>
 				</label>
 				<label class="item item-input">
 					<span class="input-label">邮编</span>
-					<input type="text" x-ng-model="order.Address.Zip">
+					<input type="text" x-ng-model="order.Address.Zip" required>
 				</label>
 				<label class="item item-input">
 					<span class="input-label">收件人</span>
-					<input type="text" x-ng-model="order.Address.Contact">
+					<input type="text" x-ng-model="order.Address.Contact" required>
 				</label>
 				<label class="item item-input">
 					<span class="input-label">联系电话</span>
-					<input type="text" x-ng-model="order.Address.Phone">
+					<input type="text" x-ng-model="order.Address.Phone" required>
 				</label>
 			</div>
 			<div class="padding">
