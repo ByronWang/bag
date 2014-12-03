@@ -15,13 +15,22 @@ angular.module('starter.services', []).factory('Host', function($http) {
 	}
 	
 	var server = {
-			live: "none"
+			Live: "none",
+			isLive: function(){
+				return this.Live == "live";
+			}
 	};
 	
 	$http.get(host + '/start.json').then(function(resp) {
-		server = resp.data;
-	}, function(err) {
-		server.live = "error";	
+		if(200<=resp.status && resp.status < 300 ){
+			angular.extend(server,resp.data);			
+		}else{
+			server.Live = "error";	
+			server.Msg = "当前无法正确连接到服务器，请确认网络连接!";		
+		}
+	},function(err) {
+		server.Live = "error";	
+		server.Msg = "当前无法正确连接到服务器，请确认网络连接!"
 	});
 //	 host = "http://www.gouwudai.net.cn:8686";
 	return {
@@ -32,9 +41,6 @@ angular.module('starter.services', []).factory('Host', function($http) {
 		},
 		getServer : function(){
 			return server;
-		},		
-		isLive: function(){
-			return server.live;
 		}
 	};
 }).factory('$localstorage', [ '$window', function($window) {
@@ -53,6 +59,8 @@ angular.module('starter.services', []).factory('Host', function($http) {
 		}
 	};
 } ]).factory('Inventorys', function($resource, Host) {
+	return $resource(Host.host + '/d/Inventory/:itemId');
+} ).factory('InventoryItems', function($resource, Host) {
 	return $resource(Host.host + '/d/OrderItem/:itemId');
 } ).factory('Balances', function($resource, Host) {
 	return $resource(Host.host + '/d/Balance/:userId');
@@ -261,48 +269,8 @@ angular.module('starter.services', []).factory('Host', function($http) {
 
 			return q.promise;
 		},
-//		getCountryRegion : function(position) {
-//			var q = $q.defer();
-//
-//			if (Host.pc) {		
-//				q.resolve(position);
-//				return q.promise;
-//			}
-//			
-//			var url = 'http://111.221.29.14/REST/v1/Locations/' + position.coords.latitude + ',' + position.coords.longitude + '?includeEntityTypes=Address&o=json&key=AlVuxcZtD7dY3Hb8ZFcOx_JSm0Vnqq1m82cx77HLguQ-7Em9e0Hul0pNfFLuPCwg&c=zh-Hans' + "&jsonp=JSON_CALLBACK";
-//		    $ionicLoading.show({template: '获取位置信息...'});
-//		    
-//			$http.jsonp(url).success(function(result) {				
-//				$ionicLoading.hide();
-//				var resources = result.resourceSets[0].resources;
-//				var region = resources[resources.length - 1];
-//				q.resolve(region);
-//			}, function(err) {
-//				q.reject(err);
-//			}, options);
-//
-//			return q.promise;
-//		},
 		getRegion : function() {
-			var q = $q.defer();
-
-			/*
-			if (Host.pc) {		
-				var region = {};
-				region.coords = {
-						latitude: 102.1,
-						longitude:11.10
-				};
-				region.address = {
-						countryRegion: "中国",
-						adminDistrict:"上海",
-						adminDistrict2:"浦东"
-				};				
-				q.resolve(region);
-				return q.promise;
-			}
-			*/
-			
+			var q = $q.defer();			
 			var qLocation = this.getGeolocation();
 			qLocation.then(function(position){
 				var url = 'http://111.221.29.14/REST/v1/Locations/' + position.coords.latitude + ',' + position.coords.longitude + '?includeEntityTypes=Address&o=json&key=AlVuxcZtD7dY3Hb8ZFcOx_JSm0Vnqq1m82cx77HLguQ-7Em9e0Hul0pNfFLuPCwg&c=zh-Hans' + "&jsonp=JSON_CALLBACK";

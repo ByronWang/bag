@@ -22,6 +22,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.cart.edit($scope);
 	};
 	$scope.host = Host.host;
+	$scope.server = Host.getServer();
 	$scope.setHost = function(host) {
 		if (host && host.length > 1) {
 			$scope.host = host;
@@ -31,10 +32,12 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 }).controller('TabsCtrl', function($scope, $ionicTabsDelegate, $state, LoginUser, Popup) {
 	var navs = [ 'dash', 'cart', 'inventorys', 'orders.customer', 'account' ];
 	$scope.makeSureLogin = function(index) {
-		LoginUser.needLogin($scope.$new(), function() {
-			$ionicTabsDelegate.$getByHandle('rootTabs').select(index);
-			$state.go(navs[index]);
-		});
+		if($scope.server.isLive()){
+			LoginUser.needLogin($scope.$new(), function() {
+				$ionicTabsDelegate.$getByHandle('rootTabs').select(index);
+				$state.go(navs[index]);
+			});
+		}
 	};
 
 }).controller('LoginCtrl', function($scope, Users, Popup) {
@@ -66,6 +69,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.pay = function() {
 		Popup.show($scope, 'templates/modal-pay-for-purchaser.html', function(user) {
 			$scope.currentUser.reload();
+			$scope.$parent.done($scope.user);
 		});
 	};
 }).controller('PayForPurchaserCtrl', function($scope, Users, Popup) {
@@ -730,7 +734,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.becomePurchaser = function() {
 		Popup.show($scope, 'templates/modal-become-purchaser.html');
 	};
-}).controller('InventoryDetailCtrl', function($scope, $state, Category, Exts, OrderBiding, $timeout, $state, Popup, DeliveryMethod, Inventorys) {
+}).controller('InventoryDetailCtrl', function($scope, $state, Category, Exts, OrderBiding, $timeout, $state, Popup, DeliveryMethod, InventoryItems) {
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
@@ -738,7 +742,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 	var load = function(funcPageLoadSucceed) {
 		$scope.triger1 = false;
-		$scope.item = Inventorys.get({
+		$scope.item = InventoryItems.get({
 			itemId : $scope.$parent.item.ID
 		}, function() {
 			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);

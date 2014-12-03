@@ -9,6 +9,7 @@
 	<ion-content has-header="true" padding="false">
 		<ion-refresher on-refresh="doRefresh()"  pulling-text="下拉刷新..."  refreshing-text="更新中"  refreshing-icon="ion-loading-c"></ion-refresher>
 		<pane x-ng-show="step==1">
+		<form name="mainform" novalidate>
 			<div class="list top">
 				<div class="item">
 					<div class="item-avatar item-product">
@@ -28,6 +29,7 @@
 						</div>
 					</div>
 				</div>
+				
 				<div class="item">
 					<div class="list data">
 						<div class="item item-avatar item-product-user">
@@ -72,7 +74,7 @@
 					<div class="item message message-strong energized" style="border-bottom: 0;">
 						<i class="ion-ios7-information-outline"></i><span>这是你的订单！</span>
 					</div>
-					</div>
+				</div>
 					
 					
 				<div class="item" style="padding: 0;" x-ng-hide="item.CustomerID==currentUser.ID">
@@ -103,11 +105,13 @@
 							<input type="text" x-ng-model="suitor.Comment">
 							<i class="icon ion-ios7-arrow-forward item-note"></i></label>
 					</div>
+					<div class="padding"  x-ng-hide="item.CustomerID==currentUser.ID">
+						<button class="button button-block  button-positive" x-ng-click="submit()" x-ng-disabled="mainform.$invalid">确认</button>
+					</div>
 				</div>
 			</div>
-			<div class="padding"  x-ng-hide="item.CustomerID==currentUser.ID">
-				<button class="button button-block  button-positive" x-ng-click="submit()">确认</button>
-			</div>
+			
+				</form>
 		</pane>
 
 		<pane x-ng-show="step==2">
