@@ -28,25 +28,27 @@
 		<script src="js/filter.js"></script>
 	</head>
 	<body x-ng-app="starter" animation="slide-in-up" x-ng-controller="GlobalCtrl">
+		<div id="topMsg" x-ng-hide="server.isLive()">{{server.Msg}}
+		<div id="warning"></div></div>
 		<ion-tabs  delegate-handle="rootTabs" class="tabs-icon-top tabs-stable" x-ng-controller="TabsCtrl">
 
-			<ion-tab title="首页" icon="icon ion-home" href="#/dash">
+			<ion-tab title="首页" icon="icon ion-home" href="#/dash" x-ng-disabled="!server.isLive()">>
 				<ion-nav-view name="tab-dash"></ion-nav-view>
 			</ion-tab>
 
-			<ion-tab title="购物车" icon="icon ion-ios7-cart" href="#/cart" x-ng-click="makeSureLogin(1);">
+			<ion-tab title="购物车" icon="icon ion-ios7-cart" href="#/cart" x-ng-click="makeSureLogin(1);" x-ng-disabled="!server.isLive()">
 				<ion-nav-view name="tab-cart"></ion-nav-view>
 			</ion-tab>
 
-			<ion-tab title="接单" icon="icon ion-filing" href="#/inventorys">
+			<ion-tab title="接单" icon="icon ion-filing" href="#/inventorys" x-ng-disabled="!server.isLive()">>
 				<ion-nav-view name="tab-inventorys"></ion-nav-view>
 			</ion-tab>
 
-			<ion-tab title="订单" icon="icon ion-ios7-paper" href="#/orders" x-ng-click="makeSureLogin(3);">
+			<ion-tab title="订单" icon="icon ion-ios7-paper" href="#/orders" x-ng-click="makeSureLogin(3);" x-ng-disabled="!server.isLive()">>
 				<ion-nav-view name="tab-orders"></ion-nav-view>
 			</ion-tab>
 
-			<ion-tab title="我的" icon="icon ion-person" href="#/account" x-ng-click="makeSureLogin(4);">
+			<ion-tab title="我的" icon="icon ion-person" href="#/account" x-ng-click="makeSureLogin(4);" x-ng-disabled="!server.isLive()">>
 				<ion-nav-view name="tab-account"></ion-nav-view>
 			</ion-tab>
 		</ion-tabs>
