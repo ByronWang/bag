@@ -251,6 +251,11 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		return $scope.hasmore;
 	};
 
+	$scope.newProduct = function() {
+		var scope = $scope.$new();
+		Popup.show(scope, 'templates/modal-new-product.html');
+	};
+
 }).controller('ProductDetailCtrl', function($scope, $stateParams, Products, Exts, LoginUser, Category) {
 
 	$scope.product = Products.get({
