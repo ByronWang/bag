@@ -94,24 +94,26 @@
 		</div>
 		<div class="item item-product-info">
 			<div class="message" style="font-weight: bold;">
-				<i class="ion-ios7-paper-outline"></i><span>购物小票</span>
-			</div>
-			<div class="item item-avatar item-product" style="border: 0;" x-ng-repeat="img in  current.Extends.InvoiceImageList">
-				<img align="center" x-ng-src="{{img.uri | URI}}">
-			</div>
-			<div class="item item-avatar item-product col" style="border: 0;">
-				<a x-ng-click="showInvoiceCameraMenu();"> <i class="icon ion-ios7-camera"></i> <h2>更新图片</h2> </a>
-			</div>
-		</div>
-		<div class="item item-product-info">
-			<div class="message" style="font-weight: bold;">
 				<i class="ion-image"></i><span>商品照片</span>
 			</div>
 			<div class="item item-avatar item-product" style="border: 0;" x-ng-repeat="im in  current.Extends.ProductActualImageList">
 				<img align="center" x-ng-src="{{im.uri | URI}}">
+				<a class="button icon button-icon ion-ios7-close-empty" x-ng-click="current.Extends.ProductActualImageList.splice($index,1);" style="position: relative;top: 0;right: 0;"></a>
 			</div>
 			<div class="item item-avatar item-product" style="border: 0;">
 				<a x-ng-click="showProductCameraMenu();"> <i class="icon ion-ios7-camera"></i> <h2>更新图片</h2> </a>
+			</div>
+		</div>
+		<div class="item item-product-info">
+			<div class="message" style="font-weight: bold;">
+				<i class="ion-ios7-paper-outline"></i><span>购物小票</span>
+			</div>
+			<div class="item item-avatar item-product" style="border: 0;" x-ng-repeat="img in  current.Extends.InvoiceImageList">
+				<img align="center" x-ng-src="{{img.uri | URI}}">
+				<a class="button icon button-icon ion-ios7-close-empty" x-ng-click="current.Extends.InvoiceImageList.splice($index,1);" style="position: relative;top: 0;right: 0;"></a>
+			</div>
+			<div class="item item-avatar item-product col" style="border: 0;">
+				<a x-ng-click="showInvoiceCameraMenu();"> <i class="icon ion-ios7-camera"></i> <h2>更新图片</h2> </a>
 			</div>
 		</div>
 		<div class="item">
