@@ -1,4 +1,4 @@
-angular.module('starter.services', []).factory('Host', function() {
+angular.module('starter.services', []).factory('Host', function($http) {
 	var host = window.location.host;
 	var pc = false;// For Test
 	if (host) {
@@ -18,7 +18,7 @@ angular.module('starter.services', []).factory('Host', function() {
 			live: "none"
 	};
 	
-	$http.get('js/ProvinceAndCityJson.json').then(function(resp) {
+	$http.get(host + '/start.json').then(function(resp) {
 		server = resp.data;
 	}, function(err) {
 		server.live = "error";	
@@ -33,7 +33,7 @@ angular.module('starter.services', []).factory('Host', function() {
 		getServer : function(){
 			return server;
 		},		
-		isServerLive: function(){
+		isLive: function(){
 			return server.live;
 		}
 	};
