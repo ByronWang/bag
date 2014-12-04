@@ -13,7 +13,10 @@ angular.module('starter.services', []).factory('Host', function($http) {
 		host = "http://" + host + ":8686";
 		pc = false;
 	}
-	
+
+//	 host = "http://www.gouwudai.net.cn:8686";
+	 host = "http://www.gouwudai.net.cn:8686";
+	 
 	var server = {
 			Live: "none",
 			isLive: function(){
@@ -32,8 +35,6 @@ angular.module('starter.services', []).factory('Host', function($http) {
 		server.Live = "error";	
 		server.Msg = "当前无法正确连接到服务器，请确认网络连接!"
 	});
-//	 host = "http://www.gouwudai.net.cn:8686";
-//	 host = "http://www.gouwudai.net.cn:8686";
 	return {
 		host : host,
 		pc : pc,
