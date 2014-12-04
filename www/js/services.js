@@ -1,21 +1,20 @@
-angular.module('starter.services', []).factory('Host', function($http) {
+angular.module('starter.services', []).factory('Host', function($http,$timeout) {
 	var host = window.location.host;
 	var pc = false;// For Test
 	if (host) {
 		host = host.substr(0, host.indexOf(":"));
 		host = "http://" + host + ":8686";
+//		host = "www.gouwudai.net.cn";
 		pc = true;
 	} else {
 //		host = "192.168.0.101";
 		 host = "192.168.12.101";
 		// host = "10.0.0.57";
-		 host = "172.20.10.2"
+		 host = "172.20.10.2";
+		host = "www.gouwudai.net.cn";
 		host = "http://" + host + ":8686";
 		pc = false;
 	}
-
-//	 host = "http://www.gouwudai.net.cn:8686";
-	 host = "http://www.gouwudai.net.cn:8686";
 	 
 	var server = {
 			Live: "none",
@@ -24,17 +23,35 @@ angular.module('starter.services', []).factory('Host', function($http) {
 			}
 	};
 	
-	$http.get(host + '/start.json').then(function(resp) {
-		if(200<=resp.status && resp.status < 300 ){
-			angular.extend(server,resp.data);			
-		}else{
+	var tryConnection = function(){
+		$http.get(host + '/start.json').then(function(resp) {
+			if(200<=resp.status && resp.status < 300 ){
+				angular.extend(server,resp.data);			
+			}else{
+				server.Live = "error";	
+				server.Msg = "当前无法正确连接到服务器，请确认网络连接!";		
+				retryConnection();
+			}
+		},function(err) {
 			server.Live = "error";	
-			server.Msg = "当前无法正确连接到服务器，请确认网络连接!";		
-		}
-	},function(err) {
-		server.Live = "error";	
-		server.Msg = "当前无法正确连接到服务器，请确认网络连接!"
-	});
+			server.Msg = "当前无法正确连接到服务器，请确认网络连接!";
+			retryConnection();
+		});
+	};
+	
+	var retryConnection = function(){
+		var timer ={};
+		 timer = $timeout(
+	             function() {
+	            	 $timeout.cancel(timer);
+	            	 tryConnection();
+	             },
+	             2000
+	      );
+	};
+	
+	tryConnection();
+		
 	return {
 		host : host,
 		pc : pc,
@@ -43,6 +60,9 @@ angular.module('starter.services', []).factory('Host', function($http) {
 		},
 		getServer : function(){
 			return server;
+		},
+		retry: function(){
+			retryConnection();
 		}
 	};
 }).factory('$localstorage', [ '$window', function($window) {
