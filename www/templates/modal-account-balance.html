@@ -9,28 +9,37 @@
 		<ion-refresher on-refresh="doRefresh()"		pulling-text="下拉刷新..."		refreshing-text="更新中"		refreshing-icon="ion-loading-c"></ion-refresher>	
 		<div class="list">
 			<div class="item item-button-right">
-				账户：{{balance.Amount}}元
+				账户：{{balance.Amount}} 元
 				<button class="button" x-ng-click="withdraw($event);"  x-ng-disabled="balance.Amount<=0">提现</button>
 			</div>
 		</div>
 
 		<div class="list" x-ng-show="data.payments.length>0">
-			<a class="item item-icon-left item-icon-right" x-ng-repeat="payment in data.payments"  x-ng-click="showDetail(payment);">
+			<!--<a class="item item-icon-left item-icon-right" x-ng-repeat="payment in data.payments"  x-ng-click="showDetail(payment);">-->
+			<a class="item item-icon-right" x-ng-repeat="payment in data.payments"  x-ng-click="showDetail(payment);">
 			<pane x-ng-show="payment.PayTypeID==1"><!-- 买手保证金 -->
-			<i class="icon ion-ios7-people-outline color-icon"></i> {{payment.Description}} &nbsp; - {{payment.Amount}}<i class="icon ion-ios7-arrow-forward item-note"></i>
+			<!--<i class="icon ion-ios7-people-outline color-icon"></i>-->
+				<!--{{payment.Description}} &nbsp; - {{payment.Amount}}<i class="icon ion-ios7-arrow-forward item-note"></i>-->
+				{{payment.Datetime}}&nbsp;{{payment.Description}}&nbsp;-{{payment.Amount}}<i class="icon ion-ios7-arrow-forward item-note"></i>
 			</pane> 
 						<pane x-ng-show="payment.PayTypeID==2"><!-- 购买保证金 -->
-			<i class="icon ion-ios7-people-outline color-icon"></i> {{payment.Description}} &nbsp; - {{payment.Amount}}  &nbsp;+ {{payment.OrderNo}} <i class="icon ion-ios7-arrow-forward item-note"></i>
-			</pane> 
+			<!--<i class="icon ion-ios7-people-outline color-icon"></i>-->
+							{{payment.Datetime}} {{payment.Description}}&nbsp;-{{payment.Amount}}<i class="icon ion-ios7-arrow-forward item-note"></i>
+			</pane>
 						<pane x-ng-show="payment.PayTypeID==3"><!-- 提现 -->
-			<i class="icon ion-ios7-people-outline color-icon"></i> {{payment.Description}}&nbsp; - {{payment.Amount}}<i class="icon ion-ios7-arrow-forward item-note"></i>
+			<!--<i class="icon ion-ios7-people-outline color-icon"></i> -->
+							{{payment.Datetime}}&nbsp;{{payment.Description}}&nbsp;-{{payment.Amount}}<i class="icon ion-ios7-arrow-forward item-note"></i>
 			</pane> 
 						<pane x-ng-show="payment.PayTypeID==4"><!-- 退款-->
-			<i class="icon ion-ios7-people-outline color-icon"></i> {{payment.Description}}&nbsp; + {{payment.Amount}}  &nbsp; {{payment.OrderNo}}  <i class="icon ion-ios7-arrow-forward item-note"></i>
+			<!--<i class="icon ion-ios7-people-outline color-icon"></i>-->
+							{{payment.Datetime}}&nbsp;{{payment.Description}}&nbsp;+{{payment.Amount}}<i class="icon ion-ios7-arrow-forward item-note"></i>
 			</pane> 
-			<pane x-ng-show="payment.PayTypeID==5"><!-- 支付购买款项 -->
-			<i class="icon ion-ios7-people-outline color-icon"></i> {{payment.Description}} &nbsp;+ {{payment.Amount}}  &nbsp; {{payment.OrderNo}} <i class="icon ion-ios7-arrow-forward item-note"></i>
-			</pane> 
+			<!--<pane x-ng-show="payment.PayTypeID==5">&lt;!&ndash; 支付购买款项 &ndash;&gt;-->
+			<!--<i class="icon ion-ios7-people-outline color-icon"></i> {{payment.Description}} &nbsp;+ {{payment.Amount}}  &nbsp; {{payment.OrderNo}} <i class="icon ion-ios7-arrow-forward item-note"></i>-->
+			<!--</pane> -->
+				<pane x-ng-show="payment.PayTypeID==5"><!-- 支付购买款项 -->
+					{{payment.Datetime}}&nbsp;{{payment.Description}}&nbsp;+{{payment.Amount}}<i class="icon ion-ios7-arrow-forward item-note"></i>
+				</pane>
 
 	<span x-ng-show="payment.TransStatus==1">开始支付</span>
 	<span x-ng-show="payment.TransStatus==2">支付完成</span>
