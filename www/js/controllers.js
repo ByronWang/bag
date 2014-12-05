@@ -102,7 +102,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.done = function() {
 		$scope.$parent.done($scope.user);
 	};
-}).controller('PaymentCtrl', function($scope, Users, Popup, PaymentFlow, Unipay) {
+}).controller('PaymentCtrl', function($scope, Users, Popup,$ionicPopup, PaymentFlow, Unipay) {
 	// getTradeNO PaymentRequest
 	$scope.$watch('$parent.payment',function(){
 		$scope.payment = $scope.$parent.payment;		
@@ -132,8 +132,19 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	var doPayFromBank = function(tradeNo) {
 		Unipay.pay(tradeNo).then(function() {
 			$scope.finishPayment();
-		});
+                                 },function(){
+                                 
+                                 var confirmPopup = $ionicPopup.alert({
+                                                                       title : '确认',
+                                                                       okText : '确定',
+                                                                       template : '支付已失败，请稍后再试！'
+                                                                       });
+                                 
+                                 confirmPopup.then(function(reason) {});
+                                 
+                                 });
 	};
+              
 
 	$scope.finishPayment = function() {
 		flowStepOut(2, $scope.payment, function(payment) {
