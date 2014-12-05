@@ -479,6 +479,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 			}
 			// q.resolve("succeed");
 			cn.xj.bag.plugin.Unionpay.payForTest(tradeNo, function(result) {
+				alert(result);
 				// Do any magic you need
 				q.resolve(result);
 			}, function(err) {

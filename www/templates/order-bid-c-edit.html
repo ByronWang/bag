@@ -142,6 +142,7 @@
 			</pane>
 			<pane x-ng-show="payment.ActionID == 2">
 				<div class="padding">
+					<button class="button button-block button-positive" x-ng-click="doPay()">支付失败，重新支付</button>
 					<button class="button button-block button-positive" x-ng-click="finishPayment()">刷新支付状态</button>
 				</div>
 			</pane>
