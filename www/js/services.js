@@ -396,16 +396,15 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 				}
 			}
 		},
-		login : function(username, pwd, funcSucceed) {
+		login : function(username, md5Password, funcSucceed,funcError) {
 			var _this = this;
+
 			$http.post(Host.host + '/f/access/', {
 				Name : username,
-				Password : pwd
-			}).success(function(response) { // TODO
-				var users = loginUsers.query({
-					Name : username
-				}, function() {
-					var user = users[0];
+				Password : md5Password
+			}).then(function(resp) { // TODO
+				if(resp.status == 200){
+					var user = resp.data;
 					_this.ID = user.ID;
 					_this.isLogin = true;
 					_this.isPurchase = user.isPurchase;
@@ -420,7 +419,12 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 					}
 					_this.isLogin = true;
 					funcSucceed(user);
-				});
+				}else{
+					if(funcError){
+						funcError("认证失败，请确认你的用户名密码！");
+						return;
+					}					
+				}
 			});
 		},
 		checkReadedForOrderList : function(orderList){

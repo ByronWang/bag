@@ -9,6 +9,8 @@
 		</div>
 	</ion-header-bar>
 	<ion-content>
+		<div id="modal_massage" x-ng-show="ErrorMessage">{{ErrorMessage}}</div>
+		<form name="mainform" novalidate>
 		<div class="list list-inset" style="margin: 10px;">
 			<label class="item item-input">
 				<span class="input-label">用户名</span>
@@ -18,11 +20,11 @@
 			</label>
 			<label class="item item-input">
 				<span class="input-label">用户名</span>
-				<input type="text" x-ng-model="user.Name">
+				<input type="text" x-ng-model="user.Name" required>
 			</label>
 			<label class="item item-input">
 				<span class="input-label">密码</span>
-				<input type="password" x-ng-model="user.Password">
+				<input type="password" x-ng-model="user.TextPassword" required>
 			</label>
 			<!-- for  test -->
 			<label class="item item-input">
@@ -39,8 +41,9 @@
 			</div>
 		</div>
 		<div class="padding">
-			<button class="button button-block button-positive" x-ng-click="login();">登录</button>
+			<button class="button button-block button-positive" x-ng-click="login();"  x-ng-disabled="mainform.$invalid">登录</button>
 		</div>
+		</form>
 		<!--<div class="right"><a x-ng-click="showSignup()">免费注册</a></div>-->
 	</ion-content>
 </ion-modal-view>

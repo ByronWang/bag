@@ -26,6 +26,16 @@
 	box-shadow: 1px 1px 1px #bbbbbb;
 }
 
+#modal_massage{
+	top: 1px;
+	left: 1px;
+	position: absolute;
+	background-color: #FFFF66;	
+	padding: 2px;
+	z-index: 1000;
+	box-shadow: 1px 1px 1px #bbbbbb;	
+}
+
 .list.data>.item>.label,.data-view .item-extends>.label {
 	font-weight: bold;
 	width: 6em;
