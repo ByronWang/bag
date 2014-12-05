@@ -11,7 +11,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		 host = "192.168.12.101";
 		// host = "10.0.0.57";
 		 host = "172.20.10.2";
-		host = "www.gouwudai.net.cn";
+//		host = "www.gouwudai.net.cn";
 		host = "http://" + host + ":8686";
 		pc = false;
 	}
