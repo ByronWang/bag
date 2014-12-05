@@ -46,12 +46,18 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.users = Users.query();
 	// for test
 	$scope.user.Name = "wangshilian";
+	$scope.user.TextPassword = "123456";
 	$scope.login = function() {
+		
+		var md5Password= hex_md5($scope.user.TextPassword);
 		$scope.$parent.setHost($scope.user.host);
-		$scope.currentUser.login($scope.user.Name, $scope.user.Password, function(user) {
+		$scope.currentUser.login($scope.user.Name, md5Password, function(user) {
 			if (user) {
+				$scope.ErrorMessage = undefined;
 				$scope.$parent.ret(user);
 			}
+		},function(msg){
+			$scope.ErrorMessage = msg;
 		});
 	};
 	$scope.showSignup = function() {
@@ -174,6 +180,14 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.user = {};
 
 	$scope.signup = function() {
+		
+		if($scope.user.TextPassword != $scope.user.ConfirmPassword ){
+			$scope.ErrorMsg = "密码必须一致！";
+			return;
+		}
+
+		$scope.user.Password = hex_md5($scope.user.TextPassword);
+			
 		if ($scope.user.TobePurchaser) {
 			var User = new Users($scope.user);
 			User.$save(function(resp) {
