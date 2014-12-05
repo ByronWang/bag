@@ -43,7 +43,7 @@
 		</div>
 
 		<pane data-ng-controller="PaymentCtrl">
-			<pane x-ng-show="payment.ActionID == 1">
+			<pane x-ng-show="payment.ActionID == 0">
 				<div class="list list-inset">
 					<div class="item item item-divider" style="background-color: #ffffff;">
 						总计<span class="assertive" style="float: right">{{payment.Amount}} 元</span>
@@ -62,6 +62,33 @@
 
 				<div class="padding">
 					<button class="button button-block button-positive" x-ng-click="doPay()">支付</button>
+				</div>
+			</pane>
+			<pane x-ng-show="payment.ActionID == 1">
+				<div class="list list-inset">
+					<div class="item item item-divider" style="background-color: #ffffff;">
+						总计<span class="assertive" style="float: right">{{payment.Amount}} 元</span>
+					</div>
+					<label class="item item-radio">
+						<input type="radio" name="group" checked>
+						<span class="item-content"> <i class="ion-card energized" style="margin-right: 10px; font-size: 180%; vertical-align: middle;"></i>银联支付 </span>
+						<i class="radio-icon ion-checkmark energized"></i>
+					</label>
+
+					<div class="message energized" style="padding-top: 10px;">
+						<i class="ion-ios7-information-outline"></i>
+						<span>更多支付方式随后就到</span>
+					</div>
+				</div>
+
+				<div class="padding">
+					<button class="button button-block button-positive" x-ng-click="doPay()">支付失败，重新支付</button>
+					<button class="button button-block button-positive" x-ng-click="finishPayment()">支付完成</button>
+				</div>
+			</pane>
+			<pane x-ng-show="payment.ActionID == 2">
+				<div class="padding">
+					<button class="button button-block button-positive" x-ng-click="finishPayment()">刷新支付状态</button>
 				</div>
 			</pane>
 

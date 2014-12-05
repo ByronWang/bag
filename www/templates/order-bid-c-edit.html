@@ -96,7 +96,8 @@
 	</div>
 </div>
 
-<div  x-ng-show="current.ActionID==Actions.payFinished.ID">
+<div  x-ng-show="current.ActionID==Actions.payFinished.ID || current.ActionID==Actions.payPrepare.ID " data-ng-controller="PayForOrderFinishCtrl">
+
 	<div class="list action data">
 		<div class="item item-avatar item-product-user">
 			<img src="{{item.BidPurchaser.Image | URI}}">
@@ -132,12 +133,18 @@
 			<i class="ion-ios7-information-outline"></i>
 			<span>支付结果确认中，请点击按钮刷新</span>
 		</div>
-		<div class="item">
-			<button class="button button-energized button-block" x-ng-click="confirmPay();">刷新</button>
-		</div>
-		<div class="item">
-			<button class="button button-assertive button-block" x-ng-click="cancelOrder();">取消订单</button>
-		</div>
+		<pane data-ng-controller="PaymentCtrl">
+			<pane x-ng-show="payment.ActionID == 1">
+				<div class="padding">
+					<button class="button button-block button-positive" x-ng-click="doPay()">支付失败，重新支付</button>
+					<button class="button button-block button-positive" x-ng-click="finishPayment()">支付完成</button>
+				</div>
+			</pane>
+			<pane x-ng-show="payment.ActionID == 2">
+				<div class="padding">
+					<button class="button button-block button-positive" x-ng-click="finishPayment()">刷新支付状态</button>
+				</div>
+			</pane>
 	</div>
 </div>
 

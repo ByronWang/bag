@@ -104,8 +104,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 }).controller('PaymentCtrl', function($scope, Users, Popup, PaymentFlow, Unipay) {
 	// getTradeNO PaymentRequest
-	$scope.payment = $scope.$parent.payment;
-	$scope.current = {};
+	$scope.$watch('$parent.payment',function(){
+		$scope.payment = $scope.$parent.payment;		
+	});
 
 	$scope.doPay = function() {
 		if ($scope.payment.PayMethodID == 1) {
@@ -130,13 +131,18 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	var doPayFromBank = function(tradeNo) {
 		Unipay.pay(tradeNo).then(function() {
-			finishPayment();
+			$scope.finishPayment();
 		});
 	};
 
-	var finishPayment = function() {
+	$scope.finishPayment = function() {
 		flowStepOut(2, $scope.payment, function(payment) {
 			$scope.payment = payment;
+			if($scope.payment.ActionID == 3){
+				if($scope.$parent.confirmedPayment){
+					$scope.$parent.confirmedPayment();					
+				}
+			}
 		});
 	};
 
@@ -961,7 +967,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		PayMethodID : 2,// Bank
 		Description : "订单支付",// Bank
 		OrderNo : $scope.item.ID,
-		ActionID : 1
+		ActionID : 0
 	};
 	$scope.done = function(payment) {
 		$scope.$parent.done(payment);
@@ -1209,7 +1215,24 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		scope.iampurchaser = iampurchaser;
 		Popup.show(scope, 'templates/modal-chat.html');
 	};
+	
 
+	$scope.confirmedPayment = function(){
+		load();		
+	};
+	
+}).controller('PayForOrderFinishCtrl', function($scope,PaymentFlow) {
+	$scope.$watch('$parent.current.PaymentID',function(){
+		$scope.item = $scope.$parent.item;
+		if( $scope.$parent.current.PaymentID){
+			var flows = PaymentFlow.query({
+				Payment : $scope.$parent.current.PaymentID
+			},function(){
+				$scope.payment =flows[0];
+			});
+		}
+	});
+	
 }).controller('OrderPurchaserDetailCtrl', function($scope, $q, Popup, OrderItems, $ionicPopup, Geolocation, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
 
 	var $stateParams = {

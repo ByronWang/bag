@@ -217,7 +217,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		getPicture : function(options) {
 			var q = $q.defer();
 
-			if (Host.pc) {
+			if (!navigator.camera) {
 				q.resolve("img/productActual-default.jpg");
 				return q.promise;
 			}
@@ -244,7 +244,8 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		},
 		upload : function(imageURI) {
 			var q = $q.defer();
-			if (Host.pc) {
+			
+			if (!FileUploadOptions) {
 				q.resolve({	response:"img/productActual-default.jpg"});
 				return q.promise;
 			}
