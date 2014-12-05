@@ -3,8 +3,8 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 	var pc = false;// For Test
 	if (host) {
 		host = host.substr(0, host.indexOf(":"));
-		host = "http://" + host + ":8686";
 //		host = "www.gouwudai.net.cn";
+		host = "http://" + host + ":8686";
 		pc = true;
 	} else {
 //		host = "192.168.0.101";
