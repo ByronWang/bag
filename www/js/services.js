@@ -325,33 +325,21 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		provinces : function() {
 			return provinces;
 		}
-	}
+	};
 }).factory('Exts', function() {
 	return {
 		encode : function(o) {
-			var es = "";
-			angular.forEach(o, function(v, k) {
-				es = es + k + ":" + v + ";";
-			});
-
-			if (es.length > 0) {
-				es = es.substr(0, es.length - 1);
-			}
-			return es;
+			var str = JSON.stringify(o);
+			str = str.replace(/"([^"]*)"/g, "'$1'");			
+			return str;
 		},
 		decode : function(str) {
-			var o = {};
-			if (str) {
-				var kva = str.split(";");
-				angular.forEach(kva, function(kv) {
-					var k_v = kv.split(":");
-					o[k_v[0]] = k_v[1];
-				});
-			}
-			return o;
+			var slocal = str || "";
+			var slocal = slocal.replace(/'([^']*)'/g, "\"$1\"");	
+			return JSON.parse(slocal || '{}');
 		}
 	};
-}).factory('LoginUser', function($ionicModal, $resource, $http, Host, Users, Cart) {
+}).factory('LoginUser', function($ionicModal, $resource, $http,Exts, Host, Users,$localstorage, $timeout) {
 	var loginUsers = $resource(Host.host + '/d/User/:userId');
 
 	var defaultUser = {
@@ -361,44 +349,71 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		Image : "img/avatar-default.jpg",
 		Address : {}
 	};
+	
+	
 
 	return {
+		rememberme : {},
 		readedItems :{},
+		cart :{},
+		waitingUpdateReadList: false,
 		isLogin : false,
 		BePurchaser : false,
 		needLogin : function($scope, funcSucceed) {
-			if (!this.isLogin) { // f/login
-				$scope.user = {};
-				$ionicModal.fromTemplateUrl('templates/modal-login.html', {
-					scope : $scope,
-					animation : 'slide-in-up'
-				}).then(function(modal) {
-					$scope.modal = modal;
-					$scope.modal.show();
-					return;
-				});
-				$scope.openModal = function() {
-					$scope.modal.show();
-				};
-				$scope.closeModal = function() {
-					$scope.modal.hide();
-				};
-				$scope.ret = function(user) {
-					Cart.load(user);
-					if (funcSucceed) {
-						funcSucceed(user);
-					}
-					$scope.modal.hide();
-				};
-			} else {
-				if (funcSucceed) {
-					funcSucceed();
-				}
-			}
-		},
-		login : function(username, md5Password, funcSucceed,funcError) {
 			var _this = this;
-
+			if (!_this.isLogin) { // f/login
+				var rememberme = $localstorage.getObject("rememberme");
+				if(rememberme.rememberme){
+					_this.login(rememberme.username, rememberme.md5Password,rememberme, funcSucceed,function(){
+						_this.doPopupLogin($scope, funcSucceed) ;
+					});
+				}else{
+					_this.doPopupLogin($scope, funcSucceed) ;
+				}
+			} else {
+				if (funcSucceed)	funcSucceed();
+			};
+				
+		},
+		doPopupLogin : function($scope, funcSucceed) {
+			$scope.user = {};
+			$ionicModal.fromTemplateUrl('templates/modal-login.html', {
+				scope : $scope,
+				animation : 'slide-in-up'
+			}).then(function(modal) {
+				$scope.modal = modal;
+				$scope.modal.show();
+				return;
+			});
+			
+			$scope.openModal = function() {
+				$scope.modal.show();
+			};
+			
+			$scope.closeModal = function() {
+				$scope.modal.hide();
+			};
+			
+			$scope.ret = function(user) {
+				if (funcSucceed) {
+					funcSucceed(user);
+				}
+				$scope.modal.hide();
+			};
+		},
+		login : function(username, md5Password,options, funcSucceed,funcError) {
+			var _this = this;
+			
+			if(options.rememberme){
+				$localstorage.setObject("rememberme",{
+					username: username,
+					md5Password :md5Password,
+					rememberme : true
+				});
+			}else{
+				$localstorage.setObject("rememberme",null);					
+			}
+			
 			$http.post(Host.host + '/f/access/', {
 				Name : username,
 				Password : md5Password
@@ -413,6 +428,11 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 					_this.Image = user.Image;
 					_this.BePurchaser = user.BePurchaser;
 					_this.Address = user.Address;
+
+					_this.readedItems = Exts.decode(user.ExtendsReaded);
+					_this.cart = Exts.decode(user.ExtendsCart) || {};
+					_this.cart.Countrys = _this.cart.Countrys || [];
+					
 
 					if (!_this.Image) {
 						_this.Image = "img/avatar-default.jpg";
@@ -439,8 +459,33 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 			var _this = this;
 			item.Readed = (_this.readedItems[item.ID]  && _this.readedItems[item.ID] == item.LastUpdated);
 		},
+		saveExtends : function(){
+			var _this = this;
+			if(!_this.waitingUpdateReadList){
+				_this.waitingUpdateReadList = true;
+				var timer = {};
+				timer= $timeout(
+			             function() {
+			            	 _this.waitingUpdateReadList = false;
+			            	 $timeout.cancel(timer);
+			 				 var user = Users.get({userId : _this.ID},function(){
+			 					user.ExtendsReaded = Exts.encode(_this.readedItems);
+			 					user.ExtendsCart = Exts.encode(_this.cart);
+			 					user.$update();
+							});
+			             },
+			             1
+			      );		
+			}
+		},
 		read : function(item){
-			this.readedItems[item.ID] =item.LastUpdated;
+			var old = this.readedItems[item.ID];
+			if(old == item.LastUpdated){
+				return;
+			}
+			
+			this.readedItems[item.ID] = item.LastUpdated;
+			this.saveExtends();
 		},
 		hasReaded : function(itemID,lastUpdated){
 			return lastUpdated==ReadedItems[itemID] ;
@@ -457,7 +502,10 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 				_this.NickName = user.NickName;
 				_this.Image = user.Image;
 				_this.BePurchaser = user.BePurchaser;
-				_this.Address = user.Address;
+				_this.Address = user.Address;				
+				_this.readedItems = Exts.decode(user.ExtendsReaded);
+				_this.cart = Exts.decode(user.ExtendsCart) || {};
+				_this.cart.Countrys = _this.cart.Countrys || [];
 			});
 		},
 		logoff : function(funcSucceed) {
@@ -623,25 +671,15 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 			return cren;
 		}
 	};
-}).factory('Cart', function($localstorage) {
-
-	var _user = {};
+}).factory('Cart', function(LoginUser) {
 
 	return {
-		Countrys : [],
-		load : function(user) {
-			_user = user;
-			var localCart = $localstorage.getObject("Cart" + _user.ID);
-			if (localCart.Countrys) {
-				this.Countrys = localCart.Countrys;
-			} else {
-				this.Countrys = [];
-			}
+		Countrys  : function(){
+			return LoginUser.cart.Countrys;
 		},
-
 		size : function() {
 			var len = 0;
-			angular.forEach(this.Countrys, function(o) {
+			angular.forEach(this.Countrys(), function(o) {
 				len = len + o.Items.length;
 			});
 			return len;
@@ -655,7 +693,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 			var itemAlready;
 
 			if (this.Countrys) {
-				angular.forEach(this.Countrys, function(o) {
+				angular.forEach(this.Countrys(), function(o) {
 					if (o.Name == item.Product.CountryName) {
 						countryAlreadyExist = true;
 						countryAlready = o;
@@ -682,15 +720,12 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 					Items : []
 				};
 				country.Items.push(item);
-				this.Countrys.push(country);
+				this.Countrys().push(country);
 			}
 			this.save();
 		},
 		save : function() {
-			var _this = this;
-			$localstorage.setObject("Cart" + _user.ID, {
-				Countrys : _this.Countrys
-			});
+			LoginUser.saveExtends();
 		}
 	};
 });

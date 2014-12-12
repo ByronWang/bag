@@ -40,18 +40,30 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		}
 	};
 
-}).controller('LoginCtrl', function($scope, Users, Popup) {
+}).controller('LoginCtrl', function($scope, $localstorage,Users, Popup) {
 	$scope.user = {};
 	$scope.user.host = $scope.$parent.host;
 	$scope.users = Users.query();
-	// for test
-	$scope.user.Name = "wangshilian";
-	$scope.user.TextPassword = "123456";
+	
+	var rememberme = $localstorage.getObject("rememberme");
+	if(rememberme && rememberme.rememberme){
+		// for test
+		$scope.user.Name = rememberme.username;
+		$scope.user.TextPassword = "!@#$%^&*";
+		$scope.user.rememberme =true;
+		$scope.user.md5Password = rememberme.md5Password;
+	}else{
+		$scope.user.Name = "wangshilian";
+		$scope.user.TextPassword = "123456";
+		$scope.user.rememberme =false;
+	}
 	$scope.login = function() {
-		
 		var md5Password= hex_md5($scope.user.TextPassword);
+		if($scope.user.rememberme && $scope.user.TextPassword == "!@#$%^&*" && $scope.user.Name == rememberme.username){
+			md5Password = $scope.user.md5Password;
+		}
 		$scope.$parent.setHost($scope.user.host);
-		$scope.currentUser.login($scope.user.Name, md5Password, function(user) {
+		$scope.currentUser.login($scope.user.Name, md5Password,{rememberme:$scope.user.rememberme}, function(user) {
 			if (user) {
 				$scope.ErrorMessage = undefined;
 				$scope.$parent.ret(user);
@@ -62,7 +74,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 	$scope.showSignup = function() {
 		Popup.show($scope, 'templates/modal-signup.html', function(user) {
-			$scope.currentUser.login(user.Name, user.Password, function(user) {
+			$scope.currentUser.login(user.Name, user.Password, {rememberme:$scope.user.rememberme},function(user) {
 				if (user) {
 					$scope.$parent.ret(user);
 				}
@@ -320,7 +332,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.next = function() {
 		var items = [];
 
-		angular.forEach($scope.cart.Countrys, function(c) {
+		angular.forEach($scope.cart.Countrys(), function(c) {
 			angular.forEach(c.Items, function(i) {
 				if (i.checked) {
 					items.push(i);
@@ -361,7 +373,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		var checked = country.checked;
 		if (checked) {
 			country.selected = true;
-			angular.forEach($scope.cart.Countrys, function(c) {
+			angular.forEach($scope.cart.Countrys(), function(c) {
 				if (c != country) {
 					c.selected = false;
 					c.checked = false;
@@ -380,7 +392,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.check = function($event, country, item) {
 		if (item.checked && !country.selected) {
-			angular.forEach($scope.cart.Countrys, function(c) {
+			angular.forEach($scope.cart.Countrys(), function(c) {
 				if (c != country) {
 					c.selected = false;
 					c.checked = false;
@@ -408,7 +420,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	var sumAll = function() {
 		var sum = 0;
 		var cnt = 0;
-		angular.forEach($scope.cart.Countrys, function(c) {
+		angular.forEach($scope.cart.Countrys(), function(c) {
 			if (c.selected) {
 				var checkall = true;
 				angular.forEach(c.Items, function(i) {
@@ -428,7 +440,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	sumAll();
 	$scope.refineCart = function() {
-		angular.forEach($scope.cart.Countrys, function(c) {
+		angular.forEach($scope.cart.Countrys(), function(c) {
 			var newitems = [];
 			angular.forEach(c.Items, function(i) {
 				if (!i.checked) {
@@ -1678,8 +1690,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.data.bigText = $scope.$parent.bigText;
 }).controller('AccountCtrl', function($scope, Popup, LoginUser) {
 	$scope.showLogin = function() {
-		// Popup.show($scope, 'templates/modal-login.html');
-		LoginUser.needLogin($scope.$new(), function() {
+		LoginUser.doPopupLogin($scope.$new(), function() {
 		});
 	};
 

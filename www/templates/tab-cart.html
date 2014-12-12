@@ -84,7 +84,7 @@
 		</div>
 
 		<pane x-ng-show="cart.size()!=0">
-			<ion-list ng-repeat="country in cart.Countrys"
+			<ion-list ng-repeat="country in cart.Countrys()"
 			show-delete="false"
 			show-reorder="false"
 			can-swipe="true" ng-if="country.Items.length>0">
