@@ -53,8 +53,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.user.rememberme =true;
 		$scope.user.md5Password = rememberme.md5Password;
 	}else{
-		$scope.user.Name = "wangshilian";
-		$scope.user.TextPassword = "123456";
+//		$scope.user.Name = "wangshilian";
+//		$scope.user.TextPassword = "123456";
 		$scope.user.rememberme =false;
 	}
 	$scope.login = function() {

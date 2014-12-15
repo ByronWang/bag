@@ -14,22 +14,11 @@
 		<div class="list list-inset" style="margin: 10px;">
 			<label class="item item-input">
 				<span class="input-label">用户名</span>
-				<select x-ng-model="user.Name" x-ng-options="u.Name as (u.NickName + ' - ' + u.Name ) for u in users">
-					<option value="">-- 请选择 --</option>
-				</select>
-			</label>
-			<label class="item item-input">
-				<span class="input-label">用户名</span>
 				<input type="text" x-ng-model="user.Name" required>
 			</label>
 			<label class="item item-input">
 				<span class="input-label">密码</span>
 				<input type="password" x-ng-model="user.TextPassword" required>
-			</label>
-			<!-- for  test -->
-			<label class="item item-input">
-				<span class="input-label">Host</span>
-				<input type="text"  x-ng-model="user.host" class="input">
 			</label>
 		</div>
 		<div class="list" style="margin: 0px 10px;">

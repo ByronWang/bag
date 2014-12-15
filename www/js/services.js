@@ -3,7 +3,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 	var pc = false;// For Test
 	if (host) {
 		host = host.substr(0, host.indexOf(":"));
-//		host = "www.gouwudai.net.cn";
+		host = "www.gouwudai.net.cn";
 		host = "http://" + host + ":8686";
 		pc = true;
 	} else {
@@ -217,10 +217,11 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		getPicture : function(options) {
 			var q = $q.defer();
 
+			/*
 			if (!navigator.camera) {
 				q.resolve("img/productActual-default.jpg");
 				return q.promise;
-			}
+			}*/
 			navigator.camera.getPicture(function(result) {
 				// Do any magic you need
 				q.resolve(result);
@@ -244,11 +245,11 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		},
 		upload : function(imageURI) {
 			var q = $q.defer();
-			
+			/*
 			if (!FileUploadOptions) {
 				q.resolve({	response:"img/productActual-default.jpg"});
 				return q.promise;
-			}
+			}*/
 			{
 				var options = new FileUploadOptions();
 				options.fileKey = "file";
@@ -273,6 +274,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		getGeolocation : function(options) {
 			var q = $q.defer();
 
+			/*
 			if (Host.pc) {
 				var position = {};
 				position.coords = {
@@ -281,7 +283,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 				};				
 				q.resolve(position);
 				return q.promise;
-			}
+			}*/
 		
 			navigator.geolocation.getCurrentPosition(function(result) {
 				q.resolve(result);
