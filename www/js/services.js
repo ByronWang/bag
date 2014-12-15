@@ -331,7 +331,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 }).factory('Exts', function() {
 	return {
 		encode : function(o) {
-			var str = JSON.stringify(o);
+			var str = JSON.stringify(o||{});
 			str = str.replace(/"([^"]*)"/g, "'$1'");			
 			return str;
 		},
