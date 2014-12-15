@@ -35,7 +35,6 @@
 						<div class="item item-avatar item-product-user">
 							<img src="{{item.CustomerImage | URI}}">
 							<span>{{item.CustomerNickName}}</span>
-							<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
 						</div>
 						<div class="item">
 							<span class="label"> 收件地址 </span><span class="item-value">中国 {{item.Address.Province}}-{{item.Address.City}}-{{item.Address.Area}}</span>
@@ -124,7 +123,7 @@
 			<div class="list top">
 				<div class="item">
 					<div class="item-avatar item-product">
-						<img align="center" x-ng-src="{{item.Product.Image | URI:'product' }}">
+						<img align="center" x-ng-src="{{item.Product.Image | URI:'product' }}" x-big-image="item.Product.Name">
 					</div>
 				</div>
 				<div class="item">
@@ -145,7 +144,6 @@
 						<div class="item item-avatar item-product-user">
 							<img src="{{item.CustomerImage | URI}}">
 							<span>{{item.CustomerNickName}}</span>
-							<a class="item-note"><i class="chatbox ion-chatbox-working"></i></a>
 						</div>
 						<div class="item">
 							<span class="label"> 收件地址 </span><span class="item-value">中国 {{item.Address.Province}}-{{item.Address.City}}-{{item.Address.Area}}</span>
