@@ -319,6 +319,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			item.Product = $scope.product;
 			if (!item.Product.CopyFromID) {
 				item.Product.CopyFromID = $scope.product.ID;
+				item.Product.ExpectedPrice = item.Product.Price;
+				item.Product.ID = undefined;
 			}
 			item.Quantity = 1;
 			$scope.cart.add(item);
@@ -453,26 +455,8 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 }).controller('NewProductCtrl', function($scope, $ionicActionSheet, $ionicScrollDelegate, Popup, $timeout, Products, Camera, Orders, Countries, Category, Exts) {
 	var productScrollDelegate = $ionicScrollDelegate.$getByHandle('product');
-
-	if ($scope.$parent.product) {
-		$scope.product = $scope.$parent.product;
-		$scope.product.ExpectedPrice = $scope.product.Price;
-		$scope.item = $scope.$parent.item;
-		$scope.categoryInEdit = false;
-	} else {
-		$scope.product = {};
-		$scope.product.Image = "img/mcfly.jpg";
-		$scope.isNew = true;
-		$scope.categoryInEdit = true;
-		$scope.item = {
-			Quantity : 1
-		};
-	}
 	$scope.categories = Category.level1();
-
-	$scope.product.CategoryDesc = "请选择分类！";
-
-	$scope.anchers = [];
+	$scope.anchers = [];	
 	$scope.desc = function() {
 		if ($scope.anchers.length > 0) {
 			var desc = "";
@@ -484,6 +468,22 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			return "请选择分类！";
 		}
 	};
+
+	if ($scope.$parent.product) {
+		$scope.product = $scope.$parent.product;
+		$scope.item = $scope.$parent.item;
+		$scope.categoryInEdit = false;
+		$scope.product.CategoryDesc = $scope.desc();
+	} else {
+		$scope.product = {};
+		$scope.product.CategoryDesc = "请选择分类！";
+		$scope.product.Image = "img/mcfly.jpg";
+		$scope.isNew = true;
+		$scope.categoryInEdit = true;
+		$scope.item = {
+			Quantity : 1
+		};
+	}
 
 	$scope.selectCat = function(cat) {
 		$scope.anchers.push(cat);
