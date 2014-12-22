@@ -48,6 +48,9 @@ angular.module('starter.filter', []).filter('URI', function(Host) {
 }).filter('hours', function() {
 	return function(value) {
 		if(value && value!=""){
+			if(value<1){
+				return "小于1小时";
+			}
 			var days = Math.floor(value / 24);
 			var day_hours = value % 24;
 			if(days > 0){
@@ -56,7 +59,7 @@ angular.module('starter.filter', []).filter('URI', function(Host) {
 				return day_hours + "小时";			
 			}
 		}else{
-			return "-";
+			return "小于1小时";
 		}
 	};
 });

@@ -25,10 +25,10 @@
 					<div class="item" x-ng-show="item.StatusID==1">
 						<span class="label">预想单价</span><span class="item-value strength"><b>{{item.Product.Price}}</b>&nbsp;元</span>
 					</div>
-					<div class="item" x-ng-show="item.StatusID==2 || item.StatusID==3">
+					<div class="item" x-ng-show="item.StatusID==2">
 						<span class="label">建议单价</span><span class="item-value strength"><b>{{item.Product.Price}}</b>&nbsp;元</span>
 					</div>
-					<div class="item" x-ng-show="item.StatusID==4">
+					<div class="item" x-ng-show="item.StatusID==3 || item.StatusID==4">
 						<span class="label">成交单价</span><span class="item-value strength"><b>{{item.Product.Price}}</b>&nbsp;元</span>
 					</div>
 					<div class="item">
@@ -36,7 +36,7 @@
 					</div>
 					<div class="item">
 						<span class="label">状态</span><span class="order-state"
-						x-ng-class="{'1': 'order-state-bid-bg', 2: 'order-state-purchase-bg', 3: 'order-state-delivering-bg', 4: 'order-state-completed-bg', 5: 'order-state-cancelOrder-bg',6: 'order-state-cancelPurchase-bg'}[item.StatusID]">{{item.StatusName}}</span>
+						x-ng-class="{'1': 'order-state-bid-bg', 2: 'order-state-purchase-bg', 3: 'order-state-delivering-bg', 4: 'order-state-completed-bg', 5: 'order-state-cancelOrder-bg',6: 'order-state-cancelPurchase-bg'}[item.StatusID]">{{item.ActionName}}</span>
 					</div>			
 			</div> <i class="ion-record assertive notify" x-ng-hide="item.Readed"></i> </a>
 			</div>
