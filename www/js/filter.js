@@ -5,7 +5,7 @@ angular.module('starter.filter', []).filter('URI', function(Host) {
 			if (path.indexOf("file://") >= 0 || path.indexOf("http://") >= 0 || path.indexOf("https://") >= 0) {
 				realPath = path;
 			} else if (path.indexOf("uploads") >= 0) {
-				realPath = Host.host + path;
+				realPath = Host.host() + path;
 			} else {
 				realPath = path;
 			}
