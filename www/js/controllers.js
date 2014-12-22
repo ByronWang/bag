@@ -702,7 +702,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	var load = function(funcPageLoadSucceed) {
-		$scope.countryName = "全部国家";
+		if(!$scope.countryName){
+			$scope.countryName= "全部国家";
+		}
+		
 
 		$scope.data = {
 			inventorys : []
@@ -737,9 +740,15 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.filter = function() {
 		$scope.countries = Countries.query();
 		Popup.show($scope, 'templates/modal-filter.html', function(country) {
-			$scope.countryID = country.ID;
-			$scope.countryName = country.Name;
-			load();
+			if(country){
+				$scope.countryID = country.ID;
+				$scope.countryName = country.Name;	
+				load();			
+			}else{
+				$scope.countryID = undefined;
+				$scope.countryName = "全部国家";
+				load();					
+			}
 		});
 	};
 
@@ -751,7 +760,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.changeCountry = function(c) {
 		$scope.countryID = c.ID;
 		$scope.countryName = c.Name;
-		$scope.Inventorys = Inventorys.query();
+		load();
 	};
 
 	// Load more after 1 second delay
