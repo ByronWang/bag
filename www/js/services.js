@@ -3,7 +3,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 	var pc = false;// For Test
 	if (host) {
 		host = host.substr(0, host.indexOf(":"));
-		host = "www.gouwudai.net.cn";
+		//host = "www.gouwudai.net.cn";
 		host = "http://" + host + ":8686";
 		pc = true;
 	} else {
@@ -51,10 +51,19 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 	};
 	
 	tryConnection();
-		
+	
+	var debugMode = true;
+	
 	return {
-		host : host,
-		pc : pc,
+		host :  function(){
+			return host;
+		},
+		isDebugMode: function(){
+			return debugMode;
+		},
+		isPc : function(){
+			return pc;
+		},
 		setHost : function(newhost) {
 			host = newhost;
 		},
@@ -63,6 +72,9 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		},
 		retry: function(){
 			retryConnection();
+		},
+		setDebugMode : function(debug){
+			debugMode = debug;
 		}
 	};
 }).factory('$localstorage', [ '$window', function($window) {
@@ -81,13 +93,13 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		}
 	};
 } ]).factory('Inventorys', function($resource, Host) {
-	return $resource(Host.host + '/d/Inventory/:itemId');
+	return $resource(Host.host() + '/d/Inventory/:itemId');
 } ).factory('InventoryItems', function($resource, Host) {
-	return $resource(Host.host + '/d/OrderItem/:itemId');
+	return $resource(Host.host() + '/d/OrderItem/:itemId');
 } ).factory('Balances', function($resource, Host) {
-	return $resource(Host.host + '/d/Balance/:userId');
+	return $resource(Host.host() + '/d/Balance/:userId');
 }).factory('DeliveryMethod', function($resource, Host) {
-	var list = $resource(Host.host + '/d/DeliveryMethod/:itemId').query();
+	var list = $resource(Host.host() + '/d/DeliveryMethod/:itemId').query();
 	return {
 		query : function(a, b, c) {
 			return list;
@@ -104,18 +116,18 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		}
 	};
 }).factory('Products', function($resource, Host) {
-	return $resource(Host.host + '/d/Product/:productId');
+	return $resource(Host.host() + '/d/Product/:productId');
 }).factory('Orders', function($resource, Host) {
-	var url = Host.host + '/d/Order/:orderId';
+	var url = Host.host() + '/d/Order/:orderId';
 	return $resource(url);
 }).factory('PurchaserOrdes', function($resource, Host) {
-	var url = Host.host + '/d/PurchaserOrder/:orderId';
+	var url = Host.host() + '/d/PurchaserOrder/:orderId';
 	return $resource(url);
 }).factory('OrderItems', function($resource, Host) {
-	var url = Host.host + '/d/OrderItem/:itemId';
+	var url = Host.host() + '/d/OrderItem/:itemId';
 	return $resource(url);
 }).factory('Users', function($resource, Host) {
-	var url = Host.host + '/d/User/:userId';
+	var url = Host.host() + '/d/User/:userId';
 	return $resource(url, {
 		userId : '@ID'
 	}, {
@@ -198,30 +210,30 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		}
 	};
 }).factory('OrderItemFlowByItem', function($resource, Host) {
-	return $resource(Host.host + '/d/OrderItemFlow/?OrderItem=:itemId');
+	return $resource(Host.host() + '/d/OrderItemFlow/?OrderItem=:itemId');
 }).factory('OrderItemFlow', function($resource, Host) {
-	return $resource(Host.host + '/d/OrderItemFlow/:flowId');
+	return $resource(Host.host() + '/d/OrderItemFlow/:flowId');
 }).factory('ChatMessages', function($resource, Host) {
-	return $resource(Host.host + '/d/ChatMessage/:id');
+	return $resource(Host.host() + '/d/ChatMessage/:id');
 }).factory('Payments', function($resource, Host) {
-	return $resource(Host.host + '/d/Payment/:paymentId');
+	return $resource(Host.host() + '/d/Payment/:paymentId');
 }).factory('PaymentFlow', function($resource, Host) {
-	return $resource(Host.host + '/d/PaymentFlow/:flowId');
+	return $resource(Host.host() + '/d/PaymentFlow/:flowId');
 }).factory('PaymentFlowByUser', function($resource, Host) {
-	return $resource(Host.host + '/d/User/:userId/PaymentFlow/:flowId');
+	return $resource(Host.host() + '/d/User/:userId/PaymentFlow/:flowId');
 }).factory('OrderBiding', function($resource, Host) {
-	return $resource(Host.host + '/d/Bid/:bidId');
+	return $resource(Host.host() + '/d/Bid/:bidId');
 }).factory('Camera', [ '$q', 'Host', function($q, Host) {
 
 	return {
 		getPicture : function(options) {
 			var q = $q.defer();
 
-			/*
-			if (!navigator.camera) {
+			
+			if (!navigator.camera && Host.isDebugMode()) {
 				q.resolve("img/productActual-default.jpg");
 				return q.promise;
-			}*/
+			}
 			navigator.camera.getPicture(function(result) {
 				// Do any magic you need
 				q.resolve(result);
@@ -245,11 +257,11 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		},
 		upload : function(imageURI) {
 			var q = $q.defer();
-			/*
-			if (!FileUploadOptions) {
+			
+			if (!FileUploadOptions && Host.isDebugMode()) {
 				q.resolve({	response:"img/productActual-default.jpg"});
 				return q.promise;
-			}*/
+			}
 			{
 				var options = new FileUploadOptions();
 				options.fileKey = "file";
@@ -257,7 +269,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 				options.mimeType = "multipart/form-data";
 				options.chunkedMode = false;
 				var ft = new FileTransfer();
-				var uploadUrl = encodeURI(Host.host + "/f/uploads/");
+				var uploadUrl = encodeURI(Host.host() + "/f/uploads/");
 				ft.upload(imageURI, uploadUrl, function(result) {
 					q.resolve(result);
 				}, function(err) {
@@ -274,8 +286,8 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		getGeolocation : function(options) {
 			var q = $q.defer();
 
-			/*
-			if (Host.pc) {
+			
+			if (Host.isPc() && Host.isDebugMode()) {
 				var position = {};
 				position.coords = {
 						latitude: 31.21,
@@ -283,7 +295,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 				};				
 				q.resolve(position);
 				return q.promise;
-			}*/
+			}
 		
 			navigator.geolocation.getCurrentPosition(function(result) {
 				q.resolve(result);
@@ -337,12 +349,12 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		},
 		decode : function(str) {
 			var slocal = str || "";
-			var slocal = slocal.replace(/'([^']*)'/g, "\"$1\"");	
+			slocal = slocal.replace(/'([^']*)'/g, "\"$1\"");	
 			return JSON.parse(slocal || '{}');
 		}
 	};
 }).factory('LoginUser', function($ionicModal, $resource, $http,Exts, Host, Users,$localstorage, $timeout) {
-	var loginUsers = $resource(Host.host + '/d/User/:userId');
+	var loginUsers = $resource(Host.host() + '/d/User/:userId');
 
 	var defaultUser = {
 		isLogin : false,
@@ -416,7 +428,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 				$localstorage.setObject("rememberme",null);					
 			}
 			
-			$http.post(Host.host + '/f/access/', {
+			$http.post(Host.host() + '/f/access/', {
 				Name : username,
 				Password : md5Password
 			}).then(function(resp) { // TODO
@@ -527,7 +539,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		pay : function(tradeNo) {
 			var q = $q.defer();
 
-			if (Host.pc) {
+			if (Host.isPc() && Host.isDebugMode()) {
 				q.resolve("succeed");
 				return q.promise;
 			}

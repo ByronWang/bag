@@ -25,7 +25,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.server = Host.getServer();
 	$scope.setHost = function(host) {
 		if (host && host.length > 1) {
-			$scope.host = host;
 			Host.setHost(host);
 		}
 	};
@@ -42,7 +41,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 }).controller('LoginCtrl', function($scope, $localstorage,Users, Popup) {
 	$scope.user = {};
-	$scope.user.host = $scope.$parent.host;
 	$scope.users = Users.query();
 	
 	var rememberme = $localstorage.getObject("rememberme");
@@ -62,7 +60,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		if($scope.user.rememberme && $scope.user.TextPassword == "!@#$%^&*" && $scope.user.Name == rememberme.username){
 			md5Password = $scope.user.md5Password;
 		}
-		$scope.$parent.setHost($scope.user.host);
+		//$scope.$parent.setHost($scope.user.host());
 		$scope.currentUser.login($scope.user.Name, md5Password,{rememberme:$scope.user.rememberme}, function(user) {
 			if (user) {
 				$scope.ErrorMessage = undefined;
