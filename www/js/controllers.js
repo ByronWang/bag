@@ -943,6 +943,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			pagesize : $scope.pagesize
 		}, function() {
 			var id = $scope.currentUser.ID;
+			$scope.currentUser.checkReadedForOrderList(ordersList);
 			angular.forEach(ordersList, function(o) {
 				var items = o.Items;
 				for ( var i = items.length - 1; i >= 0; i--) {
@@ -979,6 +980,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			page : $scope.page,
 			pagesize : $scope.pagesize
 		}, function() {
+			$scope.currentUser.checkReadedForOrderList(ordersList);
 			var id = $scope.currentUser.ID;
 			angular.forEach(ordersList, function(o) {
 				var items = o.Items;
