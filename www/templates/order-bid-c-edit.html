@@ -136,16 +136,19 @@
 		<pane data-ng-controller="PaymentCtrl">
 			<pane x-ng-show="payment.ActionID == 1">
 				<div class="padding">
-					<button class="button button-block button-positive" x-ng-click="doPay()">支付失败，重新支付</button>
 					<button class="button button-block button-positive" x-ng-click="finishPayment()">支付完成</button>
+					<button class="button button-block button-positive" x-ng-click="doPay()">支付失败，重新支付</button>
+					<button class="button button-assertive button-block" x-ng-click="cancelOrder();">取消订单</button>
 				</div>
 			</pane>
 			<pane x-ng-show="payment.ActionID == 2">
 				<div class="padding">
-					<button class="button button-block button-positive" x-ng-click="doPay()">支付失败，重新支付</button>
 					<button class="button button-block button-positive" x-ng-click="finishPayment()">刷新支付状态</button>
-				</div>
+					<button class="button button-block button-positive" x-ng-click="doPay()">支付失败，重新支付</button>
+					<button class="button button-assertive button-block" x-ng-click="cancelOrder();">支付失败，取消订单</button>
+				</div>		
 			</pane>
+
 	</div>
 </div>
 
