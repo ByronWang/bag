@@ -258,7 +258,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 		upload : function(imageURI) {
 			var q = $q.defer();
 			
-			if (!FileUploadOptions && Host.isDebugMode()) {
+			if (Host.isDebugMode()) {
 				q.resolve({	response:"img/productActual-default.jpg"});
 				return q.promise;
 			}
