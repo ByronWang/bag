@@ -446,6 +446,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 					_this.readedItems = Exts.decode(user.ExtendsReaded);
 					_this.cart = Exts.decode(user.ExtendsCart) || {};
 					_this.cart.Countrys = _this.cart.Countrys || [];
+					_this.refreshChecked(_this.cart.Countrys);
 					
 
 					if (!_this.Image) {
@@ -520,6 +521,7 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 				_this.readedItems = Exts.decode(user.ExtendsReaded);
 				_this.cart = Exts.decode(user.ExtendsCart) || {};
 				_this.cart.Countrys = _this.cart.Countrys || [];
+				_this.refreshChecked(_this.cart.Countrys);
 			});
 		},
 		logoff : function(funcSucceed) {
@@ -532,7 +534,32 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 			_this.BePurchaser = defaultUser.BePurchaser;
 			_this.Address = defaultUser.Address;
 			funcSucceed();
-		}
+		},
+		refreshChecked : function(countrys){
+			var hasSelected = false;
+			angular.forEach(countrys, function(c) {
+				if(!hasSelected){
+					var checkall = true;
+					var hasChecked = false;
+					angular.forEach(c.Items, function(i) {
+						checkall = checkall && i.checked;
+						hasChecked = hasChecked ||  i.checked;
+					});
+					if(hasChecked){
+						c.selected = true;			
+						hasSelected = true;	
+					}			
+					if (checkall) {
+						c.checked = checkall;
+					}
+				}else{
+					c.checked = false;
+					angular.forEach(c.Items, function(i) {
+						i.checked = false;
+					});
+				}
+			});
+		},
 	};
 }).factory('Unipay', function($q, Host) {
 	return {
@@ -705,12 +732,18 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 
 			var countryAlready;
 			var itemAlready;
+			
+			item.checked = true;
 
 			if (this.Countrys) {
 				angular.forEach(this.Countrys(), function(o) {
 					if (o.Name == item.Product.CountryName) {
 						countryAlreadyExist = true;
 						countryAlready = o;
+					}else{
+						angular.forEach(o.Items, function(i) {
+							i.checked = false;
+						});
 					}
 				});
 			}
@@ -727,6 +760,14 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 				} else {
 					countryAlready.Items.push(item);
 				}
+				var checkall = true;
+				angular.forEach(countryAlready.Items, function(i) {
+					checkall = checkall && i.checked;
+				});
+				countryAlready.selected = true;		
+				if (checkall) {
+					countryAlready.checked = checkall;
+				}
 			} else {
 				var country = {
 					Name : item.Product.CountryName,
@@ -735,8 +776,11 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 				};
 				country.Items.push(item);
 				this.Countrys().push(country);
+				country.selected = true;		
+				country.checked = true;
 			}
 			this.save();
+			LoginUser.refreshChecked(this.Countrys);
 		},
 		save : function() {
 			LoginUser.saveExtends();

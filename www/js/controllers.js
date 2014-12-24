@@ -329,7 +329,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 }).controller('CartCtrl', function($scope, Popup, Exts, $ionicListDelegate) {
 
-	$scope.next = function() {
+	$scope.makeOrder = function() {
 		var items = [];
 
 		angular.forEach($scope.cart.Countrys(), function(c) {
@@ -352,7 +352,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 	$scope.newProduct = function() {
 		var scope = $scope.$new();
-		Popup.show(scope, 'templates/modal-new-product.html');
+		Popup.show(scope, 'templates/modal-new-product.html',function(){
+			sumAll();			
+		});		
 	};
 
 	$scope.editProduct = function(item) {
@@ -361,12 +363,15 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		scope.product = item.Product;
 		Popup.show(scope, 'templates/modal-new-product.html', function() {
 			$ionicListDelegate.closeOptionButtons();
+			sumAll();
 		});
 	};
 
 	$scope.popupOrder = function(order) {
 		$scope.order = order;
-		Popup.show($scope, 'templates/modal-new-order.html');
+		Popup.show($scope, 'templates/modal-new-order.html',function(){
+			sumAll();
+		});
 	};
 
 	$scope.checkAll = function($event, country) {
@@ -389,6 +394,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		sumAll();
 	};
+	
 
 	$scope.check = function($event, country, item) {
 		if (item.checked && !country.selected) {
@@ -403,7 +409,6 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			});
 			country.selected = true;
 		}
-		;
 
 		var checkall = true;
 		angular.forEach(country.Items, function(i) {
