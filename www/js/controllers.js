@@ -327,7 +327,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		return false;
 	};
-}).controller('CartCtrl', function($scope, Popup, Exts, $ionicListDelegate) {
+}).controller('CartCtrl', function($scope, Popup, Exts,$ionicPopup, $ionicListDelegate) {
 
 	$scope.makeOrder = function() {
 		var items = [];
@@ -368,6 +368,25 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 
 	$scope.popupOrder = function(order) {
+		var checkSucceed = true;
+		angular.forEach(order.Items, function(newitem) {
+				if(newitem.Product.ExpectedPrice && Number(newitem.Product.ExpectedPrice) > 0){
+					
+				} else{
+					checkSucceed = false;
+				}
+		});
+		if(!checkSucceed){
+			   var alertPopup = $ionicPopup.alert({
+			     title: '警告!',
+			     template: '价格必须大于0'
+			   });
+			   alertPopup.then(function(res) {
+			   });
+			   return ;
+		}
+		
+		
 		$scope.order = order;
 		Popup.show($scope, 'templates/modal-new-order.html',function(){
 			sumAll();
@@ -683,10 +702,15 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		var submitOrder = function() {
 			var Order = new Orders($scope.order);
-			Order.$save(function() {
+			Order.$save(function(res, responseHeaders) {
 				$scope.$parent.refineCart();
 				$scope.$parent.closeModal();
-			});
+			},function(responseHeaders){
+			   var alertPopup = $ionicPopup.alert({
+				     title: '警告!',
+				     template: responseHeaders.statusText
+				 });
+			});			
 		};
 
 		if (promiseArray.length > 0) {

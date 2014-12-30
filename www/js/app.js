@@ -21,7 +21,7 @@ angular.module('starter', [ 'ionic', 'ngResource', 'starter.controllers', 'start
 })
 /* global loading dialog */
 .config(function($httpProvider) {
-	$httpProvider.interceptors.push(function($rootScope) {
+	$httpProvider.interceptors.push(function($rootScope,$q) {
 		return {
 			request : function(config) {
 				// $rootScope.$broadcast('loading:show');
@@ -32,8 +32,13 @@ angular.module('starter', [ 'ionic', 'ngResource', 'starter.controllers', 'start
 				return response;
 			},
 			responseError : function(response) {
-				// alert("adf");
-				return response;
+				if(response.status == 200){
+					
+				}else if( response.config.method == "POST"){
+				     return $q.reject(response);
+				}else{
+				     return $q.reject(response);		
+				}
 			}
 		};
 	});

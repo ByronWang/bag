@@ -41,7 +41,7 @@
 				<ion-nav-view name="tab-cart"></ion-nav-view>
 			</ion-tab>
 
-			<ion-tab title="接单" icon="icon ion-filing" href="#/inventorys" x-ng-disabled="!server.isLive()">
+			<ion-tab title="接单" icon="icon ion-filing" href="#/inventorys" x-ng-click="makeSureLogin(2);"  x-ng-disabled="!server.isLive()">
 				<ion-nav-view name="tab-inventorys"></ion-nav-view>
 			</ion-tab>
 
