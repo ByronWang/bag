@@ -201,16 +201,19 @@
 					<div x-ng-show="statusActiveSlide==0">
 					&nbsp;
 						<ng-include src="'templates/order-bid-c-edit.html'" ng-if="current.StatusID==1"></ng-include>
+						<ng-include src="'templates/order-cancel-check.html'" ng-if="current.StatusID==1"></ng-include>
 						<ng-include src="'templates/order-bid-c-info.html'" ng-if="current.StatusID!=1"></ng-include>
 					</div>
 					<div x-ng-show="statusActiveSlide==1">
 					&nbsp;
 						<ng-include src="'templates/order-purchase-c-edit.html'" ng-if="current.StatusID==2"></ng-include>
+						<ng-include src="'templates/order-cancel-check.html'" ng-if="current.StatusID==2"></ng-include>
 						<ng-include src="'templates/order-purchase-c-info.html'" ng-if="current.StatusID!=2"></ng-include>
 					</div>
 					<div x-ng-show="statusActiveSlide==2">
 					&nbsp;
 						<ng-include src="'templates/order-delivering-c-edit.html'" ng-if="current.StatusID==3"></ng-include>
+						<ng-include src="'templates/order-cancel-check.html'" ng-if="current.StatusID==3"></ng-include>
 						<ng-include src="'templates/order-delivering-c-info.html'" ng-if="current.StatusID!=3"></ng-include>
 					</div>
 					<div x-ng-show="statusActiveSlide==3">
