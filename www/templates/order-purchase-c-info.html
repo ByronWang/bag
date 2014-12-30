@@ -1,4 +1,4 @@
-<pane x-ng-hide="current.ActionID==Actions.cancelPurchasing.ID || current.ActionID==Actions.cancelOrder.ID">
+<pane x-ng-hide="statuses[2].ActionID==Actions.cancelOrder.ID  || statuses[2].ActionID==Actions.cancelPurchasing.ID">
 	<div class="list action data">
 		<div class="item message message-strong energized">
 			<i class="ion-ios7-information-outline"></i><span>购买已经完成</span>

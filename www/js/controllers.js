@@ -1094,10 +1094,10 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					}
 				});
 
+				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 				if ($scope.item.StatusID == 5 || $scope.item.StatusID == 6) {
 					$scope.statuses[maxStatusID].class = "cancel";
 				}
-				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 
 			} else {
 				$scope.current = {
@@ -1107,6 +1107,19 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 				$scope.statusActiveSlide = $scope.current.StatusID - 1;
 				$scope.loadBid();
 			}
+
+			$scope.promiseRegion = Geolocation.getRegion();
+			$scope.promiseRegion.then(function(region) {
+				$scope.currentRegion = {};
+
+				var location = region.address.countryRegion + "-" + region.address.adminDistrict;
+				if (region.address.adminDistrict2) {
+					location = location + "-" + region.address.adminDistrict2;
+				}
+				$scope.currentRegion.Location = location;
+				$scope.currentRegion.Latitude = region.coords.latitude;
+				$scope.currentRegion.Longitude = region.coords.longitude;
+			});
 		});
 	};
 
@@ -1221,7 +1234,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 						$scope.current.Extends = {};
 					}
 					$scope.current.Extends.CancelOrderComment = reason;
-					flowStepOut($scope.current.StatusID, Actions.cancelOrder);
+					flowStepOut({	ID:$scope.current.StatusID,Name:$scope.current.StatusName}, Actions.cancelOrder);
 				}
 			});
 		} else {
@@ -1463,7 +1476,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 					$scope.current.Extends = {};
 				}
 				$scope.current.Extends.CancelPurchasingComment = reason;
-				flowStepOut($scope.current.StatusID, Actions.cancelPurchasing);
+				flowStepOut({	ID:$scope.current.StatusID,Name:$scope.current.StatusName}, Actions.cancelPurchasing);
 			}
 		});
 	};

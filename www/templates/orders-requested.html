@@ -22,22 +22,26 @@
 				</div>
 				<a x-ng-repeat="item in order.Items" class="item item-thumbnail-left item-info item-outline" x-ng-click="showDetail(item);" x-ng-hide="hiddenDescription"> <img x-ng-src="{{item.Product.Image | URI }}"> <h2>{{item.Product.Name}}</h2>
 				<div class="list data">
-					<div class="item" x-ng-show="item.StatusID==1">
+					<div class="item" x-ng-hide="item.Product.PriceType==2 || item.Product.PriceType==3">
 						<span class="label">预想单价</span><span class="item-value strength"><b>{{item.Product.Price}}</b>&nbsp;元</span>
 					</div>
-					<div class="item" x-ng-show="item.StatusID==2">
+					<div class="item" x-ng-show="item.Product.PriceType==2">
 						<span class="label">建议单价</span><span class="item-value strength"><b>{{item.Product.Price}}</b>&nbsp;元</span>
 					</div>
-					<div class="item" x-ng-show="item.StatusID==3 || item.StatusID==4">
+					<div class="item" x-ng-show="item.Product.PriceType==3">
 						<span class="label">成交单价</span><span class="item-value strength"><b>{{item.Product.Price}}</b>&nbsp;元</span>
 					</div>
 					<div class="item">
 						<span class="label">数量</span><span class="item-value">{{item.Quantity}}</span>
 					</div>
-					<div class="item">
+					<div class="item" x-ng-hide="item.StatusID==5 || item.StatusID==6">
 						<span class="label">状态</span><span class="order-state"
 						x-ng-class="{'1': 'order-state-bid-bg', 2: 'order-state-purchase-bg', 3: 'order-state-delivering-bg', 4: 'order-state-completed-bg', 5: 'order-state-cancelOrder-bg',6: 'order-state-cancelPurchase-bg'}[item.StatusID]">{{item.ActionName}}</span>
-					</div>			
+					</div>
+					<div class="item" x-ng-show="item.StatusID==5 || item.StatusID==6">
+						<span class="label">状态</span><span class="order-state"
+						x-ng-class="{'1': 'order-state-bid-bg', 2: 'order-state-purchase-bg', 3: 'order-state-delivering-bg', 4: 'order-state-completed-bg', 5: 'order-state-cancelOrder-bg',6: 'order-state-cancelPurchase-bg'}[item.StatusID]">{{item.StatusName}}</span>
+					</div>
 			</div> <i class="ion-record assertive notify" x-ng-hide="item.Readed"></i> </a>
 			</div>
 			<ion-infinite-scroll on-infinite="loadMoreItems()" distance="1%" ng-if="moreDataCanBeLoaded()" icon="ion-loading-c"></ion-infinite-scroll>

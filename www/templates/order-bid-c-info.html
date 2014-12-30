@@ -1,4 +1,4 @@
-<div x-ng-show="statuses[1].ActionID==Actions.bitSucceed.ID">
+<div x-ng-show="statuses[1].ActionID==Actions.payConfirmed.ID || statuses[1].ActionID==Actions.payFinished.ID">
 	<div class="list action data">
 		<div class="item item-avatar item-product-user">
 			<img src="{{item.Bid.Purchaser.Image | URI}}">
@@ -37,7 +37,7 @@
 <div x-ng-show="statuses[1].ActionID==Actions.cancelPurchasing.ID">
 	<div class="list action data">
 		<div class="item message message-strong energized">
-			<i class="ion-ios7-information-outline"></i><span>该订单已被买手放弃购买</span>
+			<i class="ion-ios7-information-outline"></i><span>该订单已被买手放弃购买！</span>
 		</div>
 		<div class="item item-input">
 			<span class="label">放弃时间</span><span class="item-value">{{current.Extends.CancelPurchasingDatetime}}</span>
