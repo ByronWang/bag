@@ -1047,12 +1047,17 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	$scope.done = function(payment) {
 		$scope.$parent.done(payment);
 	};
-}).controller('OrderCustomerDetailCtrl', function($scope, OrderItems, OrderItemFlowByItem, $ionicPopup, OrderItemFlow, Popup, Statuses, Actions, OrderBiding, $state, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, Unipay) {
+}).controller('OrderCustomerDetailCtrl', function($scope, OrderItems,$ionicScrollDelegate, OrderItemFlowByItem, $ionicPopup, OrderItemFlow, Popup, Statuses, Actions, OrderBiding, $state, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, Unipay) {
 
 	var $stateParams = {
 		itemId : $scope.$parent.item.ID
 	};
-
+	
+	$scope.scrollMainToTop = function() {
+		  $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+	};
+		  
+		  
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
@@ -1087,6 +1092,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			$scope.item.Product.Extends = undefined;
 			$scope.product = $scope.item.Product;
 			$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+			$scope.scrollMainToTop();
 		});
 	};
 	load();
@@ -1321,12 +1327,16 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		}
 	});
 	
-}).controller('OrderPurchaserDetailCtrl', function($scope, $q, Popup, OrderItems, $ionicPopup, Geolocation, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
+}).controller('OrderPurchaserDetailCtrl', function($scope, $ionicScrollDelegate,$q, Popup, OrderItems, $ionicPopup, Geolocation, OrderItemFlowByItem, OrderItemFlow, Statuses, Actions, OrderBiding, $state, $stateParams, $ionicSlideBoxDelegate, $timeout, Orders, Category, Exts, $ionicActionSheet, Camera) {
 
 	var $stateParams = {
 		itemId : $scope.$parent.item.ID
 	};
 
+	$scope.scrollMainToTop = function() {
+		  $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+	};
+	
 	$scope.doRefresh = function() {
 		load(function() {
 			$scope.$broadcast('scroll.refreshComplete');
@@ -1362,6 +1372,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 			}
 			$scope.product = $scope.item.Product;
 			$scope.item.Product.CategoryDesc = Category.get($scope.item.Product.CategoryID).Desc;
+			$scope.scrollMainToTop();
 		});
 
 	};
