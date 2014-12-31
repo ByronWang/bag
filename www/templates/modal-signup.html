@@ -1,3 +1,5 @@
+
+
 <ion-modal-view ng-controller="SignupCtrl">
 	<ion-header-bar class="bar-stable">
 		<div class="buttons">
@@ -10,7 +12,8 @@
 				<div class="list list-inset">
 					<label class="item item-input">
 						<span class="input-label">用户名</span>
-						<input type="text" x-ng-model="user.Name" required>
+						<input type="text"  name="Name" x-ng-model="user.Name" required x-ensure-unique-user>
+						<span x-ng-show="mainform.Name.$dirty && mainform.Name.$error.unique">用户名已存在！</span>
 					</label>
 					<label class="item item-input">
 						<span class="input-label">昵称</span>

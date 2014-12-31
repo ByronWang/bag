@@ -15,10 +15,8 @@ angular.module('starter.directives', []).directive('ngExts', [ '$http', '$contro
 				return scope.$eval(attr.bgPriceHint) - scope.$eval(attr.priceFrom);
 			}, function() {
 				var result = scope.$eval(attr.bgPriceHint) - scope.$eval(attr.priceFrom);
-				if (result > 0)
-					element.html('<i class="ion-arrow-up-a">&nbsp;</i>' + result + ' 元');
-				else if (result < 0)
-					element.html('<i class="ion-arrow-down-a">&nbsp;</i>' + result + ' 元');
+				if (result > 0) element.html('<i class="ion-arrow-up-a">&nbsp;</i>' + result + ' 元');
+				else if (result < 0) element.html('<i class="ion-arrow-down-a">&nbsp;</i>' + result + ' 元');
 				else
 					element.html('' + result + ' 元');
 			});
@@ -34,4 +32,24 @@ angular.module('starter.directives', []).directive('ngExts', [ '$http', '$contro
 			});
 		}
 	};
+} ]).directive('ensureUniqueUser', [ '$http', 'Host', function($http, Host) {
+	return {
+		require : 'ngModel',
+		link : function(scope, ele, attrs, c) {
+			scope.$watch(attrs.ngModel, function(data) {
+				$http({
+					method : 'get',
+					url : Host.host() + '/d/User?Name=' + data
+				}).success(function(data, status, headers, cfg) {
+					if (data && data.length == 0) {
+						c.$setValidity('unique', true);
+					} else {
+						c.$setValidity('unique', false);
+					}
+				}).error(function(data, status, headers, cfg) {
+					c.$setValidity('unique', false);
+				});
+			});
+		}
+	}
 } ]);

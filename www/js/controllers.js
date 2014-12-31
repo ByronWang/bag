@@ -188,7 +188,19 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 	};
 }).controller('SignupCtrl', function($scope, Users, Popup) {
 	$scope.user = {};
-
+	
+	$scope.checkUnique = function(name){
+		var UserNames = Users.query({
+			Name : name
+		},function(){
+			if(UserNames.length>0){
+				$scope.NameUnique = false;
+			}else{
+				$scope.NameUnique = true;				
+			}
+		})
+	};
+	
 	$scope.signup = function() {
 		
 		if($scope.user.TextPassword != $scope.user.ConfirmPassword ){
