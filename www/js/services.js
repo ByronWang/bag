@@ -470,6 +470,12 @@ angular.module('starter.services', []).factory('Host', function($http,$timeout) 
 				});
 			});
 		},
+		checkReadedForItemList : function(itemList){
+			var _this = this;
+			angular.forEach(itemList,function(item){
+				item.Readed = (_this.readedItems[item.ID]  && _this.readedItems[item.ID] == item.LastUpdated);
+			});
+		},
 		checkReadedForItem : function(item){
 			var _this = this;
 			item.Readed = (_this.readedItems[item.ID]  && _this.readedItems[item.ID] == item.LastUpdated);

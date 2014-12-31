@@ -45,7 +45,7 @@
 					<span class="label" x-ng-show="item.SuitorCount">已有{{item.SuitorCount}}位买手参与竞标</span>
 					<span class="label" x-ng-hide="item.SuitorCount">还没有买手参与竞标</span>
 				</div>
-			</div> </a>
+			</div><i class="ion-record assertive notify" x-ng-hide="item.Readed"></i>  </a>
 		<ion-infinite-scroll on-infinite="loadMoreItems()" distance="1%" ng-if="moreDataCanBeLoaded()" icon="ion-loading-c"></ion-infinite-scroll>		
 		</pane>
 	</ion-content>

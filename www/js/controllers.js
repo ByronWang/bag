@@ -756,6 +756,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 
 		var realList = undefined;
 		realList = Inventorys.query(params, function() {
+			$scope.currentUser.checkReadedForItemList(realList);
 			$scope.data.inventorys = $scope.data.inventorys.concat(realList);
 			if (realList.length < $scope.pagesize) {
 				$scope.hasmore = false;
@@ -829,6 +830,7 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		$scope.item = InventoryItems.get({
 			itemId : $scope.$parent.item.ID
 		}, function() {
+			$scope.currentUser.read($scope.item);
 			$scope.item.Product.Exts = Exts.decode($scope.item.Product.Extends);
 			$scope.item.Product.Extends = undefined;
 			$scope.product = $scope.item.Product;
