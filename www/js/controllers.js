@@ -197,7 +197,9 @@ angular.module('starter.controllers', []).controller('GlobalCtrl', function($sco
 		}
 
 		$scope.user.Password = hex_md5($scope.user.TextPassword);
-			
+		if(!$scope.user.NickName)
+			$scope.user.NickName = $scope.user.Name;
+		
 		if ($scope.user.TobePurchaser) {
 			var User = new Users($scope.user);
 			User.$save(function(resp) {
